@@ -1,0 +1,28 @@
+﻿body 
+{
+}
+
+.Blue_button 
+{
+  color: #ffffff;
+  background-color: #000000;
+  border-color: #000000;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.my_navbar
+{
+  background-color: #000000;
+}
+
+.Blue_button:hover,
+.Blue_button:focus,
+.Blue_button:active,
+.Blue_button.active,
+.open .dropdown-toggle.Blue_button 
+{
+  color: #ffffff;
+  background-color: #0026ff;
+  border-color: #0026ff;
+}
