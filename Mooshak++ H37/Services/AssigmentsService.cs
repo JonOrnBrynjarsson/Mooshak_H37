@@ -44,5 +44,31 @@ namespace Mooshak___H37.Services
 
             return viewModel;
         }
+
+        public AssignmentViewModel Assignment(int id)
+        {
+            var assignment = (from asi in _db.Assignments
+                                              where asi.ID == id
+                                              select asi).FirstOrDefault();
+
+            if (assignment == null)
+            {
+                //DO SOMETHING
+                //throw new exception / skila NULL
+            }
+
+            AssignmentViewModel model = new AssignmentViewModel
+            {
+                ID = assignment.ID,
+                Name = assignment.Name,
+                SetDate = assignment.SetDate,
+                DueDate = assignment.DueDate,
+                CourseID = assignment.CourseID,
+                IsActive = assignment.IsActive,
+                IsRemoved = assignment.IsRemoved,
+            };
+
+            return model;
+        }
     }
 }

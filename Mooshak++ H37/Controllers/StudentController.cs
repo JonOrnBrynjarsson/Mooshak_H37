@@ -4,9 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Mooshak___H37.Services;
+using Mooshak___H37.Models;
+using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Controllers
 {
+    //[Authorize("Students")]
     public class StudentController : Controller
     {
         AssigmentsService _assignService = new AssigmentsService();
@@ -18,5 +21,13 @@ namespace Mooshak___H37.Controllers
             var viewModel = _assignService.getAllAssignments();
             return View(viewModel);
         }
+
+        public ActionResult ViewAssignment(int id)
+        {
+            var viewModel = _assignService.Assignment(id);
+            return View(viewModel);
+        }
     }
+
+
 }

@@ -5,58 +5,65 @@
 }
 
 
+<div class="clearfix">
 
-<div id="messages" class="left-portion">
-    <table id="message" class="table table-hover">
-        <thead>
-            <tr>
-                <th>Nr</th>
-                <th>Message</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Lorem</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Ipsum</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Dolar</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 
-<div id="due-assignments" class="right-portion">
-    <table id="assignments" class="table table-hover">
-        <thead>
-            <tr>
-                <th>Nr</th>
-                <th>Name</th>
-                <th>Due Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{int rowNo = 0;}
-            @foreach (var item in Model)
-            {
+    <div id="messages" class="left-portion">
+        <table id="message" class="table table-hover">
+            <thead>
                 <tr>
-                    <td>
-                        @(rowNo += 1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DueDate)
-                    </td>
+                    <th>Nr</th>
+                    <th>Message</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Lorem</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Ipsum</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Dolar</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
+    <div id="due-assignments" class="right-portion">
+        <table id="assignments" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nr</th>
+                    <th>Name</th>
+                    <th>Due Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int rowNo = 0;}
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @(rowNo += 1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DueDate)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
 </div>
