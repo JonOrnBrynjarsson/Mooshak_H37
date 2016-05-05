@@ -9,13 +9,20 @@ namespace Mooshak___H37.Controllers
 {
     public class TeacherController : Controller
     {
-        CoursesService _courseService = new CoursesService();
+		AssigmentsService _assignService = new AssigmentsService();
 
-        // GET: Teacher
-        public ActionResult Index()
-        {
-            var viewModel = _courseService.getAllCourses();
-            return View(viewModel);
-        }
-    }
+		// GET: Assignment
+		[HttpGet]
+		public ActionResult Index()
+		{
+			var viewModel = _assignService.getAllAssignments();
+			return View(viewModel);
+		}
+
+		public ActionResult ViewAssignment(int id)
+		{
+			var viewModel = _assignService.Assignment(id);
+			return View(viewModel);
+		}
+	}
 }

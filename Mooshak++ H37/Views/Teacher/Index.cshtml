@@ -1,39 +1,82 @@
-﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.CourseViewModel>
+@model IEnumerable<Mooshak___H37.Models.Viewmodels.AssignmentViewModel>
+
 @{
     ViewBag.Title = "Teacher Homepage";
 }
 
 <h2>Teacher Homepage</h2>
 
-<div id="due-assignments" class="right-portion">
-    <table id="assignments" class="table table-hover">
-        <thead>
-            <tr>
-                <th>Nr</th>
-                <th>Name</th>
-                <th>Due Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{int rowNo = 0;}
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @(rowNo += 1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Isactive)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="clearfix">
+    <div class="left-portion">
+        <h3>Messages</h3>
+        <div id="messages">
+            <table id="message" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Lorem</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ipsum</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Dolar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <img class="dataImage" src="~/images/data.jpg" alt="No image man" />
+    </div>
 
+    <div class="right-portion">
+        <div id="due-assignments">
+            <h3>
+                Assignments
+                <button type="button" class="btn btn-primary button-right">Create New Assignment</button>
+            </h3>
+            <table id="assignments" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Name</th>
+                        <th>Due Date</th>
+                        <th>Accepted</th>
+                        <th>Graded</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int rowNo = 0;}
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(rowNo += 1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DueDate)
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

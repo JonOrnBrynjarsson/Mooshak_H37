@@ -11,6 +11,23 @@
 
 }
 
+.admin-createCourse-buttons
+{
+    float: right; 
+    margin-top: 3%;
+}
+
+.save-button
+{
+    padding-left: 35%;
+    padding-right: 35%;
+}
+
+.userTable
+{
+    margin-top: 20%;
+}
+
 #createUser
 {
     padding-left: 16%;
