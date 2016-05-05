@@ -54,25 +54,35 @@ namespace Mooshak___H37.Services
 
             if (assignment == null)
             {
-                //DO SOMETHING
-                //throw new exception / skila NULL
+				//DO SOMETHING
+				//throw new exception / skila NULL(ekki skila null hér)
             }
-
+				
 			var milestones = _db.Milestones.Where(x => x.AssignmentID == id)
-				.ToList();
+				.Select(x => new MilestoneViewmodel
+				{
+					ID = x.ID,
+					AllowedSubmissions = x.AllowedSubmissions,
+					Name = x.Name,
+					Description = x.Description,
+					Grade = x.Grade,
+					AssignmentID = x.AssignmentID,
+					IsRemoved = x.IsRemoved			
+				}).ToList();
 
-            AssignmentViewModel model = new AssignmentViewModel
-            {
-                ID = assignment.ID,
-                Name = assignment.Name,
-                SetDate = assignment.SetDate,
-                DueDate = assignment.DueDate,
-                CourseID = assignment.CourseID,
-                IsActive = assignment.IsActive,
-                IsRemoved = assignment.IsRemoved,
-                Description = assignment.Description,
-            };
-
+			AssignmentViewModel model = new AssignmentViewModel
+			{
+				ID = assignment.ID,
+				Name = assignment.Name,
+				SetDate = assignment.SetDate,
+				DueDate = assignment.DueDate,
+				CourseID = assignment.CourseID,
+				IsActive = assignment.IsActive,
+				IsRemoved = assignment.IsRemoved,
+				Description = assignment.Description,
+				Milestones = milestones
+			}; 
+			        
             return model;
         }
     }
