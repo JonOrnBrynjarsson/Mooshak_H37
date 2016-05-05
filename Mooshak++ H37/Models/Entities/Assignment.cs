@@ -28,6 +28,8 @@ namespace Mooshak___H37.Models.Entities
 
         public bool IsRemoved { get; set; }
 
+        public string Description { get; set; }
+
         public virtual Course Course { get; set; }
         public virtual ICollection<ErrorReport> ErrorReports { get; set; }
 

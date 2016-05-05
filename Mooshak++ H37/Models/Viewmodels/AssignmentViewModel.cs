@@ -14,5 +14,6 @@ namespace Mooshak___H37.Models.Viewmodels
         public int CourseID { get; set; }
         public bool IsActive { get; set; }
         public bool IsRemoved { get; set; }
+        public string Description { get; set; }
     }
 }
