@@ -17,5 +17,15 @@ namespace Mooshak___H37.Controllers
             var viewModel = _errorsService.getTopErrormessages();
             return View();
         }
+
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
+
+        public ActionResult CreateCourse()
+        {
+            return View();
+        }
     }
 }

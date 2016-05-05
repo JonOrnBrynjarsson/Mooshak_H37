@@ -4,17 +4,16 @@
     ViewBag.Title = "Admin Homepage";
 }
 
-<div class="clearfix">
+<link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
 
-    <link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
+<div class="clearfix">
 
     <h2>AdminHomePage</h2>
 
     <div class="admin-home-buttons">
-        <button class="btn btn-primary create-button">Create Course</button>
+        <button class="btn btn-primary create-button">@Html.ActionLink("Create Course", "CreateCourse")</button>
         <br/>
-        <button class="btn btn-primary create-button" id="createUser">Create User</button>
-
+        <button class="btn btn-primary create-button" id="createUser">@Html.ActionLink("Create Users", "CreateUser")</button>
     </div>
 
     <div>
