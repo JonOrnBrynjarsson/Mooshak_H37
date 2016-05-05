@@ -1,22 +1,20 @@
 namespace Mooshak___H37.Models.Entities
 {
-    using System.ComponentModel.DataAnnotations;
-	using Mooshak___H37.Models;
+	using System.ComponentModel.DataAnnotations;
 
 	public class GroupMember
-    {
-        public int ID { get; set; }
+	{
+		public int ID { get; set; }
 
-        public int AssignmentID { get; set; }
+		public int AssignmentID { get; set; }
 
-        [Required]
-        [StringLength(128)]
-        public string UserID { get; set; }
+		[Required]
+		public int UserID { get; set; }
 
-        public bool IsRemoved { get; set; }
+		public bool IsRemoved { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
+		public virtual User User { get; set; }
 
-        public virtual Assignment Assignment { get; set; }
-    }
+		public virtual Assignment Assignment { get; set; }
+	}
 }

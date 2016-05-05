@@ -41,7 +41,7 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
-        public List<CourseViewModel> getAllCoursesByID(string UserID)
+        public List<CourseViewModel> getAllCoursesByID(int UserID)
         {
             List<Course> Courses = null;
 
