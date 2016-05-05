@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace Mooshak___H37.Controllers
 {
-    public class MessageController : Controller
-    {
-        // GET: Message
-        public ActionResult Index()
-        {
-            return View();
-        }
-    }
+    //public class MessageController : Controller
+    //{
+    //    // GET: Message
+    //    public ActionResult Index()
+    //    {
+    //        return View();
+    //    }
+    //}
 }
