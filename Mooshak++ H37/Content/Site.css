@@ -7,6 +7,9 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -22,3 +25,22 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*.borders {
+    border-radius: 10px;
+    border: 2px solid #000000;
+    padding: 20px; 
+}*/
+
+.left-portion
+{
+	float:left;
+	width:29%;
+}
+
+.right-portion
+{
+    float:right;
+	width:69%;
+}
+
