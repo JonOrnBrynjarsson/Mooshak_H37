@@ -29,7 +29,7 @@ namespace Mooshak___H37.Services
 
 			var viewModel = new List<AdminErrorViewmModel>();
 
-			foreach (var message in errorMessage)
+			/*foreach (var message in errorMessage)
 			{
 				AdminErrorViewmModel model = new AdminErrorViewmModel
 				{
@@ -38,7 +38,7 @@ namespace Mooshak___H37.Services
 					User = message.UserId
 				};
 				viewModel.Add(model);
-			}
+			}*/
 
 			return viewModel;
 		}

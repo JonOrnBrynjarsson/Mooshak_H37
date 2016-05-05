@@ -4,39 +4,80 @@
     ViewBag.Title = "Admin Homepage";
 }
 
-<h2>AdminHomePage</h2>
+<div class="clearfix">
 
-<div>
-    <h4>AdminErrorViewmModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+    <link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+    <h2>AdminHomePage</h2>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Message)
-        </dt>
+    <div>
+        <button class="btn btn-primary admin-home">Create Course</button>
+        <br/>
+        <br/>
+        <button class="btn btn-primary admin-home">Create User</button>
 
-        <dd>
-            @Html.DisplayFor(model => model.Message)
-        </dd>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
+    <div>
+        <div id="messages" class="left-portion">
+            <h3>Messages</h3>
+            <table id="message" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Lorem</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ipsum</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Dolar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.User)
-        </dd>
+        <div id="due-assignments" class="right-portion">
+            <h3>Error Reports</h3>
+            <table id="assignments" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Date</th>
+                        <th>Error type</th>
+                        <th>User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int rowNo = 0;}
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        <tr>
+                            <td>
+                                @(rowNo += 1)
+                            </td>
+                            <td>
+                                12/0 @i
+                            </td>
+                            <td>
+                                error @i
+                            </td>
+                            <td>
+                                Hrafn
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-    </dl>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
