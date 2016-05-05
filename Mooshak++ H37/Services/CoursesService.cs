@@ -18,69 +18,69 @@ namespace Mooshak___H37.Services
 			_db = new ApplicationDbContext();
 		}
 
-        public List<TeacherCourseViewModel> getAllCourses()
-        {
+        //public List<TeacherCourseViewModel> getAllCourses()
+        //{
 
-            var Courses = (from x in _db.Courses
-                           select x).ToList();
+        //    var Courses = (from x in _db.Courses
+        //                   select x).ToList();
 
-            var viewModel = new List<TeacherCourseViewModel>();
+        //    var viewModel = new List<TeacherCourseViewModel>();
 
-            foreach (var course in Courses)
-            {
-                TeacherCourseViewModel model = new TeacherCourseViewModel
-                {
-                    Name = course.Name,
-                    StartDate = course.Startdate,
-                    ID = course.ID,
-                    Isactive = course.Isactive,
-                };
-                viewModel.Add(model);
-            }
+        //    foreach (var course in Courses)
+        //    {
+        //        TeacherCourseViewModel model = new TeacherCourseViewModel
+        //        {
+        //            Name = course.Name,
+        //            StartDate = course.Startdate,
+        //            ID = course.ID,
+        //            Isactive = course.Isactive,
+        //        };
+        //        viewModel.Add(model);
+        //    }
 
-            return viewModel;
-        }
+        //    return viewModel;
+        //}
 
-        public List<TeacherCourseViewModel> getAllCoursesByID(string UserID)
-        {
-            List<Course> Courses = null;
+        //public List<TeacherCourseViewModel> getAllCoursesByID(string UserID)
+        //{
+        //    List<Course> Courses = null;
 
-            var coursesID = (from x in _db.UserCourseRelations
-                             where x.UserID == UserID
-                             select x.CourseID);
+        //    var coursesID = (from x in _db.UserCourseRelations
+        //                     where x.UserID == UserID
+        //                     select x.CourseID);
 
-            foreach (var id in coursesID)
-            {
-                Courses.Add(getCourseByID(id));
-            }
+        //    foreach (var id in coursesID)
+        //    {
+        //        Courses.Add(getCourseByID(id));
+        //    }
 
-            var viewModel = new List<TeacherCourseViewModel>();
+        //    var viewModel = new List<TeacherCourseViewModel>();
 
-            foreach (var course in Courses)
-            {
-                TeacherCourseViewModel model = new TeacherCourseViewModel
-                {
-                    Name = course.Name,
-                    StartDate = course.Startdate,
-                    ID = course.ID,
-                    Isactive = course.Isactive,
-                };
-                viewModel.Add(model);
-            }
+        //    foreach (var course in Courses)
+        //    {
+        //        TeacherCourseViewModel model = new TeacherCourseViewModel
+        //        {
+        //            Name = course.Name,
+        //            StartDate = course.Startdate,
+        //            ID = course.ID,
+        //            Isactive = course.Isactive,
+        //        };
+        //        viewModel.Add(model);
+        //    }
 
-            return viewModel;
+        //    return viewModel;
 
-        }
+        //}
 
-        public Course getCourseByID(int courseID)
-        {
+        //public Course getCourseByID(int courseID)
+        //{
 
-            var course = (from x in _db.Courses
-                         where x.ID == courseID
-                         select x).SingleOrDefault();
+        //    var course = (from x in _db.Courses
+        //                 where x.ID == courseID
+        //                 select x).SingleOrDefault();
 
-            return course;
-        }
+        //    return course;
+        //}
 
 
     }
