@@ -18,22 +18,26 @@ namespace Mooshak___H37.Services
 			_db = new ApplicationDbContext();
 		}
 
-        public List<StudentAssignmentViewModel> getAssignments()
+        public List<AssignmentViewModel> getAllAssignments()
         {
 
             var assignments = (from assi in _db.Assignments
                                orderby assi.DueDate descending
                                select assi);
 
-            var viewModel = new List<StudentAssignmentViewModel>();
+            var viewModel = new List<AssignmentViewModel>();
 
             foreach (var assignm in assignments)
             {
-                StudentAssignmentViewModel model = new StudentAssignmentViewModel
+                AssignmentViewModel model = new AssignmentViewModel
                 {
-                    Name = assignm.Name,
-                    Date = assignm.DueDate,
                     ID = assignm.ID,
+                    Name = assignm.Name,
+                    SetDate = assignm.SetDate,
+                    DueDate = assignm.DueDate,
+                    CourseID = assignm.CourseID,
+                    IsActive = assignm.IsActive,
+                    IsRemoved = assignm.IsRemoved,
                 };
                 viewModel.Add(model);
             }

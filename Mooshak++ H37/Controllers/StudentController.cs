@@ -15,7 +15,7 @@ namespace Mooshak___H37.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var viewModel = _assignService.getAssignments();
+            var viewModel = _assignService.getAllAssignments();
             return View(viewModel);
         }
     }
