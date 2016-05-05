@@ -232,6 +232,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Viewmodels\AdminHomeViewModel.cs" />
     <Compile Include="Models\Viewmodels\AssignmentViewModel.cs" />
+    <Compile Include="Models\Viewmodels\MilestoneViewmodel.cs" />
     <Compile Include="Models\Viewmodels\TeacherCourseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Viewmodels\AdminErrorViewmModel.cs" />

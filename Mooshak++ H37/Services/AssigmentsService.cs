@@ -58,6 +58,9 @@ namespace Mooshak___H37.Services
                 //throw new exception / skila NULL
             }
 
+			var milestones = _db.Milestones.Where(x => x.AssignmentID == id)
+				.ToList();
+
             AssignmentViewModel model = new AssignmentViewModel
             {
                 ID = assignment.ID,
