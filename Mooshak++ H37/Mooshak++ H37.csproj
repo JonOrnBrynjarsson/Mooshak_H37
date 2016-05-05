@@ -251,6 +251,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\data.jpg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -313,6 +314,7 @@
     <Content Include="Views\Admin\CreateCourse.cshtml" />
     <None Include="Views\Shared\_Layout.backup" />
     <Content Include="Views\Student\ViewAssignment.cshtml" />
+    <Content Include="Views\Teacher\ViewAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
