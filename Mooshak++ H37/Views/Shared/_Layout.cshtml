@@ -25,9 +25,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
-                    <li>
+                    @*<li>
                         <div class="dropdown">
-                            <button class="Blue_button btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <button class="Blue_button btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                 Student
                                 <span class="caret"></span>
                             </button>
@@ -35,28 +35,46 @@
                                 <li><p>@Html.ActionLink("Index", "Index", "Student", new { area = "" }, new { @class = "my_icon navbar-brand" })</p></li>
                             </ul>
                         </div>
-                    </li>
+                    </li>*@
 
                     <li>
                         <div class="dropdown">
-                            <button class="Blue_button btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                Teacher
+                            <button class="Blue_button btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Student
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><p>@Html.ActionLink("Index", "Index", "Teacher", new { area = "" }, new { @class = "my_icon navbar-brand" })</p></li>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>@Html.ActionLink("Student Index", "Index", "Student")</li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Information</a></li>
                             </ul>
                         </div>
                     </li>
 
                     <li>
                         <div class="dropdown">
-                            <button class="Blue_button btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <button class="Blue_button btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Teacher
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>@Html.ActionLink("Teacher Index", "Index", "Teacher")</li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Information</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="dropdown">
+                            <button class="Blue_button btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 Admin
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><p>@Html.ActionLink("Index", "Index", "Admin", new { area = "" }, new { @class = "my_icon navbar-brand" })</p></li>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>@Html.ActionLink("Admin Index", "Index", "Admin")</li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Information</a></li>
                             </ul>
                         </div>
                     </li>
