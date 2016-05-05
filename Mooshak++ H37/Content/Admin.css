@@ -1,12 +1,23 @@
 ﻿body {
 }
 
-.admin-home
+.admin-home-buttons
 {
-    float: right;
+    float: right;    
+}
+
+.create-button
+{
+
+}
+
+#createUser
+{
+    padding-left: 16%;
+    padding-right: 16%;
 }
 
 #messages
 {
-    margin-top: 3%;
+    margin-top: 6%;
 }
