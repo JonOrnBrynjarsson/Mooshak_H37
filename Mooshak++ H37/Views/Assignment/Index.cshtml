@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.StudentAssignmentViewModel>
+
+@{
     ViewBag.Title = "Index";
 }
 
@@ -13,17 +15,21 @@
         <tbody>
             <tr>
                 <td>1</td>
-                <td>Please change you..</td>
+                <td>Lorem</td>
             </tr>
             <tr>
                 <td>2</td>
-                <td>Please change you..</td>
+                <td>Ipsum</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Dolar</td>
             </tr>
         </tbody>
-    </table>
+</table>
 </div>
 
-<div id="dueAssignments" class="right-portion">
+<div id="due-assignments" class="right-portion">
     <table id="assignments" class="table table-hover">
         <thead>
             <tr>
@@ -33,16 +39,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Assignment 1</td>
-                <td>12.04.2016</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Assignment 1</td>
-                <td>12.05.2016</td>
-            </tr>
+            @{int rowNo = 0;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @(rowNo += 1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 

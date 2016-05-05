@@ -15,5 +15,5 @@ namespace Mooshak___H37.Services
 		{
 			_db = new ApplicationDbContext();
 		}
-	}
+    }
 }

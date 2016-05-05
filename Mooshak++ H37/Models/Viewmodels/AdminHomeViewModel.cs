@@ -7,7 +7,7 @@ using Mooshak___H37.Models.Entities;
 
 namespace Mooshak___H37.Models.Viewmodels
 {
-	class AdminHomeViewModel
+	public class AdminHomeViewModel
 	{
 		public DateTime Date { get; set; }
 		public string Message { get; set; }
