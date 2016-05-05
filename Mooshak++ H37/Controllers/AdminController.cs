@@ -15,7 +15,7 @@ namespace Mooshak___H37.Controllers
         public ActionResult Index()
         {
             var viewModel = _errorsService.getTopErrormessages();
-            return View(viewModel);
+            return View();
         }
     }
 }

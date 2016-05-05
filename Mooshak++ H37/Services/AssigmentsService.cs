@@ -38,6 +38,7 @@ namespace Mooshak___H37.Services
                     CourseID = assignm.CourseID,
                     IsActive = assignm.IsActive,
                     IsRemoved = assignm.IsRemoved,
+                    Description = assignm.Description,
                 };
                 viewModel.Add(model);
             }
@@ -69,6 +70,7 @@ namespace Mooshak___H37.Services
                 CourseID = assignment.CourseID,
                 IsActive = assignment.IsActive,
                 IsRemoved = assignment.IsRemoved,
+                Description = assignment.Description,
             };
 
             return model;
