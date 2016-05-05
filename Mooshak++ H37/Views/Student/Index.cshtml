@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.StudentAssignmentViewModel>
+﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.AssignmentViewModel>
 
 @{
     ViewBag.Title = "Student Homepage";
@@ -52,7 +52,7 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Date)
+                        @Html.DisplayFor(modelItem => item.DueDate)
                     </td>
                 </tr>
             }
