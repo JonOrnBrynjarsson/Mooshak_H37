@@ -58,6 +58,7 @@ namespace Mooshak___H37.Services
 				//throw new exception / skila NULL(ekki skila null hér)
             }
 				
+
 			var milestones = _db.Milestones.Where(x => x.AssignmentID == id)
 				.Select(x => new MilestoneViewmodel
 				{
@@ -70,20 +71,37 @@ namespace Mooshak___H37.Services
 					IsRemoved = x.IsRemoved			
 				}).ToList();
 
-			AssignmentViewModel model = new AssignmentViewModel
-			{
-				ID = assignment.ID,
-				Name = assignment.Name,
-				SetDate = assignment.SetDate,
-				DueDate = assignment.DueDate,
-				CourseID = assignment.CourseID,
-				IsActive = assignment.IsActive,
-				IsRemoved = assignment.IsRemoved,
-				Description = assignment.Description,
-				Milestones = milestones
-			}; 
+            var coursename = (from asi in _db.Courses
+                              where asi.ID == assignment.CourseID
+                              select asi).FirstOrDefault();
+
+            System.Diagnostics.Debug.WriteLine("INFO");
+            System.Diagnostics.Debug.WriteLine(id);
+            System.Diagnostics.Debug.WriteLine(coursename.Name);
+
+
+            if (coursename == null)
+            {
+                throw new Exception("ITS NULL BITCH");
+            }
+
+            AssignmentViewModel model = new AssignmentViewModel
+            {
+                ID = assignment.ID,
+                Name = assignment.Name,
+                SetDate = assignment.SetDate,
+                DueDate = assignment.DueDate,
+                CourseID = assignment.CourseID,
+                IsActive = assignment.IsActive,
+                IsRemoved = assignment.IsRemoved,
+                Description = assignment.Description,
+                Milestones = milestones,
+                CourseName = coursename.Name,
+            }; 
 			        
             return model;
         }
+
+
     }
 }

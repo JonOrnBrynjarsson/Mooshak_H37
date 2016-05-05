@@ -38,9 +38,21 @@ textarea {
 	width:29%;
 }
 
+.large-left-portion
+{
+	float:left;
+	width:69%;
+}
+
 .right-portion
 {
     float:right;
 	width:69%;
+}
+
+.small-right-portion
+{
+	float:left;
+	width:29%;
 }
 

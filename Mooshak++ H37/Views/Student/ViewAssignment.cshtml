@@ -4,71 +4,130 @@
     ViewBag.Title = "ViewAssignment";
 }
 
-<h2>ViewAssignment</h2>
+<div class="clearfix">
+    <div class="large-left-portion">
+        @*<table id="top">
+            <tr>
+                <td><h4>@Html.DisplayFor(model => model.CourseName)</h4></td>
+                <td><h4>@Html.DisplayFor(model => model.Name)</h4></td>
+            </tr>
+            <tr>
+                <td><h4>Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")</h4></td>
+            </tr>
+        </table>*@
 
-<div>
-    <h4>AssignmentViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+        @*<div class="panel panel-default">
+            <div class="panel-heading">@Html.DisplayFor(model => model.CourseName)</div>
+            <div class="panel-body">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+        </div>*@
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        <div class="page-header">
+            <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SetDate)
-        </dt>
+        
 
-        <dd>
-            @Html.DisplayFor(model => model.SetDate)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DueDate)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DueDate)
-        </dd>
+        <div class="panel panel-default">
+            <div class="panel-heading">Description:</div>
+            <div class="panel-body">
+                @Html.DisplayFor(model => model.Description)
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseID)
-        </dt>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.CourseID)
-        </dd>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsRemoved)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsRemoved)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-    </dl>
+    <div class="small-right-portion">
+        <button class="btn btn-primary create-button">Submit</button>
+        <button class="btn btn-primary create-button">Editor</button>
+        <button class="btn btn-primary create-button">View Submissions</button>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    @*<div>
+            <h4>AssignmentViewModel</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SetDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SetDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DueDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DueDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CourseID)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CourseID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsActive)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsRemoved)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsRemoved)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CourseName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CourseName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+            </dl>
+        </div>*@
+
+
+<div class="clearfix">
+    <p>
+        @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |*@
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+

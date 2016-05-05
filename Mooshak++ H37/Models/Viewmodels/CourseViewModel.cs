@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Mooshak___H37.Models.Viewmodels
 {
-    public class TeacherCourseViewModel
+    public class CourseViewModel
     {
         public int ID { get; set; }
         public string Name { get; set; }

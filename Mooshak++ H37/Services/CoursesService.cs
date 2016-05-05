@@ -18,17 +18,17 @@ namespace Mooshak___H37.Services
 			_db = new ApplicationDbContext();
 		}
 
-        public List<TeacherCourseViewModel> getAllCourses()
+        public List<CourseViewModel> getAllCourses()
         {
 
             var Courses = (from x in _db.Courses
                            select x).ToList();
 
-            var viewModel = new List<TeacherCourseViewModel>();
+            var viewModel = new List<CourseViewModel>();
 
             foreach (var course in Courses)
             {
-                TeacherCourseViewModel model = new TeacherCourseViewModel
+                CourseViewModel model = new CourseViewModel
                 {
                     Name = course.Name,
                     StartDate = course.Startdate,
@@ -41,7 +41,7 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
-        public List<TeacherCourseViewModel> getAllCoursesByID(string UserID)
+        public List<CourseViewModel> getAllCoursesByID(string UserID)
         {
             List<Course> Courses = null;
 
@@ -54,11 +54,11 @@ namespace Mooshak___H37.Services
                 Courses.Add(getCourseByID(id));
             }
 
-            var viewModel = new List<TeacherCourseViewModel>();
+            var viewModel = new List<CourseViewModel>();
 
             foreach (var course in Courses)
             {
-                TeacherCourseViewModel model = new TeacherCourseViewModel
+                CourseViewModel model = new CourseViewModel
                 {
                     Name = course.Name,
                     StartDate = course.Startdate,
