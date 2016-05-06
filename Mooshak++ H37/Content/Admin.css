@@ -6,9 +6,14 @@
     float: right;    
 }
 
-.create-button
+.right-table
 {
 
+}
+
+#button-add
+{
+    float: left;
 }
 
 .admin-createCourse-buttons

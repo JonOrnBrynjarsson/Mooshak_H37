@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Mooshak___H37.Services;
+using Mooshak___H37.Models;
 
 namespace Mooshak___H37.Controllers
 {
@@ -27,7 +28,10 @@ namespace Mooshak___H37.Controllers
 		}
 		public ActionResult CreateUser()
         {
-            return View();
+            RegisterViewModel viewModel = new RegisterViewModel();
+            viewModel.Course = _courseService.getAllCourses();
+
+            return View(viewModel);
         }
 
         public ActionResult CreateCourse()
