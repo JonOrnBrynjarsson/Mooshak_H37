@@ -14,5 +14,7 @@ namespace Mooshak___H37.Models.Viewmodels
 		public double? Grade { get; set; }
 		public int AssignmentID { get; set; }
 		public bool IsRemoved { get; set; }
+		
+
 	}
 }
