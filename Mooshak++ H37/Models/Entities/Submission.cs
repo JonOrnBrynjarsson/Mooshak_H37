@@ -9,17 +9,19 @@ namespace Mooshak___H37.Models.Entities
 		public Submission()
 		{
 			ErrorReports = new HashSet<ErrorReport>();
-			Testruns = new HashSet<Testrun>();
 		}
 
 		public int ID { get; set; }
 
-	public int MilestoneID { get; set; }
+		public int MilestoneID { get; set; }
+
+		
+		private int UserID { get; set; }
+
+		public double Grade { get; set; }
 
 		[Required]
-		public byte[] Code { get; set; }
-
-		public int TestCasePassed { get; set; }
+		public string ProgramFileLocation { get; set; }
 
 		public bool IsRemoved { get; set; }
 
@@ -28,7 +30,6 @@ namespace Mooshak___H37.Models.Entities
 
 		public virtual Milestone Milestone { get; set; }
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-		public virtual ICollection<Testrun> Testruns { get; set; }
+		public virtual User User { get; set; }
 	}
 }
