@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.CourseViewModel>
+﻿@model Mooshak___H37.Models.RegisterViewModel
 @{
     ViewBag.Title = "CreateUser";
 }
@@ -10,21 +10,53 @@
         <button class="btn btn-primary save-button">Save</button>
     </div>
 
+    
+       @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+       {
+        <div class="left-portion">
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+            </div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>*@
 
-    <div class="left-portion">
-        <form class="form-horizontal">
-            <label for="Name">Name</label>
-            <input type="text" name="Name" class="form-control" id="Name" /><br />
-            <label for="type">Type</label>
-            <select name="type" class="form-control" id="type">
-                <option value="Teacher">Teacher</option>
-                <option value="Student">Student</option>
-                <option value="Admin">Admin</option>
-            </select>
-            <label for="lastlogin">Last Login</label>
-            <label name="lastlogin" id="lastlogin">11.</label>
-        </form>
-        <br />
-        <br />
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Register" />
+                </div>
+            </div>
+       }
+
+    <div>
+        <select>
+            @foreach(var item in Model.Course)
+            {
+                <option>@item.Name</option>
+            }
+        </select>
     </div>
 </div>

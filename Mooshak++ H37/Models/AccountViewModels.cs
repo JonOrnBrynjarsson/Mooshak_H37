@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Mooshak___H37.Models.Viewmodels;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mooshak___H37.Models
@@ -82,7 +83,9 @@ namespace Mooshak___H37.Models
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get { return Password; } set { ConfirmPassword = Password; } }
+
+        public List<CourseViewModel> Course { get; set; }
     }
 
     public class ResetPasswordViewModel
