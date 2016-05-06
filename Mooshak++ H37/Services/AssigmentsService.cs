@@ -123,7 +123,7 @@ namespace Mooshak___H37.Services
 
             if (coursename == null)
             {
-                throw new Exception("ITS NULL BITCH");
+                // DO SOMETHING
             }
 
             AssignmentViewModel model = new AssignmentViewModel

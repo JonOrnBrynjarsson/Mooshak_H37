@@ -2,20 +2,33 @@
 
 
 @{
-    ViewBag.Title = "Assignments";
+	ViewBag.Title = "Assignments";
 }
 
-<h2>Assignments</h2>
+<div class="clearfix">
+	<div class="large-left-portion">
+		@foreach (var item in Model)
+		{
+			if (item.Assignments.Count != 0)
+			{
+				<h2>@item.Name</h2>
 
-@foreach (var item in Model)
-{
-	<h4>@item.Name</h4>
-	<h4>@item.ID</h4>
+				<table id="assignments-@item.Name" class="table table-hover">
+				@{int rowNo = 0;}
 
-	foreach (var it in item.Assignments)
-	{
-		<li>@it.Name</li>
-		<li>@it.ID</li>
-	}
+					@foreach (var it in item.Assignments)
+					{
+						<tr>
+							<td>@(rowNo += 1)</td>
+							<td>@it.Name</td>
+							<td>Submissions</td>
+							<td>@it.DueDate</td>
+							<td>Submit</td>
+						</tr>
+					}
+					</table>
+				}
+			}
 
-}
+	</div>
+</div>
