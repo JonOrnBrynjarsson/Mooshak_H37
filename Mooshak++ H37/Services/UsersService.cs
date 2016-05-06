@@ -1,4 +1,5 @@
 ﻿using Mooshak___H37.Models;
+using Mooshak___H37.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,21 @@ namespace Mooshak___H37.Services
 		{
 			_db = new ApplicationDbContext();
 		}
+
+        internal void setUser(string name, ApplicationUser user)
+        {
+
+            string ID = user.Id;
+
+            var bla = new User
+            {
+                Name = name,
+                AspNetUserId = ID
+            };
+
+            _db.Users.Add(bla);
+            _db.SaveChanges();
+
+        }
     }
 }

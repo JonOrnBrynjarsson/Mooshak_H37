@@ -10,6 +10,7 @@ namespace Mooshak___H37.Controllers
     public class AdminController : Controller
     {
         ErrorsService _errorsService = new ErrorsService();
+        CoursesService _courseService = new CoursesService();
 
         // GET: Admin
         public ActionResult Index()
@@ -25,7 +26,8 @@ namespace Mooshak___H37.Controllers
 		}
 		public ActionResult CreateUser()
         {
-            return View();
+            var viewModel = _courseService.getAllCourses();
+            return View(viewModel);
         }
 
         public ActionResult CreateCourse()
