@@ -66,7 +66,6 @@ namespace Mooshak___H37.Services
 					AllowedSubmissions = x.AllowedSubmissions,
 					Name = x.Name,
 					Description = x.Description,
-					Grade = x.Grade,
 					AssignmentID = x.AssignmentID,
 					IsRemoved = x.IsRemoved			
 				}).ToList();

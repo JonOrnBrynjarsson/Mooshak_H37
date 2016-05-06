@@ -24,9 +24,7 @@ namespace Mooshak___H37.Models.Entities
 		public string Description { get; set; }
 
 		public int AllowedSubmissions { get; set; }
-
-		public double? Grade { get; set; }
-
+		public string FileWithLocation { get; set; }
 		public int AssignmentID { get; set; }
 
 		public bool IsRemoved { get; set; }
