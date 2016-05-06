@@ -34,7 +34,13 @@ namespace Mooshak___H37.Controllers
             return View(viewModel);
         }
 
-        public ActionResult CreateCourse()
+		public ActionResult ViewCourses()
+		{
+			var viewModel = _courseService.getAllCourses();
+			return View(viewModel);
+		}
+
+		public ActionResult CreateCourse()
         {
             return View();
         }
