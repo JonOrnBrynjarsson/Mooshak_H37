@@ -29,6 +29,7 @@ namespace Mooshak___H37.Services
             };
 
             _db.Users.Add(bla);
+            _db.SaveChanges();
 
         }
     }
