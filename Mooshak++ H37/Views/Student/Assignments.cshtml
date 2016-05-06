@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.CourseViewModel>
+
+
+@{
+    ViewBag.Title = "Assignments";
+}
+
+<h2>Assignments</h2>
+
+@foreach (var item in Model)
+{
+	<h4>@item.Name</h4>
+	<h4>@item.ID</h4>
+
+	foreach (var it in item.Assignments)
+	{
+		<li>@it.Name</li>
+		<li>@it.ID</li>
+	}
+
+}

@@ -19,11 +19,11 @@ namespace Mooshak___H37.Services
         public List<AssignmentViewModel> getAllAssignments()
         {
 
-            var assignments = (from assi in _db.Assignments
-                               orderby assi.DueDate descending
-                               select assi);
+			var assignments = (from assi in _db.Assignments
+							   orderby assi.DueDate descending
+							   select assi);
 
-            var viewModel = new List<AssignmentViewModel>();
+			var viewModel = new List<AssignmentViewModel>();
 
             foreach (var assignm in assignments)
             {
@@ -43,6 +43,40 @@ namespace Mooshak___H37.Services
 
             return viewModel;
         }
+
+		public List<CourseViewModel> GetCourseAssignments()
+		{
+				var courses = _db.Courses
+				.Select(x => new CourseViewModel
+				{
+					ID = x.ID,
+					Name = x.Name,
+					Isactive = x.Isactive,
+					IsRemoved = x.IsRemoved,
+					StartDate = x.Startdate,
+					Assignments = (from asi in _db.Assignments
+								   where asi.CourseID == x.ID select asi).ToList(),
+				}).ToList();
+
+			var viewModel = new List<CourseViewModel>();
+
+			foreach (var course in courses)
+			{
+				CourseViewModel model = new CourseViewModel
+				{
+					Assignments = course.Assignments,
+					ID = course.ID,
+					Isactive = course.Isactive,
+					IsRemoved = course.IsRemoved,
+					Name = course.Name,
+					StartDate = course.StartDate,
+				};
+				viewModel.Add(model);
+			}
+
+			return viewModel;
+
+		}
 
         public AssignmentViewModel Assignment(int id)
         {

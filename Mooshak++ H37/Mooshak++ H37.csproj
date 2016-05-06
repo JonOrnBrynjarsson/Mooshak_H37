@@ -316,6 +316,7 @@
     <None Include="Views\Shared\_Layout.backup" />
     <Content Include="Views\Student\ViewAssignment.cshtml" />
     <Content Include="Views\Teacher\ViewAssignment.cshtml" />
+    <Content Include="Views\Student\Assignments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
