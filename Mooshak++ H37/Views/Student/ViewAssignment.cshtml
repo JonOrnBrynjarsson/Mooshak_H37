@@ -53,21 +53,6 @@
     </div>
 </div>
 
-@foreach (var item in Model.Users)
-{ 
-		<div class="panel panel-default">
-			<div class="panel-heading">Description:</div>
-			<div class="panel-body">
-				@Html.DisplayFor(model => model.Users)
-			</div>
-		</div>
-
-		<div class="panel panel-default">
-			<div class="panel-body">
-				Due Date: @Html.ValueFor(model => model.Users)
-			</div>
-		</div>
-}
 
     @*<div>
             <h4>AssignmentViewModel</h4>
