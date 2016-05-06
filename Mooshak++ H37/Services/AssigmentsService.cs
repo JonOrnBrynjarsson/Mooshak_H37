@@ -75,10 +75,20 @@ namespace Mooshak___H37.Services
                               where asi.ID == assignment.CourseID
                               select asi).FirstOrDefault();
 
-            System.Diagnostics.Debug.WriteLine("INFO");
-            System.Diagnostics.Debug.WriteLine(id);
-            System.Diagnostics.Debug.WriteLine(coursename.Name);
+			//
+			var userid = (from usr in _db.UserCourseRelations
+								where  
+								assignment.CourseID == usr.CourseID
+								select usr.UserID).ToList();
 
+
+			var users = (from user in _db.Users
+					  where userid.Contains(user.ID)
+					  select user).Select(x => new UserViewModel
+					  {
+						  CourseID = x.ID,
+						  Name = x.Name
+					  }).ToList();
 
             if (coursename == null)
             {
@@ -97,6 +107,7 @@ namespace Mooshak___H37.Services
                 Description = assignment.Description,
                 Milestones = milestones,
                 CourseName = coursename.Name,
+				Users = users
             }; 
 			        
             return model;

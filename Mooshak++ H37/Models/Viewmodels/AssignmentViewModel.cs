@@ -16,6 +16,7 @@ namespace Mooshak___H37.Models.Viewmodels
         public bool IsRemoved { get; set; }
 		public string Description { get; set; }
 		public List<MilestoneViewmodel> Milestones { get; set; }
-        public string CourseName { get; set; }
+		public List<UserViewModel> Users { get; set; }
+		public string CourseName { get; set; }
     }
 }
