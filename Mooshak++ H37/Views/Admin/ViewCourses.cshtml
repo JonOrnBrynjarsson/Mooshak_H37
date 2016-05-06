@@ -4,7 +4,47 @@
     ViewBag.Title = "ViewCourses";
 }
 
-@foreach (var item in Model)
-{
-	@item.Name
-}
+
+
+<div class="clearfix">
+    <div class="large-left-portion">
+        <h1>Courses<button class="btn btn-primary create-button button-right">Create New Course</button></h1>
+        
+        <label for="courses">Search Courses</label>
+        <select id="courses" name="courses">
+            <option>Course1</option>
+            <option>Course2</option>
+            <option>Course3</option>
+        </select>
+        <label for="inactive">Inactive</label>
+        <input type="checkbox" id="inactive" name="inactive" />
+    </div>  
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nr</th>
+                    <th>Course</th>
+                    <th>Teacher</th>
+                    <th>Users</th>
+                    <th>Date</th>
+                    <th>Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int rowNo = 0;}
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(rowNo += 1)</td>
+                        <td>@item.Name</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    
+
+</div>
