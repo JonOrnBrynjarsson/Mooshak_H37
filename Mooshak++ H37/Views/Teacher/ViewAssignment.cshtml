@@ -22,7 +22,13 @@
                 <option>Milestone2 </option>
             </select>
          </div>
-        <h3>Due date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyy}")</h3>
+        
+		<div class="panel panel-default">
+			<div class="panel-body">
+				Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")
+			</div>
+		</div>
+
         <table class="table table-hover">
             <thead>
                 <tr>

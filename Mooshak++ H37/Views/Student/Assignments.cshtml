@@ -20,7 +20,9 @@
 					{
 						<tr>
 							<td>@(rowNo += 1)</td>
-							<td>@it.Name</td>
+
+							<td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
+
 							<td>Submissions</td>
 							<td>@it.DueDate</td>
 							<td>Submit</td>
