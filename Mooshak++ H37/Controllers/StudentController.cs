@@ -22,6 +22,12 @@ namespace Mooshak___H37.Controllers
             return View(viewModel);
         }
 
+		public ActionResult Assignments()
+		{
+
+			return View();
+		}
+
         public ActionResult ViewAssignment(int id)
         {
             var viewModel = _assignService.Assignment(id);
