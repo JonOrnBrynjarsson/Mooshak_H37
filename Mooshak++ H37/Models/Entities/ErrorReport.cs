@@ -13,7 +13,7 @@ namespace Mooshak___H37.Models.Entities
 		public DateTime DateOccurred { get; set; }
 
 		[Required]
-		public string UserID { get; set; }
+		public int UserID { get; set; }
 
 		public int? CourseID { get; set; }
 
@@ -28,12 +28,12 @@ namespace Mooshak___H37.Models.Entities
 		[Column("Message")]
 		public string _message { get; set; }
 
-		public virtual ApplicationUser AspNetUser { get; set; }
-
 		public virtual User User { get; set; }
 
 		public virtual Course Course { get; set; }
 
 		public virtual Submission Submission { get; set; }
+
+		public virtual Milestone Milestone { get; set; }
 	}
 }

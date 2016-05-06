@@ -29,16 +29,16 @@ namespace Mooshak___H37.Services
 
 			var viewModel = new List<AdminErrorViewmModel>();
 
-			/*foreach (var message in errorMessage)
+			foreach (var message in errorMessage)
 			{
 				AdminErrorViewmModel model = new AdminErrorViewmModel
 				{
 					Date = message.DateOccurred,
 					Message = message._message,
-					User = message.UserId
+					User = message.UserID.ToString()
 				};
 				viewModel.Add(model);
-			}*/
+			}
 
 			return viewModel;
 		}

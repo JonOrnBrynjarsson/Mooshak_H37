@@ -14,11 +14,16 @@ namespace Mooshak___H37.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            var viewModel = _errorsService.getTopErrormessages();
+
             return View();
         }
-
-        public ActionResult CreateUser()
+		// GET: Admin
+		public ActionResult IndexErrors()
+		{
+			var viewModel = _errorsService.getTopErrormessages();
+			return View(viewModel);
+		}
+		public ActionResult CreateUser()
         {
             return View();
         }
