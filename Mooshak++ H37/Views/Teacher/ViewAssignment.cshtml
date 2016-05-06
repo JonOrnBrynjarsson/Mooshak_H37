@@ -7,6 +7,21 @@
 <div class="clearfix">
     <div class="large-left-portion">
         <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
+        <div>
+            <label for="student">Student</label>
+            <select id="student" name="student">
+                <option>Student1</option>
+                <option>Student2</option>
+            </select>
+            <label for="graded">Graded</label>
+            <input type="checkbox" id="graded" name="graded" />
+            <br />
+            <label for="milestone">Filter Milestone</label>
+            <select id="milestone" name="milestone">
+                <option>Milestone1</option>
+                <option>Milestone2 </option>
+            </select>
+         </div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -20,20 +35,19 @@
                 </tr>
             </thead>
             <tbody>
-                @*@{ int rowNo = 0; }*@
-               @* @foreach (var item in Model)*@
-                @*  *@
+                @{ int rowNo = 0;}
+                @foreach (var item in Model.Users)
+                {
                     <tr>
-                       @* <td>@(rowNo += 1)</td>*@
-                        <td>@Html.DisplayFor(model => model.ID)</td>
+                        <th>@(rowNo += 1)</th>
+                        <th>@item.Name</th>
+                        <th>@Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyy}")</th>
                     </tr>
-                
-
+                }
             </tbody>
         </table>
     </div>
 </div>
-<h2>ViewAssignment</h2>
 @*
     <div>
         <h4>AssignmentViewModel</h4>
