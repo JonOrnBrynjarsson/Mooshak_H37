@@ -32,16 +32,8 @@ namespace Mooshak___H37.Services
 			var currUsId = GetCurrentUser();
 
 			var userCourses = (from uscr in _db.UserCourseRelations
-									  where currUsId == uscr.UserID
-									  select uscr.CourseID).ToList();
-
-			//var users = (from user in _db.Users
-			//			 where userid.Contains(user.ID)
-			//			 select user).Select(x => new UserViewModel
-			//			 {
-			//				 CourseID = x.ID,
-			//				 Name = x.Name
-			//			 }).ToList();
+							   where currUsId == uscr.UserID
+							   select uscr.CourseID).ToList();
 
 
 			var assignments = (from assi in _db.Assignments
@@ -77,7 +69,26 @@ namespace Mooshak___H37.Services
 
 		public List<CourseViewModel> GetCourseAssignments()
 		{
-			var courses = _db.Courses
+
+			var currUsId = GetCurrentUser();
+
+			var userCourses = (from uscr in _db.UserCourseRelations
+							   where currUsId == uscr.UserID
+							   select uscr.CourseID).ToList();
+
+
+			var assignments = (from assi in _db.Assignments
+							   where userCourses.Contains(assi.CourseID)
+							   orderby assi.DueDate descending
+							   select assi).ToList();
+
+			System.Diagnostics.Debug.WriteLine("===OUTPUT===");
+
+			System.Diagnostics.Debug.WriteLine(assignments);
+
+			var coursese = (from crse in _db.Courses
+							where userCourses.Contains(crse.ID)
+							select crse)
 			.Select(x => new CourseViewModel
 			{
 				ID = x.ID,
@@ -91,7 +102,7 @@ namespace Mooshak___H37.Services
 
 			var viewModel = new List<CourseViewModel>();
 
-			foreach (var course in courses)
+			foreach (var course in coursese)
 			{
 				CourseViewModel model = new CourseViewModel
 				{
