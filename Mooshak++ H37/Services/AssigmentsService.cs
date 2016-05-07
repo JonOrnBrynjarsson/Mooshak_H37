@@ -41,11 +41,6 @@ namespace Mooshak___H37.Services
 							   orderby assi.DueDate descending
 							   select assi).ToList();
 
-			System.Diagnostics.Debug.WriteLine("===OUTPUT===");
-
-			System.Diagnostics.Debug.WriteLine(assignments);
-
-
 			var viewModel = new List<AssignmentViewModel>();
 
             foreach (var assignm in assignments)
