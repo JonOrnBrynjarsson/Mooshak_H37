@@ -68,7 +68,7 @@ namespace Mooshak___H37.Services
 			var currUsId = GetCurrentUser();
 
 			var userCourses = (from uscr in _db.UserCourseRelations
-							   where currUsId == uscr.UserID
+							   where currUsId == uscr.UserID							  
 							   select uscr.CourseID).ToList();
 
 
@@ -92,7 +92,8 @@ namespace Mooshak___H37.Services
 				IsRemoved = x.IsRemoved,
 				StartDate = x.Startdate,
 				Assignments = (from asi in _db.Assignments
-								where asi.CourseID == x.ID select asi).ToList(),
+							   where asi.CourseID == x.ID
+							   select asi).ToList(),
 			}).ToList();
 
 			var viewModel = new List<CourseViewModel>();
@@ -152,6 +153,7 @@ namespace Mooshak___H37.Services
 
 			var users = (from user in _db.Users
 					  where userid.Contains(user.ID)
+					  orderby user.Name ascending
 					  select user).Select(x => new UserViewModel
 					  {
 						  CourseID = x.ID,
