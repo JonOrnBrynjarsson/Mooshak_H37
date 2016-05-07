@@ -14,8 +14,6 @@ namespace Mooshak___H37.Models.Viewmodels
         public bool Isactive { get; set; }
         public bool IsRemoved { get; set; }
 		public List<Assignment> Assignments { get; set; }
-		public List<Submission> Submissions { get; set; }
         public List<UserViewModel> User { get; set; }
-
     }
 }

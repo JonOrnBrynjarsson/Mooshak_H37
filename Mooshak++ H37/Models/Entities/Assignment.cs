@@ -12,21 +12,21 @@ namespace Mooshak___H37.Models.Entities
 			GroupMembers = new HashSet<GroupMember>();
 			Milestones = new HashSet<Milestone>();
 		}
-		public AssignmentViewModel GetViewModel()
-		{
-			AssignmentViewModel ret = new AssignmentViewModel();
-			ret.ID = this.ID;
-			ret.CourseID = this.CourseID;
-			ret.Description = this.Description;
-			ret.DueDate = this.DueDate;
-			ret.ID = this.ID;
-			ret.IsActive = this.IsActive;
-			ret.IsRemoved = this.IsRemoved;
-			ret.Name = this.Name;
-			ret.SetDate = this.SetDate;
+		//public AssignmentViewModel GetViewModel()
+		//{
+		//	AssignmentViewModel ret = new AssignmentViewModel();
+		//	ret.ID = this.ID;
+		//	ret.CourseID = this.CourseID;
+		//	ret.Description = this.Description;
+		//	ret.DueDate = this.DueDate;
+		//	ret.ID = this.ID;
+		//	ret.IsActive = this.IsActive;
+		//	ret.IsRemoved = this.IsRemoved;
+		//	ret.Name = this.Name;
+		//	ret.SetDate = this.SetDate;
 
-			return ret;
-		}
+		//	return ret;
+		//}
 		public int ID { get; set; }
 
 		[Required]
