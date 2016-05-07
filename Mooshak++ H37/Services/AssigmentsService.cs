@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web.Mvc.Html;
+using Microsoft.Ajax.Utilities;
 using Mooshak___H37.Models;
+using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
-
+using System.Diagnostics;
 
 namespace Mooshak___H37.Services
 {
@@ -16,46 +20,45 @@ namespace Mooshak___H37.Services
 			_db = new ApplicationDbContext();
 		}
 
-        public List<AssignmentViewModel> getAllAssignments()
-        {
+		public List<AssignmentViewModel> getAllAssignments()
+		{
 
-            var assignments = (from assi in _db.Assignments
-                               orderby assi.DueDate descending
-                               select assi);
+			var assignments = (from assi in _db.Assignments
+								orderby assi.DueDate descending
+								select assi);
 
-            var viewModel = new List<AssignmentViewModel>();
+			var viewModel = new List<AssignmentViewModel>();
 
-            foreach (var assignm in assignments)
-            {
-                AssignmentViewModel model = new AssignmentViewModel
-                {
-                    ID = assignm.ID,
-                    Name = assignm.Name,
-                    SetDate = assignm.SetDate,
-                    DueDate = assignm.DueDate,
-                    CourseID = assignm.CourseID,
-                    IsActive = assignm.IsActive,
-                    IsRemoved = assignm.IsRemoved,
-                    Description = assignm.Description,
-                };
-                viewModel.Add(model);
-            }
+			foreach (var assignm in assignments)
+			{
+				AssignmentViewModel model = new AssignmentViewModel
+				{
+					ID = assignm.ID,
+					Name = assignm.Name,
+					SetDate = assignm.SetDate,
+					DueDate = assignm.DueDate,
+					CourseID = assignm.CourseID,
+					IsActive = assignm.IsActive,
+					IsRemoved = assignm.IsRemoved,
+					Description = assignm.Description,
+				};
+				viewModel.Add(model);
+			}
 
-            return viewModel;
-        }
+			return viewModel;
+		}
 
-        public AssignmentViewModel Assignment(int id)
-        {
-            var assignment = (from asi in _db.Assignments
-                                              where asi.ID == id
-                                              select asi).FirstOrDefault();
+		public AssignmentViewModel Assignment(int id)
+		{
+			var assignment = (from asi in _db.Assignments
+							where asi.ID == id
+							select asi).FirstOrDefault();
 
-            if (assignment == null)
-            {
+			if (assignment == null)
+			{
 				//DO SOMETHING
 				//throw new exception / skila NULL(ekki skila null hér)
-            }
-				
+			}
 
 			var milestones = _db.Milestones.Where(x => x.AssignmentID == id)
 				.Select(x => new MilestoneViewmodel
@@ -68,9 +71,9 @@ namespace Mooshak___H37.Services
 					IsRemoved = x.IsRemoved			
 				}).ToList();
 
-            var coursename = (from asi in _db.Courses
-                              where asi.ID == assignment.CourseID
-                              select asi).FirstOrDefault();
+			var coursename = (from asi in _db.Courses
+								where asi.ID == assignment.CourseID
+								select asi).FirstOrDefault();
 
 			//
 			var userid = (from usr in _db.UserCourseRelations
@@ -87,29 +90,67 @@ namespace Mooshak___H37.Services
 						  Name = x.Name
 					  }).ToList();
 
-            if (coursename == null)
-            {
-                throw new Exception("ITS NULL BITCH");
-            }
+			if (coursename == null)
+			{
+				throw new Exception("ITS NULL BITCH");
+			}
 
-            AssignmentViewModel model = new AssignmentViewModel
-            {
-                ID = assignment.ID,
-                Name = assignment.Name,
-                SetDate = assignment.SetDate,
-                DueDate = assignment.DueDate,
-                CourseID = assignment.CourseID,
-                IsActive = assignment.IsActive,
-                IsRemoved = assignment.IsRemoved,
-                Description = assignment.Description,
-                Milestones = milestones,
-                CourseName = coursename.Name,
+			AssignmentViewModel model = new AssignmentViewModel
+			{
+				ID = assignment.ID,
+				Name = assignment.Name,
+				SetDate = assignment.SetDate,
+				DueDate = assignment.DueDate,
+				CourseID = assignment.CourseID,
+				IsActive = assignment.IsActive,
+				IsRemoved = assignment.IsRemoved,
+				Description = assignment.Description,
+				Milestones = milestones,
+				CourseName = coursename.Name,
 				Users = users
-            }; 
-			        
-            return model;
-        }
+			}; 
+
+			return model;
+		}
+
+		public bool SaveSubmissionfile(string file)
+		{
+			return true;
+		}
+
+		public void RunTest(int SubmissionId)
+		{
+			
+		}
+
+		private static void FileCompiler(int submissionId)
+		{
+			
+			string fileToCompile = @"c:\temp\jontest\jon\main.cpp";
+			string fileName = @"c:\temp\jontest\jon\jonob06.exe";
+			string Compiler = "mingw32-g++.exe";
+			string all = fileToCompile + " -o " + fileName;
+			Console.WriteLine(all);
+
+			Process process = new Process();
+			process.StartInfo.FileName = Compiler;
+			process.StartInfo.Arguments = all;
+			process.StartInfo.UseShellExecute = false;
+			//process.StartInfo.RedirectStandardOutput = true;
+			process.StartInfo.RedirectStandardInput = true;
+			process.Start();
+			process.WaitForExit();
+		}
+
+		public string getUserNameBySubmissionID(int submissionId)
+		{
+			var retvalue = (from s in _db.Submissions
+								where s.User = submissionId
+								join u in _db.Users on s.User
+								select new { s.UserName}).singleOrDefault();
+			return retvalue;
+		}
 
 
-    }
+	}
 }

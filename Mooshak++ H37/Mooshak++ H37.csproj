@@ -240,6 +240,7 @@
     <Compile Include="Services\AssigmentsService.cs" />
     <Compile Include="Services\CoursesService.cs" />
     <Compile Include="Services\ErrorsService.cs" />
+    <Compile Include="Services\FilesService.cs" />
     <Compile Include="Services\MessagesService.cs" />
     <Compile Include="Services\UsersService.cs" />
     <Compile Include="Startup.cs" />
@@ -315,6 +316,7 @@
     <None Include="Views\Shared\_Layout.backup" />
     <Content Include="Views\Student\ViewAssignment.cshtml" />
     <Content Include="Views\Teacher\ViewAssignment.cshtml" />
+    <Content Include="Views\Student\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

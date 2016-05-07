@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Mooshak___H37.Models.Entities
 {
 
@@ -5,7 +7,7 @@ namespace Mooshak___H37.Models.Entities
 	{
 		public int ID { get; set; }
 
-		//public int TestCaseID { get; set; }
+		public int TestCase { get; set; }
 
 		public int SubmissionID { get; set; }
 
@@ -13,6 +15,7 @@ namespace Mooshak___H37.Models.Entities
 
 		public string ResultComments { get; set; }
 
+		[DefaultValue(0)]
 		public bool IsRemoved { get; set; }
 
 		public virtual Submission Submission { get; set; }
