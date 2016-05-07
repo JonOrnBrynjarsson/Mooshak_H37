@@ -19,13 +19,12 @@
 .add-course
 {
     margin-left: 20%;
-    margin-bottom: -10%;
-    margin-top: -10%
+    margin-bottom: 0%;
 }
 
 .add-course-2
 {
-    
+    margin-top: -10%;
 }
 
 .admin-createCourse-buttons
