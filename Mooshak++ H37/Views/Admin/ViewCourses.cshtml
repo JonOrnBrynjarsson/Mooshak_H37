@@ -12,9 +12,10 @@
         
         <label for="courses">Search Courses</label>
         <select id="courses" name="courses">
-            <option>Course1</option>
-            <option>Course2</option>
-            <option>Course3</option>
+            @foreach(var item in Model)
+            {
+                <option>@item.Name</option>
+            }
         </select>
         <label for="inactive">Inactive</label>
         <input type="checkbox" id="inactive" name="inactive" />
