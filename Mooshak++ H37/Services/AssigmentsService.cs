@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Mooshak___H37.Models;
 using Mooshak___H37.Models.Viewmodels;
-
+using Microsoft.AspNet.Identity;
+using Mooshak___H37.Models.Entities;
 
 namespace Mooshak___H37.Services
 {
 	class AssigmentsService
 	{
 		private ApplicationDbContext _db;
+
+		public int GetCurrentUser()
+		{
+			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
+			var currUserID = (from x in _db.Users
+							  where x.AspNetUserId == currentUser
+							  select x.ID).FirstOrDefault();
+
+			return currUserID;
+		}
 
 		public AssigmentsService()
 		{
@@ -18,10 +29,30 @@ namespace Mooshak___H37.Services
 
         public List<AssignmentViewModel> getAllAssignments()
         {
+			var currUsId = GetCurrentUser();
+
+			var userCourses = (from uscr in _db.UserCourseRelations
+									  where currUsId == uscr.UserID
+									  select uscr.CourseID).ToList();
+
+			//var users = (from user in _db.Users
+			//			 where userid.Contains(user.ID)
+			//			 select user).Select(x => new UserViewModel
+			//			 {
+			//				 CourseID = x.ID,
+			//				 Name = x.Name
+			//			 }).ToList();
+
 
 			var assignments = (from assi in _db.Assignments
+							   where userCourses.Contains(assi.CourseID)
 							   orderby assi.DueDate descending
-							   select assi);
+							   select assi).ToList();
+
+			System.Diagnostics.Debug.WriteLine("===OUTPUT===");
+
+			System.Diagnostics.Debug.WriteLine(assignments);
+
 
 			var viewModel = new List<AssignmentViewModel>();
 
@@ -46,17 +77,17 @@ namespace Mooshak___H37.Services
 
 		public List<CourseViewModel> GetCourseAssignments()
 		{
-				var courses = _db.Courses
-				.Select(x => new CourseViewModel
-				{
-					ID = x.ID,
-					Name = x.Name,
-					Isactive = x.Isactive,
-					IsRemoved = x.IsRemoved,
-					StartDate = x.Startdate,
-					Assignments = (from asi in _db.Assignments
-								   where asi.CourseID == x.ID select asi).ToList(),
-				}).ToList();
+			var courses = _db.Courses
+			.Select(x => new CourseViewModel
+			{
+				ID = x.ID,
+				Name = x.Name,
+				Isactive = x.Isactive,
+				IsRemoved = x.IsRemoved,
+				StartDate = x.Startdate,
+				Assignments = (from asi in _db.Assignments
+								where asi.CourseID == x.ID select asi).ToList(),
+			}).ToList();
 
 			var viewModel = new List<CourseViewModel>();
 
