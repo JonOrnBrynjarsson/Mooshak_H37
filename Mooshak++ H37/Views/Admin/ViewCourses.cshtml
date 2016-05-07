@@ -11,7 +11,7 @@
         <h1>Courses<button class="btn btn-primary create-button button-right">Create New Course</button></h1>
         
         <label for="courses">Search Courses</label>
-        <select id="courses" name="courses">
+        <select id="courses" name="courses" class="form-control">
             @foreach(var item in Model)
             {
                 <option>@item.Name</option>

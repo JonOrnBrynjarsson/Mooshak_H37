@@ -22,6 +22,7 @@ namespace Mooshak___H37.Services
         {
 
             var Users = (from x in _db.Users
+						 orderby x.Name ascending
                            select x).ToList();
 
             var viewModel = new List<UserViewModel>();
