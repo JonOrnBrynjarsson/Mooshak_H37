@@ -12,9 +12,10 @@ namespace Mooshak___H37.Controllers
 	//[Authorize(Roles = "Admin")]
 	public class AdminController : Controller
     {
-        ErrorsService _errorsService = new ErrorsService();
-        CoursesService _courseService = new CoursesService();
-        UsersService _userService = new UsersService();
+		private ErrorsService _errorsService = new ErrorsService();
+		private CoursesService _courseService = new CoursesService();
+		private UsersService _userService = new UsersService();
+		private AssigmentsService _assignmentsService = new AssigmentsService();
 
         // GET: Admin
         public ActionResult Index()
@@ -57,5 +58,38 @@ namespace Mooshak___H37.Controllers
             _courseService.setCourse(model);
             return View();
         }
-    }
+
+		public ActionResult EditCourse(int? id)
+		{
+			if(id==null)
+			{
+				//TODO
+				//throw exception
+			}
+
+			AssignmentViewModel model = _assignmentsService.Assignment(id.Value);
+
+			if(model == null)
+			{
+				//TODO
+				//throw exception
+			}
+
+			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult EditCourse(int id, FormCollection formData)
+		{
+			AssignmentViewModel modelUpdate = _assignmentsService.Assignment(id);
+
+			if (modelUpdate != null)
+			{
+				UpdateModel(modelUpdate);
+				_assignmentsService.updateAssignment(modelUpdate);
+			}
+
+			return RedirectToAction("ViewCourses");
+		}
+	}
 }

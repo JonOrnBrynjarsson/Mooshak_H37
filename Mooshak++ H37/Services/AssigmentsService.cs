@@ -182,7 +182,28 @@ namespace Mooshak___H37.Services
 			        
             return model;
         }
+		
+		public void updateAssignment(AssignmentViewModel ass)
+		{
 
+			var item = (from it in _db.Assignments
+						where it.ID == ass.ID
+						select it).FirstOrDefault();
+
+			if(item != null)
+			{
+				item.IsActive = ass.IsActive;
+				item.IsRemoved = ass.IsRemoved;
+				item.Name = ass.Name;
+				item.SetDate = ass.SetDate;
+				item.DueDate = ass.DueDate;
+				item.CourseID = ass.CourseID;
+				item.Description = ass.Description;
+
+				_db.SaveChanges();
+			}
+
+		}
 
     }
 }
