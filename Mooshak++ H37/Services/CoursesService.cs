@@ -22,6 +22,7 @@ namespace Mooshak___H37.Services
         {
 
             var Courses = (from x in _db.Courses
+						   orderby x.Name ascending
                            select x).ToList();
 
             var viewModel = new List<CourseViewModel>();
