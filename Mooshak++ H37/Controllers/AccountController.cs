@@ -168,7 +168,7 @@ namespace Mooshak___H37.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("CreateUser", "Admin");
+            return RedirectToAction("CreateUser", "Admin", model);
         }
 
         //

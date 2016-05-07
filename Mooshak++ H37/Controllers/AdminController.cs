@@ -9,7 +9,7 @@ using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Controllers
 {
-	[Authorize(Roles = "Admin")]
+	//[Authorize(Roles = "Admin")]
 	public class AdminController : Controller
     {
         ErrorsService _errorsService = new ErrorsService();
@@ -36,7 +36,8 @@ namespace Mooshak___H37.Controllers
             return View(viewModel);
         }
 
-		public ActionResult ViewCourses()
+
+        public ActionResult ViewCourses()
 		{
 			var viewModel = _courseService.getAllCourses();
 			return View(viewModel);
