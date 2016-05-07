@@ -9,8 +9,8 @@ using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Controllers
 {
-    //[Authorize("Students")]
-    public class StudentController : Controller
+	[Authorize(Roles = "Student")]
+	public class StudentController : Controller
     {
         AssigmentsService _assignService = new AssigmentsService();
 

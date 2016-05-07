@@ -9,7 +9,8 @@ using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Controllers
 {
-    public class AdminController : Controller
+	[Authorize(Roles = "Admin")]
+	public class AdminController : Controller
     {
         ErrorsService _errorsService = new ErrorsService();
         CoursesService _courseService = new CoursesService();
