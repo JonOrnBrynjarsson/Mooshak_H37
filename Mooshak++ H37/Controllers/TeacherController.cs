@@ -7,7 +7,7 @@ using Mooshak___H37.Services;
 
 namespace Mooshak___H37.Controllers
 {
-	[Authorize(Roles = "Teacher")]
+	//[Authorize(Roles = "Teacher")]
 	public class TeacherController : Controller
     {
 		AssigmentsService _assignService = new AssigmentsService();
