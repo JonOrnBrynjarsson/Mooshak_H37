@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models;
+using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Controllers
 {
@@ -42,6 +43,16 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult CreateCourse()
         {
+            CourseViewModel viewModel = new CourseViewModel();
+            viewModel.User = _userService.getAllUsersName();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreateCourse(CourseViewModel model)
+        {
+            _courseService.setCourse(model);
             return View();
         }
     }

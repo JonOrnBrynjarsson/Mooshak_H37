@@ -72,6 +72,18 @@ namespace Mooshak___H37.Services
 
         }
 
+        internal void setCourse(CourseViewModel model)
+        {
+            _db.Courses.Add(new Course
+            {
+                Name = model.Name,
+                Startdate = model.StartDate.Value,
+                Isactive = model.Isactive,
+                IsRemoved = model.IsRemoved
+            });
+            _db.SaveChanges();
+        }
+
         public Course getCourseByID(int courseID)
         {
 

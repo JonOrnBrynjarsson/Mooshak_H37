@@ -1,4 +1,4 @@
-﻿
+﻿@model Mooshak___H37.Models.Viewmodels.CourseViewModel
 @{
     ViewBag.Title = "CreateCourse";
 }
@@ -18,29 +18,50 @@
 
 
     <div class="left-portion">
-        <form class="form-horizontal">
-            <label for="Name">Name</label>
-            <input type="text" name="Name" class="form-control" id="Name" /><br/>
-            <label for="teachers">Teacher</label>
-            <select name="teachers" class="form-control" id="teachers">
-                <option value="Hrafn">Hrafn</option>
-                <option value="Dabs">Dabs</option>
-                <option value="Arri Oxels">Arri Oxels</option>
-                <option value="Farði Breyr">Farði Breyr</option>
-            </select>
-        </form>
+    @using (Html.BeginForm("CreateCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    { 
+    @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name , new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Name , new { @class = "form-control" })
+            </div>
+        </div>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.StartDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Isactive, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(m => m.Isactive, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>
+    }
+
         <br />
         <br />
     </div>
     <div class="userTable">
-        <label for="addUser">Add User</label>
-        <select name="addUser" class="form-control" id="addUser">
-            <option value="Ólafur">Ólafur</option>
-            <option value="Orri Axels">Orri Axels</option>
-            <option value="Victor">Victor</option>
-            <option value="Barði Freyr">Barði Freyr</option>
-            <option value="Jón Örn">Jón Örn</option>
-        </select>
+        <div class="form-inline" id="addUser">  
+            <select name="addUser" class="form-control" id="addUser">
+                @foreach(var user in Model.User)
+                {
+                    <option>@user.Name</option>
+                }
+            </select>
+            <button class="btn btn-primary">Add user</button> 
+        </div>
         <br/>
         <table class="table table-hover">
             <thead>
