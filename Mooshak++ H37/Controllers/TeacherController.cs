@@ -30,20 +30,45 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult CreateAssignment()
 		{
-			var allCourses = _courseService.getAllCourses();
-
 			AssignmentViewModel viewModel = new AssignmentViewModel();
 
-			ViewBag.CourseList = new List<CourseViewModel>(allCourses);
+			ViewBag.CourseList = GetCourses();
 
 			return View(viewModel);
+		}
+
+		private List<SelectListItem> GetCourses()
+		{
+			List<SelectListItem> result = new List<SelectListItem>();
+			var allCourses = _courseService.getAllCourses();
+
+			result.Add(new SelectListItem() { Value = "", Text = " - Choose a course - " });
+
+			result.AddRange(allCourses.Select(x=>new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }));
+
+			return result;
 		}
 
 		[HttpPost]
 		public ActionResult CreateAssignment(AssignmentViewModel model)
 		{
-			_assignService.CreateAssignment(model);
-			return View();
+			if (ModelState.IsValid)
+			{
+				_assignService.CreateAssignment(model);
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				ViewBag.CourseList = GetCourses();
+				return View(model);
+			}
+		}
+
+		[HttpGet]
+		public ActionResult Milestones(int id)
+		{
+			AssignmentViewModel model = _assignService.Assignment(id);
+			return View(model);
 		}
 	}
 }
