@@ -6,6 +6,15 @@
 
 <h2>Milestones</h2>
 
+<div class="form-group">
+	<label class="control-label col-md-2" for="CourseID">Course</label>
+	<div class="col-md-10">
+		@Html.DropDownListFor(model => model.Milestones, (ViewBag.MilestoneList as List<SelectListItem>), new { @class = "form-control" })
+		@Html.ValidationMessageFor(model => model.Milestones, "", new { @class = "text-danger" })
+	</div>
+</div>
+
+
 <div>
     <h4>AssignmentViewModel</h4>
     <hr />
@@ -78,6 +87,11 @@
 </div>
 
 Create milestone form here!
+
+@Html.ActionLink("CreateMilestone", "CreateMilestone", new { assigID =  Model.ID })
+
+
+
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
