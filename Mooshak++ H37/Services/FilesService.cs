@@ -335,7 +335,7 @@ namespace Mooshak___H37.Services
 			/* keyra forritið skv. fjölda testcase með nýju í hvert sinn
 			 * Vista niðurstöður / fallið komið vantar upplýsingar
 			 */
-			 updateTestrun(submissionId,);
+			 //updateTestrun(submissionId,);
 			 clearRunfolder(submissionId);
 
 			return;

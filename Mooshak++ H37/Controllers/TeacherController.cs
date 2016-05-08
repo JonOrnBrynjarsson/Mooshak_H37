@@ -39,7 +39,7 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
-
+/*
 		[HttpPost]
 		public ActionResult CreateAssignment(AssignmentViewModel model)
 		{
@@ -47,6 +47,6 @@ namespace Mooshak___H37.Controllers
 
 			_assignService.CreateAssignment(model);
 			return View();
-		}
+		}*/
 	}
 }

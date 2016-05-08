@@ -97,7 +97,7 @@ namespace Mooshak___H37.Controllers
 			if (modelUpdate != null)
 			{
 				UpdateModel(modelUpdate);
-				_assignmentsService.updateAssignment(modelUpdate);
+		//		_assignmentsService.updateAssignment(modelUpdate);
 			}
 
 			return RedirectToAction("ViewCourses");

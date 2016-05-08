@@ -214,6 +214,10 @@
     <Compile Include="Migrations\201605061505030_submission.Designer.cs">
       <DependentUpon>201605061505030_submission.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605081226445_jon.cs" />
+    <Compile Include="Migrations\201605081226445_jon.Designer.cs">
+      <DependentUpon>201605081226445_jon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
@@ -338,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605061505030_submission.resx">
       <DependentUpon>201605061505030_submission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605081226445_jon.resx">
+      <DependentUpon>201605081226445_jon.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

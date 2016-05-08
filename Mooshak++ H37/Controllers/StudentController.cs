@@ -28,11 +28,11 @@ namespace Mooshak___H37.Controllers
             return View(viewModel);
         }
 
-		public ActionResult Assignments()
+/*		public ActionResult Assignments()
 		{
 			var viewModel = _assignService.GetCourseAssignments();
 			return View(viewModel);
-		}
+		}*/
     }
 
 

@@ -141,16 +141,7 @@ namespace Mooshak___H37.Services
 			process.Start();
 			process.WaitForExit();
 		}
-
-		public string getUserNameBySubmissionID(int submissionId)
-		{
-			var retvalue = (from s in _db.Submissions
-								where s.User = submissionId
-								join u in _db.Users on s.User
-								select new { s.UserName}).singleOrDefault();
-			return retvalue;
-		}
-
+		
 
 	}
 }
