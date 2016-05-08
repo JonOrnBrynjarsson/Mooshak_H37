@@ -55,7 +55,7 @@ namespace Mooshak___H37.Controllers
 			List<SelectListItem> result = new List<SelectListItem>();
 			var milestones = _milestoneService.GetMilestonesForAssignment(id);
 
-			result.Add(new SelectListItem() { Value = "", Text = " - Choose a course - " });
+			result.Add(new SelectListItem() { Value = "", Text = " - Choose a milestone - " });
 
 			result.AddRange(milestones.Select(x => new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }));
 
