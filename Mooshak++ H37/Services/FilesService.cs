@@ -9,6 +9,7 @@ using Microsoft.Ajax.Utilities;
 using Mooshak___H37.Models.Entities;
 using System.IO.Compression;
 using System.Net;
+using System.Web;
 
 namespace Mooshak___H37.Services
 {
@@ -24,7 +25,7 @@ namespace Mooshak___H37.Services
 		}
 
 
-		public bool SaveSubmissionfile(string file)
+		public bool SaveSubmissionfile( HttpPostedFile file)
 		{
 			return true;
 		}
@@ -69,7 +70,7 @@ namespace Mooshak___H37.Services
 		/// Returns the zipfile name an submission.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
-		/// <returns></returns>
+		/// <returns>The username of the one submitting the file</returns>
 		public string getZipfileName(int submissionId)
 		{
 			return getUserNameBySubmissionID(submissionId) + 
