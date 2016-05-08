@@ -39,14 +39,11 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
-/*
 		[HttpPost]
 		public ActionResult CreateAssignment(AssignmentViewModel model)
 		{
-
-
 			_assignService.CreateAssignment(model);
 			return View();
-		}*/
+		}
 	}
 }
