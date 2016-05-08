@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models.Viewmodels;
+using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Controllers
 {
@@ -41,7 +42,7 @@ namespace Mooshak___H37.Controllers
 		private List<SelectListItem> GetCourses()
 		{
 			List<SelectListItem> result = new List<SelectListItem>();
-			var allCourses = _courseService.getAllCourses();
+			var allCourses = _courseService.GetCoursesForUser();
 
 			result.Add(new SelectListItem() { Value = "", Text = " - Choose a course - " });
 
@@ -105,6 +106,29 @@ namespace Mooshak___H37.Controllers
 			else
 			{
 				ViewBag.CourseList = GetCourses();
+				return View(model);
+			}
+		}
+
+		[HttpGet]
+		public ActionResult EditMilestone(int milestoneID)
+		{
+			var viewModel = _milestoneService.GetSingleMilestone(milestoneID);
+			return View(viewModel);
+		}
+
+
+		[HttpPost]
+		public ActionResult EditMilestone(MilestoneViewmodel model, int milestoneID)
+		{
+			if (ModelState.IsValid)
+			{
+				_milestoneService.EditMilestone(model, milestoneID);
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				//ViewBag.CourseList = GetCourses();
 				return View(model);
 			}
 		}

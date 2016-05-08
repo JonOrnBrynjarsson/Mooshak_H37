@@ -327,13 +327,10 @@
     <Content Include="Views\Student\ViewAssignment.cshtml" />
     <Content Include="Views\Student\View.cshtml" />
     <Content Include="Views\Teacher\CreateAssignment.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Teacher\ViewAssignment.cshtml" />
     <Content Include="Views\Student\Submit.cshtml" />
-=======
     <Content Include="Views\Teacher\Milestones.cshtml" />
     <Content Include="Views\Teacher\CreateMilestone.cshtml" />
->>>>>>> 4c2dc4e98836852e51d1009dae5413f403610c3a
+    <Content Include="Views\Teacher\EditMilestone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
