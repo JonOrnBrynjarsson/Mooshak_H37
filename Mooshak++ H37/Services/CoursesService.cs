@@ -22,6 +22,7 @@ namespace Mooshak___H37.Services
         {
 
             var Courses = (from x in _db.Courses
+						   orderby x.Name ascending
                            select x).ToList();
 
             var viewModel = new List<CourseViewModel>();
@@ -41,7 +42,7 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
-        public List<CourseViewModel> getAllCoursesByID(int UserID)
+        public List<CourseViewModel> getAllCoursesByUserID(int UserID)
         {
             List<Course> Courses = null;
 
@@ -70,6 +71,18 @@ namespace Mooshak___H37.Services
 
             return viewModel;
 
+        }
+
+        internal void setCourse(CourseViewModel model)
+        {
+            _db.Courses.Add(new Course
+            {
+                Name = model.Name,
+                Startdate = model.StartDate.Value,
+                Isactive = model.Isactive,
+                IsRemoved = model.IsRemoved
+            });
+            _db.SaveChanges();
         }
 
         public Course getCourseByID(int courseID)

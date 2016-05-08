@@ -45,8 +45,10 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li>@Html.ActionLink("Student Index", "Index", "Student")</li>
+								<li>@Html.ActionLink("Assignments", "Assignments", "Student")</li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Information</a></li>
+								<li>@Html.ActionLink("Courses-todo-dropdwn", "#", "#")</li>
+								<li>@Html.ActionLink("Assignments", "Assignments", "Student")</li>
                             </ul>
                         </div>
                     </li>
@@ -77,6 +79,8 @@
 								<li>@Html.ActionLink("Admin ErrorIndex", "IndexErrors", "Admin")</li>
 								<li role="separator" class="divider"></li>
                                 <li><a href="#">Information</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Admin View Course", "ViewCourses", "Admin")</li>
                             </ul>
                         </div>
                     </li>

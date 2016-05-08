@@ -9,8 +9,8 @@ using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Controllers
 {
-    //[Authorize("Students")]
-    public class StudentController : Controller
+	//[Authorize(Roles = "Student")]
+	public class StudentController : Controller
     {
         AssigmentsService _assignService = new AssigmentsService();
 
@@ -27,6 +27,12 @@ namespace Mooshak___H37.Controllers
             var viewModel = _assignService.Assignment(id);
             return View(viewModel);
         }
+
+		public ActionResult Assignments()
+		{
+			var viewModel = _assignService.GetCourseAssignments();
+			return View(viewModel);
+		}
     }
 
 

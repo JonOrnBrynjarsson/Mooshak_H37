@@ -9,9 +9,11 @@
         <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
         <div>
             <label for="student">Student</label>
-            <select id="student" name="student">
-                <option>Student1</option>
-                <option>Student2</option>
+            <select id="student" name="student" class="form-control">
+                @foreach (var item in Model.Users)
+                {
+                    <option>@item.Name</option>
+                }
             </select>
             <label for="graded">Graded</label>
             <input type="checkbox" id="graded" name="graded" />
@@ -22,7 +24,13 @@
                 <option>Milestone2 </option>
             </select>
          </div>
-        <h3>Due date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyy}")</h3>
+        
+		<div class="panel panel-default">
+			<div class="panel-body">
+				Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")
+			</div>
+		</div>
+
         <table class="table table-hover">
             <thead>
                 <tr>

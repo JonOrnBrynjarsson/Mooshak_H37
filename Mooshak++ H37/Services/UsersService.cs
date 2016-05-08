@@ -1,5 +1,6 @@
 ﻿using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
+using Mooshak___H37.Models.Viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,28 @@ namespace Mooshak___H37.Services
 		{
 			_db = new ApplicationDbContext();
 		}
+
+        public List<UserViewModel> getAllUsersName()
+        {
+
+            var Users = (from x in _db.Users
+						 orderby x.Name ascending
+                           select x).ToList();
+
+            var viewModel = new List<UserViewModel>();
+            
+            foreach (var user in Users)
+            {
+                UserViewModel model = new UserViewModel
+                {
+                    Name = user.Name
+                    
+                };
+                viewModel.Add(model);
+            }
+
+            return viewModel;
+        }
 
         internal void setUser(string name, ApplicationUser user)
         {
