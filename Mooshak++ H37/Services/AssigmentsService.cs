@@ -113,6 +113,40 @@ namespace Mooshak___H37.Services
 			return model;
 		}
 
+		public List<AssignmentViewModel> getAssignmentsInCourse(int id)
+		{
+			var assignments = (from asi in _db.Assignments
+							  where asi.CourseID == id
+							  select asi).ToList();
+
+			if(assignments == null)
+			{
+				//TODO
+				//Throw exception
+				//return null;
+			}
+
+			List<AssignmentViewModel> viewModel = null;
+			
+			foreach(var assignm in assignments)
+			{
+				AssignmentViewModel model = new AssignmentViewModel
+				{
+					ID = assignm.ID,
+					Name = assignm.Name,
+					SetDate = assignm.SetDate,
+					DueDate = assignm.DueDate,
+					CourseID = assignm.CourseID,
+					IsActive = assignm.IsActive,
+					IsRemoved = assignm.IsRemoved,
+					Description = assignm.Description,
+				};
+				viewModel.Add(model);
+			}
+			
+			return viewModel;
+		}
+
 		internal void CreateAssignment(AssignmentViewModel model)
 		{
 			_db.Assignments.Add(new Assignment

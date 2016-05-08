@@ -322,6 +322,8 @@
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\Admin\CreateCourse.cshtml" />
     <Content Include="Views\Admin\IndexErrors.cshtml" />
+    <Content Include="Views\Admin\ViewCourses.cshtml" />
+    <Content Include="Views\Admin\EditCourse.cshtml" />
     <None Include="Views\Shared\_Layout.backup" />
     <Content Include="Views\Student\ViewAssignment.cshtml" />
     <Content Include="Views\Teacher\ViewAssignment.cshtml" />

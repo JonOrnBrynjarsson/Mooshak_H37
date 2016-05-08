@@ -15,7 +15,6 @@ namespace Mooshak___H37.Controllers
 		private ErrorsService _errorsService = new ErrorsService();
 		private CoursesService _courseService = new CoursesService();
 		private UsersService _userService = new UsersService();
-		private AssigmentsService _assignmentsService = new AssigmentsService();
 
         // GET: Admin
         public ActionResult Index()
@@ -78,7 +77,7 @@ namespace Mooshak___H37.Controllers
 				//throw exception
 			}
 
-			AssignmentViewModel model = _assignmentsService.Assignment(id.Value);
+			CourseViewModel model = _courseService.getCourseViewModelByID(id.Value);
 
 			if(model == null)
 			{
@@ -92,7 +91,7 @@ namespace Mooshak___H37.Controllers
 		[HttpPost]
 		public ActionResult EditCourse(int id, FormCollection formData)
 		{
-			AssignmentViewModel modelUpdate = _assignmentsService.Assignment(id);
+			CourseViewModel modelUpdate = _courseService.getCourseViewModelByID(id);
 
 			if (modelUpdate != null)
 			{

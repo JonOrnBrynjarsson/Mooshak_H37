@@ -12,6 +12,8 @@ namespace Mooshak___H37.Services
 	class CoursesService
 	{
 		private ApplicationDbContext _db;
+		private AssigmentsService _assignmentsService;
+		private UsersService _userService;
 
 		public CoursesService()
 		{
@@ -94,7 +96,30 @@ namespace Mooshak___H37.Services
 
             return course;
         }
+		//in progress
+		public CourseViewModel getCourseViewModelByID(int courseID)
+		{
+
+			var course = (from x in _db.Courses
+						  where x.ID == courseID
+						  select x).SingleOrDefault();
+
+			var ass = _assignmentsService.getAssignmentsInCourse(courseID);
+			var users = _userService.getAllUsersName();
+			CourseViewModel model = new CourseViewModel
+			{
+				Name = course.Name,
+				Isactive = course.Isactive,
+				ID = course.ID,
+				IsRemoved = course.IsRemoved,
+				StartDate = course.Startdate,
+				Assignments = ass,
+				User = users
+			};
+
+			return model;
+		}
 
 
-    }
+	}
 }
