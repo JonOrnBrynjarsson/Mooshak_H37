@@ -28,6 +28,7 @@ namespace Mooshak___H37.Models.Entities
 		public int AssignmentID { get; set; }
 
 		public bool IsRemoved { get; set; }
+		public double Percentage { get; set; }
 
 		public virtual Assignment Assignment { get; set; }
 

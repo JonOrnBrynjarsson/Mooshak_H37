@@ -113,6 +113,22 @@ namespace Mooshak___H37.Services
 			return model;
 		}
 
+		internal void CreateAssignment(AssignmentViewModel model)
+		{
+			_db.Assignments.Add(new Assignment
+			{
+				Name = model.Name,
+				CourseID = model.CourseID,
+				Description = model.Description,
+				DueDate = model.DueDate,
+				ID = model.ID,
+				IsActive = model.IsActive,
+				IsRemoved = model.IsRemoved,
+				SetDate = model.SetDate,
+			});
+			_db.SaveChanges();
+		}
+
 		public bool SaveSubmissionfile(string file)
 		{
 			return true;
