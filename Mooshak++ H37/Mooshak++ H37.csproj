@@ -238,6 +238,10 @@
     <Compile Include="Migrations\201605091306316_jont1.Designer.cs">
       <DependentUpon>201605091306316_jont1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605091316385_jon1.cs" />
+    <Compile Include="Migrations\201605091316385_jon1.Designer.cs">
+      <DependentUpon>201605091316385_jon1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
@@ -392,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605091306316_jont1.resx">
       <DependentUpon>201605091306316_jont1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605091316385_jon1.resx">
+      <DependentUpon>201605091316385_jon1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
