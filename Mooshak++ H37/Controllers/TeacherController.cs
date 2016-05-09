@@ -15,6 +15,7 @@ namespace Mooshak___H37.Controllers
 		AssigmentsService _assignService = new AssigmentsService();
 		CoursesService _courseService = new CoursesService();
 		MilestoneService _milestoneService = new MilestoneService();
+		TestCaseService _testcaseService = new TestCaseService();
 
 		// GET: Assignment
 		[HttpGet]
@@ -153,6 +154,35 @@ namespace Mooshak___H37.Controllers
 			{
 				return View(model);
 			}
+		}
+
+		[HttpGet]
+		public ActionResult CreateTestCase(TestCaseViewModel model)
+		{
+			TestCaseViewModel viewModel = new TestCaseViewModel();
+			return View(viewModel);
+		}
+
+
+		[HttpPost]
+		public ActionResult CreateTestCase(TestCaseViewModel model, int milestoneID)
+		{
+			if (ModelState.IsValid)
+			{
+				_testcaseService.CreateTestCase(model, milestoneID);
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View(model);
+			}
+		}
+
+		[HttpGet]
+		public ActionResult TestCases(int milID)
+		{
+			var viewModel = _testcaseService.GetTestCasesForMilestone(milID);
+			return View(viewModel);
 		}
 	}
 }
