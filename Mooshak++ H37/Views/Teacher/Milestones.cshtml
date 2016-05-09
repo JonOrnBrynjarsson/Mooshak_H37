@@ -39,15 +39,25 @@
                 @foreach (var item in Model.Milestones)
                 {
                     <tr>
-                        <th>@(rowNo += 1)</th>
-                        <th>@item.Name</th>
-                        <th>@item.Percentage %</th>
-                        <th>@item.AllowedSubmissions</th>
-						<th>@Html.ActionLink("Remove", "RemoveMilestone", new { id = item.ID })</th>
-                        <th>@Html.ActionLink("Edit", "EditMilestone", new { milestoneID = item.ID })</th>
-						<th>@Html.ActionLink("Test Cases", "TestCases", new { milID = item.ID })</th>
+                        <td>@(rowNo += 1)</td>
+                        <td>@item.Name</td>
+                        <td>@item.Percentage %</td>
+                        <td>@item.AllowedSubmissions</td>
+						<td>@Html.ActionLink("Remove", "RemoveMilestone", new { id = item.ID })</td>
+                        <td>@Html.ActionLink("Edit", "EditMilestone", new { milestoneID = item.ID })</td>
+						<td>@Html.ActionLink("Test Cases", "TestCases", new { milID = item.ID })</td>
                     </tr>
 				}
+
+				<tr>
+					<th></th>
+					<th>Total: </th>
+					<th>@ViewBag.TotalPercentage %</th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
             </tbody>
         </table>
 

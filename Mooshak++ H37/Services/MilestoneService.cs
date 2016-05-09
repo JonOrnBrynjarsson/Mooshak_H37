@@ -62,6 +62,26 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
+		public double GetTotalMilestonePercentageForAssignment(int assigID)
+		{
+			var milestones = (from miles in _db.Milestones
+							  orderby miles.ID
+							  where miles.AssignmentID == assigID &&
+							  miles.IsRemoved != true
+							  select miles).ToList();
+
+			var viewModel = new List<MilestoneViewmodel>();
+
+			double totalPercentage = 0;
+
+			foreach (var mil in milestones)
+			{
+				totalPercentage += mil.Percentage;
+			}
+
+			return totalPercentage;
+		}
+
 		public MilestoneViewmodel GetSingleMilestone(int milID)
 		{
 			var milestones = (from miles in _db.Milestones
