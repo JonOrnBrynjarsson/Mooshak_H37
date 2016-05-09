@@ -55,6 +55,10 @@ namespace Mooshak___H37.Controllers
 			if (submit.File != null && submit.File.ContentLength > 0)
 			{
 				int submissionId = _filesService.createSubmission(submit.Milestone);
+				if (submissionId == 0)
+				{
+					return View("Error");
+				}
 				_filesService.SaveSubmissionfile(submit.File, submissionId);
 			}
 			else
