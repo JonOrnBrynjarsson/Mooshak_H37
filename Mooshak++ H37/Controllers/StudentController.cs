@@ -44,7 +44,9 @@ namespace Mooshak___H37.Controllers
 		public ActionResult Submit(int? milestone)
 		{
 			StudentSubmit s = new StudentSubmit();
-			s.Milestone = 10;
+
+// Hér þarf að laga milestone til að taka við því sem verið er að vinna með
+			s.Milestone = 2;
 			return View(s);
 		}
 
