@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.UserViewModel>
+
+@{
+    ViewBag.Title = "ViewUsers";
+}
+
+<h2>ViewUsers</h2>
+
+<div class="clearfix">
+    <div class="large-left-portion">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nr</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Edit</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int rowNo = 0;}
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(rowNo += 1)</td>
+                        <td>@item.Name</td>
+                        <td>                                        
+                        @if (item.RoleID == 1)                       
+                        {
+                            @Html.Raw("Teacher")
+                        }
+                        else if (item.RoleID == 2)
+                        {
+                            @Html.Raw("Student")
+                        }
+                        else if (item.RoleID == 3)
+                        {
+                            @Html.Raw("Admin")
+                        }                         
+                        </td>
+                        <td>@item.Email</td>                                                                    
+                        <td>@Html.Raw("drasl")</td>
+                        <td>@item.RoleID</td>
+                    </tr>}
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
