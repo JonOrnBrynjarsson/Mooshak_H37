@@ -50,7 +50,7 @@ namespace Mooshak___H37.Services
 			//here we select the connection table that gives us the userID, roleID, courseID, etc.
 			//of the users in the given courseID param.
 			var userInfo = (from x in _db.UserCourseRelations
-						  where courseID == x.CourseID
+						  where courseID == x.CourseID && x.IsRemoved == false
 						  select x).ToList();
 			//this is to get only the student id for next linq expression (.Contains)
 			var userIdList = (from x in _db.UserCourseRelations
@@ -70,15 +70,12 @@ namespace Mooshak___H37.Services
 
 			for(int i = 0; i<userInfo.Count; i++)
 			{
+
 				UserViewModel temp = new UserViewModel
 				{
 					Name = users[i].Name,
 					Email = aspInfo[i],
-					RoleID = userInfo[i].RoleID,
-					//To see all the courseID's of each individual student and store them in list
-					CourseID = (from usr in _db.UserCourseRelations
-								where userInfo[i].UserID == usr.UserID
-								select usr.CourseID).ToList()					
+					RoleID = userInfo[i].RoleID
 				};
 
 				model.Add(temp);
