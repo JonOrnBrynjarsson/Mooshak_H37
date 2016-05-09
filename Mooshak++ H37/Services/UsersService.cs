@@ -39,8 +39,52 @@ namespace Mooshak___H37.Services
                 viewModel.Add(model);
             }
 
+
             return viewModel;
         }
+
+		public List<UserViewModel> getUsersInCourse(int courseID)
+		{
+
+			List<UserViewModel> model = new List<UserViewModel>();
+
+			//here we select the connection table that gives us the userID, roleID, courseID, etc.
+			//of the users in the given courseID param.
+			var userInfo = (from x in _db.UserCourseRelations
+						  where courseID == x.CourseID && x.IsRemoved == false
+						  select x).ToList();
+			//this is to get only the student id for next linq expression (.Contains)
+			var userIdList = (from x in _db.UserCourseRelations
+							where courseID == x.CourseID && x.IsRemoved == false
+							select x.UserID).ToList();
+			//here we select all the student names that that are in the course
+			//from the ID we collected just above
+			var users = (from y in _db.Users
+						 where userIdList.Contains(y.ID) 
+						 select y).ToList();
+			//here we select the AspNetUser table to get the email from all the students in the course
+			var aspInfo = (from z in _db.Users
+						   where z.AspNetUser.Id == z.AspNetUserId
+						   select z.AspNetUser.Email).ToList();
+
+
+
+			for(int i = 0; i<userInfo.Count; i++)
+			{
+
+				UserViewModel temp = new UserViewModel
+				{
+					Name = users[i].Name,
+					Email = aspInfo[i],
+					RoleID = userInfo[i].RoleID
+				};
+
+				model.Add(temp);
+			}
+
+			return model;
+		}
+
 		/// <summary>
 		/// In order to 
 		/// </summary>
@@ -59,15 +103,51 @@ namespace Mooshak___H37.Services
 
             string ID = user.Id;
 
-            var bla = new User
+            var User = new User
             {
                 Name = name,
                 AspNetUserId = ID
             };
 
-            _db.Users.Add(bla);
+            _db.Users.Add(User);
             _db.SaveChanges();
+        }
 
+        internal int getUserIDbyEmail(LoginViewModel model)
+        {
+
+            var User = (from x in _db.Users
+                        where x.AspNetUser.Email == model.Email
+                        select x.ID).SingleOrDefault();
+
+
+
+            return User;
+        }
+
+        internal string getRoleNamebyID(int userID)
+        {
+            var roleID = (from x in _db.UserCourseRelations
+                        where x.UserID == userID
+                        select x.RoleID).FirstOrDefault();
+
+            switch(roleID)
+            {
+                case 1:
+                    {
+                        return "Student";
+                    }
+                case 2:
+                    {
+                        return "Teacher";
+                    }
+                case 3:
+                    {
+                        return "Admin";
+                    }
+            }
+
+            return "Student";
         }
     }
 }

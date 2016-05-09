@@ -52,13 +52,25 @@ namespace Mooshak___H37.Services
 
 			var viewModel = new List<TestCaseViewModel>();
 
-			foreach (var test in testcases)
+			if (testcases.Count != 0)
+			{
+				foreach (var test in testcases)
+				{
+					TestCaseViewModel model = new TestCaseViewModel
+					{
+						ID = test.ID,
+						Inputstring = test.Inputstring,
+						MilestoneID = test.MilestoneID,
+					};
+					viewModel.Add(model);
+				}
+			}
+			else
 			{
 				TestCaseViewModel model = new TestCaseViewModel
 				{
-					ID = test.ID,
-					Inputstring = test.Inputstring,
-					MilestoneID = test.MilestoneID,
+					Inputstring = "Currently no Inputs.",
+					MilestoneID = milID,
 				};
 				viewModel.Add(model);
 			}

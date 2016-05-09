@@ -52,10 +52,10 @@ namespace Mooshak___H37.Controllers
 			return result;
 		}
 
-		private List<SelectListItem> GetMilestones(int id)
+		private List<SelectListItem> GetMilestones(int assignmentId)
 		{
 			List<SelectListItem> result = new List<SelectListItem>();
-			var milestones = _milestoneService.GetMilestonesForAssignment(id);
+			var milestones = _milestoneService.GetMilestonesForAssignment(assignmentId);
 
 			result.Add(new SelectListItem() { Value = "", Text = " - Choose a milestone - " });
 
@@ -86,6 +86,7 @@ namespace Mooshak___H37.Controllers
 		{
 			AssignmentViewModel model = _assignService.Assignment(id);
 			ViewBag.MilestoneList = GetMilestones(id);
+			ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
 			return View(model);
 		}
 
@@ -93,6 +94,7 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult CreateMilestone(MilestoneViewmodel model)
 		{
+
 			MilestoneViewmodel viewModel = new MilestoneViewmodel();
 			return View(viewModel);
 		}
@@ -135,6 +137,20 @@ namespace Mooshak___H37.Controllers
 				return View(model);
 			}
 		}
+
+		[HttpGet]
+		public ActionResult RemoveMilestone(int id)
+		{
+			var viewModel = _milestoneService.GetSingleMilestone(id);
+			return View(viewModel);
+		}
+		[HttpPost]
+		public ActionResult RemoveMilestone(MilestoneViewmodel model)
+		{
+			_milestoneService.RemoveMilestone(model);
+			return RedirectToAction("Index");
+		}
+
 		[HttpGet]
 		public ActionResult EditAssignment(int id)
 		{
@@ -154,6 +170,19 @@ namespace Mooshak___H37.Controllers
 			{
 				return View(model);
 			}
+		}
+
+		[HttpGet]
+		public ActionResult RemoveAssignment(int id)
+		{
+			var viewModel = _assignService.Assignment(id);
+			return View(viewModel);
+		}
+		[HttpPost]
+		public ActionResult RemoveAssignment(AssignmentViewModel model)
+		{
+			_assignService.RemoveAssignment(model);
+			return RedirectToAction("Index");
 		}
 
 		[HttpGet]
