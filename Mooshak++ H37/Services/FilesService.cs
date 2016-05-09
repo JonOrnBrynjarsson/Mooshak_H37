@@ -53,8 +53,8 @@ namespace Mooshak___H37.Services
 					submission.IsGraded = false;
 					_db.Submissions.Add(submission);
 					_db.SaveChanges();
-					int tala = submission.ID;
-					return tala;
+					
+					return submission.ID;
 				}
 				catch (Exception ex)
 				{
@@ -108,9 +108,6 @@ namespace Mooshak___H37.Services
 
 			if (!Directory.Exists(runfolder))
 			{
-				DirectorySecurity securityRules = new DirectorySecurity();
-				securityRules.AddAccessRule(new FileSystemAccessRule(runfolder, FileSystemRights.FullControl, AccessControlType.Allow));
-
 				Directory.CreateDirectory(runfolder);
 			}
 			return runfolder;
@@ -136,7 +133,7 @@ namespace Mooshak___H37.Services
 		/// /// <param name="userName" name>The "userName" of the user submitting</param>
 		public void copyFileToRunFolder(int submissionId, string userName)
 		{
-			string origfolder = getStudentSubmissionFolder(submissionId);
+			/*string origfolder = getStudentSubmissionFolder(submissionId);
 
 			DirectoryInfo dir = new DirectoryInfo(origfolder);
 			FileInfo[] files = dir.GetFiles("*.*");
@@ -145,9 +142,7 @@ namespace Mooshak___H37.Services
 				string runFolder = getStudentRunFolder(submissionId);
 				if (!Directory.Exists(runFolder))
 				{
-					DirectorySecurity securityRules = new DirectorySecurity();
-					securityRules.AddAccessRule(new FileSystemAccessRule(runFolder, FileSystemRights.FullControl, AccessControlType.Allow));
-					Directory.CreateDirectory(runFolder, securityRules);
+					Directory.CreateDirectory(runFolder);
 				}
 
 				foreach (var file in files)
@@ -159,7 +154,7 @@ namespace Mooshak___H37.Services
 			else
 			{
 				throw new FileNotFoundException();
-			}
+			}*/
 		}
 
 		public void unCompressZipFile(int submissionId)
@@ -197,16 +192,18 @@ namespace Mooshak___H37.Services
 
 		public void compileStudentProgram(int submissionId)
 		{
-			copyFileToRunFolder(submissionId, getUserNameBySubmissionID(submissionId));
+			//copyFileToRunFolder(submissionId, getUserNameBySubmissionID(submissionId));
 			String runfolder = getStudentRunFolder(submissionId);
-			string fileName = getUserNameBySubmissionID(submissionId);
-			fileName += ".exe";
-
-			DirectoryInfo di = new DirectoryInfo(runfolder);
+			string fileName = runfolder + @"\" +
+				getUserNameBySubmissionID(submissionId) +
+				".exe";
+			string filefolder = getStudentSubmissionFolder(submissionId);
+			DirectoryInfo di = new DirectoryInfo(filefolder);
 			FileInfo fi = di.GetFiles("main.cpp").FirstOrDefault();
 			if (fi != null)
 			{
-				compileProgram(runfolder, fileName);
+				//string filefolder = getStudentSubmissionFolder(submissionId);
+				compileProgram(filefolder +  fi, fileName);
 			}
 			else
 			{
@@ -247,7 +244,7 @@ namespace Mooshak___H37.Services
 					file.Delete();
 				}
 
-				compileProgram(fileLocation, fileName);
+				compileProgram(fileLocation + @"\" + fi, fileName);
 			}
 			else
 			{
@@ -264,7 +261,7 @@ namespace Mooshak___H37.Services
 		/// <param name="fullFileNameforCompiledFile">The filename of the compiled file with directory</param>
 		public void compileProgram(string FolderWithCodeFile, string fullFileNameforCompiledFile)
 		{
-			string fileToCompile = @FolderWithCodeFile + @"main.cpp";
+			string fileToCompile = @FolderWithCodeFile;// + @"\main.cpp";
 			string Compiler = "mingw32-g++.exe";
 			string all = fileToCompile + " -o " + fullFileNameforCompiledFile;
 			//Console.WriteLine(all);
@@ -277,8 +274,8 @@ namespace Mooshak___H37.Services
 			//process.StartInfo.RedirectStandardInput = true;
 			process.StartInfo.RedirectStandardError = true;
 			process.Start();
-			StreamReader reader = process.StandardError;
-			string output = reader.ReadToEnd();
+			StreamReader errorReader = process.StandardError;
+			string output = errorReader.ReadToEnd();
 			process.WaitForExit();
 			process.Close();
 		}
@@ -296,16 +293,23 @@ namespace Mooshak___H37.Services
 				join s in _db.Submissions
 					on m.ID equals s.MilestoneID
 				where s.ID == submissionId
+				      && s.IsRemoved == false 
 				select t.ID);
 				
 			return testCases.ToList();
 		}
 
-		public string getATestCase(int testCaseId)
+		public string getATestCaseInput(int testCaseId)
 		{
 			return (from t in _db.TestCases
 				where t.ID == testCaseId
 				select t.Inputstring).SingleOrDefault();
+		}
+		public string getATestCaseOutput(int testCaseId)
+		{
+			return (from t in _db.TestCases
+					where t.ID == testCaseId
+					select t.Outputstring).SingleOrDefault();
 		}
 
 
@@ -352,32 +356,32 @@ namespace Mooshak___H37.Services
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <param name="testCase">The "ID" of the testcase being used to test the submission</param>
 		/// <returns></returns>
-		public bool runTest(int submissionId, string testCase)
+		public bool runTest(int submissionId, string testCase, string compareTo)
 		{
 //Hvað með Errorhandling ef forrit keyrir ekki?
 			Process process = new Process();
 			string runfolder = getStudentRunFolder(submissionId);
-			string filename = runfolder +
+			string filename = runfolder + @"\" +
 			                  getUserNameBySubmissionID(submissionId) +
 			                  ".exe";
 			process.StartInfo.FileName = @filename;
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.RedirectStandardOutput = true;
 			process.StartInfo.RedirectStandardInput = true;
+			process.StartInfo.RedirectStandardError = true;
 			process.Start();
-//Hvað með Minnisvillur???
+
 			StreamWriter myStreamWriter = process.StandardInput;
 			
 			myStreamWriter.WriteLine(testCase);
 
 			StreamReader reader = process.StandardOutput;
+			StreamReader errorReader = process.StandardError;
 			string output = reader.ReadLine();
+			string error = errorReader.ReadToEnd();
 			process.Close();
 
-
-//Keyra saman við teacher...
-			string comp = compareToTeacher(submissionId, testCase);
-			if (output == comp)
+			if (output == compareTo)
 			{
 				return true;
 			}
@@ -388,13 +392,19 @@ namespace Mooshak___H37.Services
 			
 		}
 
-		public string compareToTeacher(int submissionId, string testCase)
+		public int getMilestoneIdBySubmitId(int submissionId)
 		{
 			int milestoneId = (from s in _db.Submissions
-				where s.ID == submissionId
-				select s.MilestoneID).SingleOrDefault();
+							   where s.ID == submissionId
+							   select s.MilestoneID).SingleOrDefault();
+			return milestoneId;
+		}
+
+		public string compareToTeacher(int submissionId, string testCase)
+		{
+			int milestoneId = getMilestoneIdBySubmitId(submissionId);
 			string programLocation = @ConfigurationManager.AppSettings["TeacherFileLocation"]
-					+ @"\" + milestoneId;
+					+ milestoneId;
 			string filename = ConfigurationManager.AppSettings["RunLocation"] 
 					+ milestoneId + ".exe";
 			Process process = new Process();
@@ -402,6 +412,7 @@ namespace Mooshak___H37.Services
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.RedirectStandardOutput = true;
 			process.StartInfo.RedirectStandardInput = true;
+			process.StartInfo.RedirectStandardError = true;
 			process.Start();
 //Hvað með Minnisvillur???
 			StreamWriter myStreamWriter = process.StandardInput;
@@ -409,7 +420,9 @@ namespace Mooshak___H37.Services
 			myStreamWriter.WriteLine(testCase);
 
 			StreamReader reader = process.StandardOutput;
+			StreamReader errorReader = process.StandardError;
 			string output = reader.ReadLine();
+			string error = errorReader.ReadLine();
 			process.Close();
 
 			return output;
@@ -421,9 +434,10 @@ namespace Mooshak___H37.Services
 
 			foreach (var test in testCases)
 			{
-				string tCase = getATestCase(test);
-
-				if (runTest(submissionId, tCase))
+				string input = getATestCaseInput(test);
+				string output = getATestCaseOutput(test);
+		
+				if (runTest(submissionId, input, output))
 				{
 					updateTestrun(submissionId, test, true, "LATER");
 				}
