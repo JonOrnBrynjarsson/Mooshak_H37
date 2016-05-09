@@ -27,11 +27,21 @@ namespace Mooshak___H37.Services
 			_db.SaveChanges();
 		}
 
+		internal void RemoveTestCase(int testCaseId)
+		{
+			var testcase = (from test in _db.TestCases
+							 where test.ID == testCaseId
+							 select test).FirstOrDefault();
+
+			testcase.IsRemoved = true;
+		}
+
 		public List<TestCaseViewModel> GetTestCasesForMilestone(int milID)
 		{
 			var testcases = (from test in _db.TestCases
 							 orderby test.ID
 							 where test.MilestoneID == milID
+							 && test.IsRemoved != true
 							 select test).ToList();
 
 			var viewModel = new List<TestCaseViewModel>();
