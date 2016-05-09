@@ -5,17 +5,21 @@
 }
 
 <div class="clearfix">
-    <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
-    <h4>Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")</h4>
+
+	<h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
+
+
+
+	<h2>Milestones:</h2>
 
     <div class="large-left-portion">
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="control-label col-md-2" for="CourseID">Milestone</label>
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Milestones, (ViewBag.MilestoneList as List<SelectListItem>), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Milestones, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <table class="table table-hover">
             <thead>
@@ -24,7 +28,7 @@
                     <th>Name</th>
                     <th>Percentage</th>
                     <th>Submissions</th>
-                    <th></th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,18 +38,23 @@
                     <tr>
                         <th>@(rowNo += 1)</th>
                         <th>@item.Name</th>
-                        <th>@item.Percentage</th>
+                        <th>@item.Percentage %</th>
                         <th>@item.AllowedSubmissions</th>
-                        <th></th>
+                        <th>@Html.ActionLink("Edit", "EditMilestone", new { milestoneID = item.ID })</th>
                         <th></th>
                     </tr>}
             </tbody>
         </table>
 
+		<div class="panel panel-default">
+			<div class="panel-body">
+				Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")
+			</div>
+		</div>
 
 
-        Create milestone form here!
-
-        @Html.ActionLink("CreateMilestone", "CreateMilestone", new { assigID = Model.ID })
     </div>
+	<div class="small-right-portion">
+		@Html.ActionLink("Create Milestone", "CreateMilestone", new { assigID = Model.ID }, new { @class = "btn btn-primary create-button" })
+	</div>
 </div>

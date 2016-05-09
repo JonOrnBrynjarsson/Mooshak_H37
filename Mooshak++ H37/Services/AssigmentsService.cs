@@ -8,6 +8,7 @@ using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
 using System.Diagnostics;
+using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Services
 {
@@ -20,12 +21,29 @@ namespace Mooshak___H37.Services
 			_db = new ApplicationDbContext();
 		}
 
+		public int GetCurrentUser()
+		{
+			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
+			var currUserID = (from x in _db.Users
+							  where x.AspNetUserId == currentUser
+							  select x.ID).FirstOrDefault();
+
+			return currUserID;
+		}
+
 		public List<AssignmentViewModel> getAllAssignments()
 		{
+			var currUsId = GetCurrentUser();
+
+			var userCourses = (from uscr in _db.UserCourseRelations
+							   where currUsId == uscr.UserID
+							   select uscr.CourseID).ToList();
+
 
 			var assignments = (from assi in _db.Assignments
-								orderby assi.DueDate descending
-								select assi);
+							   where userCourses.Contains(assi.CourseID)
+							   orderby assi.DueDate descending
+							   select assi).ToList();
 
 			var viewModel = new List<AssignmentViewModel>();
 
@@ -68,7 +86,8 @@ namespace Mooshak___H37.Services
 					Name = x.Name,
 					Description = x.Description,
 					AssignmentID = x.AssignmentID,
-					IsRemoved = x.IsRemoved			
+					IsRemoved = x.IsRemoved,
+					Percentage = x.Percentage,	
 				}).ToList();
 
 			var coursename = (from asi in _db.Courses
@@ -161,6 +180,30 @@ namespace Mooshak___H37.Services
 				SetDate = model.SetDate,
 			});
 			_db.SaveChanges();
+		}
+
+		internal void EditAssignment(AssignmentViewModel model, int assignID)
+		{
+			var edit = (from assign in _db.Assignments
+						where assign.ID == assignID
+						select assign).FirstOrDefault();
+
+			if(edit != null)
+			{
+				edit.Name = model.Name;
+				edit.SetDate = model.SetDate;
+			//	edit.DueDate = model.DueDate;
+				edit.Description = model.Description;
+			//	edit.ID = model.ID;
+				edit.IsActive = model.IsActive;
+				edit.IsRemoved = model.IsRemoved;
+
+				_db.SaveChanges();
+			}
+			else
+			{
+				// DO Something!!
+			}
 		}
 
 		public bool SaveSubmissionfile(string file)

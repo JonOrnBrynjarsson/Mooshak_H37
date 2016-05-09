@@ -10,11 +10,20 @@
 
     <h2>AdminHomePage</h2>
 
-    <div class="admin-home-buttons">
+    @*<div class="admin-home-buttons">
         <button type="button" class="btn btn-primary create-button">@Html.ActionLink("Create Course", "CreateCourse")</button>
         <br/>
         <button type="button" class="btn btn-primary create-button" id="createUser">@Html.ActionLink("Create Users", "CreateUser")</button>
-    </div>
+    </div>*@
+	<div>
+		@Html.ActionLink("Create Course", "CreateCourse", new { }, new { @class = "btn btn-primary button-right" })
+		
+		@Html.ActionLink("Create Users", "CreateUser", new { }, new { @class = "btn btn-primary button-right" })
+	</div>
+
+
+
+
 
     <div>
         <div id="messages" class="left-portion">

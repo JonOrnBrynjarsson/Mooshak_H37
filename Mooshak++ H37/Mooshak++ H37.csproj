@@ -222,6 +222,10 @@
     <Compile Include="Migrations\201605081535549_bardi.Designer.cs">
       <DependentUpon>201605081535549_bardi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605091114495_isgraded.cs" />
+    <Compile Include="Migrations\201605091114495_isgraded.Designer.cs">
+      <DependentUpon>201605091114495_isgraded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
@@ -329,13 +333,12 @@
     <Content Include="Views\Student\ViewAssignment.cshtml" />
     <Content Include="Views\Student\View.cshtml" />
     <Content Include="Views\Teacher\CreateAssignment.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Teacher\ViewAssignment.cshtml" />
     <Content Include="Views\Student\Submit.cshtml" />
-=======
     <Content Include="Views\Teacher\Milestones.cshtml" />
     <Content Include="Views\Teacher\CreateMilestone.cshtml" />
->>>>>>> 4c2dc4e98836852e51d1009dae5413f403610c3a
+    <Content Include="Views\Teacher\EditMilestone.cshtml" />
+    <Content Include="Views\Teacher\EditAssignment.cshtml" />
+    <Content Include="Views\Teacher\ViewAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -363,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605081535549_bardi.resx">
       <DependentUpon>201605081535549_bardi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605091114495_isgraded.resx">
+      <DependentUpon>201605091114495_isgraded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

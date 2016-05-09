@@ -6,6 +6,7 @@ using System.Text;
 using Mooshak___H37.Models.Entities;
 using System.Threading.Tasks;
 using Mooshak___H37.Models.Viewmodels;
+using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Services
 {
@@ -20,7 +21,18 @@ namespace Mooshak___H37.Services
 			_db = new ApplicationDbContext();
 		}
 
-        public List<CourseViewModel> getAllCourses()
+
+		public int GetCurrentUser()
+		{
+			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
+			var currUserID = (from x in _db.Users
+							  where x.AspNetUserId == currentUser
+							  select x.ID).FirstOrDefault();
+
+			return currUserID;
+		}
+
+		public List<CourseViewModel> getAllCourses()
         {
 
             var Courses = (from x in _db.Courses
@@ -75,7 +87,40 @@ namespace Mooshak___H37.Services
 
         }
 
-        internal void setCourse(CourseViewModel model)
+		public List<CourseViewModel> GetCoursesForUser()
+		{
+			var currUsId = GetCurrentUser();
+
+			var userCourses = (from uscr in _db.UserCourseRelations
+							   where currUsId == uscr.UserID
+							   select uscr.CourseID).ToList();
+
+
+			var Courses = (from courses in _db.Courses
+							   where userCourses.Contains(courses.ID)
+							   orderby courses.ID descending
+							   select courses).ToList();
+
+			var viewModel = new List<CourseViewModel>();
+
+			foreach (var course in Courses)
+			{
+				CourseViewModel model = new CourseViewModel
+				{
+					ID = course.ID,
+					//Assignments = course.Assignments,
+					Isactive = course.Isactive,
+					IsRemoved = course.IsRemoved,
+					Name = course.Name,
+					StartDate = course.Startdate,
+				};
+				viewModel.Add(model);
+			}
+
+			return viewModel;
+		}
+
+		internal void setCourse(CourseViewModel model)
         {
             _db.Courses.Add(new Course
             {

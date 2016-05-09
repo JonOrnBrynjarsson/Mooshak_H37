@@ -60,5 +60,56 @@ namespace Mooshak___H37.Services
 
 			return viewModel;
 		}
+
+		public MilestoneViewmodel GetSingleMilestone(int milID)
+		{
+			var milestones = (from miles in _db.Milestones
+							  orderby miles.ID
+							  where miles.ID == milID
+							  select miles).FirstOrDefault();
+
+			if (milestones == null)
+			{
+				//DO SOMETHING
+				//throw new exception / skila NULL(ekki skila null hér)
+			}
+
+			MilestoneViewmodel model = new MilestoneViewmodel
+			{
+				ID = milestones.ID,
+				AllowedSubmissions = milestones.AllowedSubmissions,
+				AssignmentID = milestones.AssignmentID,
+				Description = milestones.Description,
+				IsRemoved = milestones.IsRemoved,
+				Name = milestones.Name,
+				Percentage = milestones.Percentage,
+			};
+
+			return model;
+		}
+
+		internal void EditMilestone(MilestoneViewmodel model, int milestoneID)
+		{
+			var edit = (from mil in _db.Milestones where mil.ID == 
+						milestoneID select mil).FirstOrDefault();
+
+			if (edit != null)
+			{
+				edit.AllowedSubmissions = model.AllowedSubmissions;
+				//model.AssignmentID;
+				edit.Description = model.Description;
+				//model.ID;
+				edit.IsRemoved = model.IsRemoved;
+				edit.Name = model.Name;
+				edit.Percentage = model.Percentage;
+
+				_db.SaveChanges();
+			}
+
+			else
+			{
+				// DO SOMETHING!!!
+			}
+		}
 	}
 }

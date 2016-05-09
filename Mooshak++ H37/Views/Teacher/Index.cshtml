@@ -40,7 +40,7 @@
         <div id="due-assignments">
             <h3>
                 Assignments
-                <button type="button" class="btn btn-primary button-right">Create New Assignment</button>
+				@Html.ActionLink("Create Assignment", "CreateAssignment", new { }, new { @class = "btn btn-primary button-right" })
             </h3>
             <table id="assignments" class="table table-hover">
                 <thead>

@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models.Viewmodels;
+using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Controllers
 {
 	//[Authorize(Roles = "Teacher")]
 	public class TeacherController : Controller
-    {
+	{
 		AssigmentsService _assignService = new AssigmentsService();
 		CoursesService _courseService = new CoursesService();
 		MilestoneService _milestoneService = new MilestoneService();
@@ -41,11 +42,11 @@ namespace Mooshak___H37.Controllers
 		private List<SelectListItem> GetCourses()
 		{
 			List<SelectListItem> result = new List<SelectListItem>();
-			var allCourses = _courseService.getAllCourses();
+			var allCourses = _courseService.GetCoursesForUser();
 
 			result.Add(new SelectListItem() { Value = "", Text = " - Choose a course - " });
 
-			result.AddRange(allCourses.Select(x=>new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }));
+			result.AddRange(allCourses.Select(x => new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }));
 
 			return result;
 		}
@@ -76,6 +77,8 @@ namespace Mooshak___H37.Controllers
 				return View(model);
 			}
 		}
+
+
 
 		[HttpGet]
 		public ActionResult Milestones(int id)
@@ -108,5 +111,49 @@ namespace Mooshak___H37.Controllers
 				return View(model);
 			}
 		}
+
+		[HttpGet]
+		public ActionResult EditMilestone(int milestoneID)
+		{
+			var viewModel = _milestoneService.GetSingleMilestone(milestoneID);
+			return View(viewModel);
+		}
+
+
+		[HttpPost]
+		public ActionResult EditMilestone(MilestoneViewmodel model, int milestoneID)
+		{
+			if (ModelState.IsValid)
+			{
+				_milestoneService.EditMilestone(model, milestoneID);
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				//ViewBag.CourseList = GetCourses();
+				return View(model);
+			}
+		}
+		[HttpGet]
+		public ActionResult EditAssignment(int id)
+		{
+			var viewModel = _assignService.Assignment(id);
+			return View(viewModel);
+		}
+
+		[HttpPost]
+		public ActionResult EditAssignment(AssignmentViewModel model, int assignID)
+		{
+			if (ModelState.IsValid)
+			{
+				_assignService.EditAssignment(model, assignID);
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View(model);
+			}
+		}
 	}
 }
+

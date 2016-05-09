@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Mooshak___H37.Models.Entities
 {
 	using System.Collections.Generic;
@@ -17,6 +19,9 @@ namespace Mooshak___H37.Models.Entities
 
 		
 		private int UserID { get; set; }
+
+		[DefaultValue(0)]
+		public bool IsGraded { get; set; }
 
 		public double Grade { get; set; }
 
