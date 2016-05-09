@@ -30,6 +30,19 @@ namespace Mooshak___H37.Services
 			
 			return true;
 		}
+
+		public int createSubmission(int milestonedId)
+		{
+			if (milestonedId > 0)
+			{
+				Submission submission = new Submission();
+				submission.MilestoneID = milestonedId;
+				submission.ProgramFileLocation = "";
+				//submission.
+			}
+			return 0;
+		}
+
 		/// <summary>
 		/// Returns the userName responsible for a submission.
 		/// </summary>
