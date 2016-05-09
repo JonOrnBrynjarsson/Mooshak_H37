@@ -19,6 +19,7 @@ namespace Mooshak___H37.Controllers
 	{
 		AssigmentsService _assignService = new AssigmentsService();
 		FilesService _filesService = new FilesService();
+		CoursesService _courseService = new CoursesService();
 
 		// GET: Assignment
 		[HttpGet]
@@ -36,7 +37,7 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult Assignments()
 		{
-			var viewModel = _assignService.getAllAssignments();
+			var viewModel = _courseService.getAllCourses();
 			return View(viewModel);
 		}
 

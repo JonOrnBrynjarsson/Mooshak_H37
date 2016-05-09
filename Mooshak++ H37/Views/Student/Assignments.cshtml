@@ -9,8 +9,8 @@
 	<div class="large-left-portion">
 		@foreach (var item in Model)
 		{
-			if (item.Assignments.Count != 0)
-			{
+			//if (item.Assignments.Count == 0)
+			//{
 				<h2>@item.Name</h2>
 
 				<table id="assignments-@item.Name" class="table table-hover">
@@ -29,7 +29,7 @@
 						</tr>
 					}
 					</table>
-				}
+				@*}*@
 			}
 
 	</div>
