@@ -62,7 +62,7 @@ namespace Mooshak___H37.Controllers
 				{
 					return View("Error");
 				}
-				_filesService.SaveSubmissionfile(submit.File, submissionId);
+				_filesService.saveSubmissionfile(submit.File, submissionId);
 				_filesService.testingSubmission(submissionId);
 			}
 			else

@@ -7,19 +7,14 @@ using System.IO;
 using System.Linq;
 using Microsoft.Ajax.Utilities;
 using Mooshak___H37.Models.Entities;
-using System.IO.Compression;
-using System.Net;
-using System.Security.AccessControl;
-using System.Security.Permissions;
 using System.Web;
-using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Services
 {
 	class FilesService
 	{
 		private readonly ApplicationDbContext _db;
-		private UsersService _usersService;
+		private readonly UsersService _usersService;
 
 		public FilesService()
 		{
@@ -27,30 +22,39 @@ namespace Mooshak___H37.Services
 			_usersService = new UsersService();
 		}
 
-
-		public bool SaveSubmissionfile(HttpPostedFileBase file, int submissionId)
+		/// <summary>
+		/// Saves the file submitted to a submission folder for that submission.
+		/// </summary>
+		/// <param name="file">The code submitted</param>
+		/// <param name="submissionId">The "ID" of the submission.</param>
+		public void saveSubmissionfile(HttpPostedFileBase file, int submissionId)
 		{
 			string filePath = getStudentSubmissionFolder(submissionId);
 			
 			filePath += file.FileName;
-
 			file.SaveAs(filePath);	
-			return true;
 		}
 
+		/// <summary>
+		/// Saves a submission to the database.
+		/// </summary>
+		/// <param name="milestonedId">The "ID" of the milestone that is being worked on</param>
+		/// <returns>The "ID" of the submission</returns>
 		public int createSubmission(int milestonedId)
 		{
 			if (milestonedId > 0)
 			{
 				try
 				{
-					Submission submission = new Submission();
-					submission.ID = 1;
-					submission.MilestoneID = milestonedId;
-					submission.UserID = _usersService.getUserIdForCurrentyApplicationUser();
-					submission.ProgramFileLocation = "a";
-					submission.Grade = 0;
-					submission.IsGraded = false;
+					Submission submission = new Submission
+					{
+						ID = 1,
+						MilestoneID = milestonedId,
+						UserID = _usersService.getUserIdForCurrentyApplicationUser(),
+						ProgramFileLocation = "a",
+						Grade = 0,
+						IsGraded = false
+					};
 					_db.Submissions.Add(submission);
 					_db.SaveChanges();
 					
@@ -65,23 +69,24 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Returns the userName responsible for a submission.
+		/// Gets the userName responsible for a submission.
 		/// </summary>
-		/// <param name="submissionID">The "ID" of  submission being tested</param>
-		/// <returns></returns>
-		public string getUserNameBySubmissionID(int submissionID)
+		/// <param name="submissionId">The "ID" of  submission being tested</param>
+		/// <returns>The username for a specific submission</returns>
+		public string getUserNameBySubmissionId(int submissionId)
 		{
 			string userName = (from x in _db.Submissions
-				where x.ID == submissionID
+				where x.ID == submissionId
 				select x.User.AspNetUser.UserName).SingleOrDefault().ToString();
 
 			return userName.SubstringUpToFirst('@');
 		}
+
 		/// <summary>
-		/// Returns the folder that holds the zipfile for a submission.
+		/// Gets the folder that holds the code for a submission.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
-		/// <returns></returns>
+		/// <returns>A string reprsenting the folder for the student submission</returns>
 		public string getStudentSubmissionFolder(int submissionId)
 		{
 			string folder = @ConfigurationManager.AppSettings["StudentFileLocation"] + 
@@ -101,7 +106,7 @@ namespace Mooshak___H37.Services
 		/// <returns></returns>
 		public string getStudentRunFolder(int submissionId)
 		{
-			string userName = getUserNameBySubmissionID(submissionId);
+			string userName = getUserNameBySubmissionId(submissionId);
 
 			string runfolder = @ConfigurationManager.AppSettings["RunLocation"].ToString() +
 			                   userName;// + @"\";
@@ -112,139 +117,23 @@ namespace Mooshak___H37.Services
 			}
 			return runfolder;
 		}
-
+		
 		/// <summary>
-		/// Returns the zipfile name an submission.
+		/// Compiles a submission from student to a running folder.
 		/// </summary>
-		/// <param name="submissionId">The "ID" of the submission being tested</param>
-		/// <returns>The username of the one submitting the file</returns>
-		public string getZipfileName(int submissionId)
-		{
-			return getUserNameBySubmissionID(submissionId) + 
-				submissionId.ToString() + ".zip";
-		}	
-
-		/// <summary>
-		/// Copies the zipfile to be tested to the run folder.  If this is the first time
-		/// this user has submitted a solution to a Milestone a rundirectory is created for
-		/// him.  Throws an exception if there is no file in the submission directory.
-		/// </summary>
-		/// <param name="submissionId" name>The "ID" of the submission being copied</param>
-		/// /// <param name="userName" name>The "userName" of the user submitting</param>
-		public void copyFileToRunFolder(int submissionId, string userName)
-		{
-			/*string origfolder = getStudentSubmissionFolder(submissionId);
-
-			DirectoryInfo dir = new DirectoryInfo(origfolder);
-			FileInfo[] files = dir.GetFiles("*.*");
-			if (files[0] != null)
-			{
-				string runFolder = getStudentRunFolder(submissionId);
-				if (!Directory.Exists(runFolder))
-				{
-					Directory.CreateDirectory(runFolder);
-				}
-
-				foreach (var file in files)
-				{
-					string fileToCopy = origfolder + file;
-					File.Copy(runFolder, fileToCopy, true);
-				}
-			}
-			else
-			{
-				throw new FileNotFoundException();
-			}*/
-		}
-
-		public void unCompressZipFile(int submissionId)
-		{
-			string runFolder = getStudentRunFolder(submissionId);
-			string zipfile = getZipfileName(submissionId);
-			DirectoryInfo di = new DirectoryInfo(runFolder);
-			FileInfo fi = di.GetFiles(zipfile).FirstOrDefault();
-
-			//ZipFile.ExtractToDirectory(runFolder, origFolder);
-		}
-		/// <summary>
-		/// Compiles the C++ main.cpp file and all included files in the 
-		/// runfolder for the submission.
-		/// </summary>
-		/// <param name="submissionId">The "ID" of the submission being comiled</param>
-		public void compileStudentProgram1(int submissionId)
-		{
-			string codefileFolder = getStudentSubmissionFolder(submissionId);
-			String runfolder = getStudentRunFolder(submissionId);
-			string fileName = getUserNameBySubmissionID(submissionId);
-			fileName += ".exe";
-
-			DirectoryInfo di = new DirectoryInfo(codefileFolder);
-			FileInfo fi = di.GetFiles("main.cpp").FirstOrDefault();
-			if (fi != null)
-			{
-				compileProgram(runfolder, (runfolder + fileName));
-			}
-			else
-			{
-				throw new FileNotFoundException();
-			}
-		}
-
+		/// <param name="submissionId">The "ID" of the submission to be compiled</param>
 		public void compileStudentProgram(int submissionId)
 		{
-			//copyFileToRunFolder(submissionId, getUserNameBySubmissionID(submissionId));
 			String runfolder = getStudentRunFolder(submissionId);
 			string fileName = runfolder + @"\" +
-				getUserNameBySubmissionID(submissionId) +
+				getUserNameBySubmissionId(submissionId) +
 				".exe";
 			string filefolder = getStudentSubmissionFolder(submissionId);
 			DirectoryInfo di = new DirectoryInfo(filefolder);
 			FileInfo fi = di.GetFiles("main.cpp").FirstOrDefault();
 			if (fi != null)
 			{
-				//string filefolder = getStudentSubmissionFolder(submissionId);
 				compileProgram(filefolder +  fi, fileName);
-			}
-			else
-			{
-				throw new FileNotFoundException();
-			}
-		}
-
-
-		/// <summary>
-		/// A function to compile the teachers code into an executable file
-		/// that can be used for comparison to the students submissions.
-		/// </summary>
-		/// <param name="milestoneId">The "ID" of the milestone to be compiled</param>
-		public void compileTeacherProgram(int milestoneId)
-		{
-			string fileLocation = @ConfigurationManager.AppSettings["TeacherFileLocation"] 
-					+ @"\" + milestoneId.ToString();
-			string runfolder = @ConfigurationManager.AppSettings["RunLocation"] + @"\";
-			runfolder += milestoneId.ToString();
-
-			string fileName = runfolder + milestoneId.ToString() + ".exe";
-
-			if (!Directory.Exists(runfolder))
-			{
-				Directory.CreateDirectory(runfolder);
-			}
-
-			//File.Copy(runfolder, origFile, true);
-			DirectoryInfo dir = new DirectoryInfo(fileLocation);
-			FileInfo fi = dir.GetFiles("main.cpp").FirstOrDefault();
-			if (fi != null)
-			{
-				DirectoryInfo directory = new DirectoryInfo(runfolder);
-				FileInfo[] files = directory.GetFiles("*.*");
-				
-				foreach (var file in files)
-				{
-					file.Delete();
-				}
-
-				compileProgram(fileLocation + @"\" + fi, fileName);
 			}
 			else
 			{
@@ -257,21 +146,18 @@ namespace Mooshak___H37.Services
 		/// from the one that holds the code, that directory has to be included in the name
 		/// sent into the function.
 		/// </summary>
-		/// <param name="FolderWithCodeFile">The folder of the file to be compiled</param>
+		/// <param name="folderWithCodeFile">The folder of the file to be compiled</param>
 		/// <param name="fullFileNameforCompiledFile">The filename of the compiled file with directory</param>
-		public void compileProgram(string FolderWithCodeFile, string fullFileNameforCompiledFile)
+		public void compileProgram(string folderWithCodeFile, string fullFileNameforCompiledFile)
 		{
-			string fileToCompile = @FolderWithCodeFile;// + @"\main.cpp";
+			string fileToCompile = @folderWithCodeFile;
 			string Compiler = "mingw32-g++.exe";
 			string all = fileToCompile + " -o " + fullFileNameforCompiledFile;
-			//Console.WriteLine(all);
-
+			
 			Process process = new Process();
 			process.StartInfo.FileName = Compiler;
 			process.StartInfo.Arguments = all;
 			process.StartInfo.UseShellExecute = false;
-			//process.StartInfo.RedirectStandardOutput = true;
-			//process.StartInfo.RedirectStandardInput = true;
 			process.StartInfo.RedirectStandardError = true;
 			process.Start();
 			StreamReader errorReader = process.StandardError;
@@ -281,10 +167,10 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Returns the number of test cases related to this submission.
+		/// Returns the "ID" of the test cases related to the submission ID sent in.
 		/// </summary>
-		/// <param name="submissionId"></param>
-		/// <returns></returns>
+		/// <param name="submissionId">The "ID" of the submission being tested.</param>
+		/// <returns>A list of testcase IDs</returns>
 		public List<int> getTestCases(int submissionId)
 		{
 			var testCases = (from t in _db.TestCases
@@ -299,19 +185,31 @@ namespace Mooshak___H37.Services
 			return testCases.ToList();
 		}
 
+		/// <summary>
+		/// Gets the string with the input for a specific testrun.
+		/// </summary>
+		/// <param name="testCaseId">The "ID" of the testcase</param>
+		/// <returns>The input string for a testrun</returns>
 		public string getATestCaseInput(int testCaseId)
 		{
 			return (from t in _db.TestCases
 				where t.ID == testCaseId
+					&& t.IsRemoved == false
 				select t.Inputstring).SingleOrDefault();
 		}
+
+		/// <summary>
+		/// Gets the string with the expected output for a specific testrun.
+		/// </summary>
+		/// <param name="testCaseId">The "ID" of the testcase</param>
+		/// <returns>A string with the expected output of the testcase</returns>
 		public string getATestCaseOutput(int testCaseId)
 		{
 			return (from t in _db.TestCases
 					where t.ID == testCaseId
+						&& t.IsRemoved == false
 					select t.Outputstring).SingleOrDefault();
 		}
-
 
 		/// <summary>
 		/// Saves the result from the current testrun to the database
@@ -333,7 +231,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Deletes all files from the test directory
+		/// Deletes all files from the test directory.
 		/// </summary>
 		/// <param name="submissionId">The submission being tested</param>
 		public void clearRunfolder(int submissionId)
@@ -344,25 +242,33 @@ namespace Mooshak___H37.Services
 
 			foreach (var file in files)
 			{
-				System.IO.File.Delete(file.ToString());
+				try
+				{
+					string deleteFile = runfolder + @"\" + file.ToString();
+					System.IO.File.Delete(deleteFile);
+				}
+				catch (Exception ex)
+				{
+					System.Console.WriteLine(ex);
+				}
 			}
 		}
 
 		/// <summary>
 		/// Runs the students submission against a testCase.  Compares the result
-		/// against what the theachers code produces.  Returns true if the results
+		/// against expected output.  Returns true if the results
 		/// are the same. Otherwise returns false.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
-		/// <param name="testCase">The "ID" of the testcase being used to test the submission</param>
-		/// <returns></returns>
+		/// <param name="testCase">The input for the test run</param>
+		/// <param name="compareTo">The expected output from the test run </param>
+		/// <returns>bool = true if testrun is successful</returns>
 		public bool runTest(int submissionId, string testCase, string compareTo)
 		{
-//Hvað með Errorhandling ef forrit keyrir ekki?
 			Process process = new Process();
 			string runfolder = getStudentRunFolder(submissionId);
 			string filename = runfolder + @"\" +
-			                  getUserNameBySubmissionID(submissionId) +
+			                  getUserNameBySubmissionId(submissionId) +
 			                  ".exe";
 			process.StartInfo.FileName = @filename;
 			process.StartInfo.UseShellExecute = false;
@@ -372,8 +278,10 @@ namespace Mooshak___H37.Services
 			process.Start();
 
 			StreamWriter myStreamWriter = process.StandardInput;
-			
-			myStreamWriter.WriteLine(testCase);
+			if (!string.IsNullOrEmpty(testCase))
+			{
+				myStreamWriter.WriteLine(testCase);
+			}
 
 			StreamReader reader = process.StandardOutput;
 			StreamReader errorReader = process.StandardError;
@@ -385,13 +293,14 @@ namespace Mooshak___H37.Services
 			{
 				return true;
 			}
-			else
-			{
-				return false;
-			}
-			
+			return false;
 		}
 
+		/// <summary>
+		/// Gets the Milestone ID from the database based on a specific submission ID.
+		/// </summary>
+		/// <param name="submissionId">The "ID" of the submission for the milestone</param>
+		/// <returns>The "ID" of the milestone for the submission sent in</returns>
 		public int getMilestoneIdBySubmitId(int submissionId)
 		{
 			int milestoneId = (from s in _db.Submissions
@@ -400,33 +309,11 @@ namespace Mooshak___H37.Services
 			return milestoneId;
 		}
 
-		public string compareToTeacher(int submissionId, string testCase)
-		{
-			int milestoneId = getMilestoneIdBySubmitId(submissionId);
-			string programLocation = @ConfigurationManager.AppSettings["TeacherFileLocation"]
-					+ milestoneId;
-			string filename = ConfigurationManager.AppSettings["RunLocation"] 
-					+ milestoneId + ".exe";
-			Process process = new Process();
-			process.StartInfo.FileName = @filename;
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.RedirectStandardInput = true;
-			process.StartInfo.RedirectStandardError = true;
-			process.Start();
-//Hvað með Minnisvillur???
-			StreamWriter myStreamWriter = process.StandardInput;
-			
-			myStreamWriter.WriteLine(testCase);
-
-			StreamReader reader = process.StandardOutput;
-			StreamReader errorReader = process.StandardError;
-			string output = reader.ReadLine();
-			string error = errorReader.ReadLine();
-			process.Close();
-
-			return output;
-		}
+		/// <summary>
+		/// The main functions in testing a submission.  This one calles different functions
+		/// as needed.  
+		/// </summary>
+		/// <param name="submissionId">The "Id" of the submission being tested</param>
 		public void testingSubmission(int submissionId)
 		{
 			List<int> testCases = getTestCases(submissionId);
@@ -448,29 +335,5 @@ namespace Mooshak___H37.Services
 			}
 			clearRunfolder(submissionId);
 		}
-
-
-		public void FileCompiler(int userId)
-		{
-
-			string fileToCompile = @"c:\temp\jontest\jon\main.cpp";
-			string fileName = @"c:\temp\jontest\jon\jonob06.exe";
-			string Compiler = "mingw32-g++.exe";
-			string all = fileToCompile + " -o " + fileName;
-			Console.WriteLine(all);
-
-			Process process = new Process();
-			process.StartInfo.FileName = Compiler;
-			process.StartInfo.Arguments = all;
-			process.StartInfo.UseShellExecute = false;
-			//process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.RedirectStandardInput = true;
-			process.Start();
-			process.WaitForExit();
-		}
-
-
-
-
 	}
 }
