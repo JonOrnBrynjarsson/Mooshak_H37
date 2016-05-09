@@ -185,12 +185,19 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
-		[HttpPost]
+
+
+		[HttpGet]
 		public ActionResult RemoveTestCase(int id)
 		{
-			var viewModel = new TestCaseViewModel();
-			_testcaseService.RemoveTestCase(id);
+			var viewModel = _testcaseService.GetSingleTestCase(id);
 			return View(viewModel);
+		}
+		[HttpPost]
+		public ActionResult RemoveTestCase(TestCaseViewModel model)
+		{
+			_testcaseService.RemoveTestCase(model);
+			return RedirectToAction("Index");
 		}
 	}
 }
