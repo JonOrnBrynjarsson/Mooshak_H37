@@ -29,7 +29,12 @@ namespace Mooshak___H37.Services
 		public bool SaveSubmissionfile(HttpPostedFileBase file, int submissionId)
 		{
 			string filePath = getStudentSubmissionFolder(submissionId);
+			if (!Directory.Exists(filePath))
+			{
+				Directory.CreateDirectory(filePath);
+			}
 			filePath += file.FileName;
+
 			file.SaveAs(filePath);	
 			return true;
 		}
@@ -38,12 +43,24 @@ namespace Mooshak___H37.Services
 		{
 			if (milestonedId > 0)
 			{
-				Submission submission = new Submission();
-				submission.MilestoneID = milestonedId;
-				submission.UserID = _usersService.getUserIdForCurrentyApplicationUser();
-				_db.Submissions.Add(submission);
-
-				return submission.ID;
+				try
+				{
+					Submission submission = new Submission();
+					submission.ID = 1;
+					submission.MilestoneID = milestonedId;
+					submission.UserID = _usersService.getUserIdForCurrentyApplicationUser();
+					submission.ProgramFileLocation = "a";
+					submission.Grade = 0;
+					submission.IsGraded = false;
+					_db.Submissions.Add(submission);
+					_db.SaveChanges();
+					int tala = submission.ID;
+					return tala;
+				}
+				catch (Exception ex)
+				{
+					System.Console.WriteLine(ex);
+				}
 			}
 			return 0;
 		}
@@ -68,8 +85,8 @@ namespace Mooshak___H37.Services
 		/// <returns></returns>
 		public string getStudentSubmissionFolder(int submissionId)
 		{
-			return ConfigurationManager.AppSettings["StudentFileLocation"] + 
-				submissionId.ToString();
+			return @ConfigurationManager.AppSettings["StudentFileLocation"] + 
+				submissionId.ToString() + @"\";
 		}
 
 		/// <summary>
