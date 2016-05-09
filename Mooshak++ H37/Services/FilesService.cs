@@ -39,13 +39,15 @@ namespace Mooshak___H37.Services
 			
 			if (milestonedId > 0)
 			{
-				Submission submission = new Submission();
-				submission.MilestoneID = milestonedId;
-				submission.User.ID = _usersService.getUserIdForCurrentyApplicationUser();
-				_db.Submissions.Add(submission);
-				_db.SaveChanges();
-				int s = submission.ID;
-				return s;
+				_db.Submissions.Add(new Submission
+			{
+				MilestoneID = milestonedId,
+			//	UserID = _usersService.getUserIdForCurrentyApplicationUser()
+			});
+			_db.SaveChanges();
+
+				return 1;
+	// henda út s línunni
 			}
 			return 0;
 		}
