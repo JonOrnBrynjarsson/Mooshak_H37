@@ -78,7 +78,8 @@ namespace Mooshak___H37.Services
 				//throw new exception / skila NULL(ekki skila null hér)
 			}
 
-			var milestones = _db.Milestones.Where(x => x.AssignmentID == id)
+			var milestones = _db.Milestones.Where(x => x.AssignmentID == id &&
+												  x.IsRemoved != true)
 				.Select(x => new MilestoneViewmodel
 				{
 					ID = x.ID,

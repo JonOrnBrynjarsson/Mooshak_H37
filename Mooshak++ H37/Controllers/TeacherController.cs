@@ -93,6 +93,7 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult CreateMilestone(MilestoneViewmodel model)
 		{
+
 			MilestoneViewmodel viewModel = new MilestoneViewmodel();
 			return View(viewModel);
 		}
@@ -135,6 +136,20 @@ namespace Mooshak___H37.Controllers
 				return View(model);
 			}
 		}
+
+		[HttpGet]
+		public ActionResult RemoveMilestone(int id)
+		{
+			var viewModel = _milestoneService.GetSingleMilestone(id);
+			return View(viewModel);
+		}
+		[HttpPost]
+		public ActionResult RemoveMilestone(MilestoneViewmodel model)
+		{
+			_milestoneService.RemoveMilestone(model);
+			return RedirectToAction("Index");
+		}
+
 		[HttpGet]
 		public ActionResult EditAssignment(int id)
 		{

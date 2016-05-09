@@ -360,6 +360,7 @@
     <Content Include="Views\Teacher\CreateTestCase.cshtml" />
     <Content Include="Views\Teacher\TestCases.cshtml" />
     <Content Include="Views\Teacher\RemoveTestCase.cshtml" />
+    <Content Include="Views\Teacher\RemoveMilestone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
