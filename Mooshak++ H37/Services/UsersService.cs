@@ -41,6 +41,28 @@ namespace Mooshak___H37.Services
 
             return viewModel;
         }
+
+		public List<UserViewModel> getUsersInCourse(int courseID)
+		{
+
+			List<UserViewModel> model = new List<UserViewModel>();
+
+			foreach(var user in model)
+			{
+				UserViewModel temp = new UserViewModel
+				{
+					//	Name = 
+					//	Email = 
+					//	RoleID = ,
+					//	CourseID = ,					
+				};
+
+				model.Add(temp);
+			}
+
+			return model;
+		}
+
 		/// <summary>
 		/// In order to 
 		/// </summary>
@@ -67,7 +89,6 @@ namespace Mooshak___H37.Services
 
             _db.Users.Add(bla);
             _db.SaveChanges();
-
         }
     }
 }

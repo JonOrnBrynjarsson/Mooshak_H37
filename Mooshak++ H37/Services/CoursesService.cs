@@ -146,7 +146,7 @@ namespace Mooshak___H37.Services
 		{
 
 			var course = (from x in _db.Courses
-						  where x.ID == courseID
+						  where x.ID == courseID && x.IsRemoved == false
 						  select x).SingleOrDefault();
 
 			var ass = _assignmentsService.getAssignmentsInCourse(courseID);
@@ -158,7 +158,7 @@ namespace Mooshak___H37.Services
 				ID = course.ID,
 				IsRemoved = course.IsRemoved,
 				StartDate = course.Startdate,
-				Assignments = _assignmentsService.getAssignmentsInCourse(courseID),
+				Assignments = ass,
 				User = users
 			};
 
