@@ -52,10 +52,10 @@ namespace Mooshak___H37.Controllers
 			return result;
 		}
 
-		private List<SelectListItem> GetMilestones(int id)
+		private List<SelectListItem> GetMilestones(int assignmentId)
 		{
 			List<SelectListItem> result = new List<SelectListItem>();
-			var milestones = _milestoneService.GetMilestonesForAssignment(id);
+			var milestones = _milestoneService.GetMilestonesForAssignment(assignmentId);
 
 			result.Add(new SelectListItem() { Value = "", Text = " - Choose a milestone - " });
 
@@ -86,6 +86,7 @@ namespace Mooshak___H37.Controllers
 		{
 			AssignmentViewModel model = _assignService.Assignment(id);
 			ViewBag.MilestoneList = GetMilestones(id);
+			ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
 			return View(model);
 		}
 

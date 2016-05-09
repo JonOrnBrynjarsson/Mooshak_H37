@@ -9,6 +9,8 @@ using Microsoft.Ajax.Utilities;
 using Mooshak___H37.Models.Entities;
 using System.IO.Compression;
 using System.Net;
+using System.Security.AccessControl;
+using System.Security.Permissions;
 using System.Web;
 using Mooshak___H37.Models.Viewmodels;
 
@@ -29,10 +31,7 @@ namespace Mooshak___H37.Services
 		public bool SaveSubmissionfile(HttpPostedFileBase file, int submissionId)
 		{
 			string filePath = getStudentSubmissionFolder(submissionId);
-			if (!Directory.Exists(filePath))
-			{
-				Directory.CreateDirectory(filePath);
-			}
+			
 			filePath += file.FileName;
 
 			file.SaveAs(filePath);	
@@ -85,8 +84,14 @@ namespace Mooshak___H37.Services
 		/// <returns></returns>
 		public string getStudentSubmissionFolder(int submissionId)
 		{
-			return @ConfigurationManager.AppSettings["StudentFileLocation"] + 
+			string folder = @ConfigurationManager.AppSettings["StudentFileLocation"] + 
 				submissionId.ToString() + @"\";
+
+			if (!Directory.Exists(folder))
+			{
+				Directory.CreateDirectory(folder);
+			}
+			return folder;
 		}
 
 		/// <summary>
@@ -98,8 +103,17 @@ namespace Mooshak___H37.Services
 		{
 			string userName = getUserNameBySubmissionID(submissionId);
 
-			return ConfigurationManager.AppSettings["RunLocation"] +
-				userName;
+			string runfolder = @ConfigurationManager.AppSettings["RunLocation"].ToString() +
+			                   userName;// + @"\";
+
+			if (!Directory.Exists(runfolder))
+			{
+				DirectorySecurity securityRules = new DirectorySecurity();
+				securityRules.AddAccessRule(new FileSystemAccessRule(runfolder, FileSystemRights.FullControl, AccessControlType.Allow));
+
+				Directory.CreateDirectory(runfolder);
+			}
+			return runfolder;
 		}
 
 		/// <summary>
@@ -122,25 +136,31 @@ namespace Mooshak___H37.Services
 		/// /// <param name="userName" name>The "userName" of the user submitting</param>
 		public void copyFileToRunFolder(int submissionId, string userName)
 		{
-			string origFile = getStudentSubmissionFolder(submissionId);
+			string origfolder = getStudentSubmissionFolder(submissionId);
 
-			if (Directory.Exists(origFile))
+			DirectoryInfo dir = new DirectoryInfo(origfolder);
+			FileInfo[] files = dir.GetFiles("*.*");
+			if (files[0] != null)
 			{
 				string runFolder = getStudentRunFolder(submissionId);
-				string zipfile = origFile + getZipfileName(submissionId);
-
 				if (!Directory.Exists(runFolder))
 				{
-					Directory.CreateDirectory(runFolder);
+					DirectorySecurity securityRules = new DirectorySecurity();
+					securityRules.AddAccessRule(new FileSystemAccessRule(runFolder, FileSystemRights.FullControl, AccessControlType.Allow));
+					Directory.CreateDirectory(runFolder, securityRules);
 				}
-				File.Copy(runFolder, origFile, true);
+
+				foreach (var file in files)
+				{
+					string fileToCopy = origfolder + file;
+					File.Copy(runFolder, fileToCopy, true);
+				}
 			}
 			else
 			{
 				throw new FileNotFoundException();
 			}
 		}
-
 
 		public void unCompressZipFile(int submissionId)
 		{
@@ -156,9 +176,29 @@ namespace Mooshak___H37.Services
 		/// runfolder for the submission.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being comiled</param>
+		public void compileStudentProgram1(int submissionId)
+		{
+			string codefileFolder = getStudentSubmissionFolder(submissionId);
+			String runfolder = getStudentRunFolder(submissionId);
+			string fileName = getUserNameBySubmissionID(submissionId);
+			fileName += ".exe";
+
+			DirectoryInfo di = new DirectoryInfo(codefileFolder);
+			FileInfo fi = di.GetFiles("main.cpp").FirstOrDefault();
+			if (fi != null)
+			{
+				compileProgram(runfolder, (runfolder + fileName));
+			}
+			else
+			{
+				throw new FileNotFoundException();
+			}
+		}
+
 		public void compileStudentProgram(int submissionId)
 		{
-			string runfolder = getStudentRunFolder(submissionId);
+			copyFileToRunFolder(submissionId, getUserNameBySubmissionID(submissionId));
+			String runfolder = getStudentRunFolder(submissionId);
 			string fileName = getUserNameBySubmissionID(submissionId);
 			fileName += ".exe";
 
@@ -173,6 +213,7 @@ namespace Mooshak___H37.Services
 				throw new FileNotFoundException();
 			}
 		}
+
 
 		/// <summary>
 		/// A function to compile the teachers code into an executable file
@@ -223,7 +264,7 @@ namespace Mooshak___H37.Services
 		/// <param name="fullFileNameforCompiledFile">The filename of the compiled file with directory</param>
 		public void compileProgram(string FolderWithCodeFile, string fullFileNameforCompiledFile)
 		{
-			string fileToCompile = @FolderWithCodeFile + @"\main.cpp";
+			string fileToCompile = @FolderWithCodeFile + @"main.cpp";
 			string Compiler = "mingw32-g++.exe";
 			string all = fileToCompile + " -o " + fullFileNameforCompiledFile;
 			//Console.WriteLine(all);
@@ -233,10 +274,13 @@ namespace Mooshak___H37.Services
 			process.StartInfo.Arguments = all;
 			process.StartInfo.UseShellExecute = false;
 			//process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.RedirectStandardInput = true;
+			//process.StartInfo.RedirectStandardInput = true;
+			process.StartInfo.RedirectStandardError = true;
 			process.Start();
+			StreamReader reader = process.StandardError;
+			string output = reader.ReadToEnd();
 			process.WaitForExit();
-
+			process.Close();
 		}
 
 		/// <summary>
@@ -256,6 +300,14 @@ namespace Mooshak___H37.Services
 				
 			return testCases.ToList();
 		}
+
+		public string getATestCase(int testCaseId)
+		{
+			return (from t in _db.TestCases
+				where t.ID == testCaseId
+				select t.Inputstring).SingleOrDefault();
+		}
+
 
 		/// <summary>
 		/// Saves the result from the current testrun to the database
@@ -362,20 +414,25 @@ namespace Mooshak___H37.Services
 
 			return output;
 		}
-		public void doingTestsOnSubmission(int submissionId)
+		public void testingSubmission(int submissionId)
 		{
 			List<int> testCases = getTestCases(submissionId);
-			copyFileToRunFolder(submissionId, getUserNameBySubmissionID(submissionId));
-			//þá afþjappa file / s í runfolder -bíður aðeins skil ekki zip dótið
 			compileStudentProgram(submissionId);
 
-			/* keyra forritið skv. fjölda testcase með nýju í hvert sinn
-			 * Vista niðurstöður / fallið komið vantar upplýsingar
-			 */
-			 //updateTestrun(submissionId,);
-			 clearRunfolder(submissionId);
+			foreach (var test in testCases)
+			{
+				string tCase = getATestCase(test);
 
-			return;
+				if (runTest(submissionId, tCase))
+				{
+					updateTestrun(submissionId, test, true, "LATER");
+				}
+				else
+				{
+					updateTestrun(submissionId, test, false, "Villa");
+				}
+			}
+			clearRunfolder(submissionId);
 		}
 
 
