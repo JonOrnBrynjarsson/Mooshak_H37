@@ -22,19 +22,34 @@ namespace Mooshak___H37.Services
 
         public List<UserViewModel> getAllUsersName()
         {
-
+			//gets all the users in the system
             var Users = (from x in _db.Users
+						// where x.IsRemoved == false
 						 orderby x.Name ascending
                            select x).ToList();
 
+			//retrevies the mail of all Users found above and
+			//inserts it into the list of strings
+			List<string> mail = new List<string>();
+			foreach (var item in Users)
+			{
+				var mailinfo = (from y in _db.Users
+							 where item.AspNetUserId == y.AspNetUser.Id
+							 select y.AspNetUser.Email).SingleOrDefault();
+
+				mail.Add(mailinfo);
+			}
+
+
             var viewModel = new List<UserViewModel>();
-            
-            foreach (var user in Users)
+			//combines all information gathered into the userViewmodel
+            for(int i = 0; i< Users.Count(); i++)
             {
                 UserViewModel model = new UserViewModel
                 {
-                    Name = user.Name
-                    
+                    Name = Users[i].Name,
+					Email = mail[i],
+
                 };
                 viewModel.Add(model);
             }
@@ -62,9 +77,16 @@ namespace Mooshak___H37.Services
 						 where userIdList.Contains(y.ID) 
 						 select y).ToList();
 			//here we select the AspNetUser table to get the email from all the students in the course
-			var aspInfo = (from z in _db.Users
-						   where z.AspNetUser.Id == z.AspNetUserId
-						   select z.AspNetUser.Email).ToList();
+			List<string> mail = new List<string>();
+			foreach(var item in users)
+			{
+				string aspInfo = (from z in _db.Users
+							   where item.AspNetUserId == z.AspNetUser.Id
+							   select z.AspNetUser.Email).FirstOrDefault();
+
+				mail.Add(aspInfo);
+			}
+			
 
 
 
@@ -74,7 +96,7 @@ namespace Mooshak___H37.Services
 				UserViewModel temp = new UserViewModel
 				{
 					Name = users[i].Name,
-					Email = aspInfo[i],
+					Email = mail[i],
 					RoleID = userInfo[i].RoleID
 				};
 

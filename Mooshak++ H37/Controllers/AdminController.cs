@@ -75,6 +75,7 @@ namespace Mooshak___H37.Controllers
 			{
 				//TODO
 				//throw exception
+				id = 1;
 			}
 
 			CourseViewModel model = _courseService.getCourseViewModelByID(id.Value);
