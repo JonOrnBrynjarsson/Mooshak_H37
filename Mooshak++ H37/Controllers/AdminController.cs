@@ -75,6 +75,7 @@ namespace Mooshak___H37.Controllers
 			{
 				//TODO
 				//throw exception
+				id = 1;
 			}
 
 			CourseViewModel model = _courseService.getCourseViewModelByID(id.Value);
@@ -103,6 +104,12 @@ namespace Mooshak___H37.Controllers
 			}
 
 			return RedirectToAction("ViewCourses");
+		}
+
+		public ActionResult ViewUsers()
+		{
+			var viewModel = _userService.getAllUsersName();
+			return View(viewModel);
 		}
 	}
 }

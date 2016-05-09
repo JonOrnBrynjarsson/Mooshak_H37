@@ -19,6 +19,7 @@ namespace Mooshak___H37.Controllers
 	{
 		AssigmentsService _assignService = new AssigmentsService();
 		FilesService _filesService = new FilesService();
+		CoursesService _courseService = new CoursesService();
 
 		// GET: Assignment
 		[HttpGet]
@@ -34,11 +35,11 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
-/*		public ActionResult Assignments()
+		public ActionResult Assignments()
 		{
-			var viewModel = _assignService.GetCourseAssignments();
+			var viewModel = _courseService.getAllCourses();
 			return View(viewModel);
-		}*/
+		}
 
 		[HttpGet]
 		public ActionResult Submit(int? milestone)

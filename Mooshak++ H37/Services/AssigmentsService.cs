@@ -133,6 +133,74 @@ namespace Mooshak___H37.Services
 			return model;
 		}
 
+
+		public List<CourseViewModel> GetCourseAssignments()
+		{
+			var currUsId = GetCurrentUser();
+
+			var userCourses = (from uscr in _db.UserCourseRelations
+							   where currUsId == uscr.UserID
+							   select uscr.CourseID).ToList();
+
+
+			var assignments = (from assi in _db.Assignments
+							   where userCourses.Contains(assi.CourseID)
+							   orderby assi.DueDate descending
+							   select assi).ToList();
+
+
+			var coursese = (from crse in _db.Courses
+							where userCourses.Contains(crse.ID)
+							select crse)
+			.Select(x => new CourseViewModel
+			{
+				ID = x.ID,
+				Name = x.Name,
+				Isactive = x.Isactive,
+				IsRemoved = x.IsRemoved,
+				StartDate = x.Startdate,
+				Assignments = getAssignmentsInCourse(x.ID),
+			}).ToList();
+
+			var viewModel = new List<CourseViewModel>();
+
+			foreach (var course in coursese)
+			{
+				CourseViewModel model = new CourseViewModel
+				{
+					Assignments = course.Assignments,
+					ID = course.ID,
+					Isactive = course.Isactive,
+					IsRemoved = course.IsRemoved,
+					Name = course.Name,
+					StartDate = course.StartDate,
+				};
+				viewModel.Add(model);
+			}
+
+			return viewModel;
+
+		}
+
+
+		public int GetAssignmentIDFromMilestoneID(int milestoneID)
+		{
+
+			var assignmentID = (from mil in _db.Milestones
+							  where mil.ID == milestoneID
+							  select mil.AssignmentID).FirstOrDefault();
+
+			if (assignmentID == null)
+			{
+				//DO SOMETHING
+				//throw new exception / skila NULL(ekki skila null hér)
+			}
+			return assignmentID;
+		}
+
+
+
+
 		internal void RemoveAssignment(AssignmentViewModel model)
 		{
 			var assignment = (from assign in _db.Assignments
@@ -208,9 +276,9 @@ namespace Mooshak___H37.Services
 			{
 				edit.Name = model.Name;
 				edit.SetDate = model.SetDate;
-			//	edit.DueDate = model.DueDate;
+				edit.DueDate = model.DueDate;
 				edit.Description = model.Description;
-			//	edit.ID = model.ID;
+				edit.ID = model.ID;
 				edit.IsActive = model.IsActive;
 				edit.IsRemoved = model.IsRemoved;
 
