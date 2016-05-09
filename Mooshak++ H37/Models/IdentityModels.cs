@@ -34,6 +34,7 @@ namespace Mooshak___H37.Models
 		public DbSet<Testrun> Testruns { get; set; }
 		public DbSet<UserCourseRelation> UserCourseRelations { get; set; }
 		public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
 
 		public ApplicationDbContext()

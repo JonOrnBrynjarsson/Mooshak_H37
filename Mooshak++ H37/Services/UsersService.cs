@@ -76,24 +76,36 @@ namespace Mooshak___H37.Services
 
             var User = (from x in _db.Users
                         where x.AspNetUser.Email == model.Email
-                        select x.ID).FirstOrDefault();
+                        select x.ID).SingleOrDefault();
 
 
 
             return User;
         }
 
-        internal string getRolebyID(int userID)
+        internal string getRoleNamebyID(int userID)
         {
             var roleID = (from x in _db.UserCourseRelations
-                          where x.UserID == userID
-                          select x.RoleID).ToString();
+                        where x.UserID == userID
+                        select x.RoleID).FirstOrDefault();
 
-            var Role = (from x in _db.Roles
-                        where x.Id == roleID
-                        select x.Name).ToString();
+            switch(roleID)
+            {
+                case 1:
+                    {
+                        return "Student";
+                    }
+                case 2:
+                    {
+                        return "Teacher";
+                    }
+                case 3:
+                    {
+                        return "Admin";
+                    }
+            }
 
-                return Role;
+            return null;
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Mooshak___H37.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private UsersService _usersService;
 
         public AccountController()
         {
@@ -76,15 +75,17 @@ namespace Mooshak___H37.Controllers
                 return View(model);
             }
 
+            UsersService _usersService = new UsersService();
+
             int userID = _usersService.getUserIDbyEmail(model);
-            string role = _usersService.getRolebyID(userID);
+            string role = _usersService.getRoleNamebyID(userID);
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
-
+   
                 case SignInStatus.Success:
                     {
                         return RedirectToAction("Index", role);
