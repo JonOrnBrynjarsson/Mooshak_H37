@@ -226,6 +226,14 @@
     <Compile Include="Migrations\201605091114495_isgraded.Designer.cs">
       <DependentUpon>201605091114495_isgraded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605091204568_testcasechange.cs" />
+    <Compile Include="Migrations\201605091204568_testcasechange.Designer.cs">
+      <DependentUpon>201605091204568_testcasechange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605091208138_tc.cs" />
+    <Compile Include="Migrations\201605091208138_tc.Designer.cs">
+      <DependentUpon>201605091208138_tc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
@@ -367,6 +375,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605091114495_isgraded.resx">
       <DependentUpon>201605091114495_isgraded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605091204568_testcasechange.resx">
+      <DependentUpon>201605091204568_testcasechange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605091208138_tc.resx">
+      <DependentUpon>201605091208138_tc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -50,11 +50,12 @@ namespace Mooshak___H37.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Submit(StudentSubmit s)
+		public ActionResult Submit(StudentSubmit submit)
 		{
-			if (s.File != null && s.File.ContentLength > 0)
+			if (submit.File != null && submit.File.ContentLength > 0)
 			{
-				_filesService.SaveSubmissionfile(s.File);
+				int submissionId = _filesService.createSubmission(submit.Milestone);
+				_filesService.SaveSubmissionfile(submit.File, submissionId);
 			}
 			else
 			{
@@ -63,7 +64,7 @@ namespace Mooshak___H37.Controllers
 					return View("Error");
 				}
 				ViewBag.ErrorMessage = "No file submitted, try again";
-				return View(s);
+				return View(submit);
 			}
 			return RedirectToAction("Index");
 		}

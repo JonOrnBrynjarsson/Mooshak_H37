@@ -12,7 +12,6 @@ namespace Mooshak___H37.Models.Entities
 		Testruns = new HashSet<Testrun>();
 		}
 
-		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int ID { get; set; }
 
 		public string Inputstring { get; set; }
