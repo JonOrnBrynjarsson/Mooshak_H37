@@ -89,14 +89,17 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult EditCourse(int id, FormCollection formData)
+		public ActionResult EditCourse(CourseViewModel model)
 		{
-			CourseViewModel modelUpdate = _courseService.getCourseViewModelByID(id);
-
-			if (modelUpdate != null)
+			if (ModelState.IsValid)
 			{
-				UpdateModel(modelUpdate);
-		//		_assignmentsService.updateAssignment(modelUpdate);
+				_courseService.EditCourse(model);
+			}
+			else
+			{
+				//TODO
+				//throw exception?
+				return View(model);
 			}
 
 			return RedirectToAction("ViewCourses");

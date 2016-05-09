@@ -13,8 +13,8 @@ namespace Mooshak___H37.Services
 	class CoursesService
 	{
 		private ApplicationDbContext _db;
-		private AssigmentsService _assignmentsService;
-		private UsersService _userService;
+		private AssigmentsService _assignmentsService = new AssigmentsService();
+		private UsersService _userService = new UsersService();
 
 		public CoursesService()
 		{
@@ -158,11 +158,28 @@ namespace Mooshak___H37.Services
 				ID = course.ID,
 				IsRemoved = course.IsRemoved,
 				StartDate = course.Startdate,
-				Assignments = ass,
+				Assignments = _assignmentsService.getAssignmentsInCourse(courseID),
 				User = users
 			};
 
 			return model;
+		}
+
+		internal void EditCourse(CourseViewModel model)
+		{
+			var edit = (from course in _db.Courses
+						where model.ID == course.ID
+						select course).FirstOrDefault();
+
+			if(edit !=null)
+			{
+				edit.Name = model.Name;
+				edit.Startdate = model.StartDate.Value;
+				edit.IsRemoved = model.IsRemoved;
+				edit.Isactive = model.Isactive;
+
+				_db.SaveChanges();
+			}
 		}
 
 

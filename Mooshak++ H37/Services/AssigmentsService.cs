@@ -103,10 +103,9 @@ namespace Mooshak___H37.Services
 
 			var users = (from user in _db.Users
 					  where userid.Contains(user.ID)
-					  select user).Select(x => new UserViewModel
+					  select user.Name).Select(x => new UserViewModel
 					  {
-						  CourseID = x.ID,
-						  Name = x.Name
+						  Name = x
 					  }).ToList();
 
 			if (coursename == null)

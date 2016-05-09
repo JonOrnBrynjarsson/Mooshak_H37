@@ -14,8 +14,6 @@
 
 
 	<div class="admin-createCourse-buttons">
-		<button class="btn btn-primary save-button">Save</button>
-		<br />
 		<button class="btn btn-primary upload-csv-button" id="createUser">Upload CSV</button>
 	</div>
 
@@ -47,7 +45,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-10">
-					<input type="submit" class="btn btn-default" value="Register" />
+					<input type="submit" class="btn btn-default" value="Save" />
 				</div>
 			</div>
 		}
@@ -78,11 +76,19 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>1</td>
-					<td>Jón Örn</td>
-					<td>NonniGumm@ru.is</td>
-					<td>Student</td>
-					<td>05-May-16 13:37:00</td>
+					@{int rowNo = 0;}
+					@foreach (var item in Model.User)
+					{
+						<td>@(rowNo += 1)</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Name)
+						</td>
+						<td>
+							
+						</td>
+						<td>Student</td>
+						<td>05-May-16 13:37:00</td>
+					}
 				</tr>
 			<tbody>
 		</table>
