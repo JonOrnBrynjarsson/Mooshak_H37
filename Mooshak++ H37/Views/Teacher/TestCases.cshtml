@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.TestCaseViewModel>
+
+@{
+    ViewBag.Title = "TestCases";
+}
+
+<h2>TestCases</h2>
+
+<div class="clearfix">
+	<div class="large-left-portion">
+		<table class="table">
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Inputstring)
+				</th>
+				<th></th>
+			</tr>
+
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Inputstring)
+					</td>
+					<td>
+						@*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
+						@*@Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+						@Html.ActionLink("Delete", "Delete", new { id = item.ID })
+					</td>
+				</tr>
+			}
+
+		</table>
+	</div>
+
+	<div class="small-right-portion">
+		<p>
+			@Html.ActionLink("Create New", "CreateTestCase", new { milestoneID = Model.ElementAt(0).MilestoneID }, new { @class = "btn btn-primary create-button" })
+			@*@Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })*@
+		</p>
+	</div>
+
+
+
+</div>
+
+@Html.ActionLink("Go Back", null, null, null, new { href = Request.UrlReferrer })

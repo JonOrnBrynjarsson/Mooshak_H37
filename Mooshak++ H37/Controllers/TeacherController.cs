@@ -177,6 +177,13 @@ namespace Mooshak___H37.Controllers
 				return View(model);
 			}
 		}
+
+		[HttpGet]
+		public ActionResult TestCases(int milID)
+		{
+			var viewModel = _testcaseService.GetTestCasesForMilestone(milID);
+			return View(viewModel);
+		}
 	}
 }
 
