@@ -208,9 +208,9 @@ namespace Mooshak___H37.Services
 			{
 				edit.Name = model.Name;
 				edit.SetDate = model.SetDate;
-			//	edit.DueDate = model.DueDate;
+				edit.DueDate = model.DueDate;
 				edit.Description = model.Description;
-			//	edit.ID = model.ID;
+				edit.ID = model.ID;
 				edit.IsActive = model.IsActive;
 				edit.IsRemoved = model.IsRemoved;
 
