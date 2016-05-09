@@ -78,27 +78,7 @@ namespace Mooshak___H37.Controllers
 			}
 		}
 
-		[HttpGet]
-		public ActionResult EditAssignment(int id)
-		{
-			var viewModel = _assignService.Assignment(id);
-			return View(viewModel);
-		}
 
-		[HttpPost]
-		public ActionResult EditAssignment(AssignmentViewModel model, int assignID)
-		{
-			if (ModelState.IsValid)
-			{
-				_assignService.EditAssignment(model, assignID);
-				return RedirectToAction("Index");
-			}
-			else
-			{
-				//ViewBag.CourseList = GetCourses();
-				return View(model);
-			}
-		}
 
 		[HttpGet]
 		public ActionResult Milestones(int id)
@@ -154,5 +134,26 @@ namespace Mooshak___H37.Controllers
 				return View(model);
 			}
 		}
+		[HttpGet]
+		public ActionResult EditAssignment(int id)
+		{
+			var viewModel = _assignService.Assignment(id);
+			return View(viewModel);
+		}
+
+		[HttpPost]
+		public ActionResult EditAssignment(AssignmentViewModel model, int assignID)
+		{
+			if (ModelState.IsValid)
+			{
+				_assignService.EditAssignment(model, assignID);
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View(model);
+			}
+		}
 	}
 }
+

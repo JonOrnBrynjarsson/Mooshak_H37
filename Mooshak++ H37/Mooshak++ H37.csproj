@@ -332,6 +332,7 @@
     <Content Include="Views\Teacher\CreateMilestone.cshtml" />
     <Content Include="Views\Teacher\EditMilestone.cshtml" />
     <Content Include="Views\Teacher\EditAssignment.cshtml" />
+    <Content Include="Views\Teacher\ViewAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
