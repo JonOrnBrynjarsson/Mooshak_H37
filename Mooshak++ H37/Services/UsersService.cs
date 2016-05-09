@@ -39,6 +39,18 @@ namespace Mooshak___H37.Services
 
             return viewModel;
         }
+		/// <summary>
+		/// In order to 
+		/// </summary>
+		/// <returns>Returns the User.ID for the current ApplicationUser</returns>
+		public int getUserIdForCurrentyApplicationUser()
+		{
+			ApplicationUser aspUser = new ApplicationUser();
+			int userId = (from user in _db.Users
+				where user.AspNetUserId == aspUser.Id
+				select user.ID).SingleOrDefault();
+			return userId;
+		}
 
         internal void setUser(string name, ApplicationUser user)
         {

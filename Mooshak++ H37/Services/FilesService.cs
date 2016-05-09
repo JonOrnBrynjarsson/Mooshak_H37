@@ -10,35 +10,42 @@ using Mooshak___H37.Models.Entities;
 using System.IO.Compression;
 using System.Net;
 using System.Web;
+using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Services
 {
-	public static class ZipFile { }
-
 	class FilesService
 	{
-		private ApplicationDbContext _db;
+		private readonly ApplicationDbContext _db;
+		private UsersService _usersService;
 
 		public FilesService()
 		{
 			_db = new ApplicationDbContext();
+			_usersService = new UsersService();
 		}
 
 
-		public bool SaveSubmissionfile( HttpPostedFileBase file)
+		public bool SaveSubmissionfile(HttpPostedFileBase file, int submissionId)
 		{
-			
+			string filePath = getStudentSubmissionFolder(submissionId);
+			filePath += file.FileName;
+			file.SaveAs(filePath);	
 			return true;
 		}
 
 		public int createSubmission(int milestonedId)
 		{
+			
 			if (milestonedId > 0)
 			{
 				Submission submission = new Submission();
 				submission.MilestoneID = milestonedId;
-				submission.ProgramFileLocation = "";
-				//submission.
+				submission.User.ID = _usersService.getUserIdForCurrentyApplicationUser();
+				_db.Submissions.Add(submission);
+				_db.SaveChanges();
+				int s = submission.ID;
+				return s;
 			}
 			return 0;
 		}
@@ -64,7 +71,7 @@ namespace Mooshak___H37.Services
 		public string getStudentSubmissionFolder(int submissionId)
 		{
 			return ConfigurationManager.AppSettings["StudentFileLocation"] + 
-			"/" + submissionId.ToString();
+				submissionId.ToString();
 		}
 
 		/// <summary>
@@ -77,7 +84,7 @@ namespace Mooshak___H37.Services
 			string userName = getUserNameBySubmissionID(submissionId);
 
 			return ConfigurationManager.AppSettings["RunLocation"] +
-			"/" + userName;
+				userName;
 		}
 
 		/// <summary>
