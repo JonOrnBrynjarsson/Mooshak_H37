@@ -41,7 +41,8 @@ namespace Mooshak___H37.Services
 
 
 			var assignments = (from assi in _db.Assignments
-							   where userCourses.Contains(assi.CourseID)
+							   where userCourses.Contains(assi.CourseID) &&
+								assi.IsRemoved != true
 							   orderby assi.DueDate descending
 							   select assi).ToList();
 
@@ -78,7 +79,8 @@ namespace Mooshak___H37.Services
 				//throw new exception / skila NULL(ekki skila null hér)
 			}
 
-			var milestones = _db.Milestones.Where(x => x.AssignmentID == id)
+			var milestones = _db.Milestones.Where(x => x.AssignmentID == id &&
+												  x.IsRemoved != true)
 				.Select(x => new MilestoneViewmodel
 				{
 					ID = x.ID,
@@ -129,6 +131,21 @@ namespace Mooshak___H37.Services
 			}; 
 
 			return model;
+		}
+
+		internal void RemoveAssignment(AssignmentViewModel model)
+		{
+			var assignment = (from assign in _db.Assignments
+							 where assign.ID == model.ID
+							 select assign).FirstOrDefault();
+
+			if (assignment == null)
+			{
+				//DO SOMEHTING
+			}
+
+			assignment.IsRemoved = true;
+			_db.SaveChanges();
 		}
 
 		public List<AssignmentViewModel> getAssignmentsInCourse(int id)

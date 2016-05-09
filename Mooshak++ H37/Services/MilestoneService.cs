@@ -38,7 +38,8 @@ namespace Mooshak___H37.Services
 		{
 			var milestones = (from miles in _db.Milestones
 							  orderby miles.ID
-							  where miles.AssignmentID == assigID
+							  where miles.AssignmentID == assigID && 
+							  miles.IsRemoved != true
 							  select miles).ToList();
 
 			var viewModel = new List<MilestoneViewmodel>();
@@ -110,6 +111,21 @@ namespace Mooshak___H37.Services
 			{
 				// DO SOMETHING!!!
 			}
+		}
+
+		internal void RemoveMilestone(MilestoneViewmodel model)
+		{
+			var milestone = (from mile in _db.Milestones
+							where mile.ID == model.ID
+							select mile).FirstOrDefault();
+
+			if (milestone == null)
+			{
+				//DO SOMEHTING
+			}
+
+			milestone.IsRemoved = true;
+			_db.SaveChanges();
 		}
 	}
 }

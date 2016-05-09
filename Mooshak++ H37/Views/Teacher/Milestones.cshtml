@@ -28,7 +28,10 @@
                     <th>Name</th>
                     <th>Percentage</th>
                     <th>Submissions</th>
+					<th>Remove</th>
                     <th>Edit</th>
+					<th>Test Cases</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +43,7 @@
                         <th>@item.Name</th>
                         <th>@item.Percentage %</th>
                         <th>@item.AllowedSubmissions</th>
+						<th>@Html.ActionLink("Remove", "RemoveMilestone", new { id = item.ID })</th>
                         <th>@Html.ActionLink("Edit", "EditMilestone", new { milestoneID = item.ID })</th>
 						<th>@Html.ActionLink("Test Cases", "TestCases", new { milID = item.ID })</th>
                     </tr>

@@ -1,0 +1,48 @@
+﻿@model Mooshak___H37.Models.Viewmodels.MilestoneViewmodel
+
+@{
+    ViewBag.Title = "RemoveMilestone";
+}
+
+<h2>Remove Milestone</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div class="clearfix">
+	<div>
+		<hr />
+		<div class="large-left-portion">
+			<table class="table table-hover">
+				<tbody>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.Name)</td>
+						<td>@Html.DisplayFor(model => model.Name)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.Description)</td>
+						<td>@Html.DisplayFor(model => model.Description)</td>
+					</tr>
+					<tr>
+						<td>Submissions:</td>
+						<td>@Html.DisplayFor(model => model.AllowedSubmissions)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.Percentage)</td>
+						<td>@Html.DisplayFor(model => model.Percentage) %</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-actions no-color">
+		<input type="submit" value="Delete" class="btn btn-default" /> |
+		@Html.ActionLink("Back to List", "Index")
+	</div>
+}
+
+

@@ -50,7 +50,10 @@
                         <th>Due Date</th>
                         <th>Accepted</th>
                         <th>Graded</th>
-                        <th></th>
+                        <th>Details</th>
+						<th>Milestones</th>
+						<th></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -71,8 +74,8 @@
                             <td></td>
                             <td>
                                 @Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
-								@Html.ActionLink("Milestones", "Milestones", new { id = item.ID })
                             </td>
+							<td>@Html.ActionLink("Milestones", "Milestones", new { id = item.ID })</td>
 
                         </tr>
                     }
