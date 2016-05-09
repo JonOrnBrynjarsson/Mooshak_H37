@@ -46,7 +46,7 @@ namespace Mooshak___H37.Controllers
 			StudentSubmit s = new StudentSubmit();
 
 // Hér þarf að laga milestone til að taka við því sem verið er að vinna með
-			s.Milestone = 2;
+			s.Milestone = 3;
 			return View(s);
 		}
 
@@ -62,6 +62,7 @@ namespace Mooshak___H37.Controllers
 					return View("Error");
 				}
 				_filesService.SaveSubmissionfile(submit.File, submissionId);
+				_filesService.testingSubmission(submissionId);
 			}
 			else
 			{
