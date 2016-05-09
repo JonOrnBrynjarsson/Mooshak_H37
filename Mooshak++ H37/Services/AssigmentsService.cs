@@ -148,6 +148,30 @@ namespace Mooshak___H37.Services
 			_db.SaveChanges();
 		}
 
+		internal void EditAssignment(AssignmentViewModel model, int assignID)
+		{
+			var edit = (from assign in _db.Assignments
+						where assign.ID == assignID
+						select assign).FirstOrDefault();
+
+			if(edit != null)
+			{
+				edit.Name = model.Name;
+				edit.SetDate = model.SetDate;
+			//	edit.DueDate = model.DueDate;
+				edit.Description = model.Description;
+			//	edit.ID = model.ID;
+				edit.IsActive = model.IsActive;
+				edit.IsRemoved = model.IsRemoved;
+
+				_db.SaveChanges();
+			}
+			else
+			{
+				// DO Something!!
+			}
+		}
+
 		public bool SaveSubmissionfile(string file)
 		{
 			return true;
