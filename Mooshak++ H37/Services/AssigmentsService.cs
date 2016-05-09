@@ -181,10 +181,10 @@ namespace Mooshak___H37.Services
 			_db.SaveChanges();
 		}
 
-		internal void EditAssignment(AssignmentViewModel model, int assignID)
+		internal void EditAssignment(AssignmentViewModel model)
 		{
 			var edit = (from assign in _db.Assignments
-						where assign.ID == assignID
+						where assign.ID == model.ID
 						select assign).FirstOrDefault();
 
 			if(edit != null)
