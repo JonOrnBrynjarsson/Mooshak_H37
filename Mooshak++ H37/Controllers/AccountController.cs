@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Mooshak___H37.Models;
 using Mooshak___H37.Services;
+using Mooshak___H37.Models.Viewmodels;
 
 namespace Mooshak___H37.Controllers
 {
@@ -18,6 +19,7 @@ namespace Mooshak___H37.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private UsersService _usersService;
 
         public AccountController()
         {
@@ -74,13 +76,19 @@ namespace Mooshak___H37.Controllers
                 return View(model);
             }
 
+            int userID = _usersService.getUserIDbyEmail(model);
+            string role = _usersService.getRolebyID(userID);
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
+
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        return RedirectToAction("Index", role);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

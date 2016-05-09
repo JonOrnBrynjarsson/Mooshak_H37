@@ -37,6 +37,7 @@ namespace Mooshak___H37.Services
                 viewModel.Add(model);
             }
 
+
             return viewModel;
         }
 		/// <summary>
@@ -57,15 +58,40 @@ namespace Mooshak___H37.Services
 
             string ID = user.Id;
 
-            var bla = new User
+            var User = new User
             {
                 Name = name,
                 AspNetUserId = ID
             };
 
-            _db.Users.Add(bla);
+            _db.Users.Add(User);
             _db.SaveChanges();
 
+        }
+
+        internal int getUserIDbyEmail(LoginViewModel model)
+        {
+
+            var User = (from x in _db.Users
+                        where x.AspNetUser.Email == model.Email
+                        select x.ID).FirstOrDefault();
+
+
+
+            return User;
+        }
+
+        internal string getRolebyID(int userID)
+        {
+            var roleID = (from x in _db.UserCourseRelations
+                          where x.UserID == userID
+                          select x.RoleID).ToString();
+
+            var Role = (from x in _db.Roles
+                        where x.Id == roleID
+                        select x.Name).ToString();
+
+                return Role;
         }
     }
 }
