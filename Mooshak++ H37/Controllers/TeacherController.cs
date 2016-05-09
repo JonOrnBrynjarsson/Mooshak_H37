@@ -172,6 +172,19 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpGet]
+		public ActionResult RemoveAssignment(int id)
+		{
+			var viewModel = _assignService.Assignment(id);
+			return View(viewModel);
+		}
+		[HttpPost]
+		public ActionResult RemoveAssignment(AssignmentViewModel model)
+		{
+			_assignService.RemoveAssignment(model);
+			return RedirectToAction("Index");
+		}
+
+		[HttpGet]
 		public ActionResult CreateTestCase(TestCaseViewModel model)
 		{
 			TestCaseViewModel viewModel = new TestCaseViewModel();
