@@ -199,7 +199,8 @@ namespace Mooshak___H37.Controllers
 			if (ModelState.IsValid)
 			{
 				_testcaseService.CreateTestCase(model, milestoneID);
-				return RedirectToAction("Index");
+				return RedirectToAction("TestCases", new { milID = milestoneID });
+
 			}
 			else
 			{
@@ -211,6 +212,16 @@ namespace Mooshak___H37.Controllers
 		public ActionResult TestCases(int milID)
 		{
 			var viewModel = _testcaseService.GetTestCasesForMilestone(milID);
+
+			ViewBag.MilestID = milID;
+
+			ViewBag.AssignID = _assignService.GetAssignmentIDFromMilestoneID(milID);
+
+			if (viewModel.Count == 0)
+			{
+				viewModel = new List<TestCaseViewModel>();
+			}
+
 			return View(viewModel);
 		}
 

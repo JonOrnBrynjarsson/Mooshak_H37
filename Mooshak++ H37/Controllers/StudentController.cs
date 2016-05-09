@@ -34,11 +34,11 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
-/*		public ActionResult Assignments()
+		public ActionResult Assignments()
 		{
-			var viewModel = _assignService.GetCourseAssignments();
+			var viewModel = _assignService.getAllAssignments();
 			return View(viewModel);
-		}*/
+		}
 
 		[HttpGet]
 		public ActionResult Submit(int? milestone)

@@ -133,6 +133,28 @@ namespace Mooshak___H37.Services
 			return model;
 		}
 
+
+
+
+
+		public int GetAssignmentIDFromMilestoneID(int milestoneID)
+		{
+
+			var assignmentID = (from mil in _db.Milestones
+							  where mil.ID == milestoneID
+							  select mil.AssignmentID).FirstOrDefault();
+
+			if (assignmentID == null)
+			{
+				//DO SOMETHING
+				//throw new exception / skila NULL(ekki skila null hér)
+			}
+			return assignmentID;
+		}
+
+
+
+
 		internal void RemoveAssignment(AssignmentViewModel model)
 		{
 			var assignment = (from assign in _db.Assignments

@@ -55,11 +55,16 @@
             </tbody>
         </table>
     </div>
-    <div class="small-right-portion">
+    <div class="small-right-portion btn-group-vertical">
         <p>
             @Html.ActionLink("Edit Assignment", "EditAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
+			<br />
 			@Html.ActionLink("Remove Assignment", "RemoveAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
-        </p>
+			<br />
+			@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
+
+
+		</p>
     </div>
 </div>
 
