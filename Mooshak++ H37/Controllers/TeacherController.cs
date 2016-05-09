@@ -164,7 +164,8 @@ namespace Mooshak___H37.Controllers
 			if (ModelState.IsValid)
 			{
 				_assignService.EditAssignment(model);
-				return RedirectToAction("Index");
+				return RedirectToAction("ViewAssignment", new { id = model.ID });
+
 			}
 			else
 			{
