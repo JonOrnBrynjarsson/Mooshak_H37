@@ -11,7 +11,7 @@ namespace Mooshak___H37.Controllers
 {
 	//[Authorize(Roles = "Teacher")]
 	public class TeacherController : Controller
-    {
+	{
 		AssigmentsService _assignService = new AssigmentsService();
 		CoursesService _courseService = new CoursesService();
 		MilestoneService _milestoneService = new MilestoneService();
@@ -46,7 +46,7 @@ namespace Mooshak___H37.Controllers
 
 			result.Add(new SelectListItem() { Value = "", Text = " - Choose a course - " });
 
-			result.AddRange(allCourses.Select(x=>new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }));
+			result.AddRange(allCourses.Select(x => new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }));
 
 			return result;
 		}
@@ -74,6 +74,28 @@ namespace Mooshak___H37.Controllers
 			else
 			{
 				ViewBag.CourseList = GetCourses();
+				return View(model);
+			}
+		}
+
+		[HttpGet]
+		public ActionResult EditAssignment(int id)
+		{
+			var viewModel = _assignService.Assignment(id);
+			return View(viewModel);
+		}
+
+		[HttpPost]
+		public ActionResult EditAssignment(AssignmentViewModel model, int assignID)
+		{
+			if (ModelState.IsValid)
+			{
+				_assignService.EditAssignment(model, assignID);
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				//ViewBag.CourseList = GetCourses();
 				return View(model);
 			}
 		}
