@@ -150,7 +150,8 @@ namespace Mooshak___H37.Services
 						  select x).SingleOrDefault();
 
 			var ass = _assignmentsService.getAssignmentsInCourse(courseID);
-			var users = _userService.getAllUsersName();
+			var users = _userService.getUsersInCourse(courseID);
+
 			CourseViewModel model = new CourseViewModel
 			{
 				Name = course.Name,

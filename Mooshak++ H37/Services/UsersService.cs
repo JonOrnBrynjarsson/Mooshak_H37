@@ -47,14 +47,38 @@ namespace Mooshak___H37.Services
 
 			List<UserViewModel> model = new List<UserViewModel>();
 
-			foreach(var user in model)
+			//here we select the connection table that gives us the userID, roleID, courseID, etc.
+			//of the users in the given courseID param.
+			var userInfo = (from x in _db.UserCourseRelations
+						  where courseID == x.CourseID
+						  select x).ToList();
+			//this is to get only the student id for next linq expression (.Contains)
+			var userIdList = (from x in _db.UserCourseRelations
+							where courseID == x.CourseID && x.IsRemoved == false
+							select x.UserID).ToList();
+			//here we select all the student names that that are in the course
+			//from the ID we collected just above
+			var users = (from y in _db.Users
+						 where userIdList.Contains(y.ID) 
+						 select y).ToList();
+			//here we select the AspNetUser table to get the email from all the students in the course
+			var aspInfo = (from z in _db.Users
+						   where z.AspNetUser.Id == z.AspNetUserId
+						   select z.AspNetUser.Email).ToList();
+
+
+
+			for(int i = 0; i<userInfo.Count; i++)
 			{
 				UserViewModel temp = new UserViewModel
 				{
-					//	Name = 
-					//	Email = 
-					//	RoleID = ,
-					//	CourseID = ,					
+					Name = users[i].Name,
+					Email = aspInfo[i],
+					RoleID = userInfo[i].RoleID,
+					//To see all the courseID's of each individual student and store them in list
+					CourseID = (from usr in _db.UserCourseRelations
+								where userInfo[i].UserID == usr.UserID
+								select usr.CourseID).ToList()					
 				};
 
 				model.Add(temp);
