@@ -143,11 +143,11 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult EditAssignment(AssignmentViewModel model, int assignID)
+		public ActionResult EditAssignment(AssignmentViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
-				_assignService.EditAssignment(model, assignID);
+				_assignService.EditAssignment(model);
 				return RedirectToAction("Index");
 			}
 			else
