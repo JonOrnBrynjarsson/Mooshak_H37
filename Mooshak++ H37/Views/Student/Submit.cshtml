@@ -1,34 +1,34 @@
 ﻿@model Mooshak___H37.Models.Viewmodels.StudentSubmit
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Submit", "Student", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>StudentSubmit</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.milestone, htmlAttributes: new { @class = "control-label col-md-2" })
-	        <div class="col-md-10">
-		        @Html.EditorFor(model => model.milestone, new {htmlAttributes = new {@class = "form-control"}})
-		        @Html.ValidationMessageFor(model => model.milestone, "", new {@class = "text-danger"})
-	        </div>
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<h4>StudentSubmit</h4>
+		<hr/>
+		<p class="alert-info">@ViewBag.ErrorMessage</p>
+		@Html.ValidationSummary(true, "", new {@class = "text-danger"})
+		<div class="form-group">
+			@Html.Hidden("Milestone")
+
 			<div class="col-md-10">
-				@Html.LabelFor(model => model.file, htmlAttributes: new { @class = "control-label col-md-2" })
-		        <input type="file" name="file" id="file" accept=".cpp, .zip"/>
-				@Html.ValidationMessageFor(model => model.milestone, "", new { @class = "text-danger" })
-	        </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+				@Html.LabelFor(model => model.File, htmlAttributes: new {@class = "control-label col-md-2"})
+				<input type="file" name="File" id="File" accept=".cpp, .zip"/>
+				@Html.ValidationMessageFor(model => model.File, "", new {@class = "text-danger"})
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Create" class="btn btn-default"/>
+			</div>
+		</div>
+
+
+		<div>
+			@Html.ActionLink("Back to List", "Index")
+		</div>
+	</div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,10 +9,12 @@ using Mooshak___H37.Services;
 using Mooshak___H37.Models;
 using Mooshak___H37.Models.Viewmodels;
 using System.Web.UI.HtmlControls;
+using Mooshak___H37.Models.Entities;
+using System.IO;
 
 namespace Mooshak___H37.Controllers
 {
-	[Authorize(Roles = "Student")]
+	//[Authorize(Roles = "Student")]
 	public class StudentController : Controller
 	{
 		AssigmentsService _assignService = new AssigmentsService();
@@ -41,25 +44,27 @@ namespace Mooshak___H37.Controllers
 		public ActionResult Submit(int? milestone)
 		{
 			StudentSubmit s = new StudentSubmit();
-			s.milestone = 10;
+			s.Milestone = 10;
 			return View(s);
 		}
 
 		[HttpPost]
-		public ActionResult Submit(StudentSubmit submit)
+		[ValidateAntiForgeryToken]
+		public ActionResult Submit(StudentSubmit s)
 		{
-			
-			int milestone;
-			bool result = Int32.TryParse(submit.milestone.ToString(), out milestone);
-			
-			//string file = collection["file"];
-			//HttpPostedFile file = collection["file"];
-			/*
-			if (file.ContentLength > 0)
+			if (s.File != null && s.File.ContentLength > 0)
 			{
-				_filesService.SaveSubmissionfile(file)
+				_filesService.SaveSubmissionfile(s.File);
 			}
-*/
+			else
+			{
+				if (ViewBag.ErrorMessage != "")
+				{
+					return View("Error");
+				}
+				ViewBag.ErrorMessage = "No file submitted, try again";
+				return View(s);
+			}
 			return RedirectToAction("Index");
 		}
 	}

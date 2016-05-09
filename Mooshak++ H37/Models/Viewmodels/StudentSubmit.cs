@@ -11,7 +11,7 @@ namespace Mooshak___H37.Models.Viewmodels
 	public class StudentSubmit
 	{
 		[ConfigurationPropertyAttribute("maxRequestLength", DefaultValue = 50000)]
-		public int milestone { get; set; }
-		public HttpPostedFile file { get; set; }
+		public int Milestone { get; set; }
+		public HttpPostedFileBase File { get; set; }
 	}
 }

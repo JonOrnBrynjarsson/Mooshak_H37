@@ -25,8 +25,9 @@ namespace Mooshak___H37.Services
 		}
 
 
-		public bool SaveSubmissionfile( HttpPostedFile file)
+		public bool SaveSubmissionfile( HttpPostedFileBase file)
 		{
+			
 			return true;
 		}
 		/// <summary>
