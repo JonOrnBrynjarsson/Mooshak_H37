@@ -17,8 +17,8 @@ namespace Mooshak___H37.Models.Entities
 
 		public int MilestoneID { get; set; }
 
-		
-		private int UserID { get; set; }
+
+		public int UserID { get; set; }
 
 		[DefaultValue(0)]
 		public bool IsGraded { get; set; }

@@ -8,7 +8,7 @@
 
 <div class="clearfix">
     <div class="large-left-portion">
-        <h1>Courses<button class="btn btn-primary create-button button-right">Create New Course</button></h1>
+        <h1>Courses<button class="btn btn-primary create-button button-right" onclick="location.href='@Url.Action("CreateCourse", "Admin")'">Create New Course</button></h1>
         
         <label for="courses">Search Courses</label>
         <select id="courses" name="courses" class="form-control">
@@ -42,6 +42,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
+						<td>@Html.ActionLink("Edit", "EditCourse", new { id = item.ID })</td>
                     </tr>
                 }
             </tbody>

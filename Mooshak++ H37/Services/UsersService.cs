@@ -1,4 +1,6 @@
-﻿using Mooshak___H37.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
 using System;
@@ -46,10 +48,10 @@ namespace Mooshak___H37.Services
 		/// <returns>Returns the User.ID for the current ApplicationUser</returns>
 		public int getUserIdForCurrentyApplicationUser()
 		{
-			ApplicationUser aspUser = new ApplicationUser();
-			int userId = (from user in _db.Users
-				where user.AspNetUserId == aspUser.Id
-				select user.ID).SingleOrDefault();
+			var aspUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
+			var userId = (from user in _db.Users
+							where user.AspNetUserId == aspUser
+							select user.ID).FirstOrDefault();
 			return userId;
 		}
 

@@ -5,15 +5,14 @@
 }
 
 <div class="clearfix">
+    <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
     <div class="large-left-portion">
-        <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
         <div>
             <label for="student">Student</label>
             <select id="student" name="student" class="form-control">
                 @foreach (var item in Model.Users)
                 {
-                    <option>@item.Name</option>
-                }
+                    <option>@item.Name</option>}
             </select>
             <label for="graded">Graded</label>
             <input type="checkbox" id="graded" name="graded" />
@@ -23,14 +22,13 @@
                 <option>Milestone1</option>
                 <option>Milestone2 </option>
             </select>
+        </div>
+    
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")                 </div>
          </div>
-        
-		<div class="panel panel-default">
-			<div class="panel-body">
-				Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")
-			</div>
-		</div>
-
+    
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -53,76 +51,16 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                    </tr>
-                }
+                    </tr>}
             </tbody>
         </table>
     </div>
+    <div class="small-right-portion">
+        <p>
+            @Html.ActionLink("Edit Assignment", "EditAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
+
+        </p>
+    </div>
 </div>
-@*
-    <div>
-        <h4>AssignmentViewModel</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.SetDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.SetDate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.DueDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.DueDate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CourseID)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CourseID)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.IsActive)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.IsRemoved)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.IsRemoved)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-
-        </dl>
-    </div>*@
-<p>
-    @Html.ActionLink("Editt", "EditAssignment", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
