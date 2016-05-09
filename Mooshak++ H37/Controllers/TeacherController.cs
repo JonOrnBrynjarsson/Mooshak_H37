@@ -184,6 +184,21 @@ namespace Mooshak___H37.Controllers
 			var viewModel = _testcaseService.GetTestCasesForMilestone(milID);
 			return View(viewModel);
 		}
+
+
+
+		[HttpGet]
+		public ActionResult RemoveTestCase(int id)
+		{
+			var viewModel = _testcaseService.GetSingleTestCase(id);
+			return View(viewModel);
+		}
+		[HttpPost]
+		public ActionResult RemoveTestCase(TestCaseViewModel model)
+		{
+			_testcaseService.RemoveTestCase(model);
+			return RedirectToAction("Index");
+		}
 	}
 }
 
