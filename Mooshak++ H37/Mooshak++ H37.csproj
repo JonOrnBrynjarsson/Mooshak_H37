@@ -347,6 +347,7 @@
     <Content Include="Views\Admin\IndexErrors.cshtml" />
     <Content Include="Views\Admin\ViewCourses.cshtml" />
     <Content Include="Views\Admin\EditCourse.cshtml" />
+    <Content Include="Views\Admin\ViewUsers.cshtml" />
     <None Include="Views\Shared\_Layout.backup" />
     <Content Include="Views\Student\ViewAssignment.cshtml" />
     <Content Include="Views\Student\View.cshtml" />
