@@ -178,5 +178,13 @@ namespace Mooshak___H37.Services
             return model;
 
         }
+
+        public int NumberOfSubmissions()
+        {
+            var submissions = (from subs in _db.Submissions
+                              select subs).Count();
+
+            return submissions;
+        }
     }       
 }

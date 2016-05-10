@@ -105,5 +105,13 @@ namespace Mooshak___H37.Services
 
 			return model;
 		}
-	}
+
+        public int NumberOfTestCases()
+        {
+            var testCases = (from tc in _db.TestCases
+                              select tc).Count();
+
+            return testCases;
+        }
+    }
 }

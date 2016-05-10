@@ -203,5 +203,13 @@ namespace Mooshak___H37.Services
 			return tRuns;
 
 		}
-	}
+
+        public int NumberOfMilestones()
+        {
+            var milestones = (from mil in _db.Milestones
+                           select mil).Count();
+
+            return milestones;
+        }
+    }
 }
