@@ -108,7 +108,7 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
         public ActionResult ViewSubmission (int submissionID)
         {
-            var viewModel = _submissionService.GetOneSubmission(submissionID);
+            var viewModel = _submissionService.GetSubmission(submissionID);
             viewModel.code = _filesService.getSubmissionFile(submissionID);
             viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionID);
             return View(viewModel);
