@@ -341,6 +341,11 @@ namespace Mooshak___H37.Services
 			clearRunfolder(submissionId);
 		}
 
+		/// <summary>
+		/// Gets the program code for a submission
+		/// </summary>
+		/// <param name="submissionId">The submission ID for the submission</param>
+		/// <returns>The program code as a string</returns>
 		public string getSubmissionFile(int submissionId)
 		{
 			string folder = getStudentSubmissionFolder(submissionId);

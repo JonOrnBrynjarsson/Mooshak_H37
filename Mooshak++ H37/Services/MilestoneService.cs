@@ -198,7 +198,7 @@ namespace Mooshak___H37.Services
 		public List<Testrun> getTestrunsOutcomeForSubmission(int submissionId)
 		{
 			List<Testrun> tRuns = (from t in _db.Testruns
-								   where t.ID == submissionId
+								   where t.SubmissionID == submissionId
 								   select t).ToList();
 			return tRuns;
 

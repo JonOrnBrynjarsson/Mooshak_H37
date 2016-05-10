@@ -97,6 +97,14 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpGet]
+		public ActionResult SubmissionDetail(int submissionId)
+		{
+			SubmissionsViewModel model = new SubmissionsViewModel();
+			model = _submissionService.getSubmissionDetail(submissionId);
+			return View(model);
+		}
+
+		[HttpGet]
 		public ActionResult EditCode( )
 		{
 			int submissionId = 68;

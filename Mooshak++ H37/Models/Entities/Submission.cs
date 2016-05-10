@@ -28,6 +28,8 @@ namespace Mooshak___H37.Models.Entities
 
 		public double Grade { get; set; }
 
+		public bool FinalSolution { get; set; }
+
 		[Required]
 		public string ProgramFileLocation { get; set; }
 
