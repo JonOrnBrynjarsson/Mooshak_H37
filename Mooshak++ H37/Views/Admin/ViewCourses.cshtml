@@ -38,9 +38,18 @@
                         <td>@(rowNo += 1)</td>
                         <td>@item.Name</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-						<td>@Html.ActionLink("Delete", "DeleteCourse", new { id = item.ID })</td>
+                        <td>
+							@if(item.User == null)
+							{
+								@Html.Raw("0");
+							}
+							else
+							{
+								@Html.Raw(item.User.Count);
+							}
+						</td>
+                        <td>@item.Isactive</td>
+						<td>@Html.ActionLink("Delete", "RemoveCourse", new { id = item.ID })</td>
 						<td>@Html.ActionLink("Edit", "EditCourse", new { id = item.ID })</td>
                     </tr>
                 }
