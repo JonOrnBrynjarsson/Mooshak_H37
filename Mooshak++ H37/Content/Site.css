@@ -70,3 +70,7 @@ h1
 {
     margin-bottom: 5%
 }
+
+.btn-group-vertical a.btn {
+	display:block;
+}

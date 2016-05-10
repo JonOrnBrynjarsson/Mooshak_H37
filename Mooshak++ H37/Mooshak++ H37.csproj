@@ -276,6 +276,7 @@
     <Compile Include="Models\Viewmodels\EditCodeViewModel.cs" />
     <Compile Include="Models\Viewmodels\MilestoneViewmodel.cs" />
     <Compile Include="Models\Viewmodels\StudentSubmit.cs" />
+    <Compile Include="Models\Viewmodels\SubmissionsViewModel.cs" />
     <Compile Include="Models\Viewmodels\TestCaseViewModel.cs" />
     <Compile Include="Models\Viewmodels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -286,6 +287,7 @@
     <Compile Include="Services\FilesService.cs" />
     <Compile Include="Services\MessagesService.cs" />
     <Compile Include="Services\MilestoneService.cs" />
+    <Compile Include="Services\SubmissionsService.cs" />
     <Compile Include="Services\TestCaseService.cs" />
     <Compile Include="Services\UsersService.cs" />
     <Compile Include="Startup.cs" />
@@ -361,6 +363,7 @@
     <Content Include="Views\Admin\ViewCourses.cshtml" />
     <Content Include="Views\Admin\EditCourse.cshtml" />
     <Content Include="Views\Admin\ViewUsers.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
     <None Include="Views\Shared\_Layout.backup" />
     <Content Include="Views\Student\ViewAssignment.cshtml" />
     <Content Include="Views\Student\View.cshtml" />
@@ -378,6 +381,8 @@
     <Content Include="Views\Teacher\RemoveAssignment.cshtml" />
     <Content Include="Views\Student\EditCode.cshtml" />
     <Content Include="Views\Student\Assignments.cshtml" />
+    <Content Include="Views\Teacher\ViewSubmissions.cshtml" />
+    <Content Include="Views\Teacher\GradeSubmission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

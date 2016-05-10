@@ -55,8 +55,13 @@ namespace Mooshak___H37.Controllers
         [HttpPost]
         public ActionResult CreateCourse(CourseViewModel model)
         {
+			//Save the new course that was just created to the DB
             _courseService.setCourse(model);
-            return RedirectToAction("ViewCourses");
+
+			//find the id number of the course just created from the DB
+			int Courseid = _courseService.getCourseIdByName(model.Name);
+
+			return RedirectToAction("EditCourse", new { id = Courseid});
         }
 
 		public ActionResult EditCourse(int? id)
@@ -98,6 +103,20 @@ namespace Mooshak___H37.Controllers
 			return RedirectToAction("ViewCourses");
 		}
 
+		public ActionResult RemoveCourse(int? id)
+		{
+			if(id == null)
+			{
+				//TODO
+				//Throw exception
+				return null;//dont return null here
+			}
+
+			_courseService.removeCourseByID(id.Value);
+
+			return RedirectToAction("ViewCourses");
+		}
+
 		public ActionResult ViewUsers()
 		{
 			var viewModel = _userService.getAllUsersName();
@@ -106,6 +125,28 @@ namespace Mooshak___H37.Controllers
 				item.RoleID = _userService.getRoleNamebyID(item.ID);
 			}
 			return View(viewModel);
+		}
+
+		[HttpGet]
+		public ActionResult EditUser(int id)
+		{
+			var viewModel = _userService.GetSingleUser(id);
+			return View(viewModel);
+		}
+
+		[HttpPost]
+		public ActionResult EditUser(UserViewModel model)
+		{
+			if(ModelState.IsValid)
+			{
+				_userService.EditUser(model);
+			}
+			else
+			{
+				return View(model);
+			}
+
+			return RedirectToAction("ViewUsers");
 		}
 	}
 }

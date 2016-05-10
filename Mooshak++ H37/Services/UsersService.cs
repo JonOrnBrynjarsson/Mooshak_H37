@@ -40,6 +40,7 @@ namespace Mooshak___H37.Services
 				mail.Add(mailinfo);
 			}
 
+
             var viewModel = new List<UserViewModel>();
 			//combines all information gathered into the userViewmodel
             for(int i = 0; i< Users.Count(); i++)
@@ -74,7 +75,7 @@ namespace Mooshak___H37.Services
 			//here we select all the student names that that are in the course
 			//from the ID we collected just above
 			var users = (from y in _db.Users
-						 where userIdList.Contains(y.ID) 
+						 where userIdList.Contains(y.ID) && y.IsRemoved == false
 						 select y).ToList();
 			//here we select the AspNetUser table to get the email from all the students in the course
 			List<string> mail = new List<string>();
@@ -90,7 +91,7 @@ namespace Mooshak___H37.Services
 
 
 
-			for(int i = 0; i<userInfo.Count; i++)
+			for(int i = 0; i<users.Count; i++)
 			{
 
 				UserViewModel temp = new UserViewModel
@@ -146,6 +147,14 @@ namespace Mooshak___H37.Services
             _db.SaveChanges();
         }
 
+		//public string GetNameFromUserID(int userID)
+		//{
+		//	var username = (from name in _db.Users
+		//					where name.ID == userID
+		//					select name.Name).FirstOrDefault();
+		//	return username;
+		//}
+
         internal int getUserIDbyEmail(LoginViewModel model)
         {
 
@@ -153,10 +162,33 @@ namespace Mooshak___H37.Services
                         where x.AspNetUser.Email == model.Email
                         select x.ID).SingleOrDefault();
 
-
-
             return User;
         }
+
+		public UserViewModel GetSingleUser(int userID)
+		{
+			var user = (from us in _db.Users
+						where us.ID == userID
+						select us).FirstOrDefault();
+
+			var email = (from us in _db.Users
+						 where user.AspNetUserId == us.AspNetUser.Id
+						 select us.AspNetUser.Email).SingleOrDefault();
+
+			if (user == null)
+			{
+				//do something
+			}
+
+			UserViewModel model = new UserViewModel
+			{
+				ID = user.ID,
+				Name = user.Name,
+				Email = email,
+			};
+
+			return model;
+		}
 
         internal int getRoleNamebyID(int userID)
         {
@@ -166,5 +198,57 @@ namespace Mooshak___H37.Services
 
             return roleID;
         }
-    }
+
+		internal void EditUser(UserViewModel model)
+		{
+			var edit = (from user in _db.Users
+						where model.ID == user.ID
+						select user).FirstOrDefault();
+
+			if (edit != null)
+			{
+				edit.Name = model.Name;
+			}
+
+			_db.SaveChanges();
+
+			//var usr = (from us in _db.Users
+			//			 where edit.AspNetUserId == us.AspNetUser.Id
+			//			 select us.AspNetUser).SingleOrDefault();
+
+			//if (usr == null)
+			//{
+			//	//TODO
+			//	//throw error
+			//	return;
+			//}
+
+
+
+			//var store = new UserStore<ApplicationUser>(new IdentityDbContext());
+			//var manager = new UserManager<ApplicationUser>(store);
+
+			//ApplicationUser a = new ApplicationUser
+			//{
+			//	AccessFailedCount = usr.AccessFailedCount,
+			//	Email = usr.Email,
+			//	EmailConfirmed = usr.EmailConfirmed,
+			//	Id = usr.Id,
+			//	LockoutEnabled = usr.LockoutEnabled,
+			//	LockoutEndDateUtc = usr.LockoutEndDateUtc,
+			//	PasswordHash = usr.PasswordHash,
+			//	PhoneNumber = usr.PhoneNumber,
+			//	PhoneNumberConfirmed = usr.PhoneNumberConfirmed,
+			//	SecurityStamp = usr.SecurityStamp,
+			//	TwoFactorEnabled = usr.TwoFactorEnabled,
+			//	UserName = usr.UserName
+			//};
+
+
+			//manager.UpdateAsync(usr);
+
+			//store.Context.SaveChanges();
+			
+		}
+	}
 }

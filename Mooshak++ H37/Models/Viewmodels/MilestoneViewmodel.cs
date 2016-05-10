@@ -20,6 +20,7 @@ namespace Mooshak___H37.Models.Viewmodels
 		public bool IsRemoved { get; set; }
 		[Required(ErrorMessage = "Percentage is required")]
 		public double Percentage { get; set; }
+		public int UserSubmissions { get; set; }
 
 	}
 }
