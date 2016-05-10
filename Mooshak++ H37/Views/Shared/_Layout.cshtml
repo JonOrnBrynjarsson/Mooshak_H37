@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Mooshak++</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/Layout.css" rel="stylesheet" type="text/css">
@@ -50,6 +50,7 @@
 								<li>@Html.ActionLink("Courses-todo-dropdwn", "#", "#")</li>
 	                            <li>@Html.ActionLink("Assignments", "Assignments", "Student")</li>
 	                            <li>@Html.ActionLink("Submit", "Submit", "Student")</li>
+	                            <li>@Html.ActionLink("EditCode","EditCode","Student")</li>
                             </ul>
                         </div>
                     </li>
@@ -107,7 +108,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Mooshak++</p>
         </footer>
     </div>
 

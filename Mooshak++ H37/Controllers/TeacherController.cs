@@ -16,6 +16,7 @@ namespace Mooshak___H37.Controllers
 		CoursesService _courseService = new CoursesService();
 		MilestoneService _milestoneService = new MilestoneService();
 		TestCaseService _testcaseService = new TestCaseService();
+		SubmissionsService _submissionsService = new SubmissionsService();
 
 		// GET: Assignment
 		[HttpGet]
@@ -103,16 +104,25 @@ namespace Mooshak___H37.Controllers
 		[HttpPost]
 		public ActionResult CreateMilestone(MilestoneViewmodel model, int assigID)
 		{
-			if (ModelState.IsValid)
+			if (_milestoneService.TeacherCanCreateMilestone(model, assigID))
 			{
-				_milestoneService.CreateMilestone(model, assigID);
-				return RedirectToAction("Index");
+				if (ModelState.IsValid)
+				{
+					_milestoneService.CreateMilestone(model, assigID);
+					return RedirectToAction("Milestones", new { id = assigID });
+				}
+				else
+				{
+					ViewBag.CourseList = GetCourses();
+					return View(model);
+				}
 			}
 			else
 			{
-				ViewBag.CourseList = GetCourses();
-				return View(model);
+				return View("Error");
 			}
+
+
 		}
 
 		[HttpGet]
@@ -121,6 +131,42 @@ namespace Mooshak___H37.Controllers
 			var viewModel = _milestoneService.GetSingleMilestone(milestoneID);
 			return View(viewModel);
 		}
+
+		public ActionResult ViewSubmissions (int milestoneID)
+		{
+			var viewmodel = _submissionsService.GetSubmissionsForMilestone(milestoneID);
+			return View(viewmodel);
+		}
+
+		[HttpGet]
+		public ActionResult GradeSubmission(int submissionID)
+		{
+			var viewModel = _submissionsService.GetSubmission(submissionID);
+			return View(viewModel);
+		}
+
+		[HttpPost]
+		public ActionResult GradeSubmission(SubmissionsViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				_submissionsService.GradeAssignment(model);
+				//return RedirectToAction("ViewSubmissions", new { id = model.ID });
+				return RedirectToAction("ViewSubmissions", new { milestoneID = 
+					_submissionsService.GetMilestoneIDFromSubmissionID(model.ID)});			}
+			else
+			{
+				return View(model);
+			}
+		}
+
+
+
+
+
+
+
+
 
 
 		[HttpPost]

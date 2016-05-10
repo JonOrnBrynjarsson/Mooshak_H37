@@ -31,6 +31,7 @@
 					<th>Remove</th>
                     <th>Edit</th>
 					<th>Test Cases</th>
+					<th>Submissions</th>
 
                 </tr>
             </thead>
@@ -46,7 +47,9 @@
 						<td>@Html.ActionLink("Remove", "RemoveMilestone", new { id = item.ID })</td>
                         <td>@Html.ActionLink("Edit", "EditMilestone", new { milestoneID = item.ID })</td>
 						<td>@Html.ActionLink("Test Cases", "TestCases", new { milID = item.ID })</td>
-                    </tr>
+						<td>@Html.ActionLink("View", "ViewSubmissions", new { milestoneID = item.ID })</td>
+
+					</tr>
 				}
 
 				<tr>

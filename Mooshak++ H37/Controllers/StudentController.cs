@@ -49,14 +49,11 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult Submit(int milestoneId)
 		{
-			StudentSubmit s = new StudentSubmit();
-
-			var test = _milestoneService.UserCanSubmit(milestoneId);
-
-			if (test == false)
+			if (!_milestoneService.UserCanSubmitMilestone(milestoneId))
 			{
 				return View("Error");
 			}
+			StudentSubmit s = new StudentSubmit();
 			s.Milestone = milestoneId;
 
 			return View(s);
@@ -90,13 +87,14 @@ namespace Mooshak___H37.Controllers
 
 
 		[HttpGet]
-		public ActionResult EditCode(int submissionId )
+		public ActionResult EditCode( )
 		{
-			StudentSubmit studentSubmit = new StudentSubmit();
-			studentSubmit.Milestone = _filesService.getMilestoneIdBySubmitId(submissionId);
-			//studentSubmit.File = _filesService
+			int submissionId = 68;
+			EditCodeViewModel editCode = new EditCodeViewModel();
+			editCode.Milestone = _filesService.getMilestoneIdBySubmitId(submissionId);
+			editCode.codefile = _filesService.getSubmissionFile(submissionId);
 
-			return View();
+			return View(editCode);
 		}
 	}
 }
