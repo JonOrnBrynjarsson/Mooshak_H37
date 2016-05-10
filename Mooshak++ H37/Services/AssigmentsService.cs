@@ -229,7 +229,7 @@ namespace Mooshak___H37.Services
 				//return null;
 			}
 
-			List<AssignmentViewModel> viewModel = null;
+			List<AssignmentViewModel> viewModel = new List<AssignmentViewModel>();
 			
 			foreach(var assignm in assignments)
 			{

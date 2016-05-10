@@ -46,7 +46,7 @@ namespace Mooshak___H37.Controllers
 		public ActionResult CreateCourse()
         {
             CourseViewModel viewModel = new CourseViewModel();
-            viewModel.User = _userService.getAllUsersName();
+			ViewBag.userList = _userService.getAllUsersName();
 
             return View(viewModel);
         }
@@ -56,7 +56,7 @@ namespace Mooshak___H37.Controllers
         public ActionResult CreateCourse(CourseViewModel model)
         {
             _courseService.setCourse(model);
-            return View();
+            return RedirectToAction("ViewCourses");
         }
 
 		public ActionResult EditCourse(int? id)
@@ -75,6 +75,8 @@ namespace Mooshak___H37.Controllers
 				//TODO
 				//throw exception
 			}
+
+			ViewBag.userList = _userService.getAllUsersName();
 
 			return View(model);
 		}

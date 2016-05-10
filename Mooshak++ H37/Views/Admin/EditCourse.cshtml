@@ -56,9 +56,12 @@
 	<div class="userTable">
 		<div class="form-inline" id="addUser">
 			<select name="addUser" class="form-control" id="addUser">
-				@foreach (var user in Model.User)
+				@if (@ViewBag.userList != null)
 				{
-					<option>@user.Name</option>
+					foreach (var user in @ViewBag.userList)
+					{
+						<option>@user.Name</option>
+					}
 				}
 			</select>
 			<button class="btn btn-primary">Add user</button>

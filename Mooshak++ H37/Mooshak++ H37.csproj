@@ -375,8 +375,8 @@
     <Content Include="Views\Teacher\RemoveTestCase.cshtml" />
     <Content Include="Views\Teacher\RemoveMilestone.cshtml" />
     <Content Include="Views\Teacher\RemoveAssignment.cshtml" />
-    <Content Include="Views\Student\Assignments.cshtml" />
     <Content Include="Views\Student\View1.cshtml" />
+    <Content Include="Views\Student\Assignments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
