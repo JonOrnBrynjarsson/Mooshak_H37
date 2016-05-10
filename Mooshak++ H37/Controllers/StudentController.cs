@@ -40,18 +40,19 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult Assignments()
 		{
-			int userId = _usersService.getUserIdForCurrentyApplicationUser();
-			var viewModel = _courseService.getAllCoursesByUserID(userId);
+			var viewModel = _courseService.GetCoursesForUser();
+			//int userId = _usersService.getUserIdForCurrentyApplicationUser();
+			//var viewModel = _courseService.getAllCoursesByUserID(userId);
 			return View(viewModel);
 		}
 
 		[HttpGet]
-		public ActionResult Submit(int milestoneID)
+		public ActionResult Submit(int milestoneId)
 		{
 			StudentSubmit s = new StudentSubmit();
 
 // Hér þarf að laga milestone til að taka við því sem verið er að vinna með
-			s.Milestone = milestoneID;
+			s.Milestone = milestoneId;
 
 			return View(s);
 		}

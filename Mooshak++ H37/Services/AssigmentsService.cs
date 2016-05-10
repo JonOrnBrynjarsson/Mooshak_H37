@@ -8,6 +8,7 @@ using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
 using System.Diagnostics;
+using Microsoft.ApplicationInsights.Web;
 using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Services
@@ -190,14 +191,21 @@ namespace Mooshak___H37.Services
 							  where mil.ID == milestoneID
 							  select mil.AssignmentID).FirstOrDefault();
 
-			if (assignmentID == null)
-			{
-				//DO SOMETHING
-				//throw new exception / skila NULL(ekki skila null hér)
-			}
 			return assignmentID;
 		}
 
+		/// <summary>
+		/// Gets the number of submissions from a user to a specific milestone.
+		/// </summary>
+		/// <param name="milestoneId">The milestone "ID"</param>
+		/// <param name="userId">The user "ID"</param>
+		/// <returns>Number of submissions</returns>
+		public int getNumOfSubmissions(int milestoneId, int userId)
+		{
+			return (from s in _db.Submissions
+				where s.ID == userId && s.MilestoneID == milestoneId
+				select s.ID).Count();
+		}
 
 
 
