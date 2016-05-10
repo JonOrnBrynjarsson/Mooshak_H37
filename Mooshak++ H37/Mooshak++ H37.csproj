@@ -270,6 +270,7 @@
     <Compile Include="Models\Entities\UserCourseRelation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Viewmodels\AddUserToCourseViewModel.cs" />
     <Compile Include="Models\Viewmodels\AdminHomeViewModel.cs" />
     <Compile Include="Models\Viewmodels\AssignmentViewModel.cs" />
     <Compile Include="Models\Viewmodels\CourseViewModel.cs" />
