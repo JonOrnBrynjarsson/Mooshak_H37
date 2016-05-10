@@ -1,36 +1,77 @@
 ﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.CourseViewModel>
 
-
 @{
 	ViewBag.Title = "Assignments";
 }
 
+@*<p>
+		@Html.ActionLink("Create New", "Create")
+	</p>*@
 <div class="clearfix">
 	<div class="large-left-portion">
 		@foreach (var item in Model)
 		{
-			//if (item.Assignments.Count == 0)
-			//{
-				<h2>@item.Name</h2>
-
-				<table id="assignments-@item.Name" class="table table-hover">
+			<h2>@item.Name</h2>
+			<table id="assignments-@item.Name" class="table table-hover">
 				@{int rowNo = 0;}
 
-					@foreach (var it in item.Assignments)
-					{
-						<tr>
-							<td>@(rowNo += 1)</td>
+				@foreach (var it in item.Assignments)
+				{
+					<tr>
+						<td>@(rowNo += 1)</td>
+						<td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
+						<td>@it.DueDate</td>
+					</tr>
+				}
+			</table>
 
-							<td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
-
-							<td>Submissions</td>
-							<td>@it.DueDate</td>
-							<td>Submit</td>
-						</tr>
-					}
-					</table>
-				@*}*@
-			}
-
+		}
 	</div>
 </div>
+@*<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Name)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.StartDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Isactive)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.IsRemoved)
+			</th>
+			<th></th>
+		</tr>
+
+	@foreach (var item in Model) {
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Name)
+			</td>
+
+			@foreach (var it in item.Assignments)
+			{
+				<td>@it.Name</td>
+			}
+
+			<td>
+				@Html.DisplayFor(modelItem => item.StartDate)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Isactive)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.IsRemoved)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+				@Html.ActionLink("Details", "Details", new { id=item.ID }) |
+				@Html.ActionLink("Delete", "Delete", new { id=item.ID })
+			</td>
+		</tr>
+	}
+
+		</table>*@
+
+

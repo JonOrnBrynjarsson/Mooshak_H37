@@ -36,16 +36,6 @@ namespace Mooshak___H37.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public ActionResult CreateUser(RegisterViewModel model)
-        {
-            RegisterViewModel viewModel = new RegisterViewModel();
-            viewModel.Course = _courseService.getAllCourses();
-
-            model.Password = null;
-
-            return View(model);
-        }
 
         public ActionResult ViewCourses()
 		{
