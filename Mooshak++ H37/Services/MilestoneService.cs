@@ -114,11 +114,15 @@ namespace Mooshak___H37.Services
 			return false;
 		}
 
-		public bool TeacherCanCreateMilestone(int assignmentID)
+		public bool TeacherCanCreateMilestone(MilestoneViewmodel model, int assignmentID)
 		{
 			var totalPercentage = GetTotalMilestonePercentageForAssignment(assignmentID);
 
-			if (totalPercentage >= 100)
+			var milestonePercentage = model.Percentage;
+
+			var currPercentage = totalPercentage + milestonePercentage;
+
+			if (currPercentage > 100)
 			{
 				return false;
 			}
