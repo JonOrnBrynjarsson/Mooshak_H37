@@ -101,14 +101,34 @@ namespace Mooshak___H37.Services
 							   orderby courses.ID descending
 							   select courses).ToList();
 
+			//var assignments = (from assi in _db.Assignments
+			//				   where userCourses.Contains(assi.CourseID)
+			//				   orderby assi.CourseID descending
+			//				   select assi).ToList();
+
 			var viewModel = new List<CourseViewModel>();
+
+			//foreach (var asi in assignments)
+			//{
+			//	AssignmentViewModel model = new AssignmentViewModel
+			//	{
+			//		CourseID = asi.CourseID,
+			//		Description = asi.Description,
+			//		DueDate = asi.DueDate,
+			//		ID = asi.ID,
+			//		IsActive = asi.IsActive,
+			//		Name = asi.Name,
+			//		SetDate = asi.SetDate,
+			//	};
+			//}
+
 
 			foreach (var course in Courses)
 			{
 				CourseViewModel model = new CourseViewModel
 				{
 					ID = course.ID,
-					//Assignments = course.Assignments,
+					Assignments = _assignmentsService.getAssignmentsInCourse(course.ID),
 					Isactive = course.Isactive,
 					IsRemoved = course.IsRemoved,
 					Name = course.Name,

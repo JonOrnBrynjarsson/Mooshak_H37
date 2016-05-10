@@ -39,7 +39,7 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult Assignments()
 		{
-			var viewModel = _courseService.getAllCourses();
+			var viewModel = _courseService.GetCoursesForUser();
 			return View(viewModel);
 		}
 
