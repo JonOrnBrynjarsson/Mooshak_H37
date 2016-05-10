@@ -79,8 +79,12 @@ namespace Mooshak___H37.Services
 		{
 			string userName = (from x in _db.Submissions
 				where x.ID == submissionId
-				select x.User.AspNetUser.UserName).SingleOrDefault().ToString();
-			return userName.SubstringUpToFirst('@');
+				select x.User.AspNetUser.UserName).SingleOrDefault();
+			if (!String.IsNullOrEmpty(userName))
+			{
+				return userName.SubstringUpToFirst('@');
+			}
+			return null;
 		}
 
 		/// <summary>

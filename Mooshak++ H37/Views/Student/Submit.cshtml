@@ -1,4 +1,4 @@
-﻿@model Mooshak___H37.Models.Viewmodels.StudentSubmit
+﻿@model Mooshak___H37.Models.Viewmodels.StudentSubmitViewModel
 
 @using (Html.BeginForm("Submit", "Student", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
@@ -15,20 +15,24 @@
 			<div class="col-md-10">
 
 				@Html.LabelFor(model => model.File, htmlAttributes: new {@class = "control-label col-md-2"})
-				<input type="file" name="File" id="File" accept=".cpp"/>
+				<input class="col-md-offset-2 col-md-10" type="file" name="File" id="File" accept=".cpp"/>
 				@Html.ValidationMessageFor(model => model.File, "", new {@class = "text-danger"})
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<input type="submit" value="Create" class="btn btn-default"/>
+				<input type="submit" value="Submit" class="btn btn-default"/>
 			</div>
 		</div>
-
-
-		<div>
-			@Html.ActionLink("Back to List", "Index")
+	<div class="col-md-offset-2 col-md-10">
 		</div>
-	</div>
-}
+			<div class="form-group">
+
+			</div>
+			<div class="col-md-offset-2 col-md-10">
+				<div>
+					@Html.ActionLink("Back to List", "Index")
+				</div>
+			</div>
+			}
