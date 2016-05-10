@@ -71,19 +71,20 @@ namespace Mooshak___H37.Services
 
             var viewModel = new List<CourseViewModel>();
 
-            foreach (var course in Courses)
-            {
-                CourseViewModel model = new CourseViewModel
-                {
-                    Name = course.Name,
-                    StartDate = course.Startdate,
-                    ID = course.ID,
-                    Isactive = course.Isactive,
-                };
-                viewModel.Add(model);
-            }
+	        if (Courses != null)
+		        foreach (var course in Courses)
+		        {
+			        CourseViewModel model = new CourseViewModel
+			        {
+				        Name = course.Name,
+				        StartDate = course.Startdate,
+				        ID = course.ID,
+				        Isactive = course.Isactive,
+			        };
+			        viewModel.Add(model);
+		        }
 
-            return viewModel;
+	        return viewModel;
 
         }
 
