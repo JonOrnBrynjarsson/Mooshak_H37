@@ -78,7 +78,7 @@ namespace Mooshak___H37.Controllers
             UsersService _usersService = new UsersService();
 
             int userID = _usersService.getUserIDbyEmail(model);
-            string role = _usersService.getRoleNamebyID(userID);
+            int role = _usersService.getRoleNamebyID(userID);
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true

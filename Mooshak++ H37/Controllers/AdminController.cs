@@ -109,6 +109,10 @@ namespace Mooshak___H37.Controllers
 		public ActionResult ViewUsers()
 		{
 			var viewModel = _userService.getAllUsersName();
+			foreach (var item in viewModel)
+			{
+				item.RoleID = _userService.getRoleNamebyID(item.ID);
+			}
 			return View(viewModel);
 		}
 	}
