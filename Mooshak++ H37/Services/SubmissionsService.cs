@@ -114,5 +114,39 @@ namespace Mooshak___H37.Services
 				// DO Something!!
 			}
 		}
+
+		public List<SubmissionsViewModel> GetSubmissionsForMilestoneForStudent(int milestoneID)
+		{
+			var currUser = GetCurrentUser();
+			var submissions = (from subs in _db.Submissions
+							   where subs.MilestoneID == milestoneID &&
+							   subs.UserID == currUser
+							   select subs).ToList();
+
+			var viewModel = new List<SubmissionsViewModel>();
+
+
+			foreach (var subs in submissions)
+			{
+				SubmissionsViewModel model = new SubmissionsViewModel
+				{
+					Grade = subs.Grade,
+					ID = subs.ID,
+					IsGraded = subs.IsGraded,
+					IsRemoved = subs.IsRemoved,
+					MilestoneID = subs.MilestoneID,
+					Milestone = subs.Milestone,
+					ProgramFileLocation = subs.ProgramFileLocation,
+					UserID = subs.UserID,
+					UserName = (from name in _db.Users
+								where name.ID == subs.UserID
+								select name.Name).FirstOrDefault()
+				};
+				viewModel.Add(model);
+
+			}
+
+			return viewModel;
+		}
 	}
 }

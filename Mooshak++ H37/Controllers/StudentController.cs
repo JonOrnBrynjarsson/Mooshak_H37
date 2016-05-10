@@ -22,6 +22,7 @@ namespace Mooshak___H37.Controllers
 		readonly CoursesService _courseService = new CoursesService();
 		readonly UsersService _usersService = new UsersService();
 		readonly MilestoneService _milestoneService = new MilestoneService();
+		readonly SubmissionsService _submissionService = new SubmissionsService();
 
 		// GET: Assignment
 		[HttpGet]
@@ -88,6 +89,11 @@ namespace Mooshak___H37.Controllers
 			return RedirectToAction("Index");
 		}
 
+		public ActionResult ViewSubmissions (int MilestoneID)
+		{
+			var viewModel = _submissionService.GetSubmissionsForMilestoneForStudent(MilestoneID);
+			return View(viewModel);
+		}
 
 		[HttpGet]
 		public ActionResult EditCode(int submissionId )

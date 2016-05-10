@@ -1,0 +1,127 @@
+﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.SubmissionsViewModel>
+
+@{
+    ViewBag.Title = "ViewSubmissions";
+}
+
+<h2>My Submissions: </h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+<div class="clearfix">
+	<div class="large-left-portion">
+		<table class="table table-hover">
+			<tr>
+				@*<th>
+						@Html.DisplayNameFor(model => model.MilestoneID)
+					</th>*@
+				<th>
+					Milestone Name
+				</th>
+				<th>
+					Allowed Submissions
+				</th>
+				<th>
+					Grade
+				</th>
+				<th>
+					Percentage
+				</th>
+				<th></th>
+			</tr>
+
+			@foreach (var item in Model)
+			{
+				<tr>
+					@*<td>
+							@Html.DisplayFor(modelItem => item.MilestoneID)
+						</td>*@
+					<td>
+						@Html.DisplayFor(modelItem => item.Milestone.Name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Milestone.AllowedSubmissions)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Grade)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Milestone.Percentage) %
+					</td>
+					@*<td>
+							@Html.DisplayFor(modelItem => item.IsRemoved)
+						</td>*@
+					<td>
+						@*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
+						@*@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })*@
+						@*@Html.ActionLink("Details", "Details", new { id=item.ID }) |
+							@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+					</td>
+				</tr>
+			}
+
+		</table>
+
+	</div>
+</div>
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MilestoneID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsGraded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProgramFileLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsRemoved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MilestoneID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsGraded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProgramFileLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsRemoved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>*@
