@@ -144,7 +144,24 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
-		public int getCourseIdByName(string name)
+
+        internal void addUserToCourse(AddUserToCourseViewModel model)
+        {
+            int roleID = 1;
+            if(model.Teacher == true)
+            {
+                roleID = 2;
+            }
+
+            _db.UserCourseRelations.Add(new UserCourseRelation {
+                        CourseID = model.ID,
+                        UserID = model.Name,
+                        RoleID = roleID
+            });
+            _db.SaveChanges();
+        }
+
+        public int getCourseIdByName(string name)
 		{
 			var course = (from x in _db.Courses
 						  where name == x.Name

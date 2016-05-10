@@ -274,6 +274,7 @@
     <Compile Include="Models\Entities\UserCourseRelation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Viewmodels\AddUserToCourseViewModel.cs" />
     <Compile Include="Models\Viewmodels\AdminHomeViewModel.cs" />
     <Compile Include="Models\Viewmodels\AssignmentViewModel.cs" />
     <Compile Include="Models\Viewmodels\CourseViewModel.cs" />
@@ -305,6 +306,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\data.jpg" />
+    <Content Include="Scripts\Admin.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
