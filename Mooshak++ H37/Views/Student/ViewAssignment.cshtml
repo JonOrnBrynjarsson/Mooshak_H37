@@ -52,8 +52,9 @@
 					<th>Nr</th>
 					<th>Name</th>
 					<th>Percentage</th>
-					<th>Submissions</th>
+					<th>Allowed Submissions</th>
 					<th>Submit</th>
+					<th>Submissions</th>
 					<th></th>
 
 				</tr>
@@ -70,8 +71,8 @@
 						<th>
 							@Html.ActionLink("Submit", "Submit", new { milestoneId = item.ID })
 						</th>
+						<th>@Html.ActionLink("View", "ViewSubmissions", new { MilestoneID = item.ID })</th>
 						<th></th>
-
 				</tr>
 			}
 
@@ -79,6 +80,7 @@
 					<th></th>
 					<th>Total: </th>
 					<th>@ViewBag.TotalPercentage %</th>
+					<th></th>
 					<th></th>
 					<th></th>
 					<th></th>
