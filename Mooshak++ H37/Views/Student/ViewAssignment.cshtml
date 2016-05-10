@@ -5,49 +5,91 @@
 }
 
 <div class="clearfix">
-    <div class="large-left-portion">
-        @*<table id="top">
-            <tr>
-                <td><h4>@Html.DisplayFor(model => model.CourseName)</h4></td>
-                <td><h4>@Html.DisplayFor(model => model.Name)</h4></td>
-            </tr>
-            <tr>
-                <td><h4>Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")</h4></td>
-            </tr>
-        </table>*@
+	<div class="large-left-portion">
+		@*<table id="top">
+				<tr>
+					<td><h4>@Html.DisplayFor(model => model.CourseName)</h4></td>
+					<td><h4>@Html.DisplayFor(model => model.Name)</h4></td>
+				</tr>
+				<tr>
+					<td><h4>Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")</h4></td>
+				</tr>
+			</table>*@
 
-        @*<div class="panel panel-default">
-            <div class="panel-heading">@Html.DisplayFor(model => model.CourseName)</div>
-            <div class="panel-body">
-                @Html.DisplayFor(model => model.Name)
-            </div>
-        </div>*@
+		@*<div class="panel panel-default">
+				<div class="panel-heading">@Html.DisplayFor(model => model.CourseName)</div>
+				<div class="panel-body">
+					@Html.DisplayFor(model => model.Name)
+				</div>
+			</div>*@
 
-        <div class="page-header">
-            <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
-        </div>
-
-        
+		<div class="page-header">
+			<h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
+		</div>
 
 
 
-        <div class="panel panel-default">
-            <div class="panel-heading">Description:</div>
-            <div class="panel-body">
-                @Html.DisplayFor(model => model.Description)
-            </div>
-        </div>
 
-        <div class="panel panel-default">
-            <div class="panel-body">
-                Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")
-            </div>
-        </div>
 
-    </div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Description:</div>
+			<div class="panel-body">
+				@Html.DisplayFor(model => model.Description)
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")
+			</div>
+		</div>
+
+
+
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Nr</th>
+					<th>Name</th>
+					<th>Percentage</th>
+					<th>Submissions</th>
+					<th>Submit</th>
+					<th></th>
+
+				</tr>
+			</thead>
+			<tbody>
+				@{ int rowNo = 0;}
+				@foreach (var item in Model.Milestones)
+			{
+					<tr>
+						<td>@(rowNo += 1)</td>
+						<td>@item.Name</td>
+						<td>@item.Percentage %</td>
+						<td>@item.AllowedSubmissions</td>
+						<th>
+							@Html.ActionLink("Submit", "Submit", new { milestoneId = item.ID })
+						</th>
+						<th></th>
+
+				</tr>
+			}
+
+				<tr>
+					<th></th>
+					<th>Total: </th>
+					<th>@ViewBag.TotalPercentage %</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
 
     <div class="small-right-portion">
-        @Html.ActionLink("Submit", "Submit", new { id = Model.ID }, new { @class = "btn btn-primary button-right" })
+        @*@Html.ActionLink("Submit", "Submit", new { id = Model.ID }, new { @class = "btn btn-primary button-right" })*@
         <button class="btn btn-primary create-button">Editor</button>
         <button class="btn btn-primary create-button">View Submissions</button>
     </div>
