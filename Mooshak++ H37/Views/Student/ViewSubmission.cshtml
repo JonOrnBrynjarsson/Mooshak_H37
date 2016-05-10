@@ -5,19 +5,20 @@
 }
 
 <h2>@Model.Milestone.Assignment.Name</h2>
+<div class="clearfix">
+    <div class="large-left-portion">
+        <hr />
+        <dl class="dl-horizontal">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Submitted On: @Html.ValueFor(model => model.DateSubmitted, "{0:dd/MM/yyyy}")
+                </div>
+            </div>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				Submitted On: @Html.ValueFor(model => model.DateSubmitted, "{0:dd/MM/yyyy}")
-			</div>
-		</div>
+            <pre class="prettyprint">@Model.code</pre>
 
-        <pre class="prettyprint">@Model.code</pre>
-
-    </dl>
+        </dl>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Go Back", "ViewSubmissions", new { MilestoneID = Model.MilestoneID })

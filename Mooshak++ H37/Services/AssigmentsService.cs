@@ -333,6 +333,13 @@ namespace Mooshak___H37.Services
 			process.WaitForExit();
 		}
 		
+        public int NumberOfAssignments()
+        {
+            var assignments = (from assign in _db.Assignments
+                               select assign).Count();
+
+            return assignments;
+        }
 
 	}
 }

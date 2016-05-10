@@ -248,5 +248,13 @@ namespace Mooshak___H37.Services
 			}
 		}
 
-	}
+        public int NumberOfCourses()
+        {
+            var courses = (from course in _db.Courses
+                               select course).Count();
+
+            return courses;
+        }
+
+    }
 }

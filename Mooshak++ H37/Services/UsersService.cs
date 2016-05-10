@@ -250,5 +250,36 @@ namespace Mooshak___H37.Services
 			//store.Context.SaveChanges();
 			
 		}
+
+        public List<int> UsersInSystem()
+        {
+            List<int> UserList = new List<int>();
+
+            var users = (from user in _db.Users
+                         where user.IsRemoved != true
+                         select user).Count();
+
+            UserList.Add(users);
+
+            var students = (from user in _db.UserCourseRelations
+                         where user.RoleID == 1
+                         select user).Count();
+
+            UserList.Add(students);
+
+            var teachers = (from user in _db.UserCourseRelations
+                            where user.RoleID == 2
+                            select user).Count();
+
+            UserList.Add(teachers);
+
+            var admins = (from user in _db.UserCourseRelations
+                            where user.RoleID == 3
+                            select user).Count();
+
+            UserList.Add(admins);
+
+            return UserList;
+        }
 	}
 }
