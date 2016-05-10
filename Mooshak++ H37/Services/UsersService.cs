@@ -40,7 +40,6 @@ namespace Mooshak___H37.Services
 				mail.Add(mailinfo);
 			}
 
-
             var viewModel = new List<UserViewModel>();
 			//combines all information gathered into the userViewmodel
             for(int i = 0; i< Users.Count(); i++)
@@ -49,7 +48,7 @@ namespace Mooshak___H37.Services
                 {
                     Name = Users[i].Name,
 					Email = mail[i],
-
+					ID = Users[i].ID
                 };
                 viewModel.Add(model);
             }
@@ -159,29 +158,13 @@ namespace Mooshak___H37.Services
             return User;
         }
 
-        internal string getRoleNamebyID(int userID)
+        internal int getRoleNamebyID(int userID)
         {
             var roleID = (from x in _db.UserCourseRelations
                         where x.UserID == userID
                         select x.RoleID).FirstOrDefault();
 
-            switch(roleID)
-            {
-                case 1:
-                    {
-                        return "Student";
-                    }
-                case 2:
-                    {
-                        return "Teacher";
-                    }
-                case 3:
-                    {
-                        return "Admin";
-                    }
-            }
-
-            return "Student";
+            return roleID;
         }
     }
 }
