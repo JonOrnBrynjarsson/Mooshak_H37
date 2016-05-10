@@ -27,5 +27,7 @@ namespace Mooshak___H37.Models.Viewmodels
 
 		public List<UserViewModel> User { get; set; }
 		public string UserName { get; set; }
+		public string code { get; set; }
+		public List<Testrun> Testruns { get; set; }
 	}
 }

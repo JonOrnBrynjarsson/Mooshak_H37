@@ -12,11 +12,12 @@ namespace Mooshak___H37.Controllers
 	//[Authorize(Roles = "Teacher")]
 	public class TeacherController : Controller
 	{
-		AssigmentsService _assignService = new AssigmentsService();
-		CoursesService _courseService = new CoursesService();
-		MilestoneService _milestoneService = new MilestoneService();
-		TestCaseService _testcaseService = new TestCaseService();
-		SubmissionsService _submissionsService = new SubmissionsService();
+		readonly AssigmentsService _assignService = new AssigmentsService();
+		readonly CoursesService _courseService = new CoursesService();
+		readonly MilestoneService _milestoneService = new MilestoneService();
+		readonly TestCaseService _testcaseService = new TestCaseService();
+		readonly SubmissionsService _submissionsService = new SubmissionsService();
+		readonly FilesService _filesService = new FilesService();
 
 		// GET: Assignment
 		[HttpGet]
@@ -139,9 +140,12 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult GradeSubmission(int submissionID)
+		public ActionResult GradeSubmission(int submissionId)
 		{
-			var viewModel = _submissionsService.GetSubmission(submissionID);
+
+			var viewModel = _submissionsService.GetSubmission(submissionId);
+			viewModel.code = _filesService.getSubmissionFile(submissionId);
+			viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionId);
 			return View(viewModel);
 		}
 

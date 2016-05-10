@@ -54,7 +54,7 @@ namespace Mooshak___H37.Controllers
 			{
 				return View("Error");
 			}
-			MilestoneViewmodel m = new MilestoneViewmodel()
+			MilestoneViewmodel m = new MilestoneViewmodel();
 			m = _milestoneService.GetSingleMilestone(milestoneId);
 			StudentSubmitViewModel submission = new StudentSubmitViewModel();
 			submission.Milestone = milestoneId;

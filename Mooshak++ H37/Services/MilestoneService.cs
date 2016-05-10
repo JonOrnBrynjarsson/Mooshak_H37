@@ -194,5 +194,14 @@ namespace Mooshak___H37.Services
 			milestone.IsRemoved = true;
 			_db.SaveChanges();
 		}
+
+		public List<Testrun> getTestrunsOutcomeForSubmission(int submissionId)
+		{
+			List<Testrun> tRuns = (from t in _db.Testruns
+								   where t.ID == submissionId
+								   select t).ToList();
+			return tRuns;
+
+		}
 	}
 }
