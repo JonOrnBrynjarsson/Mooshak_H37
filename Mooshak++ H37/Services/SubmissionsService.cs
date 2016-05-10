@@ -5,17 +5,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Mooshak___H37.Models.Entities;
 
 namespace Mooshak___H37.Services
 {
     public class SubmissionsService
     {
         private ApplicationDbContext _db;
+        private readonly UsersService _usersService = new UsersService();
+        private readonly FilesService _filesService = new FilesService();
+        private readonly SubmissionsService _submissionsService = new SubmissionsService();
 
         public SubmissionsService()
         {
             _db = new ApplicationDbContext();
         }
+
 
         public int GetCurrentUser()
         {
@@ -87,15 +92,6 @@ namespace Mooshak___H37.Services
             };
 
             return model;
-        }
-
-        public int GetMilestoneIDFromSubmissionID(int submissionID)
-        {
-            var milestone = (from mil in _db.Submissions
-                             where mil.ID == submissionID
-                             select mil.MilestoneID).FirstOrDefault();
-
-            return milestone;
         }
 
         internal void GradeAssignment(SubmissionsViewModel model)
@@ -185,6 +181,40 @@ namespace Mooshak___H37.Services
                               select subs).Count();
 
             return submissions;
-        }
-    }       
+        }     
+
+		public SubmissionsViewModel getSubmissionDetail(int submissionId)
+		{
+			Submission submission = (from subs in _db.Submissions
+							   where subs.ID == submissionId
+							   && subs.IsRemoved == false
+							   select subs).SingleOrDefault();
+
+			SubmissionsViewModel model = new SubmissionsViewModel
+			{
+				ID = submission.ID,
+				MilestoneID = submission.MilestoneID,
+				UserID = submission.UserID,
+				IsGraded = submission.IsGraded,
+				Grade = submission.Grade,
+				ProgramFileLocation = submission.ProgramFileLocation,
+				DateSubmitted = submission.DateSubmitted
+			};
+			model.UserName = _usersService.GetSingleUser(model.UserID).Name;
+			model.code = _filesService.getSubmissionFile(submissionId);
+			model.Testruns = _submissionsService.getSubmissionDetail(submissionId).Testruns;
+
+			return model;
+
+		}
+
+		public int GetMilestoneIDFromSubmissionID(int submissionID)
+		{
+			var milestone = (from mil in _db.Submissions
+							 where mil.ID == submissionID
+							 select mil.MilestoneID).FirstOrDefault();
+
+			return milestone;
+		}
+	}
 }

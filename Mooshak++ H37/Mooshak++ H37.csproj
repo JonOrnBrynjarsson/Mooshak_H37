@@ -258,6 +258,10 @@
     <Compile Include="Migrations\201605101802112_datesubmitted.Designer.cs">
       <DependentUpon>201605101802112_datesubmitted.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605102230333_finalsolution.cs" />
+    <Compile Include="Migrations\201605102230333_finalsolution.Designer.cs">
+      <DependentUpon>201605102230333_finalsolution.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
@@ -390,6 +394,7 @@
     <Content Include="Views\Teacher\GradeSubmission.cshtml" />
     <Content Include="Views\Student\ViewSubmissions.cshtml" />
     <Content Include="Views\Teacher\Assignments.cshtml" />
+    <Content Include="Views\Student\SubmissionDetail.cshtml" />
     <Content Include="Views\Student\ViewSubmission.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +450,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605101802112_datesubmitted.resx">
       <DependentUpon>201605101802112_datesubmitted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605102230333_finalsolution.resx">
+      <DependentUpon>201605102230333_finalsolution.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

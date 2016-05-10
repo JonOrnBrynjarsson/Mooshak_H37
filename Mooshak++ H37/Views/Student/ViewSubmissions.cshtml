@@ -18,7 +18,7 @@
 						@Html.DisplayNameFor(model => model.MilestoneID)
 					</th>*@
 				<th>
-					Milestone Name
+					Milestone
 				</th>
 				<th>
 					Allowed Submissions
@@ -63,8 +63,8 @@
 					<td>
 						@*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
 						@*@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })*@
-						@*@Html.ActionLink("Details", "Details", new { id=item.ID }) |
-							@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+						@Html.ActionLink("Details", "SubmissionDetail", new { id=item.ID })
+							@*Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
 					</td>
 				</tr>
 			}

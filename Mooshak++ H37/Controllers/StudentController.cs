@@ -97,9 +97,18 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
+		[HttpGet]
+		public ActionResult SubmissionDetail(int submissionId)
+		{
+			SubmissionsViewModel model = new SubmissionsViewModel();
+			model = _submissionService.getSubmissionDetail(submissionId);
+			return View(model);
+		}
+
+		[HttpGet]
         public ActionResult ViewSubmission (int submissionID)
         {
-            var viewModel = _submissionService.GetOneSubmission(submissionID);
+            var viewModel = _submissionService.GetSubmission(submissionID);
             viewModel.code = _filesService.getSubmissionFile(submissionID);
             viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionID);
             return View(viewModel);
