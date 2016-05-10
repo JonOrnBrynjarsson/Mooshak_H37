@@ -1,4 +1,7 @@
-﻿$(".button").click(function () {
-    $("div").removeClass("Add-course-2");
-    return false;
+﻿$(function () {
+    $('.addUserForm').on('submit', function () {
+
+        alert('Hello world');
+        return false;
+    })
 });

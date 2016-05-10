@@ -77,7 +77,7 @@ namespace Mooshak___H37.Services
 				IsRemoved = subs.IsRemoved,
 				MilestoneID = subs.MilestoneID,
 				Milestone = subs.Milestone,
-				ProgramFileLocation = subs.ProgramFileLocation,
+				//ProgramFileLocation = subs.ProgramFileLocation,
 				UserID = subs.UserID,
 				UserName = (from name in _db.Users
 							where name.ID == subs.UserID

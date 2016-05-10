@@ -254,6 +254,10 @@
     <Compile Include="Migrations\201605092151031_testcase.Designer.cs">
       <DependentUpon>201605092151031_testcase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605101802112_datesubmitted.cs" />
+    <Compile Include="Migrations\201605101802112_datesubmitted.Designer.cs">
+      <DependentUpon>201605101802112_datesubmitted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
@@ -270,9 +274,11 @@
     <Compile Include="Models\Entities\UserCourseRelation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Viewmodels\AddUserToCourseViewModel.cs" />
     <Compile Include="Models\Viewmodels\AdminHomeViewModel.cs" />
     <Compile Include="Models\Viewmodels\AssignmentViewModel.cs" />
     <Compile Include="Models\Viewmodels\CourseViewModel.cs" />
+    <Compile Include="Models\Viewmodels\EditCodeViewModel.cs" />
     <Compile Include="Models\Viewmodels\MilestoneViewmodel.cs" />
     <Compile Include="Models\Viewmodels\StudentSubmit.cs" />
     <Compile Include="Models\Viewmodels\SubmissionsViewModel.cs" />
@@ -300,6 +306,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\data.jpg" />
+    <Content Include="Scripts\Admin.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -378,7 +385,7 @@
     <Content Include="Views\Teacher\RemoveTestCase.cshtml" />
     <Content Include="Views\Teacher\RemoveMilestone.cshtml" />
     <Content Include="Views\Teacher\RemoveAssignment.cshtml" />
-    <Content Include="Views\Student\View1.cshtml" />
+    <Content Include="Views\Student\EditCode.cshtml" />
     <Content Include="Views\Student\Assignments.cshtml" />
     <Content Include="Views\Teacher\ViewSubmissions.cshtml" />
     <Content Include="Views\Teacher\GradeSubmission.cshtml" />
@@ -434,6 +441,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605092151031_testcase.resx">
       <DependentUpon>201605092151031_testcase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605101802112_datesubmitted.resx">
+      <DependentUpon>201605101802112_datesubmitted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

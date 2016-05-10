@@ -117,7 +117,16 @@ namespace Mooshak___H37.Controllers
 			return RedirectToAction("ViewCourses");
 		}
 
-		public ActionResult ViewUsers()
+        [HttpPost]
+        public ActionResult addUserToCurse(AddUserToCourseViewModel model)
+        {
+
+           _courseService.addUserToCourse(model);
+
+            return RedirectToAction("EditCourse", new { model.ID });
+        }
+
+        public ActionResult ViewUsers()
 		{
 			var viewModel = _userService.getAllUsersName();
 			foreach (var item in viewModel)

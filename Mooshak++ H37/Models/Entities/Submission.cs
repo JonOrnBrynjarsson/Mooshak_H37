@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 
 namespace Mooshak___H37.Models.Entities
@@ -15,11 +16,13 @@ namespace Mooshak___H37.Models.Entities
 
 		public int ID { get; set; }
 
+		
 		public int MilestoneID { get; set; }
 
-
+		public DateTime DateSubmitted { get; set; }
+		
 		public int UserID { get; set; }
-
+		
 		[DefaultValue(0)]
 		public bool IsGraded { get; set; }
 
