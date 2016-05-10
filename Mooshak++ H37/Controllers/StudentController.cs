@@ -41,7 +41,7 @@ namespace Mooshak___H37.Controllers
 		public ActionResult Assignments()
 		{
 			var viewModel = _courseService.GetCoursesForUser();
-			//int userId = _usersService.getUserIdForCurrentyApplicationUser();
+			//int userId = 
 			//var viewModel = _courseService.getAllCoursesByUserID(userId);
 			return View(viewModel);
 		}

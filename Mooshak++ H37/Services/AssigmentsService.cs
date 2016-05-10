@@ -68,6 +68,7 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
+
 		public AssignmentViewModel Assignment(int id)
 		{
 			var assignment = (from asi in _db.Assignments
@@ -80,6 +81,8 @@ namespace Mooshak___H37.Services
 				//throw new exception / skila NULL(ekki skila null hér)
 			}
 
+			var userID = GetCurrentUser();
+
 			var milestones = _db.Milestones.Where(x => x.AssignmentID == id &&
 												  x.IsRemoved != true)
 				.Select(x => new MilestoneViewmodel
@@ -90,7 +93,10 @@ namespace Mooshak___H37.Services
 					Description = x.Description,
 					AssignmentID = x.AssignmentID,
 					IsRemoved = x.IsRemoved,
-					Percentage = x.Percentage,	
+					Percentage = x.Percentage,
+					UserSubmissions = (from s in _db.Submissions
+									   where s.UserID == userID && s.MilestoneID == x.ID
+									   select s.ID).Count()
 				}).ToList();
 
 			var coursename = (from asi in _db.Courses

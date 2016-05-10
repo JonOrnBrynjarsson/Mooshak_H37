@@ -66,7 +66,7 @@
 						<td>@(rowNo += 1)</td>
 						<td>@item.Name</td>
 						<td>@item.Percentage %</td>
-						<td>@item.AllowedSubmissions</td>
+						<td>@item.UserSubmissions  /  @item.AllowedSubmissions</td>
 						<th>
 							@Html.ActionLink("Submit", "Submit", new { milestoneId = item.ID })
 						</th>
