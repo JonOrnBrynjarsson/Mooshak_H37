@@ -75,7 +75,7 @@ namespace Mooshak___H37.Services
 			//here we select all the student names that that are in the course
 			//from the ID we collected just above
 			var users = (from y in _db.Users
-						 where userIdList.Contains(y.ID) 
+						 where userIdList.Contains(y.ID) && y.IsRemoved == false
 						 select y).ToList();
 			//here we select the AspNetUser table to get the email from all the students in the course
 			List<string> mail = new List<string>();
@@ -91,7 +91,7 @@ namespace Mooshak___H37.Services
 
 
 
-			for(int i = 0; i<userInfo.Count; i++)
+			for(int i = 0; i<users.Count; i++)
 			{
 
 				UserViewModel temp = new UserViewModel
@@ -204,16 +204,43 @@ namespace Mooshak___H37.Services
 
 			_db.SaveChanges();
 
-			var email = (from us in _db.Users
-						 where edit.AspNetUserId == us.AspNetUser.Id
-						 select us.AspNetUser.Email).SingleOrDefault();
+			//var usr = (from us in _db.Users
+			//			 where edit.AspNetUserId == us.AspNetUser.Id
+			//			 select us.AspNetUser).SingleOrDefault();
 
-			if (email != null)
-			{
-				email = model.Email;
-			}
+			//if (usr == null)
+			//{
+			//	//TODO
+			//	//throw error
+			//	return;
+			//}
 
-			_db.SaveChanges();
+
+
+			//var store = new UserStore<ApplicationUser>(new IdentityDbContext());
+			//var manager = new UserManager<ApplicationUser>(store);
+
+			//ApplicationUser a = new ApplicationUser
+			//{
+			//	AccessFailedCount = usr.AccessFailedCount,
+			//	Email = usr.Email,
+			//	EmailConfirmed = usr.EmailConfirmed,
+			//	Id = usr.Id,
+			//	LockoutEnabled = usr.LockoutEnabled,
+			//	LockoutEndDateUtc = usr.LockoutEndDateUtc,
+			//	PasswordHash = usr.PasswordHash,
+			//	PhoneNumber = usr.PhoneNumber,
+			//	PhoneNumberConfirmed = usr.PhoneNumberConfirmed,
+			//	SecurityStamp = usr.SecurityStamp,
+			//	TwoFactorEnabled = usr.TwoFactorEnabled,
+			//	UserName = usr.UserName
+			//};
+
+
+			//manager.UpdateAsync(usr);
+
+			//store.Context.SaveChanges();
+			
 		}
 	}
 }
