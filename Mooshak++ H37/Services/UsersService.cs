@@ -40,6 +40,7 @@ namespace Mooshak___H37.Services
 				mail.Add(mailinfo);
 			}
 
+
             var viewModel = new List<UserViewModel>();
 			//combines all information gathered into the userViewmodel
             for(int i = 0; i< Users.Count(); i++)
@@ -166,5 +167,36 @@ namespace Mooshak___H37.Services
 
             return roleID;
         }
-    }
+
+		internal void EditUser(UserViewModel model)
+		{
+			var edit = (from user in _db.Users
+						where model.ID == user.ID
+						select user).FirstOrDefault();
+
+			if (edit != NULL)
+			{
+				edit.Name = model.Name;
+			}
+
+			_db.SaveChanges();
+		}
+
+		//internal void EditCourse(CourseViewModel model)
+		//{
+		//	var edit = (from course in _db.Courses
+		//				where model.ID == course.ID
+		//				select course).FirstOrDefault();
+
+		//	if (edit != null)
+		//	{
+		//		edit.Name = model.Name;
+		//		edit.Startdate = model.StartDate.Value;
+		//		edit.IsRemoved = model.IsRemoved;
+		//		edit.Isactive = model.Isactive;
+
+		//		_db.SaveChanges();
+		//	}
+		//}
+	}
 }

@@ -115,5 +115,25 @@ namespace Mooshak___H37.Controllers
 			}
 			return View(viewModel);
 		}
+
+		public ActionResult EditUser()
+		{
+			var viewModel = _userService.getAllUsersName();
+			return View(viewModel);
+		}
+
+		public ActionResult EditUser(UserViewModel model)
+		{
+			if(ModelState.IsValid)
+			{
+				_userService.EditUser(model);
+			}
+			else
+			{
+				return View(model);
+			}
+
+			return RedirectToAction("Index");
+		}
 	}
 }

@@ -360,6 +360,7 @@
     <Content Include="Views\Admin\ViewCourses.cshtml" />
     <Content Include="Views\Admin\EditCourse.cshtml" />
     <Content Include="Views\Admin\ViewUsers.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
     <None Include="Views\Shared\_Layout.backup" />
     <Content Include="Views\Student\ViewAssignment.cshtml" />
     <Content Include="Views\Student\View.cshtml" />
