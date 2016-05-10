@@ -46,12 +46,12 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Submit(int milestoneID)
+		public ActionResult Submit(int milestoneId)
 		{
 			StudentSubmit s = new StudentSubmit();
 
 // Hér þarf að laga milestone til að taka við því sem verið er að vinna með
-			s.Milestone = milestoneID;
+			s.Milestone = milestoneId;
 
 			return View(s);
 		}

@@ -78,7 +78,6 @@ namespace Mooshak___H37.Services
 			string userName = (from x in _db.Submissions
 				where x.ID == submissionId
 				select x.User.AspNetUser.UserName).SingleOrDefault().ToString();
-
 			return userName.SubstringUpToFirst('@');
 		}
 
@@ -130,7 +129,7 @@ namespace Mooshak___H37.Services
 				".exe";
 			string filefolder = getStudentSubmissionFolder(submissionId);
 			DirectoryInfo di = new DirectoryInfo(filefolder);
-			FileInfo fi = di.GetFiles("main.cpp").FirstOrDefault();
+			FileInfo fi = di.GetFiles("*.cpp").FirstOrDefault();
 			if (fi != null)
 			{
 				compileProgram(filefolder +  fi, fileName);
@@ -179,7 +178,7 @@ namespace Mooshak___H37.Services
 				join s in _db.Submissions
 					on m.ID equals s.MilestoneID
 				where s.ID == submissionId
-				      && s.IsRemoved == false 
+				      && t.IsRemoved == false 
 				select t.ID);
 				
 			return testCases.ToList();
