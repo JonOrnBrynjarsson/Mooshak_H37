@@ -11,7 +11,7 @@
     </div>
 
     <div class="large-left-portion">
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal blabla", role = "form" }))
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal addUserForm", role = "form" }))
         {
         @Html.AntiForgeryToken()
 

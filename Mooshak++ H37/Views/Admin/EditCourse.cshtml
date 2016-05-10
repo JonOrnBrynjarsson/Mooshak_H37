@@ -18,7 +18,7 @@
 	</div>
 
 
-	<div class="left-portion">
+	<div class="large-left-portion">
 		@using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 		{
 			@Html.AntiForgeryToken()
@@ -55,11 +55,26 @@
 	</div>
 	<div class="userTable">
 		<div class="form-inline" id="addUser">
-        @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal addUserForm", role = "form" }))
         {
-            @Html.DropDownListFor(model => model.User, new SelectList(Model.User, "Name", Model.User))
+
+            List<SelectListItem> sel = new List<SelectListItem>();
+            foreach (var item in @ViewBag.userList)
+            {
+                SelectListItem i = new SelectListItem();
+                i.Text = item.Name;
+                i.Value = item.ID.ToString();
+
+                sel.Add(i);
+            }
+
+
+            <div>
+             @Html.DropDownList("name", new SelectList(sel, "Value", "Text"), new { @class= "" })
+    
 
 		    <input type="submit" class="btn btn-primary addUserButton" value="Add User"/>
+            </div>
         }
 		</div>
 		<br />
