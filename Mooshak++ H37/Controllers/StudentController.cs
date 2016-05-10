@@ -51,7 +51,7 @@ namespace Mooshak___H37.Controllers
 		{
 			StudentSubmit s = new StudentSubmit();
 
-			var test = _milestoneService.UserCanSubmit(milestoneId);
+			var test = _milestoneService.UserCanSubmitMilestone(milestoneId);
 
 			if (test == false)
 			{
