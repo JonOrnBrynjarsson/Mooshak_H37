@@ -17,9 +17,11 @@ namespace Mooshak___H37.Controllers
 	//[Authorize(Roles = "Student")]
 	public class StudentController : Controller
 	{
-		AssigmentsService _assignService = new AssigmentsService();
-		FilesService _filesService = new FilesService();
-		CoursesService _courseService = new CoursesService();
+		readonly AssigmentsService _assignService = new AssigmentsService();
+		readonly FilesService _filesService = new FilesService();
+		readonly CoursesService _courseService = new CoursesService();
+		readonly UsersService _usersService = new UsersService();
+		
 
 		// GET: Assignment
 		[HttpGet]
@@ -37,7 +39,8 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult Assignments()
 		{
-			var viewModel = _courseService.getAllCourses();
+			int userId = _usersService.getUserIdForCurrentyApplicationUser();
+			var viewModel = _courseService.getAllCoursesByUserID(userId);
 			return View(viewModel);
 		}
 
