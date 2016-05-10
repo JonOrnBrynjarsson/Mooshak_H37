@@ -389,6 +389,7 @@
     <Content Include="Views\Teacher\ViewSubmissions.cshtml" />
     <Content Include="Views\Teacher\GradeSubmission.cshtml" />
     <Content Include="Views\Student\ViewSubmissions.cshtml" />
+    <Content Include="Views\Teacher\Assignments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
