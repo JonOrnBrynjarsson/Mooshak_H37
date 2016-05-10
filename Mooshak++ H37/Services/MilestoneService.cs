@@ -8,6 +8,7 @@ using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
 using System.Diagnostics;
+using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Services
 {
@@ -18,6 +19,16 @@ namespace Mooshak___H37.Services
 		public MilestoneService()
 		{
 			_db = new ApplicationDbContext();
+		}
+
+		public int GetCurrentUser()
+		{
+			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
+			var currUserID = (from x in _db.Users
+							  where x.AspNetUserId == currentUser
+							  select x.ID).FirstOrDefault();
+
+			return currUserID;
 		}
 
 		internal void CreateMilestone(MilestoneViewmodel model, int assigID)
@@ -80,6 +91,27 @@ namespace Mooshak___H37.Services
 			}
 
 			return totalPercentage;
+		}
+
+		public bool UserCanSubmit(int milestoneID)
+		{
+
+			var currUser = GetCurrentUser();
+
+			var submissions = (from s in _db.Submissions
+							   where s.UserID == currUser && s.MilestoneID == milestoneID
+							   select s.ID).Count();
+
+			var allowedSubmissions = (from x in _db.Milestones
+									  where x.ID == milestoneID
+									  select x.AllowedSubmissions).SingleOrDefault();
+
+			if (submissions <= allowedSubmissions)
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		public MilestoneViewmodel GetSingleMilestone(int milID)

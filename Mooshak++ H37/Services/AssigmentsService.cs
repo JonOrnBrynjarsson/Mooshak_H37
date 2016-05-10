@@ -206,12 +206,12 @@ namespace Mooshak___H37.Services
 		/// <param name="milestoneId">The milestone "ID"</param>
 		/// <param name="userId">The user "ID"</param>
 		/// <returns>Number of submissions</returns>
-		public int getNumOfSubmissions(int milestoneId, int userId)
-		{
-			return (from s in _db.Submissions
-				where s.ID == userId && s.MilestoneID == milestoneId
-				select s.ID).Count();
-		}
+		//public int getNumOfSubmissions(int milestoneId, int userId)
+		//{
+		//	return (from s in _db.Submissions
+		//		where s.ID == userId && s.MilestoneID == milestoneId
+		//		select s.ID).Count();
+		//}
 
 
 
