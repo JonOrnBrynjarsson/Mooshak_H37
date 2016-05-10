@@ -13,7 +13,7 @@ namespace Mooshak___H37.Services
 {
 	class UsersService
 	{
-		private ApplicationDbContext _db;
+		private readonly ApplicationDbContext _db;
 
 		public UsersService()
 		{

@@ -12,14 +12,15 @@ namespace Mooshak___H37.Services
 
 	public class SubmissionsService
 	{
-		private ApplicationDbContext _db;
-		private readonly UsersService _usersService = new UsersService();
-		private readonly FilesService _filesService = new FilesService();
-		private readonly SubmissionsService _submissionsService = new SubmissionsService();
-
+		private readonly ApplicationDbContext _db;
+		private readonly UsersService _usersService;
+		private readonly FilesService _filesService;
+		
 		public SubmissionsService()
 		{
 			_db = new ApplicationDbContext();
+			_usersService = new UsersService();
+			_filesService = new FilesService();
 		}
 
 		public int GetCurrentUser()
@@ -51,7 +52,7 @@ namespace Mooshak___H37.Services
 			};
 			model.UserName = _usersService.GetSingleUser(model.UserID).Name;
 			model.code = _filesService.getSubmissionFile(submissionId);
-			model.Testruns = _submissionsService.getSubmissionDetail(submissionId).Testruns;
+			model.Testruns = getSubmissionDetail(submissionId).Testruns;
 
 			return model;
 

@@ -9,7 +9,7 @@ namespace Mooshak___H37.Services
 {
 	class MessagesService
 	{
-		private ApplicationDbContext _db;
+		private readonly ApplicationDbContext _db;
 
 		public MessagesService()
 		{

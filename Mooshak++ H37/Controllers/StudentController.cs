@@ -124,5 +124,32 @@ namespace Mooshak___H37.Controllers
 
 			return View(editCode);
 		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult EditCode(EditCodeViewModel edit)
+		{
+			if (!string.IsNullOrEmpty(edit.codefile))
+			{
+				int submissionId = _filesService.createSubmission(edit.Milestone);
+				if (submissionId == 0)
+				{
+					return View("Error");
+				}
+				_filesService.saveSubmissionfile(edit.codefile, submissionId);
+				_filesService.testingSubmission(submissionId);
+			}
+			else
+			{
+				if (ViewBag.ErrorMessage != "")
+				{
+					return View("Error");
+				}
+				ViewBag.ErrorMessage = "No file submitted, try again";
+				return View(edit);
+			}
+			return RedirectToAction("Index");
+		}
+		
 	}
 }

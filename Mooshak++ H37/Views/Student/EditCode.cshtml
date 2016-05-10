@@ -1,9 +1,10 @@
-﻿@model Mooshak___H37.Models.Viewmodels.EditCodeViewModel
+﻿@using Mooshak___H37.Models.Viewmodels
+@model Mooshak___H37.Models.Viewmodels.EditCodeViewModel
 
 <style type="text/css" media="screen">
 	#editor {
 		position: absolute;
-		top: 0;
+		top: 20px;
 		right: 0;
 		bottom: 0;
 		left: 0;
@@ -29,6 +30,7 @@
 
 <div>
     @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Save","EditCode", new {x = Model})
 </div>
 
 @section Scripts {

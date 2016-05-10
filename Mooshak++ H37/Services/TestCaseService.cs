@@ -10,7 +10,7 @@ namespace Mooshak___H37.Services
 {
 	public class TestCaseService
 	{
-		private ApplicationDbContext _db;
+		private readonly ApplicationDbContext _db;
 
 		public TestCaseService()
 		{

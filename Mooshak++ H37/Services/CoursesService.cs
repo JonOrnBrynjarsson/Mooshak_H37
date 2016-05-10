@@ -12,13 +12,15 @@ namespace Mooshak___H37.Services
 {
 	class CoursesService
 	{
-		private ApplicationDbContext _db;
-		private AssigmentsService _assignmentsService = new AssigmentsService();
-		private UsersService _userService = new UsersService();
+		private readonly ApplicationDbContext _db;
+		private readonly AssigmentsService _assignmentsService;
+		private readonly UsersService _userService;
 
 		public CoursesService()
 		{
 			_db = new ApplicationDbContext();
+			_assignmentsService = new AssigmentsService();
+			_userService = new UsersService();
 		}
 
 

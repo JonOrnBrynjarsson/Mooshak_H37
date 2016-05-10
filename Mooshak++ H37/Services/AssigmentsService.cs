@@ -15,7 +15,7 @@ namespace Mooshak___H37.Services
 {
 	class AssigmentsService
 	{
-		private ApplicationDbContext _db;
+		private readonly ApplicationDbContext _db;
 
 		public AssigmentsService()
 		{

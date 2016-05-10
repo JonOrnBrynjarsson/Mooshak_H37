@@ -13,7 +13,7 @@ namespace Mooshak___H37.Services
 {
 	public class ErrorsService
 	{
-		private ApplicationDbContext _db;
+		private readonly ApplicationDbContext _db;
 
 		public ErrorsService()
 		{

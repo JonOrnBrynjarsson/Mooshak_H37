@@ -36,6 +36,18 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
+		/// Saves the string codefile to a submission folder
+		/// </summary>
+		/// <param name="codefile">The string to be saved</param>
+		/// <param name="submissionId">The "ID" of the submission</param>
+		public void saveSubmissionfile(string codefile, int submissionId)
+		{
+			string filePath = getStudentSubmissionFolder(submissionId) +
+			                  @"\main.cpp";				  
+			File.Create(filePath);
+		}
+
+		/// <summary>
 		/// Saves a submission to the database.
 		/// </summary>
 		/// <param name="milestonedId">The "ID" of the milestone that is being worked on</param>
