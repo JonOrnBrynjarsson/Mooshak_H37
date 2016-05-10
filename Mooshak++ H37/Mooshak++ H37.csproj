@@ -254,6 +254,10 @@
     <Compile Include="Migrations\201605092151031_testcase.Designer.cs">
       <DependentUpon>201605092151031_testcase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605101802112_datesubmitted.cs" />
+    <Compile Include="Migrations\201605101802112_datesubmitted.Designer.cs">
+      <DependentUpon>201605101802112_datesubmitted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
@@ -434,6 +438,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605092151031_testcase.resx">
       <DependentUpon>201605092151031_testcase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605101802112_datesubmitted.resx">
+      <DependentUpon>201605101802112_datesubmitted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

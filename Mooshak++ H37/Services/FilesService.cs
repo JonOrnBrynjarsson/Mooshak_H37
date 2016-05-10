@@ -57,7 +57,9 @@ namespace Mooshak___H37.Services
 					};
 					_db.Submissions.Add(submission);
 					_db.SaveChanges();
-					
+
+					submission.ProgramFileLocation = getStudentSubmissionFolder(submission.ID);
+					_db.SaveChanges();
 					return submission.ID;
 				}
 				catch (Exception ex)
