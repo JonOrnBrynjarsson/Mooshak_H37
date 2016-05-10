@@ -211,6 +211,17 @@ namespace Mooshak___H37.Services
 			}
 
 			_db.SaveChanges();
+
+			var email = (from us in _db.Users
+						 where edit.AspNetUserId == us.AspNetUser.Id
+						 select us.AspNetUser.Email).SingleOrDefault();
+
+			if (email != null)
+			{
+				email = model.Email;
+			}
+
+			_db.SaveChanges();
 		}
 	}
 }

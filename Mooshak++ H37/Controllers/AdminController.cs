@@ -134,6 +134,7 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
+		[HttpPost]
 		public ActionResult EditUser(UserViewModel model)
 		{
 			if(ModelState.IsValid)
@@ -145,7 +146,7 @@ namespace Mooshak___H37.Controllers
 				return View(model);
 			}
 
-			return RedirectToAction("Index");
+			return RedirectToAction("ViewUsers");
 		}
 	}
 }
