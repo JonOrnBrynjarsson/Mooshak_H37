@@ -82,7 +82,7 @@ namespace Mooshak___H37.Services
 			foreach(var item in users)
 			{
 				string aspInfo = (from z in _db.Users
-							   where item.AspNetUserId == z.AspNetUser.Id
+							   where item.AspNetUserId == z.AspNetUser.Id && z.IsRemoved == false
 							   select z.AspNetUser.Email).FirstOrDefault();
 
 				mail.Add(aspInfo);

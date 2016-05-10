@@ -104,17 +104,25 @@ namespace Mooshak___H37.Controllers
 		[HttpPost]
 		public ActionResult CreateMilestone(MilestoneViewmodel model, int assigID)
 		{
-			if (ModelState.IsValid && _milestoneService.TeacherCanCreateMilestone(assigID))
+			if (_milestoneService.TeacherCanCreateMilestone(model, assigID))
 			{
-				_milestoneService.CreateMilestone(model, assigID);
-				return RedirectToAction("Milestones", new { id = assigID });
-
+				if (ModelState.IsValid)
+				{
+					_milestoneService.CreateMilestone(model, assigID);
+					return RedirectToAction("Milestones", new { id = assigID });
+				}
+				else
+				{
+					ViewBag.CourseList = GetCourses();
+					return View(model);
+				}
 			}
 			else
 			{
-				ViewBag.CourseList = GetCourses();
-				return View(model);
+				return View("Error");
 			}
+
+
 		}
 
 		[HttpGet]
