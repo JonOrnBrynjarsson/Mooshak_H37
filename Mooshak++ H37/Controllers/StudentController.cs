@@ -50,8 +50,6 @@ namespace Mooshak___H37.Controllers
 		public ActionResult Submit(int milestoneId)
 		{
 			StudentSubmit s = new StudentSubmit();
-
-// Hér þarf að laga milestone til að taka við því sem verið er að vinna með
 			s.Milestone = milestoneId;
 
 			return View(s);
@@ -85,13 +83,14 @@ namespace Mooshak___H37.Controllers
 
 
 		[HttpGet]
-		public ActionResult EditCode(int submissionId )
+		public ActionResult EditCode( )
 		{
-			StudentSubmit studentSubmit = new StudentSubmit();
-			studentSubmit.Milestone = _filesService.getMilestoneIdBySubmitId(submissionId);
-			//studentSubmit.File = _filesService
+			int submissionId = 68;
+			EditCodeViewModel editCode = new EditCodeViewModel();
+			editCode.Milestone = _filesService.getMilestoneIdBySubmitId(submissionId);
+			editCode.codefile = _filesService.getSubmissionFile(submissionId);
 
-			return View();
+			return View(editCode);
 		}
 	}
 }

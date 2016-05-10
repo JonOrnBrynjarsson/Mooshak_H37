@@ -273,6 +273,7 @@
     <Compile Include="Models\Viewmodels\AdminHomeViewModel.cs" />
     <Compile Include="Models\Viewmodels\AssignmentViewModel.cs" />
     <Compile Include="Models\Viewmodels\CourseViewModel.cs" />
+    <Compile Include="Models\Viewmodels\EditCodeViewModel.cs" />
     <Compile Include="Models\Viewmodels\MilestoneViewmodel.cs" />
     <Compile Include="Models\Viewmodels\StudentSubmit.cs" />
     <Compile Include="Models\Viewmodels\TestCaseViewModel.cs" />
@@ -375,7 +376,7 @@
     <Content Include="Views\Teacher\RemoveTestCase.cshtml" />
     <Content Include="Views\Teacher\RemoveMilestone.cshtml" />
     <Content Include="Views\Teacher\RemoveAssignment.cshtml" />
-    <Content Include="Views\Student\View1.cshtml" />
+    <Content Include="Views\Student\EditCode.cshtml" />
     <Content Include="Views\Student\Assignments.cshtml" />
   </ItemGroup>
   <ItemGroup>
