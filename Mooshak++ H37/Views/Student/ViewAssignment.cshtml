@@ -1,7 +1,7 @@
 ﻿@model Mooshak___H37.Models.Viewmodels.AssignmentViewModel
 
 @{
-    ViewBag.Title = "ViewAssignment";
+    ViewBag.Title = "View Assignment";
 }
 
 <div class="clearfix">
@@ -71,7 +71,7 @@
 						<th>
 							@Html.ActionLink("Submit", "Submit", new { milestoneId = item.ID })
 						</th>
-						<th>@Html.ActionLink("View", "ViewSubmissions", new { MilestoneID = item.ID })</th>
+						<th>@Html.ActionLink("View", "ViewSubmissions", new { milestoneID = item.ID })</th>
 						<th></th>
 				</tr>
 			}

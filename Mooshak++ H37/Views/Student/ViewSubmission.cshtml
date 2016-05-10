@@ -1,0 +1,24 @@
+﻿@model Mooshak___H37.Models.Viewmodels.SubmissionsViewModel
+
+@{
+    ViewBag.Title = "View Submission";
+}
+
+<h2>@Model.Milestone.Assignment.Name</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				Submitted On: @Html.ValueFor(model => model.DateSubmitted, "{0:dd/MM/yyyy}")
+			</div>
+		</div>
+
+        <pre class="prettyprint">@Model.code</pre>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Go Back", "ViewSubmissions", new { MilestoneID = Model.MilestoneID })
+</p>

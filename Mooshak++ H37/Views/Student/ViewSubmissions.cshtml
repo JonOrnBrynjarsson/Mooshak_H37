@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.SubmissionsViewModel>
 
 @{
-    ViewBag.Title = "ViewSubmissions";
+    ViewBag.Title = "View Submissions";
 }
 
 <h2>My Submissions: </h2>
@@ -33,6 +33,7 @@
 					Date Submitted
 				</th>
 				<th></th>
+                <th></th>
 			</tr>
 
 			@foreach (var item in Model)
@@ -56,6 +57,9 @@
 					<td>
 						@Html.DisplayFor(modelItem => item.DateSubmitted)
 					</td>
+                    <td>
+                        @Html.ActionLink("Details", "ViewSubmission", new { submissionID = item.ID })
+                    </td>
 					<td>
 						@*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
 						@*@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })*@
@@ -69,6 +73,10 @@
 
 	</div>
 </div>
+<p>
+    @Html.ActionLink("Go Back", "ViewAssignment", new { id = @ViewBag.AssignmentID })
+</p>
+
 
 @*<table class="table">
     <tr>
