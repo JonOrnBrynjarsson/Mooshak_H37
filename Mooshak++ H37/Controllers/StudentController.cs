@@ -54,15 +54,19 @@ namespace Mooshak___H37.Controllers
 			{
 				return View("Error");
 			}
-			StudentSubmit s = new StudentSubmit();
-			s.Milestone = milestoneId;
+			MilestoneViewmodel m = new MilestoneViewmodel()
+			m = _milestoneService.GetSingleMilestone(milestoneId);
+			StudentSubmitViewModel submission = new StudentSubmitViewModel();
+			submission.Milestone = milestoneId;
+			submission.DateSet = m.DateSet;
+			submission.Duedate = m.DueDate;
 
-			return View(s);
+			return View(submission);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Submit(StudentSubmit submit)
+		public ActionResult Submit(StudentSubmitViewModel submit)
 		{
 			if (submit.File != null && submit.File.ContentLength > 0)
 			{

@@ -280,7 +280,7 @@
     <Compile Include="Models\Viewmodels\CourseViewModel.cs" />
     <Compile Include="Models\Viewmodels\EditCodeViewModel.cs" />
     <Compile Include="Models\Viewmodels\MilestoneViewmodel.cs" />
-    <Compile Include="Models\Viewmodels\StudentSubmit.cs" />
+    <Compile Include="Models\Viewmodels\StudentSubmitViewModel.cs" />
     <Compile Include="Models\Viewmodels\SubmissionsViewModel.cs" />
     <Compile Include="Models\Viewmodels\TestCaseViewModel.cs" />
     <Compile Include="Models\Viewmodels\UserViewModel.cs" />
@@ -372,7 +372,6 @@
     <Content Include="Views\Admin\EditUser.cshtml" />
     <None Include="Views\Shared\_Layout.backup" />
     <Content Include="Views\Student\ViewAssignment.cshtml" />
-    <Content Include="Views\Student\View.cshtml" />
     <Content Include="Views\Teacher\CreateAssignment.cshtml" />
     <Content Include="Views\Student\Submit.cshtml" />
     <Content Include="Views\Teacher\Milestones.cshtml" />
