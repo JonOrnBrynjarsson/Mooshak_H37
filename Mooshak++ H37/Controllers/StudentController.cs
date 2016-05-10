@@ -82,7 +82,8 @@ namespace Mooshak___H37.Controllers
 		public ActionResult EditCode(int submissionId )
 		{
 			StudentSubmit studentSubmit = new StudentSubmit();
-			studentSubmit.
+			studentSubmit.Milestone = _filesService.getMilestoneIdBySubmitId(submissionId);
+			//studentSubmit.File = _filesService
 
 			return View();
 		}

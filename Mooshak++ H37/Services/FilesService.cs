@@ -335,5 +335,26 @@ namespace Mooshak___H37.Services
 			}
 			clearRunfolder(submissionId);
 		}
+
+		/*public HttpPostedFileBase getSubmissionFile(int submissionId)
+		{
+			string folder = getStudentSubmissionFolder(submissionId);
+			DirectoryInfo dir = new DirectoryInfo(folder);
+			FileInfo[] files = dir.GetFiles("*.cpp");
+			if (files[0] == null)
+			{
+				throw new FileNotFoundException;
+			}
+			else
+			{
+				foreach (var file in files)
+				{
+					if (file.Name == "main.cpp") //Needs to be changed if we would like to return a list of files or file names.
+					{
+						return file;
+					}
+				}
+			}
+		}*/
 	}
 }

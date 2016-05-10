@@ -120,7 +120,19 @@ namespace Mooshak___H37.Services
 			return userId;
 		}
 
-        internal void setUser(string name, ApplicationUser user)
+		public string getAspUserRole(int userId)
+		{
+			var aspUser = (from user in _db.Users
+				where user.ID == userId
+				select user.AspNetUserId).SingleOrDefault();
+
+			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+			var result = um.GetRoles(aspUser).FirstOrDefault();
+			return result;
+			
+		}
+
+		internal void setUser(string name, ApplicationUser user)
         {
 
             string ID = user.Id;
