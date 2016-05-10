@@ -24,7 +24,7 @@ namespace Mooshak___H37.Services
         {
 			//gets all the users in the system
             var Users = (from x in _db.Users
-						// where x.IsRemoved == false
+						 where x.IsRemoved == false
 						 orderby x.Name ascending
                            select x).ToList();
 
