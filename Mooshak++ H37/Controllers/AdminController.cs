@@ -86,6 +86,8 @@ namespace Mooshak___H37.Controllers
 				//throw exception
 			}
 
+			ViewBag.userList = _userService.getAllUsersName();
+
 			return View(model);
 		}
 
