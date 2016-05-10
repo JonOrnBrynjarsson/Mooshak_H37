@@ -36,6 +36,7 @@ namespace Mooshak___H37.Services
         {
 
             var Courses = (from x in _db.Courses
+						   where x.IsRemoved != true
 						   orderby x.Name ascending
                            select x).ToList();
 
@@ -49,9 +50,11 @@ namespace Mooshak___H37.Services
                     StartDate = course.Startdate,
                     ID = course.ID,
                     Isactive = course.Isactive,
-                };
+					User = _userService.getUsersInCourse(course.ID)
+				};
                 viewModel.Add(model);
             }
+			
 
             return viewModel;
         }
@@ -98,7 +101,7 @@ namespace Mooshak___H37.Services
 
 
 			var Courses = (from courses in _db.Courses
-							   where userCourses.Contains(courses.ID)
+							   where userCourses.Contains(courses.ID) && courses.IsRemoved != false
 							   orderby courses.ID descending
 							   select courses).ToList();
 
@@ -213,6 +216,18 @@ namespace Mooshak___H37.Services
 			}
 		}
 
+		public void removeCourseByID(int id)
+		{
+			var course = (from c in _db.Courses
+							  where c.ID == id
+							  select c).FirstOrDefault();
+
+			if (course != null)
+			{
+				course.IsRemoved = true;
+				_db.SaveChanges();
+			}
+		}
 
 	}
 }

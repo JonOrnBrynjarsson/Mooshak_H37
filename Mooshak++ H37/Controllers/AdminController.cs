@@ -103,7 +103,7 @@ namespace Mooshak___H37.Controllers
 			return RedirectToAction("ViewCourses");
 		}
 
-		public ActionResult DeleteCourse(int? id)
+		public ActionResult RemoveCourse(int? id)
 		{
 			if(id == null)
 			{
@@ -112,7 +112,9 @@ namespace Mooshak___H37.Controllers
 				return null;//dont return null here
 			}
 
-			return View();
+			_courseService.removeCourseByID(id.Value);
+
+			return RedirectToAction("ViewCourses");
 		}
 
 		public ActionResult ViewUsers()
