@@ -93,7 +93,7 @@ namespace Mooshak___H37.Services
 			return totalPercentage;
 		}
 
-		public bool UserCanSubmit(int milestoneID)
+		public bool UserCanSubmitMilestone(int milestoneID)
 		{
 
 			var currUser = GetCurrentUser();
@@ -112,6 +112,17 @@ namespace Mooshak___H37.Services
 			}
 
 			return false;
+		}
+
+		public bool TeacherCanCreateMilestone(int assignmentID)
+		{
+			var totalPercentage = GetTotalMilestonePercentageForAssignment(assignmentID);
+
+			if (totalPercentage >= 100)
+			{
+				return false;
+			}
+			return true;
 		}
 
 		public MilestoneViewmodel GetSingleMilestone(int milID)

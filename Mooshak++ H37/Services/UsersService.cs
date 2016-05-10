@@ -147,6 +147,14 @@ namespace Mooshak___H37.Services
             _db.SaveChanges();
         }
 
+		//public string GetNameFromUserID(int userID)
+		//{
+		//	var username = (from name in _db.Users
+		//					where name.ID == userID
+		//					select name.Name).FirstOrDefault();
+		//	return username;
+		//}
+
         internal int getUserIDbyEmail(LoginViewModel model)
         {
 
