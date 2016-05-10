@@ -120,6 +120,15 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
+		public int getCourseIdByName(string name)
+		{
+			var course = (from x in _db.Courses
+						  where name == x.Name
+						  select x.ID).FirstOrDefault();
+
+			return course;
+		}
+
 		internal void setCourse(CourseViewModel model)
         {
             _db.Courses.Add(new Course

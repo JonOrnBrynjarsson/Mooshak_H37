@@ -27,7 +27,6 @@
                     <th>Course</th>
                     <th>Teacher</th>
                     <th>Users</th>
-                    <th>Date</th>
                     <th>Active</th>
                 </tr>
             </thead>
@@ -41,7 +40,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
+						<td>@Html.ActionLink("Delete", "DeleteCourse", new { id = item.ID })</td>
 						<td>@Html.ActionLink("Edit", "EditCourse", new { id = item.ID })</td>
                     </tr>
                 }

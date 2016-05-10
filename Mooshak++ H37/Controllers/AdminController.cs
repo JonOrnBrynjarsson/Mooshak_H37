@@ -65,8 +65,13 @@ namespace Mooshak___H37.Controllers
         [HttpPost]
         public ActionResult CreateCourse(CourseViewModel model)
         {
+			//Save the new course that was just created to the DB
             _courseService.setCourse(model);
-            return RedirectToAction("ViewCourses");
+
+			//find the id number of the course just created from the DB
+			int Courseid = _courseService.getCourseIdByName(model.Name);
+
+			return RedirectToAction("EditCourse", new { id = Courseid});
         }
 
 		public ActionResult EditCourse(int? id)
@@ -106,6 +111,18 @@ namespace Mooshak___H37.Controllers
 			}
 
 			return RedirectToAction("ViewCourses");
+		}
+
+		public ActionResult DeleteCourse(int? id)
+		{
+			if(id == null)
+			{
+				//TODO
+				//Throw exception
+				return null;//dont return null here
+			}
+
+			return View();
 		}
 
 		public ActionResult ViewUsers()
