@@ -101,7 +101,7 @@ namespace Mooshak___H37.Services
 
 
 			var Courses = (from courses in _db.Courses
-							   where userCourses.Contains(courses.ID) && courses.IsRemoved != false
+							   where userCourses.Contains(courses.ID) && courses.IsRemoved != true
 							   orderby courses.ID descending
 							   select courses).ToList();
 

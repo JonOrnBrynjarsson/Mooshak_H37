@@ -41,8 +41,8 @@
                         }                         
                         </td>
                         <td>@item.Email</td>                                                                    
-                        <td>@Html.Raw("drasl")</td>
-                        <td>@item.RoleID</td>
+                        <td>@Html.ActionLink("Edit", "EditUser", new { item.ID })</td>
+                        <td></td>
                     </tr>}
             </tbody>
         </table>
@@ -51,6 +51,6 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+     |
     @Html.ActionLink("Back to List", "Index")
 </p>

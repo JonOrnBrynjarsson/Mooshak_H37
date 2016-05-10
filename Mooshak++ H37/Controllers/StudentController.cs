@@ -41,7 +41,7 @@ namespace Mooshak___H37.Controllers
 		public ActionResult Assignments()
 		{
 			var viewModel = _courseService.GetCoursesForUser();
-			//int userId = _usersService.getUserIdForCurrentyApplicationUser();
+			//int userId = 
 			//var viewModel = _courseService.getAllCoursesByUserID(userId);
 			return View(viewModel);
 		}
@@ -51,7 +51,12 @@ namespace Mooshak___H37.Controllers
 		{
 			StudentSubmit s = new StudentSubmit();
 
-// Hér þarf að laga milestone til að taka við því sem verið er að vinna með
+			var test = _milestoneService.UserCanSubmit(milestoneId);
+
+			if (test == false)
+			{
+				return View("Error");
+			}
 			s.Milestone = milestoneId;
 
 			return View(s);
