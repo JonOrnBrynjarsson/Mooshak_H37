@@ -29,6 +29,9 @@
 				<th>
 					Percentage
 				</th>
+				<th>
+					Date Submitted
+				</th>
 				<th></th>
 			</tr>
 
@@ -50,9 +53,9 @@
 					<td>
 						@Html.DisplayFor(modelItem => item.Milestone.Percentage) %
 					</td>
-					@*<td>
-							@Html.DisplayFor(modelItem => item.IsRemoved)
-						</td>*@
+					<td>
+						@Html.DisplayFor(modelItem => item.DateSubmitted)
+					</td>
 					<td>
 						@*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
 						@*@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })*@

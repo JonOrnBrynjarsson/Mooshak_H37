@@ -50,6 +50,7 @@ namespace Mooshak___H37.Services
 					Milestone = subs.Milestone,
 					ProgramFileLocation = subs.ProgramFileLocation,
 					UserID = subs.UserID,
+					DateSubmitted = subs.DateSubmitted,
 					UserName = (from name in _db.Users
 								where name.ID == subs.UserID
 								select name.Name).FirstOrDefault()
@@ -78,6 +79,7 @@ namespace Mooshak___H37.Services
 				MilestoneID = subs.MilestoneID,
 				Milestone = subs.Milestone,
 				//ProgramFileLocation = subs.ProgramFileLocation,
+				DateSubmitted = subs.DateSubmitted,
 				UserID = subs.UserID,
 				UserName = (from name in _db.Users
 							where name.ID == subs.UserID
@@ -136,6 +138,7 @@ namespace Mooshak___H37.Services
 					IsRemoved = subs.IsRemoved,
 					MilestoneID = subs.MilestoneID,
 					Milestone = subs.Milestone,
+					DateSubmitted = subs.DateSubmitted,
 					ProgramFileLocation = subs.ProgramFileLocation,
 					UserID = subs.UserID,
 					UserName = (from name in _db.Users
