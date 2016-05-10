@@ -4,7 +4,6 @@
 }
 
 <link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
-<script src="~/Scripts/Admin.js"></script>
 
 <div class="clearfix">
     <div class="admin-createCourse-buttons">
@@ -12,7 +11,7 @@
     </div>
 
     <div class="large-left-portion">
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal blabla", role = "form" }))
         {
         @Html.AntiForgeryToken()
 

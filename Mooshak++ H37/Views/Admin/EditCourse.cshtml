@@ -55,16 +55,12 @@
 	</div>
 	<div class="userTable">
 		<div class="form-inline" id="addUser">
-			<select name="addUser" class="form-control" id="addUser">
-				@if (@ViewBag.userList != null)
-				{
-					foreach (var user in @ViewBag.userList)
-					{
-						<option>@user.Name</option>
-					}
-				}
-			</select>
-			<button class="btn btn-primary">Add user</button>
+        @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.DropDownListFor(model => model.User, new SelectList(Model.User, "Name", Model.User))
+
+		    <input type="submit" class="btn btn-primary addUserButton" value="Add User"/>
+        }
 		</div>
 		<br />
 		<table class="table table-hover">
