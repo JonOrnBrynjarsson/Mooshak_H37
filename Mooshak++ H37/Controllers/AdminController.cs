@@ -125,9 +125,10 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
-		public ActionResult EditUser()
+		[HttpGet]
+		public ActionResult EditUser(int id)
 		{
-			var viewModel = _userService.getAllUsersName();
+			var viewModel = _userService.GetSingleUser(id);
 			return View(viewModel);
 		}
 

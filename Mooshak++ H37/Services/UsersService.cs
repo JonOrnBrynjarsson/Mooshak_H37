@@ -154,10 +154,33 @@ namespace Mooshak___H37.Services
                         where x.AspNetUser.Email == model.Email
                         select x.ID).SingleOrDefault();
 
-
-
             return User;
         }
+
+		public UserViewModel GetSingleUser(int userID)
+		{
+			var user = (from us in _db.Users
+						where us.ID == userID
+						select us).FirstOrDefault();
+
+			var email = (from us in _db.Users
+						 where user.AspNetUserId == us.AspNetUser.Id
+						 select us.AspNetUser.Email).SingleOrDefault();
+
+			if (user == null)
+			{
+				//do something
+			}
+
+			UserViewModel model = new UserViewModel
+			{
+				ID = user.ID,
+				Name = user.Name,
+				Email = email,
+			};
+
+			return model;
+		}
 
         internal int getRoleNamebyID(int userID)
         {
@@ -174,29 +197,12 @@ namespace Mooshak___H37.Services
 						where model.ID == user.ID
 						select user).FirstOrDefault();
 
-			if (edit != NULL)
+			if (edit != null)
 			{
 				edit.Name = model.Name;
 			}
 
 			_db.SaveChanges();
 		}
-
-		//internal void EditCourse(CourseViewModel model)
-		//{
-		//	var edit = (from course in _db.Courses
-		//				where model.ID == course.ID
-		//				select course).FirstOrDefault();
-
-		//	if (edit != null)
-		//	{
-		//		edit.Name = model.Name;
-		//		edit.Startdate = model.StartDate.Value;
-		//		edit.IsRemoved = model.IsRemoved;
-		//		edit.Isactive = model.Isactive;
-
-		//		_db.SaveChanges();
-		//	}
-		//}
 	}
 }
