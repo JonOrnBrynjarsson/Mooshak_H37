@@ -11,9 +11,7 @@
 
 
     <div class="admin-createCourse-buttons">
-        <button class="btn btn-primary save-button">Save</button>
-        <br />
-        <button class="btn btn-primary upload-csv-button" id="createUser">Upload CSV</button>
+        <button class="btn btn-primary upload-csv-button" id="createUser">Upload CSV (todo)</button>
     </div>
 
 
@@ -55,34 +53,62 @@
     <div class="userTable">
         <div class="form-inline" id="addUser">  
             <select name="addUser" class="form-control" id="addUser">
-                @foreach(var user in Model.User)
-                {
-                    <option>@user.Name</option>
-                }
+				@if (@ViewBag.userList != null)
+				{
+					foreach (var user in @ViewBag.userList)
+					{
+						<option>@user.Name</option>
+					}
+				}
             </select>
             <button class="btn btn-primary">Add user</button> 
         </div>
         <br/>
-        <table class="table table-hover">
-            <thead>
-                    <tr>
-                    <th>Nr</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>User Type</th>
-                    <th>Date Added</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Jón Örn</td>
-                    <td>NonniGumm@ru.is</td>
-                    <td>Student</td>
-                    <td>05-May-16 13:37:00</td>
-                </tr>
-            <tbody>
-        </table>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Nr</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>User Type</th>
+					<th>Date Added</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				@{int rowNo = 0;}
+				@if (Model.User != null)
+				{
+					foreach (var item in Model.User)
+					{
+						<tr>
+							<td>@(rowNo += 1)</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Name)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Email)
+							</td>
+							<td>
+								@if (item.RoleID == 1)
+								{
+									@Html.Raw("Student")
+								}
+								else if (item.RoleID == 2)
+								{
+									@Html.Raw("Teach")
+								}
+								else if (item.RoleID == 2)
+								{
+									@Html.Raw("Admin")
+								}
+							</td>
+							<td>05-May-16 13:37:00</td>
+						</tr>
+					}
+				}
+			<tbody>
+		</table>
     </div>
 
 

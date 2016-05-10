@@ -21,7 +21,7 @@ namespace Mooshak___H37.Controllers
 		readonly FilesService _filesService = new FilesService();
 		readonly CoursesService _courseService = new CoursesService();
 		readonly UsersService _usersService = new UsersService();
-		
+		readonly MilestoneService _milestoneService = new MilestoneService();
 
 		// GET: Assignment
 		[HttpGet]
@@ -34,6 +34,7 @@ namespace Mooshak___H37.Controllers
 		public ActionResult ViewAssignment(int id)
 		{
 			var viewModel = _assignService.Assignment(id);
+			ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
 			return View(viewModel);
 		}
 
@@ -45,12 +46,13 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Submit(int? milestone)
+		public ActionResult Submit(int milestoneID)
 		{
 			StudentSubmit s = new StudentSubmit();
 
 // Hér þarf að laga milestone til að taka við því sem verið er að vinna með
-			s.Milestone = 4;
+			s.Milestone = milestoneID;
+
 			return View(s);
 		}
 
