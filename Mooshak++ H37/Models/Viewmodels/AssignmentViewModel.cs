@@ -20,5 +20,5 @@ namespace Mooshak___H37.Models.Viewmodels
 		public List<MilestoneViewmodel> Milestones { get; set; }
 		public List<UserViewModel> Users { get; set; }
 		public string CourseName { get; set; }
-    }
+	}
 }

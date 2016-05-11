@@ -3,11 +3,23 @@ using System.IO;
 using System.Text;
 using System.Configuration;
 using System.Web.Mvc;
+using Mooshak___H37.Models;
+using Mooshak___H37.Models.Entities;
+using Mooshak___H37.Services;
 
 namespace Project_4.Utilities
 {
 	class Logger
 	{
+		private readonly ApplicationDbContext _db;
+		private readonly UsersService _usersService;
+
+		public Logger()
+		{
+			_db = new ApplicationDbContext();
+			_usersService = new UsersService();
+		}
+
 		public static Logger theInstance = null;
 		public static Logger Instance
 		{
@@ -19,29 +31,18 @@ namespace Project_4.Utilities
 				}
 				return theInstance;
 			}
-
 		}
 
 		public void LogException(Exception ex, string controller, string action )
 		{
-			
-			string Logfile = ConfigurationManager.AppSettings["Logfile"];
-			string LogPath = ConfigurationManager.AppSettings["LogPath"];
-			if (!Directory.Exists(LogPath))
-			{
-				Directory.CreateDirectory(LogPath);
-			}
+			string comment = string.Format("The action {0} in {1}Controller, threw an error \" {2}", action, controller,  ex.Message);
+			ErrorReport report = new ErrorReport();
+			report.UserID = _usersService.getUserIdForCurrentyApplicationUser();
+			report._message = comment;
+			report.DateOccurred = DateTime.Now;
 
-			string message = string.Format("At {0}, the action {1} in {2}Controller, threw an error \" {3} \" {4}", DateTime.Now, action, controller,  ex.Message, Environment.NewLine);
-			
-			using (StreamWriter fileToUse = new StreamWriter(LogPath + Logfile, true, Encoding.Default))
-			{
-				fileToUse.Write(message);
-			}
-
+			_db.ErrorReports.Add(report);
+			_db.SaveChanges();
 		}
-
-
-
 	}
 }

@@ -128,7 +128,6 @@ namespace Mooshak___H37.Services
 			//	};
 			//}
 
-
 			foreach (var course in Courses)
 			{
 				CourseViewModel model = new CourseViewModel

@@ -23,6 +23,7 @@ namespace Mooshak___H37.Models.Viewmodels
 		public int UserSubmissions { get; set; }
 		public DateTime DateSet { get; set; }
 		public DateTime DueDate { get; set; }
+		public int TotalSubmissions { get; set; }
 
 	}
 }

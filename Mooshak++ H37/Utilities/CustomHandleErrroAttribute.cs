@@ -8,7 +8,7 @@ using Project_4;
 
 namespace Project_4.Utilities
 {
-	class CustomApplicationExceptionAttribute : HandleErrorAttribute
+	class CustomHandleExceptionAttribute : HandleErrorAttribute
 	{
 
 		public override void OnException(ExceptionContext filterContext)
@@ -20,16 +20,13 @@ namespace Project_4.Utilities
 
 			Logger.Instance.LogException(ex, currentController, currentActionName);
 
-			if (currentController == "Movie" || currentController == "Book")
+			if (ex is CustomApplicationException)
 			{
-			}
-			else if (ex is CustomApplicationException)
-			{
-				viewName = "ErrorCustom";
+				viewName = "Error";
 			}
 			else if (ex is ArgumentException)
 			{
-				viewName = "ErrorArgument";
+				viewName = "Error";
 			}
 
 			HandleErrorInfo model = new HandleErrorInfo(filterContext.Exception, currentController, currentActionName);

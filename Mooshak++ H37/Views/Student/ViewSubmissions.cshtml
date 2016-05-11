@@ -38,10 +38,7 @@
 
 			@foreach (var item in Model)
 			{
-				<tr>
-					@*<td>
-							@Html.DisplayFor(modelItem => item.MilestoneID)
-						</td>*@
+				<tr style="@(item.FinalSolution == true ? "Background-color:rgb(81, 142, 255);" : "")">
 					<td>
 						@Html.DisplayFor(modelItem => item.Milestone.Name)
 					</td>
@@ -57,15 +54,10 @@
 					<td>
 						@Html.DisplayFor(modelItem => item.DateSubmitted)
 					</td>
-                    <td>
-                        @Html.ActionLink("Details", "ViewSubmission", new { submissionID = item.ID })
-                    </td>
 					<td>
-						@*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
-						@*@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })*@
-						@Html.ActionLink("Details", "SubmissionDetail", new { id=item.ID })
-							@*Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+						@Html.ActionLink("Details", "ViewSubmission", new { submissionID = item.ID })
 					</td>
+					<td></td>
 				</tr>
 			}
 

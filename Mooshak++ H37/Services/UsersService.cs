@@ -293,11 +293,11 @@ namespace Mooshak___H37.Services
 
             UserList.Add(teachers);
 
-            var admins = (from user in _db.UserCourseRelations
-                            where user.RoleID == 3
-                            select user).Count();
+            //var admins = (from user in _db.UserCourseRelations
+            //                where user.RoleID == 3
+            //                select user).Count();
 
-            UserList.Add(admins);
+            //UserList.Add(admins);
 
             return UserList;
         }
