@@ -284,9 +284,9 @@ namespace Mooshak___H37.Services
 
             //List of assignments with given Course ID.
             var assignments = (from asi in _db.Assignments
-							  where asi.CourseID == id &&
-							  asi.IsRemoved != true 
-                              //&& asi.DueDate > todayDate
+							   where asi.CourseID == id &&
+                               asi.IsRemoved != true
+                               orderby asi.DueDate descending
                                select asi).ToList();
 
 			if(assignments == null)

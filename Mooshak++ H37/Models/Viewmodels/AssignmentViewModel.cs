@@ -11,7 +11,9 @@ namespace Mooshak___H37.Models.Viewmodels
         public int ID { get; set; }
 		[Required(ErrorMessage  = "Name is required")]
         public string Name { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime? SetDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime? DueDate { get; set; }
 		public int CourseID { get; set; }
         public bool IsActive { get; set; }

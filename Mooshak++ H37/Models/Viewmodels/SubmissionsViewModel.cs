@@ -21,7 +21,7 @@ namespace Mooshak___H37.Models.Viewmodels
 
 		public bool IsRemoved { get; set; }
 
-		public DateTime DateSubmitted { get; set; }
+        public DateTime DateSubmitted { get; set; }
 
 		public virtual Milestone Milestone { get; set; }
 
