@@ -6,14 +6,25 @@
     float: right;    
 }
 
-#addUser
+#teacherCheckBox
 {
-    margin-left: -23%;
+    margin-bottom: 5%;
 }
 
 #create-table
 {
-    margin-left: 20%;
+    margin-left: 0%;
+}
+
+#addUser
+{
+    float: right;
+    margin-right: -17%;
+}
+
+.addUserToCourse
+{
+    padding-left: 6%;
 }
 
 .add-course

@@ -13,9 +13,9 @@
 
 
 
-	<div class="admin-createCourse-buttons">
+	@*<div class="admin-createCourse-buttons">
 		<button class="btn btn-primary upload-csv-button" id="createUser">Upload CSV</button>
-	</div>
+	</div>*@
 
 
 	<div class="large-left-portion">
@@ -54,7 +54,7 @@
 		<br />
 	</div>
 	<div class="userTable">
-		<div class="form-inline" id="addUser">
+		<div class="form-inline right-portion" id="addUser">
         @using (Html.BeginForm("addUserToCurse", "Admin", FormMethod.Post, new { @class = "form-horizontal addUserForm", role = "form" }))
         {
             @Html.HiddenFor(model => model.ID)
@@ -71,16 +71,16 @@
             }
 
 
-            <div class="form-group">
+            <div class="form-group addUserToCourse">
                 @Html.DropDownList("name", new SelectList(sel, "Value", "Text"), new { @class= "form-control" })
             </div>
 
-            <div class="form-group">
+            <div class="form-group addUserToCourse" id="teacherCheckBox">
                 <label for="Teacher">Teacher?</label>
                 @Html.CheckBox("Teacher", new { @id="Teacher", @class = "form-control" })
             </div>
 
-            <div class="form-group">
+            <div class="form-group addUserToCourse">
 		        <input type="submit" class="btn btn-primary addUserButton" value="Add User"/>
             </div>
         }
@@ -116,7 +116,7 @@
 							}
 							else if (item.RoleID == 2)
 							{
-								@Html.Raw("Teach")
+								@Html.Raw("Teacher")
 							}
 							else if (item.RoleID == 2)
 							{
