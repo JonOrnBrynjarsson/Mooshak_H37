@@ -11,11 +11,12 @@ using Microsoft.Owin.Security;
 using Mooshak___H37.Models;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models.Viewmodels;
+using Project_4.Controllers;
 
 namespace Mooshak___H37.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BasicController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

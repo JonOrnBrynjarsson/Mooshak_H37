@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using Project_4.Utilities;
 
 namespace Mooshak___H37
 {
@@ -7,7 +8,8 @@ namespace Mooshak___H37
 	{
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
-			filters.Add(new HandleErrorAttribute());
+			//filters.Add(new HandleErrorAttribute());
+			filters.Add(new CustomHandleExceptionAttribute());
 		}
 	}
 }

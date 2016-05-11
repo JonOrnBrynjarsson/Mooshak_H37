@@ -6,11 +6,12 @@ using System.Web.Mvc;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models.Viewmodels;
 using Microsoft.AspNet.Identity;
+using Project_4.Controllers;
 
 namespace Mooshak___H37.Controllers
 {
 	//[Authorize(Roles = "Teacher")]
-	public class TeacherController : Controller
+	public class TeacherController : BasicController
 	{
 		readonly AssigmentsService _assignService = new AssigmentsService();
 		readonly CoursesService _courseService = new CoursesService();

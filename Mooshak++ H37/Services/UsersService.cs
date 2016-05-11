@@ -64,11 +64,6 @@ namespace Mooshak___H37.Services
 
 			List<UserViewModel> model = new List<UserViewModel>();
 
-			//here we select the connection table that gives us the userID, roleID, courseID, etc.
-			//of the users in the given courseID param.
-			var userInfo = (from x in _db.UserCourseRelations
-						  where courseID == x.CourseID && x.IsRemoved == false
-						  select x).ToList();
 			//this is to get only the student id for next linq expression (.Contains)
 			var userIdList = (from x in _db.UserCourseRelations
 							where courseID == x.CourseID && x.IsRemoved == false
@@ -98,14 +93,38 @@ namespace Mooshak___H37.Services
 				UserViewModel temp = new UserViewModel
 				{
 					Name = users[i].Name,
+					ID = users[i].ID,
 					Email = mail[i],
-					RoleID = userInfo[i].RoleID
+					CourseID = courseID
 				};
 
 				model.Add(temp);
 			}
 
-			return model;
+			List<UserViewModel> sortedModel = new List<UserViewModel>();
+			sortedModel = model.OrderBy(n => n.Name).ToList();
+
+			foreach(var item in sortedModel)
+			{
+				getRolesByCourseID(item);
+			}
+
+			return sortedModel;
+		}
+
+		/// <summary>
+		/// This function takes in a list of userViewModel with the requerment that it has
+		/// a CourseID and ID wich is a userID, then it fills in the list the correct roles for each one.
+		/// </summary>
+		private void getRolesByCourseID(UserViewModel model)
+		{
+			var role = (from x in _db.UserCourseRelations
+						where model.CourseID == x.CourseID &&
+						model.ID == x.UserID
+						select x).FirstOrDefault();
+
+			model.RoleID = role.RoleID;
+
 		}
 
 		/// <summary>
@@ -274,11 +293,11 @@ namespace Mooshak___H37.Services
 
             UserList.Add(teachers);
 
-            var admins = (from user in _db.UserCourseRelations
-                            where user.RoleID == 3
-                            select user).Count();
+            //var admins = (from user in _db.UserCourseRelations
+            //                where user.RoleID == 3
+            //                select user).Count();
 
-            UserList.Add(admins);
+            //UserList.Add(admins);
 
             return UserList;
         }
