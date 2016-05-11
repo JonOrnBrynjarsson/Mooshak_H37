@@ -1,30 +1,67 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Welcome to Mooshak++";
 }
 
+<div class="clearfix">
+	<div class="large-left-portion">
 
-Users in system: @ViewBag.NumOfUsers
+		<div class="jumbotron">
+			<h1>Welcome to Mooshak++</h1>
+			<p>The Assignment System Of The Future!</p>
+		</div>
 
-@ViewBag.NumOfUsers   |   
+		<div class="panel panel-default">
+			<div class="panel-body">
+				System Information:
+			</div>
+		</div>
 
-@ViewBag.NumOfStudents   |   
+		<ul class="list-group">
+			<li class="list-group-item">
+				<span class="badge">@ViewBag.NumOfUsers</span>
+				Total Number of users in system:
+			</li>
 
-@ViewBag.NumOfTeachers   |   
+			<li class="list-group-item">
+				<span class="badge">@ViewBag.NumOfStudents</span>
+				Students in system:
+			</li>
 
-@ViewBag.NumOfAdmins   |   
+			<li class="list-group-item">
+				<span class="badge">@ViewBag.NumOfTeachers</span>
+				Teachers in system:
+			</li>
 
-@ViewBag.NumOfAssignments   |   
+			<li class="list-group-item">
+				<span class="badge">@ViewBag.NumOfCourses</span>
+				Courses in system:
+			</li>
 
-@ViewBag.NumOfCourses   |   
-
-@ViewBag.NumOfMilestones   |   
-
-@ViewBag.NumOfSubmissions   |   
-
-@ViewBag.NumOfTestCases   |   
+			<li class="list-group-item">
+				<span class="badge">@ViewBag.NumOfAssignments</span>
+				Assignments in system:
+			</li>
 
 
 
+			<li class="list-group-item">
+				<span class="badge">@ViewBag.NumOfMilestones</span>
+				Milestones in system:
+			</li>
+
+			<li class="list-group-item">
+				<span class="badge">@ViewBag.NumOfSubmissions</span>
+				Milestone submissions in system:
+			</li>
+
+			<li class="list-group-item">
+				<span class="badge">@ViewBag.NumOfTestCases</span>
+				Test Cases in system:
+			</li>
+
+		</ul>
+	</div>
+</div>
 
 @*<div class="jumbotron">
     <h1>ASP.NET</h1>
