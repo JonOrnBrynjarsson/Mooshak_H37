@@ -11,11 +11,7 @@ using Project_4.Controllers;
 namespace Mooshak___H37.Controllers
 {
 	//[Authorize(Roles = "Admin")]
-<<<<<<< HEAD
-	public class AdminController : Controller
-=======
 	public class AdminController : BasicController
->>>>>>> 1fc6df96652bddda7a31873a1b523755f2165931
 	{
 		private ErrorsService _errorsService = new ErrorsService();
 		private CoursesService _courseService = new CoursesService();
