@@ -6,34 +6,9 @@
 
 
 <div class="clearfix">
-
-
-    <div id="messages" class="left-portion">
-        <table id="message" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Nr</th>
-                    <th>Message</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Lorem</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Ipsum</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Dolar</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="due-assignments" class="right-portion">
+    <h2>Welcome to Mooshak++</h2>
+    <div id="due-assignments" class="large-left-portion">
+        <h3>Your assignments</h3>
         <table id="assignments" class="table table-hover">
             <thead>
                 <tr>
@@ -59,7 +34,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
-                        </td>
+                        </td>   
                     </tr>
                 }
             </tbody>
