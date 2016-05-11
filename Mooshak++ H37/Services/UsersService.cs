@@ -3,12 +3,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Security;
 
 namespace Mooshak___H37.Services
 {
@@ -59,6 +55,11 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
+		/// <summary>
+		/// Gets a list of student that are in a specific course.
+		/// </summary>
+		/// <param name="courseId">The ID of the course</param>
+		/// <returns>A list of users in a course</returns>
 		public List<UserViewModel> getUsersInCourse(int courseId)
 		{
 			var usersInfo = (from ucr in _db.UserCourseRelations
@@ -415,6 +416,14 @@ namespace Mooshak___H37.Services
 					_db.SaveChanges();
 				}
 			}
+		}
+
+		public bool deleteUserById(int Id)
+		{
+				
+
+
+			return false;
 		}
 	}
 }
