@@ -146,13 +146,13 @@ namespace Mooshak___H37.Services
 									  select x.AllowedSubmissions).SingleOrDefault();
 
 			//Returns true if User has not submitted to many times
-			if (submissions <= allowedSubmissions)
+			if (submissions >= allowedSubmissions)
 			{
 				//return true;
 				throw new Exception("You have already submitted the maximum number of times");
 			}
 
-			return false;
+			return true;
 		}
 
 		/// <summary>

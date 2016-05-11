@@ -65,19 +65,12 @@ namespace Mooshak___H37.Controllers
 
 			try
 			{
-				_milestoneService.UserCanSubmitMilestone(milestoneId);
+				var canSubmit = _milestoneService.UserCanSubmitMilestone(milestoneId);
 			}
 			catch (Exception e)
 			{
-				return View("~/Views/Shared/Cerror", e);
+				return View("~/Views/Shared/Cerror.cshtml", e);
 			}
-
-			//if (!_milestoneService.UserCanSubmitMilestone(milestoneId))
-			//{
-			//	//You have already submitted the maximum number of times.
-			//	return View("Error");
-			//}
-
 
 			MilestoneViewmodel m = new MilestoneViewmodel();
 
@@ -90,6 +83,12 @@ namespace Mooshak___H37.Controllers
 			submission.Duedate = m.DueDate;
 
 			return View(submission);
+
+			//if (!_milestoneService.UserCanSubmitMilestone(milestoneId))
+			//{
+			//	//You have already submitted the maximum number of times.
+			//	return View("Error");
+			//}
 		}
 
 		[HttpPost]
