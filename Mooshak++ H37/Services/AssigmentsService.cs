@@ -357,7 +357,8 @@ namespace Mooshak___H37.Services
                 {
                     SubmissionData = (from newsub in _db.Submissions
                                   where item.ID == newsub.MilestoneID &&
-                                  newsub.UserID == userID
+                                  newsub.UserID == userID &&
+                                  newsub.IsRemoved != true
                                   orderby newsub.DateSubmitted descending
                                   select newsub).FirstOrDefault(),
                     MilestoneData = item,
