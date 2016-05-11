@@ -20,7 +20,6 @@ namespace Project_4.Utilities
 			_usersService = new UsersService();
 		}
 
-
 		public static Logger theInstance = null;
 		public static Logger Instance
 		{
@@ -32,7 +31,6 @@ namespace Project_4.Utilities
 				}
 				return theInstance;
 			}
-
 		}
 
 		public void LogException(Exception ex, string controller, string action )
@@ -46,8 +44,5 @@ namespace Project_4.Utilities
 			_db.ErrorReports.Add(report);
 			_db.SaveChanges();
 		}
-
-
-
 	}
 }
