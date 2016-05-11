@@ -295,5 +295,13 @@ namespace Mooshak___H37.Services
 				// DO Something!!
 			}
 		}
+
+		public int NumberOfAssignments()
+		{
+			var assignments = (from assi in _db.Assignments
+						   select assi).Count();
+
+			return assignments;
+		}
 	}
 }
