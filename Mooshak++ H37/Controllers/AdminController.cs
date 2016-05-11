@@ -82,7 +82,7 @@ namespace Mooshak___H37.Controllers
 				//throw exception
 			}
 
-			ViewBag.userList = _userService.getAllUsersName();
+			ViewBag.userList = _userService.getAllUsersNameNotInCourse(id.Value);
 
 			return View(model);
 		}

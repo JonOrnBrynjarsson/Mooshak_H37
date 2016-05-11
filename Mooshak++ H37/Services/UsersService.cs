@@ -108,11 +108,37 @@ namespace Mooshak___H37.Services
 			return model;
 		}
 
-		/// <summary>
-		/// In order to 
-		/// </summary>
-		/// <returns>Returns the User.ID for the current ApplicationUser</returns>
-		public int getUserIdForCurrentyApplicationUser()
+        internal dynamic getAllUsersNameNotInCourse(int courseID)
+        {
+            //gets all the users in the system
+            var Users = (from x in _db.Users
+                         join y in _db.UserCourseRelations on courseID equals y.CourseID
+                         where x.IsRemoved == false && x.ID != y.UserID
+                         orderby x.Name ascending
+                         select x).ToList();
+
+
+            var viewModel = new List<UserViewModel>();
+            //combines all information gathered into the userViewmodel
+            for (int i = 0; i < Users.Count(); i++)
+            {
+                UserViewModel model = new UserViewModel
+                {
+                    Name = Users[i].Name,
+                    ID = Users[i].ID
+                };
+                viewModel.Add(model);
+            }
+
+
+            return viewModel;
+        }
+
+        /// <summary>
+        /// In order to 
+        /// </summary>
+        /// <returns>Returns the User.ID for the current ApplicationUser</returns>
+        public int getUserIdForCurrentyApplicationUser()
 		{
 			var aspUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
 			var userId = (from user in _db.Users
