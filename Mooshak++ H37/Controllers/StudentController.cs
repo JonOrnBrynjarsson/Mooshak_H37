@@ -134,7 +134,7 @@ namespace Mooshak___H37.Controllers
 			}
 			catch (Exception e)
 			{
-				return View("~/Views/Shared/Cerror", e);
+				return View("~/Views/Shared/Cerror.cshtml", e);
 			}
 		}
 
@@ -158,7 +158,7 @@ namespace Mooshak___H37.Controllers
 			}
 			catch (Exception e)
 			{
-				return View("~/Views/Shared/Cerror", e);
+				return View("~/Views/Shared/Cerror.cshtml", e);
 			}
         }
 
