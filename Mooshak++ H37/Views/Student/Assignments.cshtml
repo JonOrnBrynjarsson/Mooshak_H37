@@ -4,9 +4,6 @@
 	ViewBag.Title = "Assignments";
 }
 
-@*<p>
-		@Html.ActionLink("Create New", "Create")
-	</p>*@
 <div class="clearfix">
 	<div class="large-left-portion">
 		@foreach (var item in Model)
@@ -28,50 +25,4 @@
 		}
 	</div>
 </div>
-@*<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.Name)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.StartDate)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Isactive)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.IsRemoved)
-			</th>
-			<th></th>
-		</tr>
-
-	@foreach (var item in Model) {
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Name)
-			</td>
-
-			@foreach (var it in item.Assignments)
-			{
-				<td>@it.Name</td>
-			}
-
-			<td>
-				@Html.DisplayFor(modelItem => item.StartDate)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Isactive)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.IsRemoved)
-			</td>
-			<td>
-				@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-				@Html.ActionLink("Details", "Details", new { id=item.ID }) |
-				@Html.ActionLink("Delete", "Delete", new { id=item.ID })
-			</td>
-		</tr>
-	}
-
-		</table>*@
-
 
