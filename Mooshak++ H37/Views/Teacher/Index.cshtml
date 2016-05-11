@@ -5,38 +5,8 @@
 }
 
 <h2>Teacher Homepage</h2>
-
 <div class="clearfix">
-    <div class="left-portion">
-        <h3>Messages</h3>
-        <div id="messages">
-            <table id="message" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nr</th>
-                        <th>Message</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Ipsum</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Dolar</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <img class="dataImage" src="~/images/data.jpg" alt="No image man" />
-    </div>
-
-    <div class="right-portion">
+    <div class="large-left-portion">
         <div id="due-assignments">
             <h3>
                 Assignments
@@ -48,12 +18,9 @@
                         <th>Nr</th>
                         <th>Name</th>
                         <th>Due Date</th>
-                        <th>Accepted</th>
-                        <th>Graded</th>
                         <th>Details</th>
 						<th>Milestones</th>
 						<th></th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -70,13 +37,10 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.DueDate)
                             </td>
-                            <td></td>
-                            <td></td>
                             <td>
                                 @Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
                             </td>
 							<td>@Html.ActionLink("Milestones", "Milestones", new { id = item.ID })</td>
-
                         </tr>
                     }
                 </tbody>

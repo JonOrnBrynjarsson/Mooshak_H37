@@ -7,23 +7,6 @@
 <div class="clearfix">
     <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
     <div class="large-left-portion">
-        <div>
-            <label for="student">Student</label>
-            <select id="student" name="student" class="form-control">
-                @foreach (var item in Model.Users)
-                {
-                    <option>@item.Name</option>}
-            </select>
-            <label for="graded">Graded</label>
-            <input type="checkbox" id="graded" name="graded" />
-            <br />
-            <label for="milestone">Milestone</label>
-            <select id="milestone" name="milestone">
-                <option>Milestone1</option>
-                <option>Milestone2 </option>
-            </select>
-        </div>
-    
         <div class="panel panel-default">
             <div class="panel-body">
                 Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")                 </div>
