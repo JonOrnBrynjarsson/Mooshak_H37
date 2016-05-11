@@ -21,7 +21,7 @@ namespace Mooshak___H37.Services
 			_db = new ApplicationDbContext();
 		}
 
-        public List<UserViewModel> getAllUsersName()
+        public List<UserViewModel> getAllUsersName()  //Breyta
         {
 			//gets all the users in the system
             var Users = (from x in _db.Users
@@ -59,7 +59,34 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
-		public List<UserViewModel> getUsersInCourse(int courseID)
+		public List<UserViewModel> getUsersInCourse(int courseId)
+		{
+			var usersInfo = (from ucr in _db.UserCourseRelations
+				join u in _db.Users on ucr.UserID equals u.ID
+				join c in _db.Courses on ucr.CourseID equals c.ID
+				where c.ID == courseId
+					   select  new {
+							ID = u.ID,
+							CourseID = courseId,
+							RoleID = ucr.RoleID,
+							Email = u.AspNetUser.Email,
+							Name = u.Name
+					}).ToList().OrderBy(x => x.Name);
+			List<UserViewModel> userList = new List<UserViewModel>();
+			foreach (var user in usersInfo)
+			{
+				UserViewModel model = new UserViewModel();
+				model.ID = user.ID;
+				model.CourseID = user.CourseID;
+				model.Email = user.Email;
+				model.RoleID = user.RoleID;
+				model.Name = user.Name;
+				userList.Add(model);
+			}
+			return userList;
+		}
+
+		/*public List<UserViewModel> getUsersInCourse(int courseID)
 		{
 
 			List<UserViewModel> model = new List<UserViewModel>();
@@ -95,7 +122,7 @@ namespace Mooshak___H37.Services
 					Name = users[i].Name,
 					ID = users[i].ID,
 					Email = mail[i],
-					CourseID = courseID
+					Course_ID = courseID
 				};
 
 				model.Add(temp);
@@ -111,7 +138,7 @@ namespace Mooshak___H37.Services
 
 			return sortedModel;
 		}
-
+*/
 		/// <summary>
 		/// This function takes in a list of userViewModel with the requerment that it has
 		/// a CourseID and ID wich is a userID, then it fills in the list the correct roles for each one.
@@ -119,7 +146,7 @@ namespace Mooshak___H37.Services
 		private void getRolesByCourseID(UserViewModel model)
 		{
 			var role = (from x in _db.UserCourseRelations
-						where model.CourseID == x.CourseID &&
+						where model.Course_ID == x.CourseID &&
 						model.ID == x.UserID
 						select x).FirstOrDefault();
 
