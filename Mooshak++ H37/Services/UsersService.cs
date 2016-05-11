@@ -297,6 +297,14 @@ namespace Mooshak___H37.Services
             return roleID;
         }
 
+		public string getUserNameByID(int userId)
+		{
+			var name = (from n in _db.Users
+						where n.ID == userId
+						select n.Name).SingleOrDefault();
+			return name;
+		}
+
 		internal void EditUser(UserViewModel model)
 		{
 			var edit = (from user in _db.Users

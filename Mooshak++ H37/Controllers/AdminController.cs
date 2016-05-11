@@ -20,8 +20,8 @@ namespace Mooshak___H37.Controllers
 		// GET: Admin
 		public ActionResult Index()
 		{
-
-			return View();
+			var model = _errorsService.getTopErrormessages();
+			return View(model);
 		}
 		// GET: Admin
 		public ActionResult IndexErrors()
