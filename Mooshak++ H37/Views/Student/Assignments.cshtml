@@ -10,16 +10,32 @@
 		{
 			<h2>@item.Name</h2>
 			<table id="assignments-@item.Name" class="table table-hover">
-				@{int rowNo = 0;}
+                <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Name</th>
+                        <th>Due Date</th>
+                        <th>Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int rowNo = 0;}
 
-				@foreach (var it in item.Assignments)
-				{
-					<tr>
-						<td>@(rowNo += 1)</td>
-						<td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
-						<td>@it.DueDate</td>
-					</tr>
-				}
+                    @foreach (var it in item.Assignments)
+                    {
+                        <tr style="@(ViewBag.Today > it.DueDate ? "color:grey; font-style:italic; Background-color:#f2f2f2; " : "")">
+                            <td>@(rowNo += 1)</td>
+                            <td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
+                            <td>@it.DueDate</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => it.Submitted)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => it.TotalGrade)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 			</table>
 
 		}

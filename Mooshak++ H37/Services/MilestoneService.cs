@@ -33,13 +33,24 @@ namespace Mooshak___H37.Services
 							  x.IsRemoved != true
 							  select x.ID).FirstOrDefault();
 
-			if (currUserID == null)
+			if (currUserID == 0)
 			{
 				throw new Exception("User does not exist or has been removed.");
 			}
 
 			return currUserID;
 		}
+
+        private List<Milestone> GetMilestones (int assigID)
+        {
+            var milestones = (from miles in _db.Milestones
+                              orderby miles.ID
+                              where miles.AssignmentID == assigID &&
+                              miles.IsRemoved != true
+                              select miles).ToList();
+
+            return milestones;
+        }
 
 		//Creates Milestone with Given Milestone Model
 		internal void CreateMilestone(MilestoneViewmodel model, int assigID)
@@ -64,13 +75,10 @@ namespace Mooshak___H37.Services
 		/// <returns>List Of Milestones</returns>
 		public List<MilestoneViewmodel> GetMilestonesForAssignment(int assigID)
 		{
-			var milestones = (from miles in _db.Milestones
-							  orderby miles.ID
-							  where miles.AssignmentID == assigID && 
-							  miles.IsRemoved != true
-							  select miles).ToList();
+            var milestones = GetMilestones(assigID);
 
-			var viewModel = new List<MilestoneViewmodel>();
+
+            var viewModel = new List<MilestoneViewmodel>();
 
 			//Creates list of View Models for Milestone.
 			foreach (var mil in milestones)
@@ -98,13 +106,9 @@ namespace Mooshak___H37.Services
 		/// <returns>Percentage of All Milestones in Given Assignment</returns>
 		public double GetTotalMilestonePercentageForAssignment(int assigID)
 		{
-			var milestones = (from miles in _db.Milestones
-							  orderby miles.ID
-							  where miles.AssignmentID == assigID &&
-							  miles.IsRemoved != true
-							  select miles).ToList();
+            var milestones = GetMilestones(assigID);
 
-			if (milestones == null)
+            if (milestones == null)
 			{
 				//No milestones have been created
 			}
@@ -176,8 +180,8 @@ namespace Mooshak___H37.Services
 			//Returns false if it would exceed 100%
 			if (currPercentage > 100)
 			{
-				return false;
-			}
+                throw new Exception("Current Milestone will make Total Milestones exceed 100%");
+            }
 			return true;
 		}
 
