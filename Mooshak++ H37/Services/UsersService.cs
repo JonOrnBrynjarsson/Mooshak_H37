@@ -5,6 +5,7 @@ using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Security;
 
 namespace Mooshak___H37.Services
 {
@@ -399,6 +400,7 @@ namespace Mooshak___H37.Services
 
 				if (usr != null)
 				{
+					string aspUser = usr.AspNetUserId;
 					//sets IsRemoved in the Users table to true for the right user
 					usr.IsRemoved = true;
 					_db.SaveChanges();
@@ -422,6 +424,10 @@ namespace Mooshak___H37.Services
 					
 					}//			=========================================									//
 					_db.SaveChanges();
+
+					var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+					ApplicationUser u = um.FindById(aspUser);	
+					Membership.DeleteUser(u.UserName);				
 				}
 			}
 		}

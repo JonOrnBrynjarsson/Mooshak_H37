@@ -52,6 +52,11 @@ namespace Mooshak___H37.Services
                                && subs.IsRemoved != true
                                select subs).ToList();
 
+			if (submissions == null)
+			{
+				//no submissions exist
+			}
+
             var viewModel = new List<SubmissionsViewModel>();
 
 			//Creates List of View models for given Submissions
@@ -94,7 +99,7 @@ namespace Mooshak___H37.Services
 
 			if (subs == null)
 			{
-				//The submission has been removed or does not exist.
+				throw new Exception("The submission has been removed or does not exist.");
 			}
 
 			//Creates model for given Submission
@@ -136,9 +141,9 @@ namespace Mooshak___H37.Services
             }
             else
             {
-                // The submission that is being graded does not exist or has been removed
-            }
-        }
+				throw new Exception("The submission that is being graded does not exist or has been removed.");
+			}
+		}
 
 		/// <summary>
 		/// Finds Submissions for given Milestone Associated
@@ -160,10 +165,10 @@ namespace Mooshak___H37.Services
 
 			if (submissions == null)
 			{
-				//Given submission does not exist or has been removed. 
+				throw new Exception("Given submission does not exist or has been removed.");
 			}
 
-            var viewModel = new List<SubmissionsViewModel>();
+			var viewModel = new List<SubmissionsViewModel>();
 
 
 			//Creates list of submissions for given model. 
@@ -208,11 +213,11 @@ namespace Mooshak___H37.Services
 
 			if (submission == null)
 			{
-				//Submission does not exist or has been removed.
+				throw new Exception("Submission does not exist or has been removed.");
 			}
 
 			//Creates viewmodel for given submission
-            SubmissionsViewModel model = new SubmissionsViewModel
+			SubmissionsViewModel model = new SubmissionsViewModel
             {
                 Grade = submission.Grade,
                 ID = submission.ID,
@@ -243,15 +248,23 @@ namespace Mooshak___H37.Services
                               select subs).Count();
 
             return submissions;
-        }     
+        }
 
+		/// <summary>
+		/// Finds Submission for given Submission ID,
+		/// Along with Username, Code and Testruns
+		/// </summary>
+		/// <param name="submissionId"></param>
+		/// <returns>Submission for given ID</returns>
 		public SubmissionsViewModel getSubmissionDetail(int submissionId)
 		{
+			//Finds submissions for given submission ID
 			Submission submission = (from subs in _db.Submissions
 							   where subs.ID == submissionId
 							   && subs.IsRemoved == false
 							   select subs).SingleOrDefault();
 
+			//Creates View model for given Submission
 			SubmissionsViewModel model = new SubmissionsViewModel
 			{
 				ID = submission.ID,
@@ -263,14 +276,22 @@ namespace Mooshak___H37.Services
 				DateSubmitted = submission.DateSubmitted,
 				FinalSolution = submission.FinalSolution,
 			};
+			//Finds Username associated with Submission
 			model.UserName = _usersService.GetSingleUser(model.UserID).Name;
+			//Finds Code associated with Submission
 			model.code = _filesService.getSubmissionFile(submissionId);
+			//Finds Testrun associated with Submission
 			model.Testruns = getSubmissionDetail(submissionId).Testruns;
 
 			return model;
 
 		}
 
+		/// <summary>
+		/// Finds ID of milestone associated with Submission
+		/// </summary>
+		/// <param name="submissionID"></param>
+		/// <returns>ID of Milestone</returns>
 		public int GetMilestoneIDFromSubmissionID(int submissionID)
 		{
 			var milestone = (from mil in _db.Submissions

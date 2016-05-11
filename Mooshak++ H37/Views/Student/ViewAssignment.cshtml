@@ -6,30 +6,10 @@
 
 <div class="clearfix">
 	<div class="large-left-portion">
-		@*<table id="top">
-				<tr>
-					<td><h4>@Html.DisplayFor(model => model.CourseName)</h4></td>
-					<td><h4>@Html.DisplayFor(model => model.Name)</h4></td>
-				</tr>
-				<tr>
-					<td><h4>Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")</h4></td>
-				</tr>
-			</table>*@
-
-		@*<div class="panel panel-default">
-				<div class="panel-heading">@Html.DisplayFor(model => model.CourseName)</div>
-				<div class="panel-body">
-					@Html.DisplayFor(model => model.Name)
-				</div>
-			</div>*@
 
 		<div class="page-header">
 			<h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
 		</div>
-
-
-
-
 
 		<div class="panel panel-default">
 			<div class="panel-heading">Description:</div>
@@ -90,10 +70,8 @@
 
 	</div>
 
-    <div class="small-right-portion">
-        @*@Html.ActionLink("Submit", "Submit", new { id = Model.ID }, new { @class = "btn btn-primary button-right" })*@
+    <div class="small-right-portion">     
         <button class="btn btn-primary create-button">Editor</button>
-        <button class="btn btn-primary create-button">View Submissions</button>
     </div>
 </div>
 
