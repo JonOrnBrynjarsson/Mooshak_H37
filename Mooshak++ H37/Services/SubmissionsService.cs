@@ -161,6 +161,7 @@ namespace Mooshak___H37.Services
                                where subs.MilestoneID == milestoneID &&
                                subs.UserID == currUser &&
 							   subs.IsRemoved != true
+                               orderby subs.DateSubmitted descending
                                select subs).ToList();
 
 			if (submissions == null)
