@@ -3,14 +3,18 @@
     ViewBag.Title = "CreateUser";
 }
 
+<h2>Create User</h2>
+
 <link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
 
 <div class="clearfix">
-    <div class="admin-createCourse-buttons">
+    
+    @*<div class="admin-createCourse-buttons">
         <button class="btn btn-primary save-button">Save</button>
-    </div>
+    </div>*@
 
     <div class="large-left-portion">
+
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal addUserForm", role = "form" }))
         {
         @Html.AntiForgeryToken()

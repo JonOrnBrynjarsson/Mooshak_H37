@@ -3,6 +3,7 @@
     ViewBag.Title = "CreateCourse";
 }
 
+<h2>Create Course</h2>
 
 <link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
 
@@ -10,45 +11,46 @@
 
 
 
-    <div class="admin-createCourse-buttons">
+    @*<div class="admin-createCourse-buttons">
         <button class="btn btn-primary upload-csv-button" id="createUser">Upload CSV (todo)</button>
-    </div>
+    </div>*@
 
 
-    <div class="left-portion">
-    @using (Html.BeginForm("CreateCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    { 
-    @Html.AntiForgeryToken()
+    <div class="large-left-portion">
 
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name , new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Name , new { @class = "form-control" })
-            </div>
-        </div>
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(m => m.StartDate, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Isactive, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(m => m.Isactive, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Create" />
-            </div>
-        </div>
-    }
+        @using (Html.BeginForm("CreateCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        { 
+        @Html.AntiForgeryToken()
 
-        <br />
-        <br />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name , new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name , new { @class = "form-control" })
+                </div>
+            </div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.StartDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10 form-inline">
+                    @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })@Html.Raw("DD/MM/YY 00:00:00")
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Isactive, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.Isactive, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Create" />
+                </div>
+            </div>
+        }
+
+            <br />
+            <br />
     </div>
     @*<div class="userTable">
         <div class="form-inline" id="addUser">  
