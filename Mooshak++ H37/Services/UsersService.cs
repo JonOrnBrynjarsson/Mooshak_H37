@@ -113,8 +113,8 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// This function takes in a list of userViewModel with the requerment that it has
-		/// a CourseID and ID wich is a userID, then it fills in the list the correct roles for each one.
+		/// This function takes in a userViewModel with the requerment that it has
+		/// a CourseID and ID wich is a userID, then it puts in the model, the correct role.
 		/// </summary>
 		private void getRolesByCourseID(UserViewModel model)
 		{
