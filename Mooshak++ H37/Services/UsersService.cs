@@ -64,11 +64,6 @@ namespace Mooshak___H37.Services
 
 			List<UserViewModel> model = new List<UserViewModel>();
 
-			//here we select the connection table that gives us the userID, roleID, courseID, etc.
-			//of the users in the given courseID param.
-			var userInfo = (from x in _db.UserCourseRelations
-						  where courseID == x.CourseID && x.IsRemoved == false
-						  select x).ToList();
 			//this is to get only the student id for next linq expression (.Contains)
 			var userIdList = (from x in _db.UserCourseRelations
 							where courseID == x.CourseID && x.IsRemoved == false
@@ -98,21 +93,85 @@ namespace Mooshak___H37.Services
 				UserViewModel temp = new UserViewModel
 				{
 					Name = users[i].Name,
+					ID = users[i].ID,
 					Email = mail[i],
-					RoleID = userInfo[i].RoleID
+					CourseID = courseID
 				};
 
 				model.Add(temp);
 			}
 
-			return model;
+			List<UserViewModel> sortedModel = new List<UserViewModel>();
+			sortedModel = model.OrderBy(n => n.Name).ToList();
+
+			foreach(var item in sortedModel)
+			{
+				getRolesByCourseID(item);
+			}
+
+			return sortedModel;
 		}
 
 		/// <summary>
-		/// In order to 
+		/// This function takes in a list of userViewModel with the requerment that it has
+		/// a CourseID and ID wich is a userID, then it fills in the list the correct roles for each one.
 		/// </summary>
-		/// <returns>Returns the User.ID for the current ApplicationUser</returns>
-		public int getUserIdForCurrentyApplicationUser()
+		private void getRolesByCourseID(UserViewModel model)
+		{
+			var role = (from x in _db.UserCourseRelations
+						where model.CourseID == x.CourseID &&
+						model.ID == x.UserID
+						select x).FirstOrDefault();
+
+			model.RoleID = role.RoleID;
+
+		}
+
+        internal dynamic getAllUsersNameNotInCourse(int courseID)
+        {
+            //gets all the users in the system
+            var usersInCourse = getUsersInCourse(courseID);
+
+            var allUsers = getAllUsersName();
+
+            int flag = 0;
+
+            var viewModel = new List<UserViewModel>();
+            //combines all information gathered into the userViewmodel
+            for(int i = 0; i< allUsers.Count; i++)
+            {
+                for(int x = 0; x < usersInCourse.Count; x++)
+                {
+                    if(allUsers[i].ID == usersInCourse[x].ID)
+                    {
+                        flag = 1;
+                    }
+                }
+
+                if (flag == 0)
+                {
+                    UserViewModel model = new UserViewModel
+                    {
+                        Name = allUsers[i].Name,
+                        ID = allUsers[i].ID
+                    };
+                    viewModel.Add(model);
+                }
+                else
+                {
+                    flag = 0;
+                }
+            }
+
+
+            return viewModel;
+        }
+
+        /// <summary>
+        /// In order to 
+        /// </summary>
+        /// <returns>Returns the User.ID for the current ApplicationUser</returns>
+        public int getUserIdForCurrentyApplicationUser()
 		{
 			var aspUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
 			var userId = (from user in _db.Users
@@ -296,15 +355,16 @@ namespace Mooshak___H37.Services
 				{
 					//sets IsRemoved in the Users table to true for the right user
 					usr.IsRemoved = true;
-					
+					_db.SaveChanges();
+
 					//deletes the account created in AspNetUsers Table	============	\\
-					var usrName = (from user in _db.Users								//
-								   where usr.AspNetUserId == user.AspNetUser.Id			//
-								   select user.AspNetUser.UserName).FirstOrDefault();	//
-					if (usrName != null)												//
-					{																	//
-						Membership.DeleteUser(usrName);									//
-					}//         ========================================				//
+					//var usrName = (from user in _db.Users                               //
+					//			   where usr.AspNetUserId == user.AspNetUser.Id         //
+					//			   select user.AspNetUser.UserName).FirstOrDefault();   //
+					//if (usrName != null)                                                //
+					//{                                                                   //
+					//	Membership.DeleteUser(usrName);                                 //
+					//}//         ========================================				//
 
 					//retrieves all the connections to courses the user to be deleted has and removes them all
 					var connections = (from x in _db.UserCourseRelations									//
@@ -312,10 +372,11 @@ namespace Mooshak___H37.Services
 									   select x).ToList();													//
 					foreach(var item in connections)														//
 					{																						//
-						item.IsRemoved = true;																//
+						item.IsRemoved = true;		
+					
 					}//			=========================================									//
+					_db.SaveChanges();
 				}
-				_db.SaveChanges();
 			}
 		}
 	}
