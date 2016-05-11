@@ -10,7 +10,7 @@ using Project_4.Controllers;
 
 namespace Mooshak___H37.Controllers
 {
-	//[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin")]
 	public class AdminController : BasicController
 	{
 		private ErrorsService _errorsService = new ErrorsService();

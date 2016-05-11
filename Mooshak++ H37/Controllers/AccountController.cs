@@ -12,6 +12,7 @@ using Mooshak___H37.Models;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models.Viewmodels;
 using Project_4.Controllers;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Mooshak___H37.Controllers
 {
@@ -163,13 +164,13 @@ namespace Mooshak___H37.Controllers
             if (ModelState.IsValid)
             {
                 UsersService _userService = new UsersService();
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                   
+                    _userService.setRole(user, model.Role);
                     _userService.setUser(model.Name, user);
 
                     return RedirectToAction("Index", "Home");
