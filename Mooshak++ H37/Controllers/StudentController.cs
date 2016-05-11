@@ -132,29 +132,33 @@ namespace Mooshak___H37.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult SubmitEdit(EditCodeViewModel model)
+		//public ActionResult SubmitEdit(EditCodeViewModel model)
+		public ActionResult SubmitEdit()
 		{
-			if (!string.IsNullOrEmpty(model.codefile))
+			string code = Request.QueryString["codefile"];
+			string milstr = Request.QueryString["Milestone"];
+
+			int milestoneId = 0;
+			bool mil = int.TryParse(milstr, out milestoneId);
+
+			if (!string.IsNullOrEmpty(code))
 			{
-				int submissionId = _filesService.createSubmission(model.Milestone);
-				if (submissionId == 0)
+				try
+				{
+					int submissionId = _filesService.createSubmission(milestoneId);
+					if (submissionId == 0)
+					{
+						throw new Exception();
+					}
+					_filesService.saveSubmissionfile(code, submissionId);
+					_filesService.testingSubmission(submissionId);
+				}
+				catch (Exception ex)
 				{
 					return View("Error");
 				}
-				_filesService.saveSubmissionfile(model.codefile, submissionId);
-				_filesService.testingSubmission(submissionId);
-			}
-			else
-			{
-				if (ViewBag.ErrorMessage != "")
-				{
-					return View("Error");
-				}
-				ViewBag.ErrorMessage = "No file submitted, try again";
-				return View(model);
 			}
 			return RedirectToAction("Index");
 		}
-		
 	}
 }
