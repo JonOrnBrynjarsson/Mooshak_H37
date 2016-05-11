@@ -20,5 +20,7 @@ namespace Mooshak___H37.Models.Viewmodels
 		public List<MilestoneViewmodel> Milestones { get; set; }
 		public List<UserViewModel> Users { get; set; }
 		public string CourseName { get; set; }
+        public bool Submitted { get; set; }
+        public double TotalGrade { get; set; }
 	}
 }

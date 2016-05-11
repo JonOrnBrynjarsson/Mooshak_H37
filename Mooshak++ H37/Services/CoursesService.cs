@@ -180,7 +180,7 @@ namespace Mooshak___H37.Services
 						  && x.IsRemoved != true
 						  select x.ID).FirstOrDefault();
 
-			if (course == null)
+			if (course == 0)
 			{
 				throw new Exception("Course does not exist in this context");
 			}
@@ -205,7 +205,7 @@ namespace Mooshak___H37.Services
 
             var course = (from x in _db.Courses
                          where x.ID == courseID
-						 && x.IsRemoved != null
+						 && x.IsRemoved != true
                          select x).SingleOrDefault();
 
 			if (course == null)

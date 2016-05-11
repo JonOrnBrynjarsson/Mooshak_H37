@@ -27,7 +27,8 @@ namespace Mooshak___H37.Controllers
 		{
 			//Returns alls assignments that the teacher is associated with
 			var viewModel = _assignService.getAllAssignments();
-			return View(viewModel);
+
+            return View(viewModel);
 		}
 
 		public ActionResult ViewAssignment(int id)
@@ -243,25 +244,13 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult Assignments()
 		{
-			try
-			{
-				var viewModel = _courseService.GetCoursesForUser();
-				return View(viewModel);
-			}
-			catch (Exception e)
-			{
-				Debug.WriteLine("Confirmation");
-				return View("~/Views/Shared/Cerror.cshtml", e);
-			}
+
+			var viewModel = _courseService.GetCoursesForUser();
+            ViewBag.Today = _assignService.Today();
+
+            return View(viewModel);
 
 		}
-
-
-
-
-
-
-
 
 		[HttpPost]
 		public ActionResult EditMilestone(MilestoneViewmodel model, int milestoneID)

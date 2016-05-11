@@ -20,6 +20,7 @@ namespace Mooshak___H37.Services
 	{
 		private readonly ApplicationDbContext _db;
 		private readonly UsersService _usersService;
+        private readonly MilestoneService _milestoneService = new MilestoneService();
 		
 		public AssigmentsService()
 		{
@@ -27,13 +28,26 @@ namespace Mooshak___H37.Services
 			_usersService = new UsersService();
 		}
 
+        public DateTime Today()
+        {
+            DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
+            return endDateTime;
+        }
+
+        private int GetCurrentUser()
+        {
+            return _usersService.getUserIdForCurrentyApplicationUser(); 
+        }
+
 		/// <summary>
 		/// Gets list of Assignments associated with Current user
 		/// </summary>
 		/// <returns>List of assignments</returns>
 		public List<AssignmentViewModel> getAllAssignments()
 		{
-			var currUsId = _usersService.getUserIdForCurrentyApplicationUser();
+            var todayDate = Today();
+
+            var currUsId = _usersService.getUserIdForCurrentyApplicationUser();
 
 			var userCourses = (from uscr in _db.UserCourseRelations
 							   where currUsId == uscr.UserID
@@ -42,8 +56,9 @@ namespace Mooshak___H37.Services
 
 			var assignments = (from assi in _db.Assignments
 							   where userCourses.Contains(assi.CourseID) &&
-								assi.IsRemoved != true
-							   orderby assi.DueDate descending
+								assi.IsRemoved != true &&
+                                assi.DueDate > todayDate
+                               orderby assi.DueDate descending
 							   select assi).ToList();
 
 			var viewModel = new List<AssignmentViewModel>();
@@ -85,8 +100,8 @@ namespace Mooshak___H37.Services
 				throw new Exception("The Assignment does not exist or has been removed");
 			}
 
-			//Current user ID
-			var userID = _usersService.getUserIdForCurrentyApplicationUser();
+            //Current user ID
+            var userID = GetCurrentUser();
 
 			//List of Milestones with given assignment ID
 			var milestones = _db.Milestones.Where(x => x.AssignmentID == id &&
@@ -243,7 +258,7 @@ namespace Mooshak___H37.Services
 		{
 			var assignment = (from assign in _db.Assignments
 							  where assign.ID == model.ID
-							  && assign.IsRemoved != null
+							  && assign.IsRemoved != true
 							  select assign).FirstOrDefault();
 
 			if (assignment == null)
@@ -263,11 +278,16 @@ namespace Mooshak___H37.Services
 		/// <returns>List of Assignments</returns>
 		public List<AssignmentViewModel> getAssignmentsInCourse(int id)
 		{
-			//List of assignments with given Course ID.
-			var assignments = (from asi in _db.Assignments
+
+            var todayDate = Today();
+            var currUser = GetCurrentUser();
+
+            //List of assignments with given Course ID.
+            var assignments = (from asi in _db.Assignments
 							  where asi.CourseID == id &&
-							  asi.IsRemoved != true
-							  select asi).ToList();
+							  asi.IsRemoved != true 
+                              //&& asi.DueDate > todayDate
+                               select asi).ToList();
 
 			if(assignments == null)
 			{
@@ -279,25 +299,89 @@ namespace Mooshak___H37.Services
 			//Creates list of view models for assignments
 			foreach(var assignm in assignments)
 			{
-				AssignmentViewModel model = new AssignmentViewModel
-				{
-					ID = assignm.ID,
-					Name = assignm.Name,
-					SetDate = assignm.SetDate,
-					DueDate = assignm.DueDate,
-					CourseID = assignm.CourseID,
-					IsActive = assignm.IsActive,
-					IsRemoved = assignm.IsRemoved,
-					Description = assignm.Description,
-				};
+                var test = GetGradeFromSubmissions(assignm.ID, currUser);
+
+                var milestones = (from mil in _db.Milestones
+                                  where mil.AssignmentID ==
+                                  assignm.ID select mil.ID);
+
+                var submissions = (from submit in _db.Submissions
+                                   where milestones.Contains(submit.MilestoneID) &&
+                                   submit.UserID == currUser
+                                  select submit).Count();
+
+                bool submitted = (submissions > 1);
+
+                double finalGrade = GetGradeFromSubmissions(assignm.ID, currUser);
+
+                AssignmentViewModel model = new AssignmentViewModel
+                {
+                    ID = assignm.ID,
+                    Name = assignm.Name,
+                    SetDate = assignm.SetDate,
+                    DueDate = assignm.DueDate,
+                    CourseID = assignm.CourseID,
+                    IsActive = assignm.IsActive,
+                    IsRemoved = assignm.IsRemoved,
+                    Description = assignm.Description,
+                    Submitted = submitted,
+                    TotalGrade = finalGrade,
+                };
 				viewModel.Add(model);
 			}
 			
 			return viewModel;
 		}
 
-		//Creates new assignment with given Assignment Model
-		internal void CreateAssignment(AssignmentViewModel model)
+        /// <summary>
+        /// First finds Milestones associate with assignment. Then It goes through the milestones and Finds
+        /// Newst associated Submissions for each milestone. It then goes through the information and 
+        /// Calculates Total Grade for Given Assignment.
+        /// </summary>
+        /// <param name="AssignmentID"></param>
+        /// <param name="userID"></param>
+        /// <returns>Total Grade for Assignment</returns>
+        private double GetGradeFromSubmissions (int AssignmentID, int userID)
+        {
+            var milestones = (from mil in _db.Milestones
+                              where mil.AssignmentID == AssignmentID &&
+                              mil.IsRemoved != true
+                              select mil).ToList();
+
+            List<GradeViewModel> NewestSubmissions = new List<GradeViewModel>();
+
+
+            foreach (var item in milestones)
+            {
+                GradeViewModel model = new GradeViewModel
+                {
+                    SubmissionData = (from newsub in _db.Submissions
+                                  where item.ID == newsub.MilestoneID &&
+                                  newsub.UserID == userID
+                                  orderby newsub.DateSubmitted descending
+                                  select newsub).FirstOrDefault(),
+                    MilestoneData = item,
+                };
+                NewestSubmissions.Add(model);
+            }
+
+            double totalGrade = 0;
+
+            foreach(var it in NewestSubmissions)
+            {
+                if (it.SubmissionData != null)
+                {
+                    var perc = it.MilestoneData.Percentage;
+                    var grade = it.SubmissionData.Grade;
+                    totalGrade += grade * (perc * 0.01);
+                }
+            }
+
+            return totalGrade;
+        }
+
+        //Creates new assignment with given Assignment Model
+        internal void CreateAssignment(AssignmentViewModel model)
 		{
 			_db.Assignments.Add(new Assignment
 			{

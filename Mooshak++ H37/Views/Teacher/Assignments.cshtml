@@ -15,14 +15,14 @@
 				@{int rowNo = 0;}
 
 				@foreach (var it in item.Assignments)
-				{
-					<tr>
-						<td>@(rowNo += 1)</td>
-						<td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
-						<td>@it.DueDate</td>
-						<td>@Html.ActionLink("Milestones", "Milestones", new { id = it.ID })</td>
-					</tr>
-				}
+                {
+                    <tr style="@(ViewBag.Today > it.DueDate ? "color:grey; font-style:italic; Background-color:#f2f2f2; " : "")">
+                        <td>@(rowNo += 1)</td>
+                        <td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
+                        <td>@it.DueDate</td>
+                        <td>@Html.ActionLink("Milestones", "Milestones", new { id = it.ID })</td>
+                    </tr>
+                }
 			</table>
 
 					}

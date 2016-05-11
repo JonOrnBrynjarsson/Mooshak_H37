@@ -197,46 +197,53 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
-		/// <summary>
-		/// Returns Submission for given Submission ID
-		/// </summary>
-		/// <param name="submissionID"></param>
-		/// <returns>Submission for given Submission ID</returns>
-        public SubmissionsViewModel GetOneSubmission(int submissionID)
-        {
-			//Finds submission for given Submission ID
-			//That has not been removed.
-            var submission = (from subs in _db.Submissions
-                              where subs.ID == submissionID
-							  && subs.IsRemoved != true
-                              select subs).FirstOrDefault();
 
-			if (submission == null)
-			{
-				throw new Exception("Submission does not exist or has been removed.");
-			}
 
-			//Creates viewmodel for given submission
-			SubmissionsViewModel model = new SubmissionsViewModel
-            {
-                Grade = submission.Grade,
-                ID = submission.ID,
-                IsGraded = submission.IsGraded,
-                IsRemoved = submission.IsRemoved,
-                MilestoneID = submission.MilestoneID,
-                Milestone = submission.Milestone,
-                DateSubmitted = submission.DateSubmitted,
-                ProgramFileLocation = submission.ProgramFileLocation,
-                UserID = submission.UserID,
-                UserName = (from name in _db.Users
-                            where name.ID == submission.UserID
-                            select name.Name).FirstOrDefault(),
-				FinalSolution = submission.FinalSolution,
-			};
 
-            return model;
 
-        }
+		///// <summary>
+		///// Returns Submission for given Submission ID
+		///// </summary>
+		///// <param name="submissionID"></param>
+		///// <returns>Submission for given Submission ID</returns>
+  //      public SubmissionsViewModel GetOneSubmission(int submissionID)
+  //      {
+		//	//Finds submission for given Submission ID
+		//	//That has not been removed.
+  //          var submission = (from subs in _db.Submissions
+  //                            where subs.ID == submissionID
+		//					  && subs.IsRemoved != true
+  //                            select subs).FirstOrDefault();
+
+		//	if (submission == null)
+		//	{
+		//		throw new Exception("Submission does not exist or has been removed.");
+		//	}
+
+		//	//Creates viewmodel for given submission
+		//	SubmissionsViewModel model = new SubmissionsViewModel
+  //          {
+  //              Grade = submission.Grade,
+  //              ID = submission.ID,
+  //              IsGraded = submission.IsGraded,
+  //              IsRemoved = submission.IsRemoved,
+  //              MilestoneID = submission.MilestoneID,
+  //              Milestone = submission.Milestone,
+  //              DateSubmitted = submission.DateSubmitted,
+  //              ProgramFileLocation = submission.ProgramFileLocation,
+  //              UserID = submission.UserID,
+  //              UserName = (from name in _db.Users
+  //                          where name.ID == submission.UserID
+  //                          select name.Name).FirstOrDefault(),
+		//		FinalSolution = submission.FinalSolution,
+		//	};
+
+  //          return model;
+
+  //      }
+
+
+
 
 		/// <summary>
 		/// Finds All submissions in system
