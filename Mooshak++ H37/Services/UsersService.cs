@@ -140,8 +140,8 @@ namespace Mooshak___H37.Services
 		}
 */
 		/// <summary>
-		/// This function takes in a list of userViewModel with the requerment that it has
-		/// a CourseID and ID wich is a userID, then it fills in the list the correct roles for each one.
+		/// This function takes in a userViewModel with the requerment that it has
+		/// a CourseID and ID wich is a userID, then it puts in the model, the correct role.
 		/// </summary>
 		private void getRolesByCourseID(UserViewModel model)
 		{
@@ -214,7 +214,7 @@ namespace Mooshak___H37.Services
 				select user.AspNetUserId).SingleOrDefault();
 
 			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-			var result = um.GetRoles(aspUser).FirstOrDefault();
+            var result = um.GetRoles(aspUser).FirstOrDefault();
 			return result;
 			
 		}
@@ -232,6 +232,10 @@ namespace Mooshak___H37.Services
 
             _db.Users.Add(User);
             _db.SaveChanges();
+
+            var role = getAspUserRole(User.ID);
+
+
         }
 
 		//public string GetNameFromUserID(int userID)
@@ -252,7 +256,13 @@ namespace Mooshak___H37.Services
             return User;
         }
 
-		public UserViewModel GetSingleUser(int userID)
+        internal void setRole(ApplicationUser model, string role)
+        {
+            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            um.AddToRole(model.Id, role);
+        }
+
+        public UserViewModel GetSingleUser(int userID)
 		{
 			var user = (from us in _db.Users
 						where us.ID == userID

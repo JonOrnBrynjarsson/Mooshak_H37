@@ -36,7 +36,22 @@
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                 </div>
             </div>
-      
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.Role, new SelectList(
+                                            new List<Object> {
+                                                new { value = "Student", text = "Student"},
+                                                new { value = "Teacher", text = "Teacher" },
+                                                new { value = "Admin", text = "Admin" }
+                                                },
+                                            "value",
+                                            "text",
+                                            2), new { @class = "form-control" })
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" class="btn btn-default button" value="Register" />
@@ -45,15 +60,15 @@
 
        }
     </div>
-    <div class="right-portion form-group add-course-2">
+    @*<div class="right-portion form-group add-course-2">
         <div class="form-inline">
             <select class="form-control add-course">
-                @*@foreach (var item in Model.Course)
+                @foreach (var item in Model.Course)
                 {
                     <option>
                         @Html.DisplayFor(modelItem => item.Name)
                     </option>
-                }*@
+                }
             </select>
             <button class="btn btn-primary" id="button-add">add</button>
         </div>
@@ -76,5 +91,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div>*@
 </div>

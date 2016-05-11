@@ -10,6 +10,9 @@ using Mooshak___H37.Models.Viewmodels;
 using System.Diagnostics;
 using Microsoft.ApplicationInsights.Web;
 using Microsoft.AspNet.Identity;
+using Mooshak___H37.Controllers;
+using System.Web.Mvc;
+using System.Web;
 
 namespace Mooshak___H37.Services
 {
@@ -17,6 +20,7 @@ namespace Mooshak___H37.Services
 	{
 		private readonly ApplicationDbContext _db;
 		private readonly UsersService _usersService;
+		HomeController _homeController;
 
 		public AssigmentsService()
 		{
@@ -24,6 +28,10 @@ namespace Mooshak___H37.Services
 			_usersService = new UsersService();
 		}
 
+		/// <summary>
+		/// Gets list of Assignments associated with Current user
+		/// </summary>
+		/// <returns>List of assignments</returns>
 		public List<AssignmentViewModel> getAllAssignments()
 		{
 			var currUsId = _usersService.getUserIdForCurrentyApplicationUser();
@@ -41,6 +49,7 @@ namespace Mooshak___H37.Services
 
 			var viewModel = new List<AssignmentViewModel>();
 
+			//Creates list of View models for assignment
 			foreach (var assignm in assignments)
 			{
 				AssignmentViewModel model = new AssignmentViewModel
@@ -60,7 +69,11 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
-
+		/// <summary>
+		/// Gets an assignment with given ID.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns>Returns assignment</returns>
 		public AssignmentViewModel Assignment(int id)
 		{
 			var assignment = (from asi in _db.Assignments
@@ -73,8 +86,10 @@ namespace Mooshak___H37.Services
 				//throw new exception / skila NULL(ekki skila null hér)
 			}
 
+			//Current user ID
 			var userID = _usersService.getUserIdForCurrentyApplicationUser();
 
+			//List of Milestones with given assignment ID
 			var milestones = _db.Milestones.Where(x => x.AssignmentID == id &&
 												  x.IsRemoved != true)
 				.Select(x => new MilestoneViewmodel
@@ -99,7 +114,7 @@ namespace Mooshak___H37.Services
 								where asi.ID == assignment.CourseID
 								select asi).FirstOrDefault();
 
-			//
+			//Users associated with Course
 			var userid = (from usr in _db.UserCourseRelations
 								where  
 								assignment.CourseID == usr.CourseID
@@ -115,9 +130,10 @@ namespace Mooshak___H37.Services
 
 			if (coursename == null)
 			{
-				throw new Exception("ITS NULL BITCH");
+				//Throw error
 			}
 
+			//Creates new View Model with given properties
 			AssignmentViewModel model = new AssignmentViewModel
 			{
 				ID = assignment.ID,
@@ -136,24 +152,30 @@ namespace Mooshak___H37.Services
 			return model;
 		}
 
-
+		/// <summary>
+		/// Gets Courses and populates them with Assignments.
+		/// </summary>
+		/// <returns>list of Courses</returns>
 		public List<CourseViewModel> GetCourseAssignments()
 		{
 			var currUsId = _usersService.getUserIdForCurrentyApplicationUser();
 
 			var userCourses = (from uscr in _db.UserCourseRelations
-							   where currUsId == uscr.UserID
+							   where currUsId == uscr.UserID &&
+							   uscr.IsRemoved != true
 							   select uscr.CourseID).ToList();
 
 
 			var assignments = (from assi in _db.Assignments
 							   where userCourses.Contains(assi.CourseID)
+							   && assi.IsRemoved != true
 							   orderby assi.DueDate descending
 							   select assi).ToList();
 
 
-			var coursese = (from crse in _db.Courses
-							where userCourses.Contains(crse.ID)
+			var courses = (from crse in _db.Courses
+							where userCourses.Contains(crse.ID) &&
+							crse.IsRemoved != true
 							select crse)
 			.Select(x => new CourseViewModel
 			{
@@ -167,7 +189,8 @@ namespace Mooshak___H37.Services
 
 			var viewModel = new List<CourseViewModel>();
 
-			foreach (var course in coursese)
+			//Creates list of View Models for Course
+			foreach (var course in courses)
 			{
 				CourseViewModel model = new CourseViewModel
 				{
@@ -185,7 +208,11 @@ namespace Mooshak___H37.Services
 
 		}
 
-
+		/// <summary>
+		/// Finds ID of Assignment that milestone is associated with
+		/// </summary>
+		/// <param name="milestoneID"></param>
+		/// <returns>Assignment ID</returns>
 		public int GetAssignmentIDFromMilestoneID(int milestoneID)
 		{
 
@@ -210,24 +237,31 @@ namespace Mooshak___H37.Services
 		//}
 
 
-
+		//Marks assignment as Removed.
 		internal void RemoveAssignment(AssignmentViewModel model)
 		{
 			var assignment = (from assign in _db.Assignments
-							 where assign.ID == model.ID
-							 select assign).FirstOrDefault();
+							  where assign.ID == model.ID
+							  select assign).FirstOrDefault();
 
 			if (assignment == null)
 			{
-				//DO SOMEHTING
+				//Throw error
 			}
 
 			assignment.IsRemoved = true;
 			_db.SaveChanges();
 		}
 
+		/// <summary>
+		/// Finds assignments in a Given Course, given they have not been marked
+		/// Removed.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns>List of Assignments</returns>
 		public List<AssignmentViewModel> getAssignmentsInCourse(int id)
 		{
+			//List of assignments with given Course ID.
 			var assignments = (from asi in _db.Assignments
 							  where asi.CourseID == id &&
 							  asi.IsRemoved != true
@@ -242,6 +276,7 @@ namespace Mooshak___H37.Services
 
 			List<AssignmentViewModel> viewModel = new List<AssignmentViewModel>();
 			
+			//Creates list of view models for assignments
 			foreach(var assignm in assignments)
 			{
 				AssignmentViewModel model = new AssignmentViewModel
@@ -261,6 +296,7 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
+		//Creates new assignment with given Assignment Model
 		internal void CreateAssignment(AssignmentViewModel model)
 		{
 			_db.Assignments.Add(new Assignment
@@ -277,12 +313,14 @@ namespace Mooshak___H37.Services
 			_db.SaveChanges();
 		}
 
+		//Edits assignment with given Assignment Model
 		internal void EditAssignment(AssignmentViewModel model)
 		{
 			var edit = (from assign in _db.Assignments
 						where assign.ID == model.ID
 						select assign).FirstOrDefault();
 
+			//assignment that should be editied excists.
 			if(edit != null)
 			{
 				edit.Name = model.Name;
@@ -297,14 +335,20 @@ namespace Mooshak___H37.Services
 			}
 			else
 			{
-				// DO Something!!
+				// No assignment found to edit, should throw error.
 			}
 		}
 
+		//returns number of assignments in the system
+		/// <summary>
+		/// Finds all assignments in System
+		/// </summary>
+		/// <returns>Number of assignments</returns>
 		public int NumberOfAssignments()
 		{
 			var assignments = (from assi in _db.Assignments
-						   select assi).Count();
+							   where assi.IsRemoved != true
+								select assi).Count();
 
 			return assignments;
 		}

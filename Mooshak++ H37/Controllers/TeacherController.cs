@@ -24,27 +24,23 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult Index()
 		{
+			//Returns alls assignments that the teacher is associated with
 			var viewModel = _assignService.getAllAssignments();
 			return View(viewModel);
 		}
 
 		public ActionResult ViewAssignment(int id)
 		{
+			//Returns selected assignment
 			var viewModel = _assignService.Assignment(id);
 			return View(viewModel);
 		}
 
-		public ActionResult CreateAssignment()
-		{
-			AssignmentViewModel viewModel = new AssignmentViewModel();
 
-			ViewBag.CourseList = GetCourses();
-
-			return View(viewModel);
-		}
 
 		private List<SelectListItem> GetCourses()
 		{
+			//Creates a list of Courses that teacher is associated with.
 			List<SelectListItem> result = new List<SelectListItem>();
 			var allCourses = _courseService.GetCoursesForUser();
 
@@ -57,6 +53,8 @@ namespace Mooshak___H37.Controllers
 
 		private List<SelectListItem> GetMilestones(int assignmentId)
 		{
+			//Creates a list of Milestones that Assignment is associated with.
+
 			List<SelectListItem> result = new List<SelectListItem>();
 			var milestones = _milestoneService.GetMilestonesForAssignment(assignmentId);
 
@@ -65,6 +63,16 @@ namespace Mooshak___H37.Controllers
 			result.AddRange(milestones.Select(x => new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }));
 
 			return result;
+		}
+
+		public ActionResult CreateAssignment()
+		{
+			AssignmentViewModel viewModel = new AssignmentViewModel();
+
+			//Returns list of All Courses that teacher is associated with
+			ViewBag.CourseList = GetCourses();
+
+			return View(viewModel);
 		}
 
 		[HttpPost]
