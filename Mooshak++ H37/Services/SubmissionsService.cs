@@ -58,7 +58,8 @@ namespace Mooshak___H37.Services
                     DateSubmitted = subs.DateSubmitted,
                     UserName = (from name in _db.Users
                                 where name.ID == subs.UserID
-                                select name.Name).FirstOrDefault()
+                                select name.Name).FirstOrDefault(),
+					FinalSolution = subs.FinalSolution,
                 };
                 viewModel.Add(model);
             }
@@ -88,7 +89,8 @@ namespace Mooshak___H37.Services
                 UserID = subs.UserID,
                 UserName = (from name in _db.Users
                             where name.ID == subs.UserID
-                            select name.Name).FirstOrDefault()
+                            select name.Name).FirstOrDefault(),
+				FinalSolution = subs.FinalSolution,
             };
 
             return model;
@@ -139,8 +141,9 @@ namespace Mooshak___H37.Services
                     UserID = subs.UserID,
                     UserName = (from name in _db.Users
                                 where name.ID == subs.UserID
-                                select name.Name).FirstOrDefault()
-                };
+                                select name.Name).FirstOrDefault(),
+					FinalSolution = subs.FinalSolution,
+				};
                 viewModel.Add(model);
 
             }
@@ -168,8 +171,9 @@ namespace Mooshak___H37.Services
                 UserID = submission.UserID,
                 UserName = (from name in _db.Users
                             where name.ID == submission.UserID
-                            select name.Name).FirstOrDefault()
-            };
+                            select name.Name).FirstOrDefault(),
+				FinalSolution = submission.FinalSolution,
+			};
 
             return model;
 
@@ -198,7 +202,8 @@ namespace Mooshak___H37.Services
 				IsGraded = submission.IsGraded,
 				Grade = submission.Grade,
 				ProgramFileLocation = submission.ProgramFileLocation,
-				DateSubmitted = submission.DateSubmitted
+				DateSubmitted = submission.DateSubmitted,
+				FinalSolution = submission.FinalSolution,
 			};
 			model.UserName = _usersService.GetSingleUser(model.UserID).Name;
 			model.code = _filesService.getSubmissionFile(submissionId);

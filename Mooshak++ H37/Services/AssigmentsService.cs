@@ -88,7 +88,11 @@ namespace Mooshak___H37.Services
 					Percentage = x.Percentage,
 					UserSubmissions = (from s in _db.Submissions
 									   where s.UserID == userID && s.MilestoneID == x.ID
+									   select s.ID).Count(),
+					TotalSubmissions = (from s in _db.Submissions
+									   where s.MilestoneID == x.ID
 									   select s.ID).Count()
+
 				}).ToList();
 
 			var coursename = (from asi in _db.Courses
@@ -225,7 +229,8 @@ namespace Mooshak___H37.Services
 		public List<AssignmentViewModel> getAssignmentsInCourse(int id)
 		{
 			var assignments = (from asi in _db.Assignments
-							  where asi.CourseID == id
+							  where asi.CourseID == id &&
+							  asi.IsRemoved != true
 							  select asi).ToList();
 
 			if(assignments == null)
