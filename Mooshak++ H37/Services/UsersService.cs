@@ -127,11 +127,51 @@ namespace Mooshak___H37.Services
 
 		}
 
-		/// <summary>
-		/// In order to 
-		/// </summary>
-		/// <returns>Returns the User.ID for the current ApplicationUser</returns>
-		public int getUserIdForCurrentyApplicationUser()
+        internal dynamic getAllUsersNameNotInCourse(int courseID)
+        {
+            //gets all the users in the system
+            var usersInCourse = getUsersInCourse(courseID);
+
+            var allUsers = getAllUsersName();
+
+            int flag = 0;
+
+            var viewModel = new List<UserViewModel>();
+            //combines all information gathered into the userViewmodel
+            for(int i = 0; i< allUsers.Count; i++)
+            {
+                for(int x = 0; x < usersInCourse.Count; x++)
+                {
+                    if(allUsers[i].ID == usersInCourse[x].ID)
+                    {
+                        flag = 1;
+                    }
+                }
+
+                if (flag == 0)
+                {
+                    UserViewModel model = new UserViewModel
+                    {
+                        Name = allUsers[i].Name,
+                        ID = allUsers[i].ID
+                    };
+                    viewModel.Add(model);
+                }
+                else
+                {
+                    flag = 0;
+                }
+            }
+
+
+            return viewModel;
+        }
+
+        /// <summary>
+        /// In order to 
+        /// </summary>
+        /// <returns>Returns the User.ID for the current ApplicationUser</returns>
+        public int getUserIdForCurrentyApplicationUser()
 		{
 			var aspUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
 			var userId = (from user in _db.Users
@@ -147,7 +187,7 @@ namespace Mooshak___H37.Services
 				select user.AspNetUserId).SingleOrDefault();
 
 			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-			var result = um.GetRoles(aspUser).FirstOrDefault();
+            var result = um.GetRoles(aspUser).FirstOrDefault();
 			return result;
 			
 		}
@@ -165,6 +205,10 @@ namespace Mooshak___H37.Services
 
             _db.Users.Add(User);
             _db.SaveChanges();
+
+            var role = getAspUserRole(User.ID);
+
+
         }
 
 		//public string GetNameFromUserID(int userID)
@@ -185,7 +229,13 @@ namespace Mooshak___H37.Services
             return User;
         }
 
-		public UserViewModel GetSingleUser(int userID)
+        internal void setRole(ApplicationUser model, string role)
+        {
+            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            um.AddToRole(model.Id, role);
+        }
+
+        public UserViewModel GetSingleUser(int userID)
 		{
 			var user = (from us in _db.Users
 						where us.ID == userID

@@ -85,6 +85,10 @@ namespace Mooshak___H37.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get { return Password; } set { ConfirmPassword = Password; } }
 
+        [Required]
+        [Display(Name = "Role")]
+        public string Role { get; set; }
+
         public List<CourseViewModel> Course { get; set; }
     }
 
