@@ -8,8 +8,15 @@
     <h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
     <div class="large-left-portion">
         <div class="panel panel-default">
+            <div class="panel-heading">Description:</div>
             <div class="panel-body">
-                Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")                 </div>
+                @Html.DisplayFor(model => model.Description)
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">                
+                Due Date: @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy}")                
+            </div>
          </div>
     
         <table class="table table-hover">
