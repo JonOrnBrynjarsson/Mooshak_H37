@@ -35,11 +35,18 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult ViewAssignment(int id)
 		{
-			//returns selected assignment
-			var viewModel = _assignService.Assignment(id);
-			//gives total percentage of all milestones in given assignment
-			ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
-			return View(viewModel);
+			try
+			{
+				//returns selected assignment
+				var viewModel = _assignService.Assignment(id);
+				//gives total percentage of all milestones in given assignment
+				ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 
 		public ActionResult Assignments()
@@ -52,13 +59,32 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult Submit(int milestoneId)
 		{
-			if (!_milestoneService.UserCanSubmitMilestone(milestoneId))
+
+			//Checks if user has already submitted the maximum number
+			//Of allowed submissions
+
+			try
 			{
-				return View("Error");
+				_milestoneService.UserCanSubmitMilestone(milestoneId);
 			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror", e);
+			}
+
+			//if (!_milestoneService.UserCanSubmitMilestone(milestoneId))
+			//{
+			//	//You have already submitted the maximum number of times.
+			//	return View("Error");
+			//}
+
+
 			MilestoneViewmodel m = new MilestoneViewmodel();
+
 			m = _milestoneService.GetSingleMilestone(milestoneId);
+
 			StudentSubmitViewModel submission = new StudentSubmitViewModel();
+
 			submission.Milestone = milestoneId;
 			submission.DateSet = m.DateSet;
 			submission.Duedate = m.DueDate;
@@ -98,10 +124,19 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult ViewSubmissions (int milestoneID)
 		{
-			//Returns submissions that student has submitted in given milestone
-			var viewModel = _submissionService.GetSubmissionsForMilestoneForStudent(milestoneID);
-            ViewBag.AssignmentID = _assignService.GetAssignmentIDFromMilestoneID(milestoneID);
-			return View(viewModel);
+			try
+			{
+				//Returns submissions that student has submitted in given milestone
+				var viewModel = _submissionService.GetSubmissionsForMilestoneForStudent(milestoneID);
+
+				//ID of assignment is added to Viewbag to be able to Go Back
+				ViewBag.AssignmentID = _assignService.GetAssignmentIDFromMilestoneID(milestoneID);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror", e);
+			}
 		}
 
 		[HttpGet]
@@ -115,10 +150,17 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
         public ActionResult ViewSubmission (int submissionID)
         {
-            var viewModel = _submissionService.GetSubmission(submissionID);
-            viewModel.code = _filesService.getSubmissionFile(submissionID);
-            viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionID);
-            return View(viewModel);
+			try
+			{
+				var viewModel = _submissionService.GetSubmission(submissionID);
+				viewModel.code = _filesService.getSubmissionFile(submissionID);
+				viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionID);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror", e);
+			}
         }
 
         [HttpGet]

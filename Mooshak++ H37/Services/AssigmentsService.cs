@@ -77,13 +77,13 @@ namespace Mooshak___H37.Services
 		public AssignmentViewModel Assignment(int id)
 		{
 			var assignment = (from asi in _db.Assignments
-							where asi.ID == id
+							where asi.ID == id &&
+							asi.IsRemoved != true
 							select asi).FirstOrDefault();
 
 			if (assignment == null)
 			{
-				//DO SOMETHING
-				//throw new exception / skila NULL(ekki skila null hér)
+				throw new Exception("The Assignment does not exist or has been removed");
 			}
 
 			//Current user ID
@@ -111,8 +111,13 @@ namespace Mooshak___H37.Services
 				}).ToList();
 
 			var coursename = (from asi in _db.Courses
-								where asi.ID == assignment.CourseID
-								select asi).FirstOrDefault();
+							  where asi.ID == assignment.CourseID
+							  select asi).SingleOrDefault();
+
+			if (coursename == null)
+			{
+				throw new Exception("The Course for Assignment Does not exist or has been removed");
+			}
 
 			//Users associated with Course
 			var userid = (from usr in _db.UserCourseRelations
@@ -128,10 +133,7 @@ namespace Mooshak___H37.Services
 						  Name = x
 					  }).ToList();
 
-			if (coursename == null)
-			{
-				//Throw error
-			}
+
 
 			//Creates new View Model with given properties
 			AssignmentViewModel model = new AssignmentViewModel
@@ -242,11 +244,12 @@ namespace Mooshak___H37.Services
 		{
 			var assignment = (from assign in _db.Assignments
 							  where assign.ID == model.ID
+							  && assign.IsRemoved != null
 							  select assign).FirstOrDefault();
 
 			if (assignment == null)
 			{
-				//Throw error
+				throw new Exception("The Assignment you want to remove does not exist or has been removed already");
 			}
 
 			assignment.IsRemoved = true;
@@ -269,9 +272,7 @@ namespace Mooshak___H37.Services
 
 			if(assignments == null)
 			{
-				//TODO
-				//Throw exception
-				//return null;
+				throw new Exception("No Assignments for given context");
 			}
 
 			List<AssignmentViewModel> viewModel = new List<AssignmentViewModel>();
@@ -335,7 +336,7 @@ namespace Mooshak___H37.Services
 			}
 			else
 			{
-				// No assignment found to edit, should throw error.
+				throw new Exception("No assignment found to edit");
 			}
 		}
 

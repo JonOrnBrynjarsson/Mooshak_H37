@@ -7,6 +7,7 @@ using Mooshak___H37.Services;
 using Mooshak___H37.Models.Viewmodels;
 using Microsoft.AspNet.Identity;
 using Project_4.Controllers;
+using System.Diagnostics;
 
 namespace Mooshak___H37.Controllers
 {
@@ -32,8 +33,15 @@ namespace Mooshak___H37.Controllers
 		public ActionResult ViewAssignment(int id)
 		{
 			//Returns selected assignment
-			var viewModel = _assignService.Assignment(id);
-			return View(viewModel);
+			try
+			{
+				var viewModel = _assignService.Assignment(id);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 
 
@@ -95,10 +103,18 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult Milestones(int id)
 		{
-			AssignmentViewModel model = _assignService.Assignment(id);
-			ViewBag.MilestoneList = GetMilestones(id);
-			ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
-			return View(model);
+			try
+			{
+				AssignmentViewModel model = _assignService.Assignment(id);
+				ViewBag.MilestoneList = GetMilestones(id);
+				ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
+
 		}
 
 
@@ -114,23 +130,43 @@ namespace Mooshak___H37.Controllers
 		[HttpPost]
 		public ActionResult CreateMilestone(MilestoneViewmodel model, int assigID)
 		{
-			if (_milestoneService.TeacherCanCreateMilestone(model, assigID))
+			try
 			{
-				if (ModelState.IsValid)
-				{
-					_milestoneService.CreateMilestone(model, assigID);
-					return RedirectToAction("Milestones", new { id = assigID });
-				}
-				else
-				{
-					ViewBag.CourseList = GetCourses();
-					return View(model);
-				}
+				_milestoneService.TeacherCanCreateMilestone(model, assigID);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
+
+			if (ModelState.IsValid)
+			{
+				_milestoneService.CreateMilestone(model, assigID);
+				return RedirectToAction("Milestones", new { id = assigID });
 			}
 			else
 			{
-				return View("Error");
+				ViewBag.CourseList = GetCourses();
+				return View(model);
 			}
+
+			//if (_milestoneService.TeacherCanCreateMilestone(model, assigID))
+			//{
+			//	if (ModelState.IsValid)
+			//	{
+			//		_milestoneService.CreateMilestone(model, assigID);
+			//		return RedirectToAction("Milestones", new { id = assigID });
+			//	}
+			//	else
+			//	{
+			//		ViewBag.CourseList = GetCourses();
+			//		return View(model);
+			//	}
+			//}
+			//else
+			//{
+			//	return View("Error");
+			//}
 
 
 		}
@@ -138,24 +174,44 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult EditMilestone(int milestoneID)
 		{
-			var viewModel = _milestoneService.GetSingleMilestone(milestoneID);
-			return View(viewModel);
+			try
+			{
+				var viewModel = _milestoneService.GetSingleMilestone(milestoneID);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 
 		public ActionResult ViewSubmissions (int milestoneID)
 		{
-			var viewmodel = _submissionsService.GetSubmissionsForMilestone(milestoneID);
-			return View(viewmodel);
+			try
+			{
+				var viewmodel = _submissionsService.GetSubmissionsForMilestone(milestoneID);
+				return View(viewmodel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 
 		[HttpGet]
 		public ActionResult GradeSubmission(int submissionId)
 		{
-
-			var viewModel = _submissionsService.GetSubmission(submissionId);
-			viewModel.code = _filesService.getSubmissionFile(submissionId);
-			viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionId);
-			return View(viewModel);
+			try
+			{
+				var viewModel = _submissionsService.GetSubmission(submissionId);
+				viewModel.code = _filesService.getSubmissionFile(submissionId);
+				viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionId);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 
 		[HttpPost]
@@ -163,10 +219,22 @@ namespace Mooshak___H37.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_submissionsService.GradeAssignment(model);
-				//return RedirectToAction("ViewSubmissions", new { id = model.ID });
-				return RedirectToAction("ViewSubmissions", new { milestoneID = 
-					_submissionsService.GetMilestoneIDFromSubmissionID(model.ID)});			}
+				try
+				{
+					_submissionsService.GradeAssignment(model);
+					//return RedirectToAction("ViewSubmissions", new { id = model.ID });
+					return RedirectToAction("ViewSubmissions", new
+					{
+						milestoneID =
+						_submissionsService.GetMilestoneIDFromSubmissionID(model.ID)
+					});
+				}
+				catch (Exception e)
+				{
+					return View("~/Views/Shared/Cerror.cshtml", e);
+				}
+			}
+
 			else
 			{
 				return View(model);
@@ -175,8 +243,17 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult Assignments()
 		{
-			var viewModel = _courseService.GetCoursesForUser();
-			return View(viewModel);
+			try
+			{
+				var viewModel = _courseService.GetCoursesForUser();
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine("Confirmation");
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
+
 		}
 
 
@@ -191,8 +268,15 @@ namespace Mooshak___H37.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_milestoneService.EditMilestone(model, milestoneID);
-				return RedirectToAction("Index");
+				try
+				{
+					_milestoneService.EditMilestone(model, milestoneID);
+					return RedirectToAction("Index");
+				}
+				catch (Exception e)
+				{
+					return View("~/Views/Shared/Cerror.cshtml", e);
+				}
 			}
 			else
 			{
@@ -204,21 +288,43 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult RemoveMilestone(int id)
 		{
-			var viewModel = _milestoneService.GetSingleMilestone(id);
-			return View(viewModel);
+			try
+			{
+				var viewModel = _milestoneService.GetSingleMilestone(id);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 		[HttpPost]
 		public ActionResult RemoveMilestone(MilestoneViewmodel model)
 		{
-			_milestoneService.RemoveMilestone(model);
-			return RedirectToAction("Index");
+			try
+			{
+				_milestoneService.RemoveMilestone(model);
+				return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
+
 		}
 
 		[HttpGet]
 		public ActionResult EditAssignment(int id)
 		{
-			var viewModel = _assignService.Assignment(id);
-			return View(viewModel);
+			try
+			{
+				var viewModel = _assignService.Assignment(id);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 
 		[HttpPost]
@@ -226,8 +332,15 @@ namespace Mooshak___H37.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_assignService.EditAssignment(model);
-				return RedirectToAction("ViewAssignment", new { id = model.ID });
+				try
+				{
+					_assignService.EditAssignment(model);
+					return RedirectToAction("ViewAssignment", new { id = model.ID });
+				}
+				catch (Exception e)
+				{
+					return View("~/Views/Shared/Cerror.cshtml", e);
+				}
 
 			}
 			else
@@ -239,14 +352,30 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult RemoveAssignment(int id)
 		{
-			var viewModel = _assignService.Assignment(id);
-			return View(viewModel);
+			try
+			{
+				var viewModel = _assignService.Assignment(id);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
+
 		}
 		[HttpPost]
 		public ActionResult RemoveAssignment(AssignmentViewModel model)
 		{
-			_assignService.RemoveAssignment(model);
-			return RedirectToAction("Index");
+			try
+			{
+				_assignService.RemoveAssignment(model);
+				return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
+
 		}
 
 		[HttpGet]
@@ -294,14 +423,29 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult RemoveTestCase(int id)
 		{
-			var viewModel = _testcaseService.GetSingleTestCase(id);
-			return View(viewModel);
+			try
+			{
+				var viewModel = _testcaseService.GetSingleTestCase(id);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 		[HttpPost]
 		public ActionResult RemoveTestCase(TestCaseViewModel model)
 		{
-			_testcaseService.RemoveTestCase(model);
-			return RedirectToAction("Index");
+			try
+			{
+				_testcaseService.RemoveTestCase(model);
+				return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
+
 		}
 	}
 }

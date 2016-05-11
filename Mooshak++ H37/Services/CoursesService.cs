@@ -173,7 +173,13 @@ namespace Mooshak___H37.Services
 		{
 			var course = (from x in _db.Courses
 						  where name == x.Name
+						  && x.IsRemoved != true
 						  select x.ID).FirstOrDefault();
+
+			if (course == null)
+			{
+				throw new Exception("Course does not exist in this context");
+			}
 
 			return course;
 		}
@@ -195,9 +201,15 @@ namespace Mooshak___H37.Services
 
             var course = (from x in _db.Courses
                          where x.ID == courseID
+						 && x.IsRemoved != null
                          select x).SingleOrDefault();
 
-            return course;
+			if (course == null)
+			{
+				throw new Exception("Course does not exist for given ID");
+			}
+
+			return course;
         }
 		//in progress
 		public CourseViewModel getCourseViewModelByID(int courseID)
@@ -206,6 +218,11 @@ namespace Mooshak___H37.Services
 			var course = (from x in _db.Courses
 						  where x.ID == courseID && x.IsRemoved == false
 						  select x).SingleOrDefault();
+
+			if (course == null)
+			{
+				throw new Exception("Course does not exist");
+			}
 
 			var ass = _assignmentsService.getAssignmentsInCourse(courseID);
 			var users = _userService.getUsersInCourse(courseID);
@@ -256,6 +273,10 @@ namespace Mooshak___H37.Services
 
 				removeCourseConnections(id);
 			}
+			else
+			{
+				throw new Exception("The course you want to remove does not exist.");
+			}
 		}
 
 		private void removeCourseConnections(int courseId)
@@ -271,6 +292,10 @@ namespace Mooshak___H37.Services
 					item.IsRemoved = true;
 				}
 				_db.SaveChanges();
+			}
+			else
+			{
+				throw new Exception("This connection does not exist.");
 			}
 		}
 

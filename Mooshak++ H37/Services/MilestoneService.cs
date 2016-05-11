@@ -35,7 +35,7 @@ namespace Mooshak___H37.Services
 
 			if (currUserID == null)
 			{
-				//User does not exist or has been removed.
+				throw new Exception("User does not exist or has been removed.");
 			}
 
 			return currUserID;
@@ -104,6 +104,11 @@ namespace Mooshak___H37.Services
 							  miles.IsRemoved != true
 							  select miles).ToList();
 
+			if (milestones == null)
+			{
+				//No milestones have been created
+			}
+
 			var viewModel = new List<MilestoneViewmodel>();
 
 			double totalPercentage = 0;
@@ -143,7 +148,8 @@ namespace Mooshak___H37.Services
 			//Returns true if User has not submitted to many times
 			if (submissions <= allowedSubmissions)
 			{
-				return true;
+				//return true;
+				throw new Exception("You have already submitted the maximum number of times");
 			}
 
 			return false;
@@ -191,7 +197,7 @@ namespace Mooshak___H37.Services
 
 			if (milestones == null)
 			{
-				//Milestone does not exist or has been removed.
+				throw new Exception("Milestone does not exist or has been removed.");
 			}
 
 			MilestoneViewmodel model = new MilestoneViewmodel
@@ -231,7 +237,7 @@ namespace Mooshak___H37.Services
 
 			else
 			{
-				// Milestone that is being edited does not exist or has been removed.
+				throw new Exception("Milestone that is being edited does not exist or has been removed.");
 			}
 		}
 
@@ -244,7 +250,7 @@ namespace Mooshak___H37.Services
 
 			if (milestone == null)
 			{
-				//Trying to remove a Milestone that does not exist or has been removed.
+				throw new Exception("Trying to remove a Milestone that does not exist or has been removed.");
 			}
 
 			milestone.IsRemoved = true;
