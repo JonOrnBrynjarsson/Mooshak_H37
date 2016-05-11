@@ -263,6 +263,10 @@
     <Compile Include="Migrations\201605102230333_finalsolution.Designer.cs">
       <DependentUpon>201605102230333_finalsolution.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605111612390_jondbtest.cs" />
+    <Compile Include="Migrations\201605111612390_jondbtest.Designer.cs">
+      <DependentUpon>201605111612390_jondbtest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
@@ -458,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605102230333_finalsolution.resx">
       <DependentUpon>201605102230333_finalsolution.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605111612390_jondbtest.resx">
+      <DependentUpon>201605111612390_jondbtest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
