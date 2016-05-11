@@ -23,6 +23,10 @@ namespace Mooshak___H37.Services
 			_filesService = new FilesService();
 		}
 
+		/// <summary>
+		/// Finds LOGGED in user
+		/// </summary>
+		/// <returns>ID of Current User</returns>
 		public int GetCurrentUser()
 		{
 			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -32,10 +36,17 @@ namespace Mooshak___H37.Services
 
 			return currUserID;
 		}
+		/// <summary>
+		/// Finds All submissions for Given Milestone ID
+		/// </summary>
+		/// <param name="milestoneID"></param>
+		/// <returns>List of Submissions</returns>
         public List<SubmissionsViewModel> GetSubmissionsForMilestone(int milestoneID)
         {
             var currUsId = GetCurrentUser();
 
+			//Finds alls submissions for given Milestone that have not been
+			//Marked as removed.
             var submissions = (from subs in _db.Submissions
                                where subs.MilestoneID == milestoneID
                                && subs.IsRemoved != true
@@ -43,6 +54,7 @@ namespace Mooshak___H37.Services
 
             var viewModel = new List<SubmissionsViewModel>();
 
+			//Creates List of View models for given Submissions
             foreach (var subs in submissions)
             {
                 SubmissionsViewModel model = new SubmissionsViewModel
@@ -67,15 +79,25 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
+		/// <summary>
+		/// Finds Submission for Given Submissions ID
+		/// </summary>
+		/// <param name="submissionID"></param>
+		/// <returns>Submission for Given ID</returns>
         public SubmissionsViewModel GetSubmission(int submissionID)
         {
-            //var currUsId = GetCurrentUser();
-
+			//Finds submission that has not been marked as removed
             var subs = (from subm in _db.Submissions
                         where subm.ID == submissionID
                         && subm.IsRemoved != true
                         select subm).FirstOrDefault();
 
+			if (subs == null)
+			{
+				//The submission has been removed or does not exist.
+			}
+
+			//Creates model for given Submission
             SubmissionsViewModel model = new SubmissionsViewModel
             {
                 Grade = subs.Grade,
@@ -96,12 +118,15 @@ namespace Mooshak___H37.Services
             return model;
         }
 
+		//Grades Assignment with given model.
         internal void GradeAssignment(SubmissionsViewModel model)
         {
+			//Finds submission that from given Model
             var currSubmission = (from subs in _db.Submissions
                                   where subs.ID == model.ID
                                   select subs).FirstOrDefault();
 
+			//Submission Exists.
             if (currSubmission != null)
             {
                 currSubmission.Grade = model.Grade;
@@ -111,21 +136,37 @@ namespace Mooshak___H37.Services
             }
             else
             {
-                // DO Something!!
+                // The submission that is being graded does not exist or has been removed
             }
         }
 
+		/// <summary>
+		/// Finds Submissions for given Milestone Associated
+		/// With Current Logged in User.
+		/// </summary>
+		/// <param name="milestoneID"></param>
+		/// <returns>List of submissions</returns>
         public List<SubmissionsViewModel> GetSubmissionsForMilestoneForStudent(int milestoneID)
         {
             var currUser = GetCurrentUser();
+
+			//Finds submissions for current user for given milestone
+			//That have not been marked as removed.
             var submissions = (from subs in _db.Submissions
                                where subs.MilestoneID == milestoneID &&
-                               subs.UserID == currUser
+                               subs.UserID == currUser &&
+							   subs.IsRemoved != true
                                select subs).ToList();
+
+			if (submissions == null)
+			{
+				//Given submission does not exist or has been removed. 
+			}
 
             var viewModel = new List<SubmissionsViewModel>();
 
 
+			//Creates list of submissions for given model. 
             foreach (var subs in submissions)
             {
                 SubmissionsViewModel model = new SubmissionsViewModel
@@ -151,13 +192,26 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
-
+		/// <summary>
+		/// Returns Submission for given Submission ID
+		/// </summary>
+		/// <param name="submissionID"></param>
+		/// <returns>Submission for given Submission ID</returns>
         public SubmissionsViewModel GetOneSubmission(int submissionID)
         {
+			//Finds submission for given Submission ID
+			//That has not been removed.
             var submission = (from subs in _db.Submissions
                               where subs.ID == submissionID
+							  && subs.IsRemoved != true
                               select subs).FirstOrDefault();
 
+			if (submission == null)
+			{
+				//Submission does not exist or has been removed.
+			}
+
+			//Creates viewmodel for given submission
             SubmissionsViewModel model = new SubmissionsViewModel
             {
                 Grade = submission.Grade,
@@ -179,6 +233,10 @@ namespace Mooshak___H37.Services
 
         }
 
+		/// <summary>
+		/// Finds All submissions in system
+		/// </summary>
+		/// <returns>Number of all submissions</returns>
         public int NumberOfSubmissions()
         {
             var submissions = (from subs in _db.Submissions
