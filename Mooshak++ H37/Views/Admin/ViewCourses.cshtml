@@ -9,17 +9,7 @@
 <div class="clearfix">
     <div class="large-left-portion">
         <h1>Courses<button class="btn btn-primary create-button button-right" onclick="location.href='@Url.Action("CreateCourse", "Admin")'">Create New Course</button></h1>
-        
-        <label for="courses">Search Courses</label>
-        <select id="courses" name="courses" class="form-control">
-            @foreach(var item in Model)
-            {
-                <option>@item.Name</option>
-            }
-        </select>
-        <label for="inactive">Inactive</label>
-        <input type="checkbox" id="inactive" name="inactive" />
-    </div>  
+    </div>
         <table class="table table-hover">
             <thead>
                 <tr>
