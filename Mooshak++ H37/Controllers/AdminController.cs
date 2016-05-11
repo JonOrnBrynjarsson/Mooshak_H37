@@ -17,12 +17,12 @@ namespace Mooshak___H37.Controllers
 		private CoursesService _courseService = new CoursesService();
 		private UsersService _userService = new UsersService();
 
-        // GET: Admin
-        public ActionResult Index()
-        {
+		// GET: Admin
+		public ActionResult Index()
+		{
 
-            return View();
-        }
+			return View();
+		}
 		// GET: Admin
 		public ActionResult IndexErrors()
 		{
@@ -30,44 +30,44 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 		public ActionResult CreateUser()
-        {
-            RegisterViewModel viewModel = new RegisterViewModel();
-            viewModel.Course = _courseService.getAllCourses();
+		{
+			RegisterViewModel viewModel = new RegisterViewModel();
+			viewModel.Course = _courseService.getAllCourses();
 
-            return View(viewModel);
-        }
+			return View(viewModel);
+		}
 
 
-        public ActionResult ViewCourses()
+		public ActionResult ViewCourses()
 		{
 			var viewModel = _courseService.getAllCourses();
 			return View(viewModel);
 		}
 
 		public ActionResult CreateCourse()
-        {
-            CourseViewModel viewModel = new CourseViewModel();
+		{
+			CourseViewModel viewModel = new CourseViewModel();
 			ViewBag.userList = _userService.getAllUsersName();
 
-            return View(viewModel);
-        }
-     
+			return View(viewModel);
+		}
 
-        [HttpPost]
-        public ActionResult CreateCourse(CourseViewModel model)
-        {
+
+		[HttpPost]
+		public ActionResult CreateCourse(CourseViewModel model)
+		{
 			//Save the new course that was just created to the DB
-            _courseService.setCourse(model);
+			_courseService.setCourse(model);
 
 			//find the id number of the course just created from the DB
 			int Courseid = _courseService.getCourseIdByName(model.Name);
 
-			return RedirectToAction("EditCourse", new { id = Courseid});
-        }
+			return RedirectToAction("EditCourse", new { id = Courseid });
+		}
 
 		public ActionResult EditCourse(int? id)
 		{
-			if(id==null)
+			if (id == null)
 			{
 				//TODO
 				//throw exception
@@ -76,7 +76,7 @@ namespace Mooshak___H37.Controllers
 
 			CourseViewModel model = _courseService.getCourseViewModelByID(id.Value);
 
-			if(model == null)
+			if (model == null)
 			{
 				//TODO
 				//throw exception
@@ -106,7 +106,7 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult RemoveCourse(int? id)
 		{
-			if(id == null)
+			if (id == null)
 			{
 				//TODO
 				//Throw exception
@@ -116,6 +116,18 @@ namespace Mooshak___H37.Controllers
 			_courseService.removeCourseByID(id.Value);
 
 			return RedirectToAction("ViewCourses");
+		}
+
+		public ActionResult RemoveUser(int? id)
+		{
+			if(id == null)
+			{
+				// do something
+			}
+
+			_userService.removeUserByID(id);
+
+			return RedirectToAction("ViewUsers");
 		}
 
         [HttpPost]
