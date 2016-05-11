@@ -16,25 +16,17 @@ namespace Mooshak___H37.Services
 	class AssigmentsService
 	{
 		private readonly ApplicationDbContext _db;
+		private readonly UsersService _usersService;
 
 		public AssigmentsService()
 		{
 			_db = new ApplicationDbContext();
-		}
-
-		public int GetCurrentUser()
-		{
-			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
-			var currUserID = (from x in _db.Users
-							  where x.AspNetUserId == currentUser
-							  select x.ID).FirstOrDefault();
-
-			return currUserID;
+			_usersService = new UsersService();
 		}
 
 		public List<AssignmentViewModel> getAllAssignments()
 		{
-			var currUsId = GetCurrentUser();
+			var currUsId = _usersService.getUserIdForCurrentyApplicationUser();
 
 			var userCourses = (from uscr in _db.UserCourseRelations
 							   where currUsId == uscr.UserID
@@ -81,7 +73,7 @@ namespace Mooshak___H37.Services
 				//throw new exception / skila NULL(ekki skila null hér)
 			}
 
-			var userID = GetCurrentUser();
+			var userID = _usersService.getUserIdForCurrentyApplicationUser();
 
 			var milestones = _db.Milestones.Where(x => x.AssignmentID == id &&
 												  x.IsRemoved != true)
@@ -143,7 +135,7 @@ namespace Mooshak___H37.Services
 
 		public List<CourseViewModel> GetCourseAssignments()
 		{
-			var currUsId = GetCurrentUser();
+			var currUsId = _usersService.getUserIdForCurrentyApplicationUser();
 
 			var userCourses = (from uscr in _db.UserCourseRelations
 							   where currUsId == uscr.UserID
@@ -303,43 +295,5 @@ namespace Mooshak___H37.Services
 				// DO Something!!
 			}
 		}
-
-		public bool SaveSubmissionfile(string file)
-		{
-			return true;
-		}
-
-		public void RunTest(int SubmissionId)
-		{
-			
-		}
-
-		private static void FileCompiler(int submissionId)
-		{
-			
-			string fileToCompile = @"c:\temp\jontest\jon\main.cpp";
-			string fileName = @"c:\temp\jontest\jon\jonob06.exe";
-			string Compiler = "mingw32-g++.exe";
-			string all = fileToCompile + " -o " + fileName;
-			Console.WriteLine(all);
-
-			Process process = new Process();
-			process.StartInfo.FileName = Compiler;
-			process.StartInfo.Arguments = all;
-			process.StartInfo.UseShellExecute = false;
-			//process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.RedirectStandardInput = true;
-			process.Start();
-			process.WaitForExit();
-		}
-		
-        public int NumberOfAssignments()
-        {
-            var assignments = (from assign in _db.Assignments
-                               select assign).Count();
-
-            return assignments;
-        }
-
 	}
 }

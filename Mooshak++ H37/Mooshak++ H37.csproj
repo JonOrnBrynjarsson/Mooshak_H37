@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AssignmentController.cs" />
+    <Compile Include="Controllers\BasicController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -300,6 +301,9 @@
     <Compile Include="Services\TestCaseService.cs" />
     <Compile Include="Services\UsersService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\CustomApplicationException.cs" />
+    <Compile Include="Utilities\CustomHandleErrroAttribute.cs" />
+    <Compile Include="Utilities\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin.css" />

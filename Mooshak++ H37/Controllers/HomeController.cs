@@ -1,4 +1,5 @@
 ﻿using Mooshak___H37.Services;
+using Project_4.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Mooshak___H37.Controllers
 {
-	public class HomeController : Controller
+	public class HomeController : BasicController
 	{
         //readonly UsersService _userService = new UsersService();
         //readonly AssigmentsService _assignService = new AssigmentsService();

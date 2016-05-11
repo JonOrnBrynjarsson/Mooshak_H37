@@ -6,12 +6,13 @@ using System.Web.Mvc;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models;
 using Mooshak___H37.Models.Viewmodels;
+using Project_4.Controllers;
 
 namespace Mooshak___H37.Controllers
 {
 	//[Authorize(Roles = "Admin")]
-	public class AdminController : Controller
-    {
+	public class AdminController : BasicController
+	{
 		private ErrorsService _errorsService = new ErrorsService();
 		private CoursesService _courseService = new CoursesService();
 		private UsersService _userService = new UsersService();

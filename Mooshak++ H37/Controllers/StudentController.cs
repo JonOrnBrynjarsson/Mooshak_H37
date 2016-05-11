@@ -11,11 +11,12 @@ using Mooshak___H37.Models.Viewmodels;
 using System.Web.UI.HtmlControls;
 using Mooshak___H37.Models.Entities;
 using System.IO;
+using Project_4.Controllers;
 
 namespace Mooshak___H37.Controllers
 {
 	//[Authorize(Roles = "Student")]
-	public class StudentController : Controller
+	public class StudentController : BasicController
 	{
 		readonly AssigmentsService _assignService = new AssigmentsService();
 		readonly FilesService _filesService = new FilesService();
