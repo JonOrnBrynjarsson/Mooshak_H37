@@ -35,16 +35,17 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult ViewAssignment(int id)
 		{
+			//returns selected assignment
 			var viewModel = _assignService.Assignment(id);
+			//gives total percentage of all milestones in given assignment
 			ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
 			return View(viewModel);
 		}
 
 		public ActionResult Assignments()
 		{
+			//Returns all assignments in all Courses that user is in.
 			var viewModel = _courseService.GetCoursesForUser();
-			//int userId = 
-			//var viewModel = _courseService.getAllCoursesByUserID(userId);
 			return View(viewModel);
 		}
 
@@ -97,6 +98,7 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult ViewSubmissions (int milestoneID)
 		{
+			//Returns submissions that student has submitted in given milestone
 			var viewModel = _submissionService.GetSubmissionsForMilestoneForStudent(milestoneID);
             ViewBag.AssignmentID = _assignService.GetAssignmentIDFromMilestoneID(milestoneID);
 			return View(viewModel);
@@ -132,29 +134,33 @@ namespace Mooshak___H37.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult SubmitEdit(EditCodeViewModel model)
+		//public ActionResult SubmitEdit(EditCodeViewModel model)
+		public ActionResult SubmitEdit()
 		{
-			if (!string.IsNullOrEmpty(model.codefile))
+			string code = Request.QueryString["codefile"];
+			string milstr = Request.QueryString["Milestone"];
+
+			int milestoneId = 0;
+			bool mil = int.TryParse(milstr, out milestoneId);
+
+			if (!string.IsNullOrEmpty(code))
 			{
-				int submissionId = _filesService.createSubmission(model.Milestone);
-				if (submissionId == 0)
+				try
+				{
+					int submissionId = _filesService.createSubmission(milestoneId);
+					if (submissionId == 0)
+					{
+						throw new Exception();
+					}
+					_filesService.saveSubmissionfile(code, submissionId);
+					_filesService.testingSubmission(submissionId);
+				}
+				catch (Exception ex)
 				{
 					return View("Error");
 				}
-				_filesService.saveSubmissionfile(model.codefile, submissionId);
-				_filesService.testingSubmission(submissionId);
-			}
-			else
-			{
-				if (ViewBag.ErrorMessage != "")
-				{
-					return View("Error");
-				}
-				ViewBag.ErrorMessage = "No file submitted, try again";
-				return View(model);
 			}
 			return RedirectToAction("Index");
 		}
-		
 	}
 }
