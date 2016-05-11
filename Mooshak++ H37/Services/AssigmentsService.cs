@@ -20,8 +20,7 @@ namespace Mooshak___H37.Services
 	{
 		private readonly ApplicationDbContext _db;
 		private readonly UsersService _usersService;
-		HomeController _homeController;
-
+		
 		public AssigmentsService()
 		{
 			_db = new ApplicationDbContext();

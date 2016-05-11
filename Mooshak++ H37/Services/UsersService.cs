@@ -146,7 +146,7 @@ namespace Mooshak___H37.Services
 		private void getRolesByCourseID(UserViewModel model)
 		{
 			var role = (from x in _db.UserCourseRelations
-						where model.Course_ID == x.CourseID &&
+						where model.CourseID == x.CourseID &&
 						model.ID == x.UserID
 						select x).FirstOrDefault();
 
