@@ -132,16 +132,20 @@ namespace Mooshak___H37.Services
 			//Creates a View Model for Given Courses.
 			foreach (var course in Courses)
 			{
-				CourseViewModel model = new CourseViewModel
-				{
-					ID = course.ID,
-					Assignments = _assignmentsService.getAssignmentsInCourse(course.ID),
-					Isactive = course.Isactive,
-					IsRemoved = course.IsRemoved,
-					Name = course.Name,
-					StartDate = course.Startdate,
-				};
-				viewModel.Add(model);
+                if (_assignmentsService.getAssignmentsInCourse(course.ID).Count != 0)
+                {
+                    CourseViewModel model = new CourseViewModel
+                    {
+
+                        ID = course.ID,
+                        Assignments = _assignmentsService.getAssignmentsInCourse(course.ID),
+                        Isactive = course.Isactive,
+                        IsRemoved = course.IsRemoved,
+                        Name = course.Name,
+                        StartDate = course.Startdate,
+                    };
+                    viewModel.Add(model);
+                }
 			}
 
 			return viewModel;
