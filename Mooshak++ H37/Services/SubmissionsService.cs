@@ -182,7 +182,6 @@ namespace Mooshak___H37.Services
 
             return submissions;
         }     
->>>>>>> 96145f4c04aee838d2b8162e976488c1526bbe59
 
 		public SubmissionsViewModel getSubmissionDetail(int submissionId)
 		{

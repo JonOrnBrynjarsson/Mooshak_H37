@@ -127,16 +127,16 @@ namespace Mooshak___H37.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditCode(EditCodeViewModel edit)
+		public ActionResult SubmitEdit(EditCodeViewModel model)
 		{
-			if (!string.IsNullOrEmpty(edit.codefile))
+			if (!string.IsNullOrEmpty(model.codefile))
 			{
-				int submissionId = _filesService.createSubmission(edit.Milestone);
+				int submissionId = _filesService.createSubmission(model.Milestone);
 				if (submissionId == 0)
 				{
 					return View("Error");
 				}
-				_filesService.saveSubmissionfile(edit.codefile, submissionId);
+				_filesService.saveSubmissionfile(model.codefile, submissionId);
 				_filesService.testingSubmission(submissionId);
 			}
 			else
@@ -146,7 +146,7 @@ namespace Mooshak___H37.Controllers
 					return View("Error");
 				}
 				ViewBag.ErrorMessage = "No file submitted, try again";
-				return View(edit);
+				return View(model);
 			}
 			return RedirectToAction("Index");
 		}

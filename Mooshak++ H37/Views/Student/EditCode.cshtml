@@ -4,7 +4,7 @@
 <style type="text/css" media="screen">
 	#editor {
 		position: absolute;
-		top: 20px;
+		top: 50px;
 		right: 0;
 		bottom: 0;
 		left: 0;
@@ -16,6 +16,7 @@
 
 	<div class="form-horizontal">
 		<h4>StudentSubmit</h4>
+		<input type="hidden" name="Milestone" value="@Model.Milestone"/>
 		<hr/>
 		<div id="editor"> @Model.codefile</div>
 	</div>
@@ -30,7 +31,8 @@
 
 <div>
     @Html.ActionLink("Back to List", "Index")
-	@Html.ActionLink("Save","EditCode", new {x = Model})
+	@Html.ActionLink("Mooshak++Save", "SubmitEdit", "Student", Model)
+	@Html.ActionLink("Save","SubmitEdit", Model)
 </div>
 
 @section Scripts {
