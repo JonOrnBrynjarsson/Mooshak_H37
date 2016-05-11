@@ -24,6 +24,10 @@ namespace Mooshak___H37.Services
 		}
 
 
+		/// <summary>
+		/// Finds the ID of logged in user
+		/// </summary>
+		/// <returns>User ID</returns>
 		public int GetCurrentUser()
 		{
 			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -34,9 +38,13 @@ namespace Mooshak___H37.Services
 			return currUserID;
 		}
 
+		/// <summary>
+		/// Gets a list of all Courses from the database that are not
+		/// marked as Removed.
+		/// </summary>
+		/// <returns>list of all Courses</returns>
 		public List<CourseViewModel> getAllCourses()
         {
-
             var Courses = (from x in _db.Courses
 						   where x.IsRemoved != true
 						   orderby x.Name ascending
@@ -61,12 +69,18 @@ namespace Mooshak___H37.Services
             return viewModel;
         }
 
+		/// <summary>
+		/// Finds all Courses Associated with given User
+		/// </summary>
+		/// <param name="UserID"></param>
+		/// <returns>List of Courses</returns>
         public List<CourseViewModel> getAllCoursesByUserID(int UserID)
         {
             List<Course> Courses = null;
 
             var coursesID = (from x in _db.UserCourseRelations
-                             where x.UserID == UserID
+                             where x.UserID == UserID &&
+							 x.IsRemoved != true
                              select x.CourseID);
 
             foreach (var id in coursesID)
@@ -93,41 +107,29 @@ namespace Mooshak___H37.Services
 
         }
 
+		/// <summary>
+		/// Finds all Courses that LOGGED IN User is Associated with.
+		/// </summary>
+		/// <returns>List of Courses</returns>
 		public List<CourseViewModel> GetCoursesForUser()
 		{
+			//Finds current User
 			var currUsId = GetCurrentUser();
 
+			//Creates a List of Course IDs that User is associated with
 			var userCourses = (from uscr in _db.UserCourseRelations
 							   where currUsId == uscr.UserID
+							   && uscr.IsRemoved != true
 							   select uscr.CourseID).ToList();
 
-
+			//Selectes Courses that are in the previous userCourses List.
 			var Courses = (from courses in _db.Courses
 							   where userCourses.Contains(courses.ID) && courses.IsRemoved != true
 							   orderby courses.ID descending
 							   select courses).ToList();
-
-			//var assignments = (from assi in _db.Assignments
-			//				   where userCourses.Contains(assi.CourseID)
-			//				   orderby assi.CourseID descending
-			//				   select assi).ToList();
-
 			var viewModel = new List<CourseViewModel>();
 
-			//foreach (var asi in assignments)
-			//{
-			//	AssignmentViewModel model = new AssignmentViewModel
-			//	{
-			//		CourseID = asi.CourseID,
-			//		Description = asi.Description,
-			//		DueDate = asi.DueDate,
-			//		ID = asi.ID,
-			//		IsActive = asi.IsActive,
-			//		Name = asi.Name,
-			//		SetDate = asi.SetDate,
-			//	};
-			//}
-
+			//Creates a View Model for Given Courses.
 			foreach (var course in Courses)
 			{
 				CourseViewModel model = new CourseViewModel
@@ -145,7 +147,7 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
-
+		//Adds User To Course
         internal void addUserToCourse(AddUserToCourseViewModel model)
         {
             int roleID = 1;
@@ -162,6 +164,11 @@ namespace Mooshak___H37.Services
             _db.SaveChanges();
         }
 
+		/// <summary>
+		/// Finds Course where given Name is Associated
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns>ID of Course</returns>
         public int getCourseIdByName(string name)
 		{
 			var course = (from x in _db.Courses
@@ -247,6 +254,10 @@ namespace Mooshak___H37.Services
 			}
 		}
 
+		/// <summary>
+		/// Finds all Courses in the system
+		/// </summary>
+		/// <returns>Total Number Of Courses</returns>
         public int NumberOfCourses()
         {
             var courses = (from course in _db.Courses
