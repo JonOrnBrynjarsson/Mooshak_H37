@@ -1,4 +1,4 @@
-﻿@model Mooshak___H37.Services.Viewmodels.AdminErrorViewmModel
+﻿@model IEnumerable<Mooshak___H37.Services.Viewmodels.AdminErrorViewmModel>
 
 @{
     ViewBag.Title = "Admin Homepage";
@@ -25,33 +25,6 @@
 
 
 
-    <div>
-        <div id="messages" class="left-portion">
-            <h3>Messages</h3>
-            <table id="message" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nr</th>
-                        <th>Message</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Ipsum</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Dolar</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
         <div id="due-assignments" class="right-portion">
             <h3>Error Reports</h3>
             <table id="assignments" class="table table-hover">
@@ -59,26 +32,26 @@
                     <tr>
                         <th>Nr</th>
                         <th>Date</th>
-                        <th>Error type</th>
+                        <th>Error message</th>
                         <th>User</th>
                     </tr>
                 </thead>
                 <tbody>
                     @{int rowNo = 0;}
-                    @for (int i = 0; i < 3; i++)
+					@foreach(var item in Model)
                     {
                         <tr>
                             <td>
                                 @(rowNo += 1)
                             </td>
                             <td>
-                                12/0 @i
+                                @item.Date
                             </td>
                             <td>
-                                error @i
+                                @item.Message
                             </td>
                             <td>
-                                Hrafn
+								@item.User
                             </td>
                         </tr>
                     }

@@ -18,7 +18,7 @@ namespace Mooshak___H37.Services
 			_db = new ApplicationDbContext();
 		}
 
-        public List<UserViewModel> getAllUsersName()  //Breyta
+        public List<UserViewModel> getAllUsersName()
         {
 			//gets all the users in the system
             var Users = (from x in _db.Users
@@ -88,59 +88,6 @@ namespace Mooshak___H37.Services
 			return userList;
 		}
 
-		/*public List<UserViewModel> getUsersInCourse(int courseID)
-		{
-
-			List<UserViewModel> model = new List<UserViewModel>();
-
-			//this is to get only the student id for next linq expression (.Contains)
-			var userIdList = (from x in _db.UserCourseRelations
-							where courseID == x.CourseID && x.IsRemoved == false
-							select x.UserID).ToList();
-			//here we select all the student names that that are in the course
-			//from the ID we collected just above
-			var users = (from y in _db.Users
-						 where userIdList.Contains(y.ID) && y.IsRemoved == false
-						 select y).ToList();
-			//here we select the AspNetUser table to get the email from all the students in the course
-			List<string> mail = new List<string>();
-			foreach(var item in users)
-			{
-				string aspInfo = (from z in _db.Users
-							   where item.AspNetUserId == z.AspNetUser.Id && z.IsRemoved == false
-							   select z.AspNetUser.Email).FirstOrDefault();
-
-				mail.Add(aspInfo);
-			}
-			
-
-
-
-			for(int i = 0; i<users.Count; i++)
-			{
-
-				UserViewModel temp = new UserViewModel
-				{
-					Name = users[i].Name,
-					ID = users[i].ID,
-					Email = mail[i],
-					Course_ID = courseID
-				};
-
-				model.Add(temp);
-			}
-
-			List<UserViewModel> sortedModel = new List<UserViewModel>();
-			sortedModel = model.OrderBy(n => n.Name).ToList();
-
-			foreach(var item in sortedModel)
-			{
-				getRolesByCourseID(item);
-			}
-
-			return sortedModel;
-		}
-*/
 		/// <summary>
 		/// This function takes in a userViewModel with the requerment that it has
 		/// a CourseID and ID wich is a userID, then it puts in the model, the correct role.
@@ -298,6 +245,14 @@ namespace Mooshak___H37.Services
             return roleID;
         }
 
+		public string getUserNameByID(int userId)
+		{
+			var name = (from n in _db.Users
+						where n.ID == userId
+						select n.Name).SingleOrDefault();
+			return name;
+		}
+
 		internal void EditUser(UserViewModel model)
 		{
 			var edit = (from user in _db.Users
@@ -417,9 +372,9 @@ namespace Mooshak___H37.Services
 					}//			=========================================									//
 					_db.SaveChanges();
 
-					var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-					ApplicationUser u = um.FindById(aspUser);	
-					Membership.DeleteUser(u.UserName);				
+					//var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+					//ApplicationUser u = um.FindById(aspUser);	
+					//Membership.DeleteUser(u.UserName);				
 				}
 			}
 		}
