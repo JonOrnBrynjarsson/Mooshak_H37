@@ -71,20 +71,24 @@ namespace Mooshak___H37.Controllers
 		{
 			if (submit.File != null && submit.File.ContentLength > 0)
 			{
-				int submissionId = _filesService.createSubmission(submit.Milestone);
-				if (submissionId == 0)
+				try
+				{
+					int submissionId = _filesService.createSubmission(submit.Milestone);
+					if (submissionId == 0)
+					{
+						throw new Exception();
+					}
+					_filesService.saveSubmissionfile(submit.File, submissionId);
+					_filesService.testingSubmission(submissionId);
+				}
+				catch (Exception ex)
 				{
 					return View("Error");
 				}
-				_filesService.saveSubmissionfile(submit.File, submissionId);
-				_filesService.testingSubmission(submissionId);
+			
 			}
 			else
 			{
-				if (ViewBag.ErrorMessage != "")
-				{
-					return View("Error");
-				}
 				ViewBag.ErrorMessage = "No file submitted, try again";
 				return View(submit);
 			}
