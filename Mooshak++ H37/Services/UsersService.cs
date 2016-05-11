@@ -130,23 +130,37 @@ namespace Mooshak___H37.Services
         internal dynamic getAllUsersNameNotInCourse(int courseID)
         {
             //gets all the users in the system
-            var Users = (from x in _db.Users
-                         join y in _db.UserCourseRelations on courseID equals y.CourseID
-                         where x.IsRemoved == false && x.ID != y.UserID
-                         orderby x.Name ascending
-                         select x).ToList();
+            var usersInCourse = getUsersInCourse(courseID);
 
+            var allUsers = getAllUsersName();
+
+            int flag = 0;
 
             var viewModel = new List<UserViewModel>();
             //combines all information gathered into the userViewmodel
-            for (int i = 0; i < Users.Count(); i++)
+            for(int i = 0; i< allUsers.Count; i++)
             {
-                UserViewModel model = new UserViewModel
+                for(int x = 0; x < usersInCourse.Count; x++)
                 {
-                    Name = Users[i].Name,
-                    ID = Users[i].ID
-                };
-                viewModel.Add(model);
+                    if(allUsers[i].ID == usersInCourse[x].ID)
+                    {
+                        flag = 1;
+                    }
+                }
+
+                if (flag == 0)
+                {
+                    UserViewModel model = new UserViewModel
+                    {
+                        Name = allUsers[i].Name,
+                        ID = allUsers[i].ID
+                    };
+                    viewModel.Add(model);
+                }
+                else
+                {
+                    flag = 0;
+                }
             }
 
 
