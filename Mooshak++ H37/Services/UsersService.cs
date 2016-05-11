@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace Mooshak___H37.Services
 {
@@ -281,5 +282,41 @@ namespace Mooshak___H37.Services
 
             return UserList;
         }
+
+		public void removeUserByID(int? id)
+		{
+			if(id != null)
+			{
+				//finds the user in the Users table from the id param.
+				var usr = (from user in _db.Users
+						   where user.ID == id.Value
+						   select user).SingleOrDefault();
+
+				if (usr != null)
+				{
+					//sets IsRemoved in the Users table to true for the right user
+					usr.IsRemoved = true;
+					
+					//deletes the account created in AspNetUsers Table	============	\\
+					var usrName = (from user in _db.Users								//
+								   where usr.AspNetUserId == user.AspNetUser.Id			//
+								   select user.AspNetUser.UserName).FirstOrDefault();	//
+					if (usrName != null)												//
+					{																	//
+						Membership.DeleteUser(usrName);									//
+					}//         ========================================				//
+
+					//retrieves all the connections to courses the user to be deleted has and removes them all
+					var connections = (from x in _db.UserCourseRelations									//
+									   where x.UserID == usr.ID												//
+									   select x).ToList();													//
+					foreach(var item in connections)														//
+					{																						//
+						item.IsRemoved = true;																//
+					}//			=========================================									//
+				}
+				_db.SaveChanges();
+			}
+		}
 	}
 }
