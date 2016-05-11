@@ -43,7 +43,7 @@
                         <td>@(rowNo += 1)</td>
                         <td>@item.Name</td>
                         <td>@item.Percentage %</td>
-                        <td>@item.AllowedSubmissions</td>
+                        <td>@item.TotalSubmissions</td>
 						<td>@Html.ActionLink("Remove", "RemoveMilestone", new { id = item.ID })</td>
                         <td>@Html.ActionLink("Edit", "EditMilestone", new { milestoneID = item.ID })</td>
 						<td>@Html.ActionLink("Test Cases", "TestCases", new { milID = item.ID })</td>

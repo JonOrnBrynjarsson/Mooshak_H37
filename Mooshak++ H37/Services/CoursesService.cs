@@ -128,7 +128,6 @@ namespace Mooshak___H37.Services
 			//	};
 			//}
 
-
 			foreach (var course in Courses)
 			{
 				CourseViewModel model = new CourseViewModel
@@ -237,6 +236,8 @@ namespace Mooshak___H37.Services
 
 		public void removeCourseByID(int id)
 		{
+
+			//find the correct course in the Courses table
 			var course = (from c in _db.Courses
 							  where c.ID == id
 							  select c).FirstOrDefault();
@@ -244,6 +245,24 @@ namespace Mooshak___H37.Services
 			if (course != null)
 			{
 				course.IsRemoved = true;
+				_db.SaveChanges();
+
+				removeCourseConnections(id);
+			}
+		}
+
+		private void removeCourseConnections(int courseId)
+		{
+			var conn = (from item in _db.UserCourseRelations
+						where item.CourseID == courseId
+						select item).ToList();
+
+			if(conn != null)
+			{
+				foreach (var item in conn)
+				{
+					item.IsRemoved = true;
+				}
 				_db.SaveChanges();
 			}
 		}
