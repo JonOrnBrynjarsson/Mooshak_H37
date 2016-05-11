@@ -296,15 +296,16 @@ namespace Mooshak___H37.Services
 				{
 					//sets IsRemoved in the Users table to true for the right user
 					usr.IsRemoved = true;
-					
+					_db.SaveChanges();
+
 					//deletes the account created in AspNetUsers Table	============	\\
-					var usrName = (from user in _db.Users								//
-								   where usr.AspNetUserId == user.AspNetUser.Id			//
-								   select user.AspNetUser.UserName).FirstOrDefault();	//
-					if (usrName != null)												//
-					{																	//
-						Membership.DeleteUser(usrName);									//
-					}//         ========================================				//
+					//var usrName = (from user in _db.Users                               //
+					//			   where usr.AspNetUserId == user.AspNetUser.Id         //
+					//			   select user.AspNetUser.UserName).FirstOrDefault();   //
+					//if (usrName != null)                                                //
+					//{                                                                   //
+					//	Membership.DeleteUser(usrName);                                 //
+					//}//         ========================================				//
 
 					//retrieves all the connections to courses the user to be deleted has and removes them all
 					var connections = (from x in _db.UserCourseRelations									//
@@ -312,10 +313,11 @@ namespace Mooshak___H37.Services
 									   select x).ToList();													//
 					foreach(var item in connections)														//
 					{																						//
-						item.IsRemoved = true;																//
+						item.IsRemoved = true;		
+					
 					}//			=========================================									//
+					_db.SaveChanges();
 				}
-				_db.SaveChanges();
 			}
 		}
 	}
