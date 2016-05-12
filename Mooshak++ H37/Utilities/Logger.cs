@@ -17,7 +17,7 @@ namespace Project_4.Utilities
 		public Logger()
 		{
 			_db = new ApplicationDbContext();
-			_usersService = new UsersService();
+			_usersService = new UsersService(null);
 		}
 
 		public static Logger theInstance = null;

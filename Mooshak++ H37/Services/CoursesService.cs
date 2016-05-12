@@ -10,17 +10,19 @@ using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Services
 {
-	class CoursesService
+	public class CoursesService
 	{
-		private readonly ApplicationDbContext _db;
-		private readonly AssignmentsService _assignmentsService;
+
+		private readonly IAppDataContext _db;
+		private readonly AssigmentsService _assignmentsService;
 		private readonly UsersService _userService;
 
-		public CoursesService()
+		public CoursesService(IAppDataContext dbContext)
 		{
-			_db = new ApplicationDbContext();
-			_assignmentsService = new AssignmentsService();
-			_userService = new UsersService();
+
+			_db = dbContext ?? new ApplicationDbContext();
+			_assignmentsService = new AssigmentsService(null);
+			_userService = new UsersService(null);
 		}
 
 

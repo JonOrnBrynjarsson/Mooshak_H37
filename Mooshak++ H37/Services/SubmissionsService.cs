@@ -12,15 +12,15 @@ namespace Mooshak___H37.Services
 
 	public class SubmissionsService
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly IAppDataContext _db;
 		private readonly UsersService _usersService;
 		private readonly FilesService _filesService;
 		
-		public SubmissionsService()
+		public SubmissionsService(IAppDataContext dbContext)
 		{
-			_db = new ApplicationDbContext();
-			_usersService = new UsersService();
-			_filesService = new FilesService();
+			_db = dbContext ?? new ApplicationDbContext();
+			_usersService = new UsersService(null);
+			_filesService = new FilesService(null);
 		}
 
 		/// <summary>

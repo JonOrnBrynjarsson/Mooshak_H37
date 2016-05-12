@@ -9,14 +9,21 @@ using System.Web.Security;
 
 namespace Mooshak___H37.Services
 {
-	class UsersService
+	public class UsersService
 	{
-		private readonly ApplicationDbContext _db;
+		//private readonly ApplicationDbContext _db;
 
+		private readonly IAppDataContext _db;
+
+		public UsersService(IAppDataContext dbContext)
+		{
+			_db = dbContext ?? new ApplicationDbContext();
+		}
+/*
 		public UsersService()
 		{
 			_db = new ApplicationDbContext();
-		}
+		}*/
 
         public List<UserViewModel> getAllUsersName()
         {
@@ -372,19 +379,11 @@ namespace Mooshak___H37.Services
 					}//			=========================================									//
 					_db.SaveChanges();
 
-					//var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-					//ApplicationUser u = um.FindById(aspUser);	
-					//Membership.DeleteUser(u.UserName);				
+					var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+					ApplicationUser u = um.FindById(aspUser);	
+					Membership.DeleteUser(u.UserName, true);				
 				}
 			}
-		}
-
-		public bool deleteUserById(int Id)
-		{
-				
-
-
-			return false;
 		}
 	}
 }

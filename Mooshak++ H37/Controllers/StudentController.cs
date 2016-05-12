@@ -18,12 +18,13 @@ namespace Mooshak___H37.Controllers
 	//[Authorize(Roles = "Student")]
 	public class StudentController : BasicController
 	{
-		readonly AssignmentsService _assignService = new AssignmentsService();
-		readonly FilesService _filesService = new FilesService();
-		readonly CoursesService _courseService = new CoursesService();
-		readonly UsersService _usersService = new UsersService();
-		readonly MilestoneService _milestoneService = new MilestoneService();
-		readonly SubmissionsService _submissionService = new SubmissionsService();
+
+		readonly AssigmentsService _assignService = new AssigmentsService(null);
+		readonly FilesService _filesService = new FilesService(null);
+		readonly CoursesService _courseService = new CoursesService(null);
+		readonly UsersService _usersService = new UsersService(null);
+		readonly MilestoneService _milestoneService = new MilestoneService(null);
+		readonly SubmissionsService _submissionService = new SubmissionsService(null);
 
 		// GET: Assignment
 		[HttpGet]
@@ -108,7 +109,7 @@ namespace Mooshak___H37.Controllers
 					_filesService.saveSubmissionfile(submit.File, submissionId);
 					_filesService.testingSubmission(submissionId);
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
 					return View("Error");
 				}
@@ -202,7 +203,7 @@ namespace Mooshak___H37.Controllers
 					_filesService.saveSubmissionfile(code, submissionId);
 					_filesService.testingSubmission(submissionId);
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
 					return View("Error");
 				}

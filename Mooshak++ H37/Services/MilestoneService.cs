@@ -14,11 +14,11 @@ namespace Mooshak___H37.Services
 {
 	public class MilestoneService
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly IAppDataContext _db;
 
-		public MilestoneService()
+		public MilestoneService(IAppDataContext dbContext)
 		{
-			_db = new ApplicationDbContext();
+			_db = dbContext ?? new ApplicationDbContext();
 		}
 
 		/// <summary>

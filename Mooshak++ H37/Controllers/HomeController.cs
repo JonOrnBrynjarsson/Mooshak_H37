@@ -12,12 +12,13 @@ namespace Mooshak___H37.Controllers
 {
     public class HomeController : BasicController
 	{
-		readonly UsersService _userService = new UsersService();
-		readonly AssignmentsService _assignService = new AssignmentsService();
-		readonly CoursesService _courseService = new CoursesService();
-		readonly MilestoneService _milestoneService = new MilestoneService();
-		readonly TestCaseService _testcaseService = new TestCaseService();
-		readonly SubmissionsService _submissionsService = new SubmissionsService();
+
+		readonly UsersService _userService = new UsersService(null);
+		readonly AssigmentsService _assignService = new AssigmentsService(null);
+		readonly CoursesService _courseService = new CoursesService(null);
+		readonly MilestoneService _milestoneService = new MilestoneService(null);
+		readonly TestCaseService _testcaseService = new TestCaseService(null);
+		readonly SubmissionsService _submissionsService = new SubmissionsService(null);
 
 		public ActionResult Index()
 		{

@@ -16,19 +16,21 @@ using System.Web;
 
 namespace Mooshak___H37.Services
 {
-    class AssignmentsService
-    {
-        private readonly ApplicationDbContext _db;
-        private readonly UsersService _usersService;
-        private readonly MilestoneService _milestoneService = new MilestoneService();
 
-        public AssignmentsService()
-        {
-            _db = new ApplicationDbContext();
-            _usersService = new UsersService();
-        }
+	public class AssigmentsService
+	{ 
+		private readonly IAppDataContext _db;
+		private readonly MilestoneService _milestoneService;
+		private readonly UsersService _usersService;
 
-        public DateTime today()
+		public AssigmentsService(IAppDataContext dbContext)
+		{
+			_db = dbContext ?? new ApplicationDbContext();
+			_usersService = new UsersService(null);
+			_milestoneService = new MilestoneService(null);
+		}
+
+		public DateTime today()
         {
             DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
             return endDateTime;

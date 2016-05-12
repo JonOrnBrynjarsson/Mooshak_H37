@@ -11,21 +11,22 @@ using System.Diagnostics;
 
 namespace Mooshak___H37.Controllers
 {
-    //[Authorize(Roles = "Teacher")]
-    public class TeacherController : BasicController
-    {
-        readonly AssignmentsService _assignService = new AssignmentsService();
-        readonly CoursesService _courseService = new CoursesService();
-        readonly MilestoneService _milestoneService = new MilestoneService();
-        readonly TestCaseService _testcaseService = new TestCaseService();
-        readonly SubmissionsService _submissionsService = new SubmissionsService();
-        readonly FilesService _filesService = new FilesService();
+	//[Authorize(Roles = "Teacher")]
+	public class TeacherController : BasicController
+	{
+		readonly AssigmentsService _assignService = new AssigmentsService(null);
+		readonly CoursesService _courseService = new CoursesService(null);
+		readonly MilestoneService _milestoneService = new MilestoneService(null);
+		readonly TestCaseService _testcaseService = new TestCaseService(null);
+		readonly SubmissionsService _submissionsService = new SubmissionsService(null);
+		readonly FilesService _filesService = new FilesService(null);
 
-        // GET: Assignment
-        [HttpGet]
-        public ActionResult Index()
-        {
-            //Returns alls assignments that the teacher is associated with
+		// GET: Assignment
+		[HttpGet]
+		public ActionResult Index()
+		{
+			//Returns alls assignments that the teacher is associated with
+
             var viewModel = _assignService.getAllAssignmentsForCurrUser();
 
             return View(viewModel);

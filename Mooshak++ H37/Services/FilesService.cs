@@ -11,15 +11,15 @@ using System.Web;
 
 namespace Mooshak___H37.Services
 {
-	class FilesService
+	public class FilesService
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly IAppDataContext _db;
 		private readonly UsersService _usersService;
 
-		public FilesService()
+		public FilesService(IAppDataContext dbContext)
 		{
-			_db = new ApplicationDbContext();
-			_usersService = new UsersService();
+			_db = dbContext ?? new ApplicationDbContext();
+			_usersService = new UsersService(null);
 		}
 
 		/// <summary>
