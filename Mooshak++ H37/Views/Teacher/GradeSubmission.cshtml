@@ -1,101 +1,61 @@
 ﻿@model Mooshak___H37.Models.Viewmodels.SubmissionsViewModel
 
 @{
-    ViewBag.Title = "GradeSubmission";
+	ViewBag.Title = "Grade Submission";
 }
 
 <h2>Give Submission Grade: </h2>
+<hr />
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+	@Html.AntiForgeryToken()
+	<div class="clearfix">
+		<div class="large-left-portion">
+			<div class="form-horizontal">
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				@Html.HiddenFor(model => model.ID)
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.MilestoneID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MilestoneID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MilestoneID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+				<div class="form-group">
+					@Html.LabelFor(model => model.Grade, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-10">
+						@Html.EditorFor(model => model.Grade, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Grade, "", new { @class = "text-danger" })
+					</div>
+				</div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-6">
+						<pre class="prettyprint">@Model.code</pre>
+					</div>
+				</div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.IsGraded, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsGraded)
-                    @Html.ValidationMessageFor(model => model.IsGraded, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>*@
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Nr</th>
+								<th>Testrun Result</th>
+							</tr>
+						</thead>
+						<tbody>
+							@{int rowNo = 0;}
+							@foreach (var item in Model.Testruns)
+							{
+								<tr>
+									<td>@(rowNo += 1) </td>
+									<td>@item.IsSuccess.ToString()  @item.ResultComments.ToString()</td>
+								</tr>
+							}
+						</tbody>
+					</table>
 
-	    <div class="form-group">
-		    @Html.LabelFor(model => model.Grade, htmlAttributes: new {@class = "control-label col-md-2"})
-		    <div class="col-md-10">
-			    @Html.EditorFor(model => model.Grade, new {htmlAttributes = new {@class = "form-control"}})
-			    @Html.ValidationMessageFor(model => model.Grade, "", new {@class = "text-danger"})
-		    </div>
-	    </div>
+		
+			</div>
+		</div>
+		<div class="small-right-portion btn-group-vertical">
+			<input type="submit" value="Save" class="btn btn-primary create-button" />
+			@Html.ActionLink("Go Back", "ViewSubmissions", new { MilestoneID = Model.MilestoneID }, new { @class = "btn btn-primary create-button" })
+		</div>
+	</div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-6">
-                <pre class="prettyprint">@Model.code</pre>
-            </div>
-        </div>
-
-            <div class="form-group">
-                @foreach (var item in Model.Testruns)
-                {
-                    <p>Oucome \t comments from mooshak </p>
-                    <p>@item.IsSuccess.ToString()  @item.ResultComments.ToString()</p>}
-            </div>
-
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.ProgramFileLocation, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ProgramFileLocation, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ProgramFileLocation, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.IsRemoved, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.IsRemoved)
-                        @Html.ValidationMessageFor(model => model.IsRemoved, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>*@
-
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
