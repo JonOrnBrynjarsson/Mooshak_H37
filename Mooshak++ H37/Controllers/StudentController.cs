@@ -137,6 +137,8 @@ namespace Mooshak___H37.Controllers
 
 				//ID of assignment is added to Viewbag to be able to Go Back
 				ViewBag.AssignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
+				ViewBag.MilestoneID = milestoneID;
+				ViewBag.AllowedSubmissions = _milestoneService.allowedSubmissionsForMilestone(milestoneID);
 				return View(viewModel);
 			}
 			catch (Exception e)
