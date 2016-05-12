@@ -3,6 +3,16 @@
        margin: 5%;
 }
 
+.Hello
+{
+    color: whitesmoke !important;
+}
+
+hr
+{
+    margin: 3%;
+}
+
 .my_icon
 {
     padding-left: 15% !important;
@@ -25,7 +35,7 @@
 .my_navbar
 {
   position: absolute;
-  background-color: #000000;
+  background: linear-gradient(20deg, #000000 70%, #0026ff);
   margin: 7%;
   padding-top: 1%;
   margin-top: 4%;

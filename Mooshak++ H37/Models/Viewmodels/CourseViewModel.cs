@@ -13,8 +13,12 @@ namespace Mooshak___H37.Models.Viewmodels
         public string Name { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd.MM.yy 00:00:00}",
                ApplyFormatInEditMode = true)]
-        public DateTime? StartDate { get; set; }
-        public bool Isactive { get; set; }
+
+		[Display(Name = "Start Date")]
+		public DateTime? StartDate { get; set; }
+
+		[Display(Name = "Active Course")]
+		public bool Isactive { get; set; }
         public bool IsRemoved { get; set; }
 		public List<AssignmentViewModel> Assignments { get; set; }
         public List<UserViewModel> User { get; set; }
