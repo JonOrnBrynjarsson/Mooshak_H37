@@ -74,7 +74,7 @@ namespace Mooshak___H37.Controllers
 				id = 1;
 			}
 
-			CourseViewModel model = _courseService.getCourseViewModelByID(id.Value);
+			CourseViewModel model = _courseService.getCourseViewModelById(id.Value);
 
 			if (model == null)
 			{
@@ -113,7 +113,7 @@ namespace Mooshak___H37.Controllers
 				return null;//dont return null here
 			}
 
-			_courseService.removeCourseByID(id.Value);
+			_courseService.removeCourseById(id.Value);
 
 			return RedirectToAction("ViewCourses");
 		}
