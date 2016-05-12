@@ -148,7 +148,7 @@ namespace Mooshak___H37.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
@@ -157,7 +157,7 @@ namespace Mooshak___H37.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -179,7 +179,8 @@ namespace Mooshak___H37.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("CreateUser", "Admin", model);
+            //return RedirectToAction("CreateUser", "Admin", model);
+            return View(model);
         }
 
         //

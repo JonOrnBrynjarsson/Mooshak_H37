@@ -446,6 +446,11 @@ namespace Mooshak___H37.Controllers
             }
 
         }
+
+        public ActionResult About()
+        {
+            return RedirectToAction("About", "Home");
+        }
     }
 }
 

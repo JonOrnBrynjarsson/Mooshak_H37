@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "About Mooshak++";
+    Layout = "~/Views/Shared/_ExtraLayout.cshtml";
+}
+
+<div class="clearfix">
+    <div class="large-left-portion">
+
+        <div class="jumbotron">
+            <h1>About Mooshak++</h1>
+            <p>The Assignment System Of The Future!</p>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                System Information:
+            </div>
+        </div>
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span class="badge">@ViewBag.NumOfUsers</span>
+                Total Number of users in system:
+            </li>
+
+            <li class="list-group-item">
+                <span class="badge">@ViewBag.NumOfStudents</span>
+                Students in system:
+            </li>
+
+            <li class="list-group-item">
+                <span class="badge">@ViewBag.NumOfTeachers</span>
+                Teachers in system:
+            </li>
+
+            <li class="list-group-item">
+                <span class="badge">@ViewBag.NumOfCourses</span>
+                Courses in system:
+            </li>
+
+            <li class="list-group-item">
+                <span class="badge">@ViewBag.NumOfAssignments</span>
+                Assignments in system:
+            </li>
+
+
+
+            <li class="list-group-item">
+                <span class="badge">@ViewBag.NumOfMilestones</span>
+                Milestones in system:
+            </li>
+
+            <li class="list-group-item">
+                <span class="badge">@ViewBag.NumOfSubmissions</span>
+                Milestone submissions in system:
+            </li>
+
+            <li class="list-group-item">
+                <span class="badge">@ViewBag.NumOfTestCases</span>
+                Test Cases in system:
+            </li>
+
+        </ul>
+    </div>
+</div>
