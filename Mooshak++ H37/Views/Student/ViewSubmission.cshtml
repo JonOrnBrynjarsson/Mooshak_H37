@@ -8,16 +8,45 @@
 <div class="clearfix">
     <div class="large-left-portion">
         <hr />
-        <dl class="dl-horizontal">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    Submitted On: @Html.ValueFor(model => model.DateSubmitted, "{0:dd/MM/yyyy}")
-                </div>
-            </div>
+	    <dl class="dl-horizontal">
+		    <div class="panel panel-default">
+			    <div class="panel-body">
+				    Submitted On: @Html.ValueFor(model => model.DateSubmitted, "{0:dd/MM/yyyy}")
+			    </div>
+		    </div>
 
-            <pre class="prettyprint">@Model.code</pre>
+		    <pre class="prettyprint">@Model.code</pre>
 
-        </dl>
+	    </dl>
+		<table class="table table-hover">
+			<tr>
+				<th>
+					Submission
+				</th>
+				<th>
+					Success
+				</th>
+				<th>
+					Comments
+				</th>
+			</tr>
+
+			@foreach (var item in Model.Testruns)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.SubmissionID)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.IsSuccess)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.ResultComments)
+					</td>
+				</tr>
+			}
+
+		</table>
     </div>
 </div>
 <p>

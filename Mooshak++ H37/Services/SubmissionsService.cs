@@ -157,11 +157,11 @@ namespace Mooshak___H37.Services
 
 			//Finds submissions for current user for given milestone
 			//That have not been marked as removed.
-            var submissions = (from subs in _db.Submissions
-                               where subs.MilestoneID == milestoneID &&
-                               subs.UserID == currUser &&
-							   subs.IsRemoved != true
-                               select subs).ToList();
+			var submissions = (from subs in _db.Submissions
+				where subs.MilestoneID == milestoneID &&
+				      subs.UserID == currUser &&
+				      subs.IsRemoved != true
+				select subs).OrderByDescending(x => x.ID).ToList();
 
 			if (submissions == null)
 			{
@@ -189,6 +189,9 @@ namespace Mooshak___H37.Services
                                 where name.ID == subs.UserID
                                 select name.Name).FirstOrDefault(),
 					FinalSolution = subs.FinalSolution,
+					NumOfTestruns = getNumOfTestruns(subs.ID),
+					NumSuccessfulTestruns = getNumOfSuccessfulTestruns(subs.ID),
+					Testruns = getListofTestruns(subs.ID)
 				};
                 viewModel.Add(model);
 
@@ -196,9 +199,42 @@ namespace Mooshak___H37.Services
 
             return viewModel;
         }
+		/// <summary>
+		/// Gets the number of testruns done on a particular submission.
+		/// </summary>
+		/// <param name="submissionId">The ID of the submission</param>
+		/// <returns>Int representing the number of testruns</returns>
+		public int getNumOfTestruns(int submissionId)
+		{
+			return (from t in _db.Testruns
+				where t.SubmissionID == submissionId
+				select t.ID).Count();
+		}
 
+		/// <summary>
+		/// Gets the number of successful testruns done on a particular submission.
+		/// </summary>
+		/// <param name="submissionId">The ID of the submission</param>
+		/// <returns>Int representing the number of successful testruns</returns>
+		public int getNumOfSuccessfulTestruns(int submissionId)
+		{
+			return (from t in _db.Testruns
+				where t.SubmissionID == submissionId
+				      && t.IsSuccess == true 
+					select t.ID).Count();
+		}
 
-
+		/// <summary>
+		/// Gets a list of testruns done on a particular submission.
+		/// </summary>
+		/// <param name="submissionId">The ID of the submission</param>
+		/// <returns>List of testruns</returns>
+		public List<Testrun> getListofTestruns(int submissionId)
+		{
+			return (from t in _db.Testruns
+				where t.SubmissionID == submissionId
+					select t).ToList();
+		}
 
 
 		///// <summary>
@@ -206,14 +242,14 @@ namespace Mooshak___H37.Services
 		///// </summary>
 		///// <param name="submissionID"></param>
 		///// <returns>Submission for given Submission ID</returns>
-  //      public SubmissionsViewModel GetOneSubmission(int submissionID)
-  //      {
+		//      public SubmissionsViewModel GetOneSubmission(int submissionID)
+		//      {
 		//	//Finds submission for given Submission ID
 		//	//That has not been removed.
-  //          var submission = (from subs in _db.Submissions
-  //                            where subs.ID == submissionID
+		//          var submission = (from subs in _db.Submissions
+		//                            where subs.ID == submissionID
 		//					  && subs.IsRemoved != true
-  //                            select subs).FirstOrDefault();
+		//                            select subs).FirstOrDefault();
 
 		//	if (submission == null)
 		//	{
@@ -222,25 +258,25 @@ namespace Mooshak___H37.Services
 
 		//	//Creates viewmodel for given submission
 		//	SubmissionsViewModel model = new SubmissionsViewModel
-  //          {
-  //              Grade = submission.Grade,
-  //              ID = submission.ID,
-  //              IsGraded = submission.IsGraded,
-  //              IsRemoved = submission.IsRemoved,
-  //              MilestoneID = submission.MilestoneID,
-  //              Milestone = submission.Milestone,
-  //              DateSubmitted = submission.DateSubmitted,
-  //              ProgramFileLocation = submission.ProgramFileLocation,
-  //              UserID = submission.UserID,
-  //              UserName = (from name in _db.Users
-  //                          where name.ID == submission.UserID
-  //                          select name.Name).FirstOrDefault(),
+		//          {
+		//              Grade = submission.Grade,
+		//              ID = submission.ID,
+		//              IsGraded = submission.IsGraded,
+		//              IsRemoved = submission.IsRemoved,
+		//              MilestoneID = submission.MilestoneID,
+		//              Milestone = submission.Milestone,
+		//              DateSubmitted = submission.DateSubmitted,
+		//              ProgramFileLocation = submission.ProgramFileLocation,
+		//              UserID = submission.UserID,
+		//              UserName = (from name in _db.Users
+		//                          where name.ID == submission.UserID
+		//                          select name.Name).FirstOrDefault(),
 		//		FinalSolution = submission.FinalSolution,
 		//	};
 
-  //          return model;
+		//          return model;
 
-  //      }
+		//      }
 
 
 
@@ -249,7 +285,7 @@ namespace Mooshak___H37.Services
 		/// Finds All submissions in system
 		/// </summary>
 		/// <returns>Number of all submissions</returns>
-        public int NumberOfSubmissions()
+		public int NumberOfSubmissions()
         {
             var submissions = (from subs in _db.Submissions
                               select subs).Count();

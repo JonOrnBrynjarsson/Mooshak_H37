@@ -30,6 +30,8 @@ namespace Mooshak___H37.Models.Viewmodels
 		public string code { get; set; }
 		public List<Testrun> Testruns { get; set; }
 		public bool FinalSolution { get; set; }
-
+//Sett inn til að sýna hlutfall
+		public int NumOfTestruns { get; set; }
+		public int NumSuccessfulTestruns { get; set; }
 	}
 }

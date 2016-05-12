@@ -17,6 +17,9 @@
 					Allowed Submissions
 				</th>
 				<th>
+					Testruns/<br />Success
+				</th>
+				<th>
 					Grade
 				</th>
 				<th>
@@ -37,6 +40,23 @@
 					</td>
 					<td>
 						@Html.DisplayFor(modelItem => item.Milestone.AllowedSubmissions)
+					</td>
+					<td>
+						@{
+							if (item.NumOfTestruns > 0)
+							{
+								@Html.DisplayFor(modelItem => item.NumSuccessfulTestruns)
+							}
+						}
+						/
+						@{
+							if (item.NumOfTestruns > 0)
+							{
+								@Html.DisplayFor(modelItem => item.NumOfTestruns)
+							}
+
+						}
+
 					</td>
 					<td>
 						@Html.DisplayFor(modelItem => item.Grade)

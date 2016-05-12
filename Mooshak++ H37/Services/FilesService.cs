@@ -60,12 +60,15 @@ namespace Mooshak___H37.Services
 				{
 					Submission submission = new Submission
 					{
-						ID = 1,
+						//ID = 1,
 						MilestoneID = milestonedId,
 						UserID = _usersService.getUserIdForCurrentyApplicationUser(),
 						ProgramFileLocation = "a",
-						Grade = 0,
-						IsGraded = false
+						//Grade = 0,
+						IsGraded = false,
+						FinalSolution = false,
+						DateSubmitted = DateTime.Now
+
 					};
 					_db.Submissions.Add(submission);
 					_db.SaveChanges();

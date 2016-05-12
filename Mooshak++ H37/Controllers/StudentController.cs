@@ -96,7 +96,7 @@ namespace Mooshak___H37.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult Submit(StudentSubmitViewModel submit)
 		{
-			if (submit.File != null && submit.File.ContentLength > 0)
+		if (submit.File != null && submit.File.ContentLength > 0)
 			{
 				try
 				{
@@ -116,7 +116,7 @@ namespace Mooshak___H37.Controllers
 			}
 			else
 			{
-				ViewBag.ErrorMessage = "No file submitted, try again";
+				ViewBag.ErrorMessage = "No file submitted, please try again";
 				return View(submit);
 			}
 			return RedirectToAction("Index");
