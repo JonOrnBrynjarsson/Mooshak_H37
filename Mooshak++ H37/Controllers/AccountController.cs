@@ -79,9 +79,6 @@ namespace Mooshak___H37.Controllers
 
             UsersService _usersService = new UsersService(null);
 
-            int userID = _usersService.getUserIdByEmail(model);
-            string role = _usersService.getAspUserRole(userID);
-
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -90,7 +87,9 @@ namespace Mooshak___H37.Controllers
    
                 case SignInStatus.Success:
                     {
-                        return RedirectToAction("Index", role);
+						int userID = _usersService.getUserIdByEmail(model);
+						string role = _usersService.getAspUserRole(userID);
+						return RedirectToAction("Index", role);
                     }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -168,12 +167,10 @@ namespace Mooshak___H37.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
                     _userService.setRole(user, model.Role);
                     _userService.setUser(model.Name, user);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ViewUsers", "Admin");
                 }
                 AddErrors(result);
             }
