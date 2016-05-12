@@ -150,7 +150,7 @@ namespace Mooshak___H37.Services
 			FileInfo fi = di.GetFiles("*.cpp").FirstOrDefault();
 			if (fi != null)
 			{
-				compileProgram(filefolder +  fi, fileName);
+				string errorMsg = compileProgram(filefolder +  fi, fileName);
 			}
 			else
 			{
@@ -165,7 +165,7 @@ namespace Mooshak___H37.Services
 		/// </summary>
 		/// <param name="folderWithCodeFile">The folder of the file to be compiled</param>
 		/// <param name="fullFileNameforCompiledFile">The filename of the compiled file with directory</param>
-		public void compileProgram(string folderWithCodeFile, string fullFileNameforCompiledFile)
+		public string compileProgram(string folderWithCodeFile, string fullFileNameforCompiledFile)
 		{
 			string fileToCompile = @folderWithCodeFile;
 			string Compiler = "mingw32-g++.exe";
@@ -181,6 +181,7 @@ namespace Mooshak___H37.Services
 			string output = errorReader.ReadToEnd();
 			process.WaitForExit();
 			process.Close();
+			return output;
 		}
 
 		/// <summary>
