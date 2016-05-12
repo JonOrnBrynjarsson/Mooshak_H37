@@ -28,7 +28,7 @@ namespace Mooshak___H37.Services
 		/// Finds the ID of logged in user
 		/// </summary>
 		/// <returns>User ID</returns>
-		public int GetCurrentUser()
+		public int getCurrentUser()
 		{
 			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
 			var currUserID = (from x in _db.Users
@@ -45,14 +45,14 @@ namespace Mooshak___H37.Services
 		/// <returns>list of all Courses</returns>
 		public List<CourseViewModel> getAllCourses()
         {
-            var Courses = (from x in _db.Courses
-						   where x.IsRemoved != true
+            var courses = (from x in _db.Courses
+						   where x.IsRemoved == false
 						   orderby x.Name ascending
                            select x).ToList();
 
             var viewModel = new List<CourseViewModel>();
 
-            foreach (var course in Courses)
+            foreach (var course in courses)
             {
                 CourseViewModel model = new CourseViewModel
                 {
@@ -72,26 +72,25 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds all Courses Associated with given User
 		/// </summary>
-		/// <param name="UserID"></param>
 		/// <returns>List of Courses</returns>
         public List<CourseViewModel> getAllCoursesByUserID(int UserID)
         {
-            List<Course> Courses = null;
+            List<Course> courses = null;
 
             var coursesID = (from x in _db.UserCourseRelations
                              where x.UserID == UserID &&
-							 x.IsRemoved != true
+							 x.IsRemoved == false
                              select x.CourseID);
 
             foreach (var id in coursesID)
             {
-                Courses.Add(getCourseByID(id));
+                courses.Add(getCourseByID(id));
             }
 
             var viewModel = new List<CourseViewModel>();
 
-	        if (Courses != null)
-		        foreach (var course in Courses)
+	        if (courses != null)
+		        foreach (var course in courses)
 		        {
 			        CourseViewModel model = new CourseViewModel
 			        {
@@ -111,26 +110,27 @@ namespace Mooshak___H37.Services
 		/// Finds all Courses that LOGGED IN User is Associated with.
 		/// </summary>
 		/// <returns>List of Courses</returns>
-		public List<CourseViewModel> GetCoursesForUser()
+		public List<CourseViewModel> getCoursesForUser()
 		{
 			//Finds current User
-			var currUsId = GetCurrentUser();
+			var currUsId = getCurrentUser();
 
 			//Creates a List of Course IDs that User is associated with
 			var userCourses = (from uscr in _db.UserCourseRelations
 							   where currUsId == uscr.UserID
-							   && uscr.IsRemoved != true
+							   && uscr.IsRemoved == false
 							   select uscr.CourseID).ToList();
 
 			//Selectes Courses that are in the previous userCourses List.
-			var Courses = (from courses in _db.Courses
-							   where userCourses.Contains(courses.ID) && courses.IsRemoved != true
-							   orderby courses.ID descending
-							   select courses).ToList();
+			var courses = (from crs in _db.Courses
+							   where userCourses.Contains(crs.ID) 
+							   && crs.IsRemoved == false
+							   orderby crs.ID descending
+							   select crs).ToList();
 			var viewModel = new List<CourseViewModel>();
 
 			//Creates a View Model for Given Courses.
-			foreach (var course in Courses)
+			foreach (var course in courses)
 			{
                 if (_assignmentsService.getAssignmentsInCourse(course.ID).Count != 0)
                 {
@@ -151,7 +151,10 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
-		//Adds User To Course
+		/// <summary>
+		/// TODO
+		/// </summary>
+		/// <param name="model"></param>
         internal void addUserToCourse(AddUserToCourseViewModel model)
         {
             int roleID = 1;
@@ -188,6 +191,10 @@ namespace Mooshak___H37.Services
 			return course;
 		}
 
+		/// <summary>
+		/// Adds a course into the database table Courses.
+		/// </summary>
+		/// <param name="model">this is the course that will be added.</param>
 		internal void setCourse(CourseViewModel model)
         {
             _db.Courses.Add(new Course
@@ -200,6 +207,10 @@ namespace Mooshak___H37.Services
             _db.SaveChanges();
         }
 
+		/// <summary>
+		/// Searches the database for a course with matching id as the parameter given
+		/// and returns an entity model Course if it is found
+		/// </summary>
         public Course getCourseByID(int courseID)
         {
 
@@ -215,12 +226,18 @@ namespace Mooshak___H37.Services
 
 			return course;
         }
-		//in progress
+
+		/// <summary>
+		/// Fills in all the needed info for a CourseViewModel from the courseID param
+		/// </summary>
+		/// <returns>CourseViewmodel with name, active status, id, removed bool, start date,
+		/// list of assignments and list of users in course</returns>
 		public CourseViewModel getCourseViewModelByID(int courseID)
 		{
 
 			var course = (from x in _db.Courses
-						  where x.ID == courseID && x.IsRemoved == false
+						  where x.ID == courseID 
+						  && x.IsRemoved == false
 						  select x).SingleOrDefault();
 
 			if (course == null)
@@ -245,10 +262,15 @@ namespace Mooshak___H37.Services
 			return model;
 		}
 
-		internal void EditCourse(CourseViewModel model)
+		/// <summary>
+		/// Edit a course already in the database.
+		/// </summary>
+		/// <param name="model">This is the course with the new information</param>
+		internal void editCourse(CourseViewModel model)
 		{
 			var edit = (from course in _db.Courses
 						where model.ID == course.ID
+						&& course.IsRemoved == false
 						select course).FirstOrDefault();
 
 			if(edit !=null)
@@ -262,12 +284,18 @@ namespace Mooshak___H37.Services
 			}
 		}
 
-		public void removeCourseByID(int id)
+		/// <summary>
+		/// Removes a course from the course database and then calls removeCourseConnections to 
+		/// remove all the connections students have to the course
+		/// </summary>
+		/// <param name="courseID">id of course to be removed</param>
+		public void removeCourseByID(int courseID)
 		{
 
 			//find the correct course in the Courses table
 			var course = (from c in _db.Courses
-							  where c.ID == id
+							  where c.ID == courseID
+							  && c.IsRemoved == false
 							  select c).FirstOrDefault();
 
 			if (course != null)
@@ -275,7 +303,7 @@ namespace Mooshak___H37.Services
 				course.IsRemoved = true;
 				_db.SaveChanges();
 
-				removeCourseConnections(id);
+				removeCourseConnections(courseID);
 			}
 			else
 			{
@@ -283,10 +311,15 @@ namespace Mooshak___H37.Services
 			}
 		}
 
+		/// <summary>
+		/// Removes all conections a course has to users from the database UserCourseRelation
+		/// </summary>
+		/// <param name="courseId">course id to be removed</param>
 		private void removeCourseConnections(int courseId)
 		{
 			var conn = (from item in _db.UserCourseRelations
 						where item.CourseID == courseId
+						&& item.IsRemoved == false
 						select item).ToList();
 
 			if(conn != null)
@@ -304,13 +337,14 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Finds all Courses in the system
+		/// Finds the count all Courses in the system
 		/// </summary>
 		/// <returns>Total Number Of Courses</returns>
         public int NumberOfCourses()
         {
             var courses = (from course in _db.Courses
-                               select course).Count();
+						   where course.IsRemoved == false
+                           select course).Count();
 
             return courses;
         }

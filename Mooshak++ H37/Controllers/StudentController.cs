@@ -52,7 +52,7 @@ namespace Mooshak___H37.Controllers
 		public ActionResult Assignments()
 		{
 			//Returns all assignments in all Courses that user is in.
-			var viewModel = _courseService.GetCoursesForUser();
+			var viewModel = _courseService.getCoursesForUser();
             ViewBag.Today = _assignService.Today();
 			return View(viewModel);
 		}
@@ -119,10 +119,15 @@ namespace Mooshak___H37.Controllers
 				ViewBag.ErrorMessage = "No file submitted, please try again";
 				return View(submit);
 			}
-			return RedirectToAction("Index");
-		}
+            //return RedirectToAction("Index");
 
-		public ActionResult ViewSubmissions (int milestoneID)
+            var assignmentID = _assignService.GetAssignmentIDFromMilestoneID(submit.Milestone);
+
+            return RedirectToAction("ViewAssignment", new {id = assignmentID });
+
+        }
+
+        public ActionResult ViewSubmissions (int milestoneID)
 		{
 			try
 			{

@@ -92,7 +92,7 @@ namespace Mooshak___H37.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_courseService.EditCourse(model);
+				_courseService.editCourse(model);
 			}
 			else
 			{

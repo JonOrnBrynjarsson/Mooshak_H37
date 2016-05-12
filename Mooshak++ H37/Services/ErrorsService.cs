@@ -22,6 +22,10 @@ namespace Mooshak___H37.Services
 			_usersService = new UsersService(null);
 		}
 
+		/// <summary>
+		/// Gets the 20 most recent error messages ot of the ErrorReports table
+		/// fills it in a list of AdminErrorViewModel wich has a date, message, and username 
+		/// </summary>
 		public List<AdminErrorViewmModel> getTopErrormessages()
 		{
 			
@@ -47,7 +51,12 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
-		void convertUserIdToUserName(List<AdminErrorViewmModel> model)
+		/// <summary>
+		/// converts the User prop in AdminErrorViewmodel from being just the id of the user
+		/// to giving it the username 
+		/// </summary>
+		/// <param name="model">This List will be updated once the function is done. (will have names instead of id's)</param>
+		private void convertUserIdToUserName(List<AdminErrorViewmModel> model)
 		{
 			int val = 0;
 			bool suc;
