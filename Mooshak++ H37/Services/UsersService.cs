@@ -4,7 +4,6 @@ using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
 using System;
-using SecurityWebAppTest.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
@@ -402,24 +401,6 @@ namespace Mooshak___H37.Services
 					_db.SaveChanges();
 
 					removeUserConnections(userId.Value);
-
-				
-					
-					var usrName = (from user in _db.Users                               
-								   where usr.AspNetUserId == user.AspNetUser.Id         
-								   select user.AspNetUser.UserName).FirstOrDefault();
-
-					if (usrName != null)                                                //
-					{                                                                   //
-						//IdentityManager im = new IdentityManager();
-
-						//im.DeleteUser(aspUser);
-							//DeleteUser(usrName);                                 //
-						//_db.SaveChanges();
-					}//         ========================================				//
-
-
-
 
 					//	var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 					//	ApplicationUser u = um.FindById(aspUser);
