@@ -1,67 +1,65 @@
 ﻿@model Mooshak___H37.Models.RegisterViewModel
 @{
-    ViewBag.Title = "CreateUser";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewBag.Title = "Create User";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Create User</h2>
+<hr />
 
-<link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
+@*<link type="text/css" rel="stylesheet" href="~/Content/Admin.css">*@
 
 <div class="clearfix">
+	<div class="large-left-portion">
 
-    <div class="large-left-portion">
-
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal addUserForm", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
+		@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal addUserForm", role = "form" }))
+		{
+			@Html.AntiForgeryToken()
 
 
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                </div>
-            </div>
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                </div>
-            </div>
+			@Html.ValidationSummary("", new { @class = "text-danger" })
+			<div class="form-group">
+				@Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+				</div>
+			</div>
+			@Html.ValidationSummary("", new { @class = "text-danger" })
+			<div class="form-group">
+				@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+				</div>
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+				</div>
+			</div>
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(m => m.Role, new SelectList(
-                                            new List<Object> {
-                                                new { value = "Student", text = "Student"},
-                                                new { value = "Teacher", text = "Teacher" },
-                                                new { value = "Admin", text = "Admin" }
-                                                },
-                                            "value",
-                                            "text",
-                                            2), new { @class = "form-control" })
-                </div>
-            </div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.DropDownListFor(m => m.Role, new SelectList(
+											new List<Object> {
+												new { value = "Student", text = "Student"},
+												new { value = "Teacher", text = "Teacher" },
+												new { value = "Admin", text = "Admin" }
+												},
+											"value",
+											"text",
+											2), new { @class = "form-control" })
+				</div>
+			</div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default button" value="Register" />
-                </div>
-            </div>
-
-        }
-    </div>
+		}
+	</div>
+	<div class="small-right-portion btn-group-vertical">
+		<input type="submit" class="btn btn-primary create-button" value="Register" />
+		@Html.ActionLink("Go Back", "Index", "Admin", null, new { @class = "btn btn-primary create-button" })
+	</div>
 </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

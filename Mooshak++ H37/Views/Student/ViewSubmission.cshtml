@@ -1,23 +1,24 @@
 ﻿@model Mooshak___H37.Models.Viewmodels.SubmissionsViewModel
 
 @{
-    ViewBag.Title = "View Submission";
+	ViewBag.Title = "View Submission";
 }
 
 <h2>@Model.Milestone.Assignment.Name</h2>
+<hr />
+
 <div class="clearfix">
-    <div class="large-left-portion">
-        <hr />
-	    <dl class="dl-horizontal">
-		    <div class="panel panel-default">
-			    <div class="panel-body">
-				    Submitted On: @Html.ValueFor(model => model.DateSubmitted, "{0:dd/MM/yyyy}")
-			    </div>
-		    </div>
+	<div class="large-left-portion">
+		
+			<div class="panel panel-default">
+				<div class="panel-body">
+					Submitted On: @Html.ValueFor(model => model.DateSubmitted, "{0:dd/MM/yyyy}")
+				</div>
+			</div>
+		<dl class="dl-horizontal">
+			<pre class="prettyprint">@Model.code</pre>
 
-		    <pre class="prettyprint">@Model.code</pre>
-
-	    </dl>
+		</dl>
 		<table class="table table-hover">
 			<tr>
 				<th>
@@ -30,12 +31,12 @@
 					Comments
 				</th>
 			</tr>
-
+			@{int rowNo = 0;}
 			@foreach (var item in Model.Testruns)
 			{
 				<tr>
 					<td>
-						@Html.DisplayFor(modelItem => item.SubmissionID)
+						@(rowNo += 1)
 					</td>
 					<td>
 						@Html.DisplayFor(modelItem => item.IsSuccess)
@@ -47,8 +48,8 @@
 			}
 
 		</table>
-    </div>
+	</div>
+	<div class="small-right-portion btn-group-vertical">
+		@Html.ActionLink("Go Back", "ViewSubmissions", new { MilestoneID = Model.MilestoneID }, new { @class = "btn btn-primary create-button" })
+	</div>
 </div>
-<p>
-    @Html.ActionLink("Go Back", "ViewSubmissions", new { MilestoneID = Model.MilestoneID })
-</p>

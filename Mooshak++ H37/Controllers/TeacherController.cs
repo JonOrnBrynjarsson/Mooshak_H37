@@ -193,6 +193,7 @@ namespace Mooshak___H37.Controllers
             try
             {
                 var viewmodel = _submissionsService.getSubmissionsForMilestone(milestoneID);
+				ViewBag.AssignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
                 return View(viewmodel);
             }
             catch (Exception e)
