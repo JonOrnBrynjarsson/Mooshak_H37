@@ -9,6 +9,7 @@ namespace Mooshak___H37.Models.Viewmodels
 	{
 		public int ID { get; set; }
 		public string Inputstring { get; set; }
+		public string Outputstring { get; set; }
 		public int MilestoneID { get; set; }
 	}
 }

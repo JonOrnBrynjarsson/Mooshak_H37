@@ -37,7 +37,8 @@ namespace Mooshak___H37.Services
 			return currUserId;
 		}
 		/// <summary>
-		/// Finds All submissions for Given Milestone ID
+		/// Finds All submissions for Given Milestone ID that have not been marke as
+		/// removed.
 		/// </summary>
 		/// <param name="milestoneId"></param>
 		/// <returns>List of Submissions</returns>
@@ -45,8 +46,6 @@ namespace Mooshak___H37.Services
         {
             var currUsId = getCurrentUser();
 
-			//Finds alls submissions for given Milestone that have not been
-			//Marked as removed.
             var submissions = (from subs in _db.Submissions
                                where subs.MilestoneID == milestoneId
                                && subs.IsRemoved != true
@@ -242,51 +241,6 @@ namespace Mooshak___H37.Services
 					&& t.IsRemoved == false
 					select t).ToList();
 		}
-
-
-		///// <summary>
-		///// Returns Submission for given Submission ID
-		///// </summary>
-		///// <param name="submissionID"></param>
-		///// <returns>Submission for given Submission ID</returns>
-		//      public SubmissionsViewModel GetOneSubmission(int submissionID)
-		//      {
-		//	//Finds submission for given Submission ID
-		//	//That has not been removed.
-		//          var submission = (from subs in _db.Submissions
-		//                            where subs.ID == submissionID
-		//					  && subs.IsRemoved != true
-		//                            select subs).FirstOrDefault();
-
-		//	if (submission == null)
-		//	{
-		//		throw new Exception("Submission does not exist or has been removed.");
-		//	}
-
-		//	//Creates viewmodel for given submission
-		//	SubmissionsViewModel model = new SubmissionsViewModel
-		//          {
-		//              Grade = submission.Grade,
-		//              ID = submission.ID,
-		//              IsGraded = submission.IsGraded,
-		//              IsRemoved = submission.IsRemoved,
-		//              MilestoneID = submission.MilestoneID,
-		//              Milestone = submission.Milestone,
-		//              DateSubmitted = submission.DateSubmitted,
-		//              ProgramFileLocation = submission.ProgramFileLocation,
-		//              UserID = submission.UserID,
-		//              UserName = (from name in _db.Users
-		//                          where name.ID == submission.UserID
-		//                          select name.Name).FirstOrDefault(),
-		//		FinalSolution = submission.FinalSolution,
-		//	};
-
-		//          return model;
-
-		//      }
-
-
-
 
 		/// <summary>
 		/// Finds All submissions in system

@@ -15,6 +15,9 @@
 				<th>
 					@Html.DisplayNameFor(model => model.Inputstring)
 				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Outputstring)
+				</th>
 				<th></th>
 			</tr>
 
@@ -23,6 +26,9 @@
 				<tr>
 					<td>
 						@Html.DisplayFor(modelItem => item.Inputstring)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Outputstring)
 					</td>
 					<td>
 						@*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
