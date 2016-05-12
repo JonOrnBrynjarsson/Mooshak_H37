@@ -4,6 +4,7 @@ using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
 using System;
+using SecurityWebAppTest.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
@@ -391,41 +392,58 @@ namespace Mooshak___H37.Services
 		{
 			if(userId != null)
 			{
-				//finds the user in the Users table from the id param.
 				var usr = getUserById(userId.Value);
-				
+
 				if (usr != null)
 				{
 					string aspUser = usr.AspNetUserId;
-					//sets IsRemoved in the Users table to true for the right user
+
 					usr.IsRemoved = true;
 					_db.SaveChanges();
 
-					//deletes the account created in AspNetUsers Table	============	\\
-					//var usrName = (from user in _db.Users                               //
-					//			   where usr.AspNetUserId == user.AspNetUser.Id         //
-					//			   select user.AspNetUser.UserName).FirstOrDefault();   //
-					//if (usrName != null)                                                //
-					//{                                                                   //
-					//	Membership.DeleteUser(usrName);                                 //
-					//}//         ========================================				//
+					removeUserConnections(userId.Value);
 
-					//retrieves all the connections to courses the user to be deleted has and removes them all
-					var connections = (from x in _db.UserCourseRelations									//
-									   where x.UserID == usr.ID												//
-									   select x).ToList();													//
-					foreach(var item in connections)														//
-					{																						//
-						item.IsRemoved = true;		
+				
 					
-					}//			=========================================									//
-					_db.SaveChanges();
+					var usrName = (from user in _db.Users                               
+								   where usr.AspNetUserId == user.AspNetUser.Id         
+								   select user.AspNetUser.UserName).FirstOrDefault();
 
-					var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-					ApplicationUser u = um.FindById(aspUser);	
-					Membership.DeleteUser(u.UserName, true);				
+					if (usrName != null)                                                //
+					{                                                                   //
+						//IdentityManager im = new IdentityManager();
+
+						//im.DeleteUser(aspUser);
+							//DeleteUser(usrName);                                 //
+						//_db.SaveChanges();
+					}//         ========================================				//
+
+
+
+
+					//	var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+					//	ApplicationUser u = um.FindById(aspUser);
+					//	Membership.DeleteUser(u.UserName, true);
 				}
 			}
+		}
+
+		private void removeUserConnections(int userId)
+		{
+
+			var connections = (from x in _db.UserCourseRelations                                    
+							   where x.UserID == userId                                             
+							   select x).ToList(); 
+			
+			if(connections != null)
+			{
+				foreach (var item in connections)
+				{
+					item.IsRemoved = true;
+				}
+				_db.SaveChanges();
+			}                                       
+			
 		}
 	}
 }

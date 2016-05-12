@@ -123,9 +123,8 @@ namespace Mooshak___H37.Controllers
         [HttpGet]
         public ActionResult CreateMilestone(MilestoneViewmodel model)
         {
-
             MilestoneViewmodel viewModel = new MilestoneViewmodel();
-            return View(viewModel);
+			return View(viewModel);
         }
 
 
@@ -135,8 +134,9 @@ namespace Mooshak___H37.Controllers
             try
             {
                 _milestoneService.teacherCanCreateMilestone(model, assigID);
-            }
-            catch (Exception e)
+
+			}
+			catch (Exception e)
             {
                 return View("~/Views/Shared/Cerror.cshtml", e);
             }
