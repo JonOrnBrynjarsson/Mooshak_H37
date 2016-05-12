@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace Mooshak___H37.Controllers
 {
-	//[Authorize(Roles = "Teacher")]
+	[Authorize(Roles = "Teacher")]
 	public class TeacherController : BasicController
 	{
 		readonly AssigmentsService _assignService = new AssigmentsService(null);
@@ -91,7 +91,7 @@ namespace Mooshak___H37.Controllers
             if (ModelState.IsValid)
             {
                 _assignService.createAssignment(model);
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewAssignments");
             }
             else
             {
