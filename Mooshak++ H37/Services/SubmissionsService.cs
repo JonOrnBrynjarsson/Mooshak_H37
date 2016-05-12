@@ -36,6 +36,25 @@ namespace Mooshak___H37.Services
 
 			return currUserId;
 		}
+
+
+		public List<User> getUsersInCourse(int courseId)
+		{
+			return (from u in _db.Users
+				join ucr in _db.UserCourseRelations on u.ID equals ucr.UserID
+				where ucr.CourseID == courseId
+				select u).ToList();
+		}
+
+		public int getCourseIdFromMilestoneId(int milestoneId)
+		{
+			return (from c in _db.Courses
+				join a in _db.Assignments on c.ID equals a.CourseID
+				join m in _db.Milestones on a.ID equals m.AssignmentID
+				where m.ID == milestoneId
+				select c.ID).SingleOrDefault();
+		}
+
 		/// <summary>
 		/// Finds All submissions for Given Milestone ID that have not been marke as
 		/// removed.
@@ -43,13 +62,40 @@ namespace Mooshak___H37.Services
 		/// <param name="milestoneId"></param>
 		/// <returns>List of Submissions</returns>
         public List<SubmissionsViewModel> getSubmissionsForMilestone(int milestoneId)
-        {
-            var currUsId = getCurrentUser();
+		{
+			var users = getUsersInCourse(getCourseIdFromMilestoneId(milestoneId));
 
-            var submissions = (from subs in _db.Submissions
-                               where subs.MilestoneID == milestoneId
-                               && subs.IsRemoved != true
-                               select subs).ToList();
+			List<Submission> submissions = new List<Submission>();
+			foreach (var user in users)
+			{
+				var submission = (from sub in _db.Submissions
+					where sub.MilestoneID == milestoneId
+					      && sub.IsRemoved != true
+						  && sub.UserID == user.ID
+					      && sub.FinalSolution == true
+					select sub).SingleOrDefault();
+				if (submission == null)
+				{
+					submission = (from sub in _db.Submissions
+							   where sub.MilestoneID == milestoneId
+									 && sub.IsRemoved != true
+									 && sub.UserID == user.ID
+							   select sub)
+							   .OrderByDescending(x => x.DateSubmitted)
+							   .FirstOrDefault();
+				}
+				if (submission != null)
+				{
+					submissions.Add(submission);
+				}
+
+			}
+
+/*			var submissions = (from subs in _db.Submissions
+				where subs.MilestoneID == milestoneId
+				      && subs.IsRemoved != true
+				    //  && subs.FinalSolution == true 
+                      select subs).ToList();*/
 
 			if (submissions == null)
 			{

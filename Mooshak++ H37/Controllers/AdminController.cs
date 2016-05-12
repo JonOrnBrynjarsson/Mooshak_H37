@@ -64,24 +64,18 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult EditCourse(int? id)
 		{
-			if (id == null)
+			try
 			{
-				//TODO
-				//throw exception
-				id = 1;
+				CourseViewModel model = _courseService.getCourseViewModelById(id.Value);
+
+				ViewBag.userList = _userService.getAllUsersNameNotInCourse(id.Value);
+
+				return View(model);
 			}
-
-			CourseViewModel model = _courseService.getCourseViewModelById(id.Value);
-
-			if (model == null)
+			catch(Exception e)
 			{
-				//TODO
-				//throw exception
+				return View("~/Views/Shared/Cerror.cshtml", e);
 			}
-
-			ViewBag.userList = _userService.getAllUsersNameNotInCourse(id.Value);
-
-			return View(model);
 		}
 
 		[HttpPost]
@@ -103,25 +97,20 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult RemoveCourse(int? id)
 		{
-			if (id == null)
+			try
 			{
-				//TODO
-				//Throw exception
-				return null;//dont return null here
+				_courseService.removeCourseById(id.Value);
+
+				return RedirectToAction("ViewCourses");
 			}
-
-			_courseService.removeCourseById(id.Value);
-
-			return RedirectToAction("ViewCourses");
+			catch(Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 
 		public ActionResult RemoveUser(int? id)
 		{
-			if(id == null)
-			{
-				// do something
-			}
-
 			_userService.removeUserById(id);
 
 			return RedirectToAction("ViewUsers");
@@ -131,10 +120,11 @@ namespace Mooshak___H37.Controllers
         public ActionResult addUserToCurse(AddUserToCourseViewModel model)
         {
 
-           _courseService.addUserToCourse(model);
+			_courseService.addUserToCourse(model);
 
-            return RedirectToAction("EditCourse", new { model.ID });
-        }
+			return RedirectToAction("EditCourse", new { model.ID });
+
+		}
 
         public ActionResult ViewUsers()
 		{
@@ -149,14 +139,21 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult EditUser(int id)
 		{
-			var viewModel = _userService.getSingleUserInfo(id);
-			return View(viewModel);
+			try
+			{
+				var viewModel = _userService.getSingleUserInfo(id);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
 		}
 
 		[HttpPost]
 		public ActionResult EditUser(UserViewModel model)
 		{
-			if(ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
 				_userService.EditUser(model);
 			}
