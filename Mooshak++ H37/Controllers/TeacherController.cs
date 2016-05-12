@@ -191,7 +191,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                var viewmodel = _submissionsService.GetSubmissionsForMilestone(milestoneID);
+                var viewmodel = _submissionsService.getSubmissionsForMilestone(milestoneID);
                 return View(viewmodel);
             }
             catch (Exception e)
@@ -205,7 +205,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                var viewModel = _submissionsService.GetSubmission(submissionId);
+                var viewModel = _submissionsService.getSubmission(submissionId);
                 viewModel.code = _filesService.getSubmissionFile(submissionId);
                 viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionId);
                 return View(viewModel);
@@ -223,12 +223,12 @@ namespace Mooshak___H37.Controllers
             {
                 try
                 {
-                    _submissionsService.GradeAssignment(model);
+                    _submissionsService.gradeAssignment(model);
                     //return RedirectToAction("ViewSubmissions", new { id = model.ID });
                     return RedirectToAction("ViewSubmissions", new
                     {
                         milestoneID =
-                        _submissionsService.GetMilestoneIDFromSubmissionID(model.ID)
+                        _submissionsService.getMilestoneIDFromSubmissionID(model.ID)
                     });
                 }
                 catch (Exception e)
@@ -385,7 +385,7 @@ namespace Mooshak___H37.Controllers
         {
             if (ModelState.IsValid)
             {
-                _testcaseService.CreateTestCase(model, milestoneID);
+                _testcaseService.createTestCase(model, milestoneID);
                 return RedirectToAction("TestCases", new { milID = milestoneID });
 
             }
@@ -398,7 +398,7 @@ namespace Mooshak___H37.Controllers
         [HttpGet]
         public ActionResult TestCases(int milID)
         {
-            var viewModel = _testcaseService.GetTestCasesForMilestone(milID);
+            var viewModel = _testcaseService.getTestCasesForMilestone(milID);
 
             ViewBag.MilestID = milID;
 
@@ -419,7 +419,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                var viewModel = _testcaseService.GetSingleTestCase(id);
+                var viewModel = _testcaseService.getSingleTestCase(id);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -432,7 +432,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                _testcaseService.RemoveTestCase(model);
+                _testcaseService.removeTestCase(model);
                 //LAGA::
                 return RedirectToAction("Index");
             }
