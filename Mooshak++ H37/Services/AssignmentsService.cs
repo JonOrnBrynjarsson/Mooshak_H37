@@ -284,16 +284,16 @@ namespace Mooshak___H37.Services
         /// <summary>
         /// Finds assignments in a Given Course, given they have not been marked Removed.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="assignmId"></param>
         /// <returns>List of Assignments</returns>
-        public List<AssignmentViewModel> getAssignmentsInCourse(int id)
+        public List<AssignmentViewModel> getAssignmentsInCourse(int assignmId)
         {
 
             //var todayDate = Today();
 
             //List of assignments with given Course ID.
             var assignments = (from asi in _db.Assignments
-                               where asi.CourseID == id &&
+                               where asi.CourseID == assignmId &&
                                asi.IsRemoved != true
                                orderby asi.DueDate descending
                                select asi).ToList();

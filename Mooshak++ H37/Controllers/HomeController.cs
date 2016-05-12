@@ -38,7 +38,7 @@ namespace Mooshak___H37.Controllers
 
             if (Request.IsAuthenticated)
             {
-                var ID = _userService.getUserIdForCurrentyApplicationUser();
+                var ID = _userService.getUserIdForCurrentApplicationUser();
                 return RedirectToAction("Index", _userService.getAspUserRole(ID));
             }
 
