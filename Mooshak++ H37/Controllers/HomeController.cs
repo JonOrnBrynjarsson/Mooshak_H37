@@ -33,9 +33,9 @@ namespace Mooshak___H37.Controllers
 
 			ViewBag.NumOfMilestones = _milestoneService.numberOfMilestones();
 
-			ViewBag.NumOfSubmissions = _submissionsService.NumberOfSubmissions();
+			ViewBag.NumOfSubmissions = _submissionsService.numberOfSubmissions();
 
-			ViewBag.NumOfTestCases = _testcaseService.NumberOfTestCases();
+			ViewBag.NumOfTestCases = _testcaseService.numberOfTestCases();
 
             if (Request.IsAuthenticated)
             {

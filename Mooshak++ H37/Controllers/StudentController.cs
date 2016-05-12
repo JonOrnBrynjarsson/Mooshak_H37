@@ -133,7 +133,7 @@ namespace Mooshak___H37.Controllers
 			try
 			{
 				//Returns submissions that student has submitted in given milestone
-				var viewModel = _submissionService.GetSubmissionsForMilestoneForStudent(milestoneID);
+				var viewModel = _submissionService.getSubmissionsForMilestoneForStudent(milestoneID);
 
 				//ID of assignment is added to Viewbag to be able to Go Back
 				ViewBag.AssignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
@@ -158,7 +158,7 @@ namespace Mooshak___H37.Controllers
         {
 			try
 			{
-				var viewModel = _submissionService.GetSubmission(submissionID);
+				var viewModel = _submissionService.getSubmission(submissionID);
 				viewModel.code = _filesService.getSubmissionFile(submissionID);
 				viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionID);
 				return View(viewModel);
