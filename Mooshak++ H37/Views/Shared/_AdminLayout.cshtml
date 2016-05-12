@@ -26,11 +26,11 @@
                 <ul class="nav navbar-nav">
 
                     <li>
-                        @Html.ActionLink("Courses", "ViewCourses", null, new { @class = "btn btn-primary Blue_button" })
+                        @Html.ActionLink("Courses", "ViewCourses", "Admin", null, new { @class = "btn btn-primary Blue_button" })
                     </li>
 
                     <li>
-                        @Html.ActionLink("Users", "ViewUsers", null, new { @class = "btn btn-primary Blue_button" })
+                        @Html.ActionLink("Users", "ViewUsers", "Admin", null, new { @class = "btn btn-primary Blue_button" })
                     </li>
                     <li>
                         <div class="dropdown">
@@ -40,7 +40,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Account Settnings", "Index", "Manage")</li>
-                                <li>@Html.ActionLink("About", "About")</li>
+                                <li>@Html.ActionLink("About", "About", "Admin")</li>
                                 <li><hr/></li>
                                 <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                             </ul>
