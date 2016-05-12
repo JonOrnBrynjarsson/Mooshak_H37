@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web.Mvc.Html;
-using Microsoft.Ajax.Utilities;
 using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
-using System.Diagnostics;
-using Microsoft.ApplicationInsights.Web;
-using Microsoft.AspNet.Identity;
-using Mooshak___H37.Controllers;
-using System.Web.Mvc;
-using System.Web;
+
 
 namespace Mooshak___H37.Services
 {
@@ -30,15 +22,11 @@ namespace Mooshak___H37.Services
 			_milestoneService = new MilestoneService(null);
 		}
 
+// Hverju á þetta fall að skila? DateTime.Now()?  - Jón Örn
 		public DateTime today()
         {
             DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
             return endDateTime;
-        }
-
-        private int getCurrentUser()
-        {
-            return _usersService.getUserIdForCurrentApplicationUser();
         }
 
         /// <summary>
@@ -104,7 +92,7 @@ namespace Mooshak___H37.Services
             }
 
             //Current user ID
-            var userId = getCurrentUser();
+	        var userId = _usersService.getUserIdForCurrentApplicationUser();
 
             //List of Milestones with given assignment ID
             var milestones = _db.Milestones.Where(x => x.AssignmentID == assignmId &&
@@ -172,65 +160,6 @@ namespace Mooshak___H37.Services
         }
 
         /// <summary>
-        /// Gets Courses and populates them with Assignments.
-        /// </summary>
-        /// <returns>list of Courses</returns>					HAS 0 REFERENCES (ENGINN AÐ NÝTA ÞETTA FALL?)
-        //public List<CourseViewModel> GetCourseAssignments()
-        //{
-        //    var currUsId = _usersService.getUserIdForCurrentApplicationUser();
-
-        //    //Gets List of Course IDs associated with Current User
-        //    var userCourses = (from uscr in _db.UserCourseRelations
-        //                       where currUsId == uscr.UserID &&
-        //                       uscr.IsRemoved != true
-        //                       select uscr.CourseID).ToList();
-
-
-        //    //var assignments = (from assi in _db.Assignments
-        //    //				   where userCourses.Contains(assi.CourseID)
-        //    //				   && assi.IsRemoved != true
-        //    //				   orderby assi.DueDate descending
-        //    //				   select assi).ToList();
-
-
-        //    //Gets List of Courses associated with Current User
-        //    var courses = (from crse in _db.Courses
-        //                   where userCourses.Contains(crse.ID) &&
-        //                   crse.IsRemoved != true
-        //                   select crse)
-
-        //    .Select(x => new CourseViewModel
-        //    {
-        //        ID = x.ID,
-        //        Name = x.Name,
-        //        Isactive = x.Isactive,
-        //        IsRemoved = x.IsRemoved,
-        //        StartDate = x.Startdate,
-        //        Assignments = getAssignmentsInCourse(x.ID),
-        //    }).ToList();
-
-        //    var viewModel = new List<CourseViewModel>();
-
-        //    //Creates list of View Models for Course
-        //    foreach (var course in courses)
-        //    {
-        //        CourseViewModel model = new CourseViewModel
-        //        {
-        //            Assignments = course.Assignments,
-        //            ID = course.ID,
-        //            Isactive = course.Isactive,
-        //            IsRemoved = course.IsRemoved,
-        //            Name = course.Name,
-        //            StartDate = course.StartDate,
-        //        };
-        //        viewModel.Add(model);
-        //    }
-
-        //    return viewModel;
-
-        //}
-
-        /// <summary>
         /// Finds ID of Assignment that milestone is associated with
         /// </summary>
         /// <param name="milestoneId"></param>
@@ -244,20 +173,6 @@ namespace Mooshak___H37.Services
 
             return assignmentId;
         }
-
-		/// <summary>
-		/// Gets the number of submissions from a user to a specific milestone.
-		/// </summary>
-		/// <param name="milestoneId">The milestone "ID"</param>
-		/// <param name="userId">The user "ID"</param>
-		/// <returns>Number of submissions</returns>
-		//public int getNumOfSubmissions(int milestoneId, int userId)
-		//{
-		//	return (from s in _db.Submissions
-		//			where s.ID == userId && s.MilestoneID == milestoneId
-		//			select s.ID).Count();
-		//}
-
 
 		/// <summary>
 		/// Sets the assignment isRemoved to true in the database
@@ -306,29 +221,14 @@ namespace Mooshak___H37.Services
             }
 
             List<AssignmentViewModel> viewModel = new List<AssignmentViewModel>();
-
+	        int curruser = _usersService.getUserIdForCurrentApplicationUser();
             //Creates list of view models for assignments
             foreach (var assignm in assignments)
             {
-                var test = getGradeFromSubmissions(assignm.ID, getCurrentUser());
-
-                ////Gets list of milestones for associated Assignment
-                //var milestones = (from mil in _db.Milestones
-                //                  where mil.AssignmentID ==
-                //                  assignm.ID
-                //                  select mil.ID);
-
-                ////Gets List of Submissions
-                //var submissions = (from submit in _db.Submissions
-                //                   where milestones.Contains(submit.MilestoneID) &&
-                //                   submit.UserID == currUser
-                //                   select submit).Count();
-
-                //bool submitted = (submissions >= 1);
-
-                bool submitted = userHasSubmissionForAssignment(assignm, getCurrentUser());
-
-                double finalGrade = getGradeFromSubmissions(assignm.ID, getCurrentUser());
+				
+                var test = getGradeFromSubmissions(assignm.ID, curruser);
+				bool submitted = userHasSubmissionForAssignment(assignm, curruser);
+                double finalGrade = getGradeFromSubmissions(assignm.ID, curruser);
 
                 AssignmentViewModel model = new AssignmentViewModel
                 {

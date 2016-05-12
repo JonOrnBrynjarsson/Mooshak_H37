@@ -55,12 +55,13 @@ namespace Mooshak___H37.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				//Save the new course that was just created to the DB
-				_courseService.setCourse(model);
+				int courseId = _courseService.setCourse(model);
 
-				//find the id number of the course just created from the DB
-				int Courseid = _courseService.getCourseIdByName(model.Name);
-				return RedirectToAction("EditCourse", new { id = Courseid });
+				if (courseId == 0)
+				{
+					throw new Exception("Course does not exist in this context");
+				}
+				return RedirectToAction("EditCourse", new { id = courseId });
 			}
 			return View(model);
 		}

@@ -4,7 +4,6 @@ using Mooshak___H37.Models.Viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Mooshak___H37.Services
 {
@@ -146,6 +145,33 @@ namespace Mooshak___H37.Services
 							 select t.ID);
 
 			return testCases.ToList();
+		}
+
+
+		/// <summary>
+		/// Gets the string with the input for a specific testrun.
+		/// </summary>
+		/// <param name="testCaseId">The "ID" of the testcase</param>
+		/// <returns>The input string for a testrun</returns>
+		public string getATestCaseInput(int testCaseId)
+		{
+			return (from t in _db.TestCases
+					where t.ID == testCaseId
+						&& t.IsRemoved == false
+					select t.Inputstring).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Gets the string with the expected output for a specific testrun.
+		/// </summary>
+		/// <param name="testCaseId">The "ID" of the testcase</param>
+		/// <returns>A string with the expected output of the testcase</returns>
+		public string getATestCaseOutput(int testCaseId)
+		{
+			return (from t in _db.TestCases
+					where t.ID == testCaseId
+						&& t.IsRemoved == false
+					select t.Outputstring).SingleOrDefault();
 		}
 
 	}

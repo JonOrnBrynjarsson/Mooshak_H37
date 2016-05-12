@@ -2,11 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Mooshak___H37.Models.Entities;
-using System.Threading.Tasks;
 using Mooshak___H37.Models.Viewmodels;
-using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Services
 {
@@ -203,39 +200,21 @@ namespace Mooshak___H37.Services
         }
 
 		/// <summary>
-		/// Finds Course where given Name is Associated
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns>ID of Course</returns>
-        public int getCourseIdByName(string name)
-		{
-			var course = (from x in _db.Courses
-						  where name == x.Name
-						  && x.IsRemoved != true
-						  select x.ID).FirstOrDefault();
-
-			if (course == 0)
-			{
-				throw new Exception("Course does not exist in this context");
-			}
-
-			return course;
-		}
-
-		/// <summary>
 		/// Adds a course into the database table Courses.
 		/// </summary>
 		/// <param name="model">this is the course that will be added.</param>
-		internal void setCourse(CourseViewModel model)
+		internal int setCourse(CourseViewModel model)
         {
-            _db.Courses.Add(new Course
+            Course course = new Course
             {
                 Name = model.Name,
                 Startdate = model.StartDate.Value,
                 Isactive = model.Isactive,
                 IsRemoved = model.IsRemoved
-            });
+            };
+			_db.Courses.Add(course);
             _db.SaveChanges();
+			return course.ID;
         }
 
 		/// <summary>
@@ -254,7 +233,6 @@ namespace Mooshak___H37.Services
 			{
 				throw new Exception("Course does not exist for given ID");
 			}
-
 			return course;
         }
 
@@ -289,7 +267,6 @@ namespace Mooshak___H37.Services
 				Assignments = ass,
 				User = users
 			};
-
 			return model;
 		}
 
@@ -322,8 +299,6 @@ namespace Mooshak___H37.Services
 		/// <param name="courseId">id of course to be removed</param>
 		public void removeCourseById(int courseId)
 		{
-
-			//find the correct course in the Courses table
 			var course = (from c in _db.Courses
 							  where c.ID == courseId
 							  && c.IsRemoved == false
@@ -353,7 +328,7 @@ namespace Mooshak___H37.Services
 						&& item.IsRemoved == false
 						select item).ToList();
 
-			if(conn != null)
+			if(conn.Count > 0)
 			{
 				foreach (var item in conn)
 				{
@@ -380,5 +355,21 @@ namespace Mooshak___H37.Services
             return courses;
         }
 
-    }
+		public List<User> getUsersInCourse(int courseId)
+		{
+			return (from u in _db.Users
+					join ucr in _db.UserCourseRelations on u.ID equals ucr.UserID
+					where ucr.CourseID == courseId
+					select u).ToList();
+		}
+
+		public int getCourseIdFromMilestoneId(int milestoneId)
+		{
+			return (from c in _db.Courses
+					join a in _db.Assignments on c.ID equals a.CourseID
+					join m in _db.Milestones on a.ID equals m.AssignmentID
+					where m.ID == milestoneId
+					select c.ID).SingleOrDefault();
+		}
+	}
 }

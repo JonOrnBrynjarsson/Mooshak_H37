@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web.Mvc.Html;
-using Microsoft.Ajax.Utilities;
 using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
-using System.Diagnostics;
-using Microsoft.AspNet.Identity;
 
 namespace Mooshak___H37.Services
 {
@@ -26,16 +21,15 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Gets all milestones associated to a specific assignment
 		/// </summary>
-		/// <param name="assigId">the id of the assignment for finding the milestones</param>
+		/// <param name="assignmentId">the id of the assignment for finding the milestones</param>
 		/// <returns>List of a Milestone entity class</returns>
-        private List<Milestone> getMilestones (int assigId)
+		private List<Milestone> getMilestones (int assignmentId)
         {
             var milestones = (from miles in _db.Milestones
                               orderby miles.ID
-                              where miles.AssignmentID == assigId &&
+                              where miles.AssignmentID == assignmentId &&
                               miles.IsRemoved != true
                               select miles).ToList();
-
             return milestones;
         }
 
@@ -43,13 +37,13 @@ namespace Mooshak___H37.Services
 		/// Creates a milestone in the Database (Milestones table)
 		/// </summary>
 		/// <param name="model">Holds all the info of the new milestone</param>
-		/// <param name="assigId">id of assignment the milestone belongs to</param>
-		internal void createMilestone(MilestoneViewmodel model, int assigId)
+		/// <param name="assignmentId">id of assignment the milestone belongs to</param>
+		internal void createMilestone(MilestoneViewmodel model, int assignmentId)
 		{
 			_db.Milestones.Add(new Milestone
 			{
 				AllowedSubmissions = model.AllowedSubmissions,
-				AssignmentID = assigId,
+				AssignmentID = assignmentId,
 				Description = model.Description,
 				ID = model.ID,
 				IsRemoved = model.IsRemoved,
@@ -58,18 +52,17 @@ namespace Mooshak___H37.Services
 			});
 			_db.SaveChanges();
 		}
+
 		/// <summary>
 		/// Finds Milestones for given Assignment ID, that are not
 		/// Marked as removed. 
 		/// </summary>
-		/// <param name="assigId"></param>
+		/// <param name="assignmentId"></param>
 		/// <returns>List Of Milestones</returns>
-		public List<MilestoneViewmodel> getMilestonesForAssignment(int assigId)
+		public List<MilestoneViewmodel> getMilestonesForAssignment(int assignmentId)
 		{
-            var milestones = getMilestones(assigId);
-
-
-            var viewModel = new List<MilestoneViewmodel>();
+            var milestones = getMilestones(assignmentId);
+			var viewModel = new List<MilestoneViewmodel>();
 
 			//Creates list of View Models for Milestone.
 			foreach (var mil in milestones)
@@ -93,10 +86,11 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds Sum of all Milestone Percentages in Given Assignment.
 		/// </summary>
+		/// <param name="assignmentId">The assignment Id</param>
 		/// <returns>Percentage of All Milestones in Given Assignment</returns>
-		public double getTotalMilestonePercentageForAssignment(int assigId)
+		public double getTotalMilestonePercentageForAssignment(int assignmentId)
 		{
-            var milestones = getMilestones(assigId);
+            var milestones = getMilestones(assignmentId);
 
             if (milestones == null)
 			{
@@ -295,7 +289,7 @@ namespace Mooshak___H37.Services
 		/// Gets the Milestone ID from the database based on a specific submission ID.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission for the milestone</param>
-		/// <returns>The "ID" of the milestone for the submission sent in</returns>
+		/// <returns>ID of Milestone</returns>
 		public int getMilestoneIdBySubmitId(int submissionId)
 		{
 			int milestoneId = (from s in _db.Submissions
@@ -303,5 +297,7 @@ namespace Mooshak___H37.Services
 							   select s.MilestoneID).SingleOrDefault();
 			return milestoneId;
 		}
+
+		
 	}
 }

@@ -210,7 +210,7 @@ namespace Mooshak___H37.Controllers
                     return RedirectToAction("ViewSubmissions", new
                     {
                         milestoneID =
-                        _submissionsService.getMilestoneIDFromSubmissionID(model.ID)
+                        _milestoneService.getMilestoneIdBySubmitId(model.ID)
                     });
                 }
                 catch (Exception e)

@@ -45,7 +45,6 @@ namespace Mooshak___H37.Services
 				};
 				viewModel.Add(model);
 			}
-
 			convertUserIdToUserName(viewModel);
 
 			return viewModel;
@@ -59,10 +58,10 @@ namespace Mooshak___H37.Services
 		private void convertUserIdToUserName(List<AdminErrorViewmModel> model)
 		{
 			int val = 0;
-			bool suc;
+			bool success;
 			foreach(var item in model)
 			{
-				suc = Int32.TryParse(item.User, out val);
+				success = int.TryParse(item.User, out val);
 				item.User = _usersService.getUserNameById(val);
 			}
 		}

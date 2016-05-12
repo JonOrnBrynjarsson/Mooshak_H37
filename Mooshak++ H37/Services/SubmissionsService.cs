@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using Mooshak___H37.Models;
+﻿using Mooshak___H37.Models;
 using Mooshak___H37.Models.Viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Mooshak___H37.Models.Entities;
 
 namespace Mooshak___H37.Services
@@ -15,33 +13,16 @@ namespace Mooshak___H37.Services
 		private readonly IAppDataContext _db;
 		private readonly UsersService _usersService;
 		private readonly FilesService _filesService;
+		private readonly CoursesService _coursesService;
 		
 		public SubmissionsService(IAppDataContext dbContext)
 		{
 			_db = dbContext ?? new ApplicationDbContext();
 			_usersService = new UsersService(null);
 			_filesService = new FilesService(null);
+			_coursesService = new CoursesService(null);
 		}
-
-// Þetta fall á að vera í coursesService - Jón Örn
-		public List<User> getUsersInCourse(int courseId)
-		{
-			return (from u in _db.Users
-				join ucr in _db.UserCourseRelations on u.ID equals ucr.UserID
-				where ucr.CourseID == courseId
-				select u).ToList();
-		}
-
-// Þetta fall á að vera í coursesService - Jón Örn
-		public int getCourseIdFromMilestoneId(int milestoneId)
-		{
-			return (from c in _db.Courses
-				join a in _db.Assignments on c.ID equals a.CourseID
-				join m in _db.Milestones on a.ID equals m.AssignmentID
-				where m.ID == milestoneId
-				select c.ID).SingleOrDefault();
-		}
-
+		
 
 		/// <summary>
 		/// Finds All submissions for Given Milestone ID that have not been marke as
@@ -51,7 +32,7 @@ namespace Mooshak___H37.Services
 		/// <returns>List of Submissions</returns>
         public List<SubmissionsViewModel> getSubmissionsForMilestone(int milestoneId)
 		{
-			var users = getUsersInCourse(getCourseIdFromMilestoneId(milestoneId));
+			var users = _coursesService.getUsersInCourse(_coursesService.getCourseIdFromMilestoneId(milestoneId));
 
 			List<Submission> submissions = new List<Submission>();
 			foreach (var user in users)
@@ -78,12 +59,6 @@ namespace Mooshak___H37.Services
 				}
 
 			}
-
-/*			var submissions = (from subs in _db.Submissions
-				where subs.MilestoneID == milestoneId
-				      && subs.IsRemoved != true
-				    //  && subs.FinalSolution == true 
-                      select subs).ToList();*/
 
 			if (submissions == null)
 			{
@@ -329,22 +304,6 @@ namespace Mooshak___H37.Services
 
 		}
 
-
-// Þetta fall á að vera í MilestonesService - Jón Örn
-		/// <summary>
-		/// Finds ID of milestone associated with Submission
-		/// </summary>
-		/// <param name="submissionId"></param>
-		/// <returns>ID of Milestone</returns>
-		public int getMilestoneIDFromSubmissionID(int submissionId)
-		{
-			var milestone = (from mil in _db.Submissions
-							 where mil.ID == submissionId
-							 && mil.IsRemoved == false
-							 select mil.MilestoneID).FirstOrDefault();
-
-			return milestone;
-		}
 
 
 		public List<Testrun> getTestrunsOutcomeForSubmission(int submissionId)

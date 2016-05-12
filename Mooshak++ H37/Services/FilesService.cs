@@ -154,32 +154,6 @@ namespace Mooshak___H37.Services
 
 	
 		/// <summary>
-		/// Gets the string with the input for a specific testrun.
-		/// </summary>
-		/// <param name="testCaseId">The "ID" of the testcase</param>
-		/// <returns>The input string for a testrun</returns>
-		public string getATestCaseInput(int testCaseId)
-		{
-			return (from t in _db.TestCases
-				where t.ID == testCaseId
-					&& t.IsRemoved == false
-				select t.Inputstring).SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Gets the string with the expected output for a specific testrun.
-		/// </summary>
-		/// <param name="testCaseId">The "ID" of the testcase</param>
-		/// <returns>A string with the expected output of the testcase</returns>
-		public string getATestCaseOutput(int testCaseId)
-		{
-			return (from t in _db.TestCases
-					where t.ID == testCaseId
-						&& t.IsRemoved == false
-					select t.Outputstring).SingleOrDefault();
-		}
-
-		/// <summary>
 		/// Saves the result from the current testrun to the database
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
@@ -278,8 +252,8 @@ namespace Mooshak___H37.Services
 
 			foreach (var test in testCases)
 			{
-				string input = getATestCaseInput(test);
-				string output = getATestCaseOutput(test);
+				string input = _testCaseService.getATestCaseInput(test);
+				string output = _testCaseService.getATestCaseOutput(test);
 		
 				if (runTest(submissionId, input, output))
 				{
