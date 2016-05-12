@@ -152,25 +152,6 @@ namespace Mooshak___H37.Controllers
                 return View(model);
             }
 
-            //if (_milestoneService.TeacherCanCreateMilestone(model, assigID))
-            //{
-            //	if (ModelState.IsValid)
-            //	{
-            //		_milestoneService.CreateMilestone(model, assigID);
-            //		return RedirectToAction("Milestones", new { id = assigID });
-            //	}
-            //	else
-            //	{
-            //		ViewBag.CourseList = GetCourses();
-            //		return View(model);
-            //	}
-            //}
-            //else
-            //{
-            //	return View("Error");
-            //}
-
-
         }
 
         [HttpGet]
@@ -226,7 +207,6 @@ namespace Mooshak___H37.Controllers
                 try
                 {
                     _submissionsService.gradeAssignment(model);
-                    //return RedirectToAction("ViewSubmissions", new { id = model.ID });
                     return RedirectToAction("ViewSubmissions", new
                     {
                         milestoneID =
@@ -436,7 +416,6 @@ namespace Mooshak___H37.Controllers
             try
             {
                 _testcaseService.removeTestCase(testcaseId);
-                //LAGA::
 	            return RedirectToAction("TestCases", new {milID = milestoneID});
 
             }
