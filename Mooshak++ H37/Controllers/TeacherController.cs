@@ -11,7 +11,6 @@ using System.Diagnostics;
 
 namespace Mooshak___H37.Controllers
 {
-<<<<<<< HEAD
 	//[Authorize(Roles = "Teacher")]
 	public class TeacherController : BasicController
 	{
@@ -27,7 +26,8 @@ namespace Mooshak___H37.Controllers
 		public ActionResult Index()
 		{
 			//Returns alls assignments that the teacher is associated with
-			var viewModel = _assignService.getAllAssignments();
+
+            var viewModel = _assignService.getAllAssignmentsForCurrUser();
 
             return View(viewModel);
         }
@@ -37,7 +37,7 @@ namespace Mooshak___H37.Controllers
             //Returns selected assignment
             try
             {
-                var viewModel = _assignService.Assignment(id);
+                var viewModel = _assignService.getAssignmentById(id);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -107,7 +107,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                AssignmentViewModel model = _assignService.Assignment(id);
+                AssignmentViewModel model = _assignService.getAssignmentById(id);
                 ViewBag.MilestoneList = GetMilestones(id);
                 ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
                 return View(model);
@@ -247,7 +247,7 @@ namespace Mooshak___H37.Controllers
         {
 
             var viewModel = _courseService.getCoursesForUser();
-            ViewBag.Today = _assignService.Today();
+            ViewBag.Today = _assignService.today();
 
             return View(viewModel);
 
@@ -262,7 +262,7 @@ namespace Mooshak___H37.Controllers
                 if (ModelState.IsValid)
                 {
                     _milestoneService.EditMilestone(model, milestoneID);
-                    var assignmentID = _assignService.GetAssignmentIDFromMilestoneID(milestoneID);
+                    var assignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
                     return RedirectToAction("Milestones", new { id = assignmentID });
                 }
                 else
@@ -297,7 +297,7 @@ namespace Mooshak___H37.Controllers
             try
             {
                 _milestoneService.RemoveMilestone(model);
-                var assignmentID = _assignService.GetAssignmentIDFromMilestoneID(model.ID);
+                var assignmentID = _assignService.getAssignmentIDFromMilestoneID(model.ID);
                 return RedirectToAction("Milestones", new { id = assignmentID });
             }
             catch (Exception e)
@@ -312,7 +312,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                var viewModel = _assignService.Assignment(id);
+                var viewModel = _assignService.getAssignmentById(id);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -348,7 +348,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                var viewModel = _assignService.Assignment(id);
+                var viewModel = _assignService.getAssignmentById(id);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -362,7 +362,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                _assignService.RemoveAssignment(model);
+                _assignService.removeAssignment(model);
                 return RedirectToAction("Assignments");
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Mooshak___H37.Controllers
 
             ViewBag.MilestID = milID;
 
-            ViewBag.AssignID = _assignService.GetAssignmentIDFromMilestoneID(milID);
+            ViewBag.AssignID = _assignService.getAssignmentIDFromMilestoneID(milID);
 
             if (viewModel.Count == 0)
             {

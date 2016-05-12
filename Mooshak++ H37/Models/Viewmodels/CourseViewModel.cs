@@ -11,7 +11,8 @@ namespace Mooshak___H37.Models.Viewmodels
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yy 00:00:00}",
+               ApplyFormatInEditMode = true)]
         public DateTime? StartDate { get; set; }
         public bool Isactive { get; set; }
         public bool IsRemoved { get; set; }

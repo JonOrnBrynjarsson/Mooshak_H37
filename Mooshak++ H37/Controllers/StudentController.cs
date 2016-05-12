@@ -18,6 +18,7 @@ namespace Mooshak___H37.Controllers
 	//[Authorize(Roles = "Student")]
 	public class StudentController : BasicController
 	{
+
 		readonly AssigmentsService _assignService = new AssigmentsService(null);
 		readonly FilesService _filesService = new FilesService(null);
 		readonly CoursesService _courseService = new CoursesService(null);
@@ -29,7 +30,7 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult Index()
 		{
-			var viewModel = _assignService.getAllAssignments();
+			var viewModel = _assignService.getAllAssignmentsForCurrUser();
 			return View(viewModel);
 		}
 
@@ -38,7 +39,7 @@ namespace Mooshak___H37.Controllers
 			try
 			{
 				//returns selected assignment
-				var viewModel = _assignService.Assignment(id);
+				var viewModel = _assignService.getAssignmentById(id);
 				//gives total percentage of all milestones in given assignment
 				ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
 				return View(viewModel);
@@ -53,7 +54,7 @@ namespace Mooshak___H37.Controllers
 		{
 			//Returns all assignments in all Courses that user is in.
 			var viewModel = _courseService.getCoursesForUser();
-            ViewBag.Today = _assignService.Today();
+            ViewBag.Today = _assignService.today();
 			return View(viewModel);
 		}
 
@@ -121,7 +122,7 @@ namespace Mooshak___H37.Controllers
 			}
             //return RedirectToAction("Index");
 
-            var assignmentID = _assignService.GetAssignmentIDFromMilestoneID(submit.Milestone);
+            var assignmentID = _assignService.getAssignmentIDFromMilestoneID(submit.Milestone);
 
             return RedirectToAction("ViewAssignment", new {id = assignmentID });
 
@@ -135,7 +136,7 @@ namespace Mooshak___H37.Controllers
 				var viewModel = _submissionService.GetSubmissionsForMilestoneForStudent(milestoneID);
 
 				//ID of assignment is added to Viewbag to be able to Go Back
-				ViewBag.AssignmentID = _assignService.GetAssignmentIDFromMilestoneID(milestoneID);
+				ViewBag.AssignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
 				return View(viewModel);
 			}
 			catch (Exception e)

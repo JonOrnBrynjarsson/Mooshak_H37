@@ -12,12 +12,14 @@ namespace Mooshak___H37.Services
 {
 	public class CoursesService
 	{
+
 		private readonly IAppDataContext _db;
 		private readonly AssigmentsService _assignmentsService;
 		private readonly UsersService _userService;
 
 		public CoursesService(IAppDataContext dbContext)
 		{
+
 			_db = dbContext ?? new ApplicationDbContext();
 			_assignmentsService = new AssigmentsService(null);
 			_userService = new UsersService(null);

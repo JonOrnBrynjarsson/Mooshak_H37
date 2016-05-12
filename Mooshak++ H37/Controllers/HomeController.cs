@@ -1,15 +1,18 @@
-﻿using Mooshak___H37.Services;
+﻿using Microsoft.Ajax.Utilities;
+using Mooshak___H37.Services;
 using Project_4.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace Mooshak___H37.Controllers
 {
-	public class HomeController : BasicController
+    public class HomeController : BasicController
 	{
+
 		readonly UsersService _userService = new UsersService(null);
 		readonly AssigmentsService _assignService = new AssigmentsService(null);
 		readonly CoursesService _courseService = new CoursesService(null);
@@ -34,7 +37,13 @@ namespace Mooshak___H37.Controllers
 
 			ViewBag.NumOfTestCases = _testcaseService.NumberOfTestCases();
 
-			return View();
+            if (Request.IsAuthenticated)
+            {
+                var ID = _userService.getUserIdForCurrentyApplicationUser();
+                return RedirectToAction("Index", _userService.getAspUserRole(ID));
+            }
+
+			return RedirectToAction("Login", "Account");
 		}
 	}
 }
