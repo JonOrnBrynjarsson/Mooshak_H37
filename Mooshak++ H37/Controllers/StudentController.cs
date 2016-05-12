@@ -41,7 +41,7 @@ namespace Mooshak___H37.Controllers
 				//returns selected assignment
 				var viewModel = _assignService.getAssignmentById(id);
 				//gives total percentage of all milestones in given assignment
-				ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
+				ViewBag.TotalPercentage = _milestoneService.getTotalMilestonePercentageForAssignment(id);
 				return View(viewModel);
 			}
 			catch (Exception e)
@@ -67,7 +67,7 @@ namespace Mooshak___H37.Controllers
 
 			try
 			{
-				var canSubmit = _milestoneService.UserCanSubmitMilestone(milestoneId);
+				var canSubmit = _milestoneService.userCanSubmitMilestone(milestoneId);
 			}
 			catch (Exception e)
 			{
@@ -76,7 +76,7 @@ namespace Mooshak___H37.Controllers
 
 			MilestoneViewmodel m = new MilestoneViewmodel();
 
-			m = _milestoneService.GetSingleMilestone(milestoneId);
+			m = _milestoneService.getSingleMilestone(milestoneId);
 
 			StudentSubmitViewModel submission = new StudentSubmitViewModel();
 

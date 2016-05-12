@@ -66,7 +66,7 @@ namespace Mooshak___H37.Controllers
             //Creates a list of Milestones that Assignment is associated with.
 
             List<SelectListItem> result = new List<SelectListItem>();
-            var milestones = _milestoneService.GetMilestonesForAssignment(assignmentId);
+            var milestones = _milestoneService.getMilestonesForAssignment(assignmentId);
 
             result.Add(new SelectListItem() { Value = "", Text = " - Choose a milestone - " });
 
@@ -109,7 +109,7 @@ namespace Mooshak___H37.Controllers
             {
                 AssignmentViewModel model = _assignService.getAssignmentById(id);
                 ViewBag.MilestoneList = GetMilestones(id);
-                ViewBag.TotalPercentage = _milestoneService.GetTotalMilestonePercentageForAssignment(id);
+                ViewBag.TotalPercentage = _milestoneService.getTotalMilestonePercentageForAssignment(id);
                 return View(model);
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                _milestoneService.TeacherCanCreateMilestone(model, assigID);
+                _milestoneService.teacherCanCreateMilestone(model, assigID);
             }
             catch (Exception e)
             {
@@ -143,7 +143,7 @@ namespace Mooshak___H37.Controllers
 
             if (ModelState.IsValid)
             {
-                _milestoneService.CreateMilestone(model, assigID);
+                _milestoneService.createMilestone(model, assigID);
                 return RedirectToAction("Milestones", new { id = assigID });
             }
             else
@@ -178,7 +178,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                var viewModel = _milestoneService.GetSingleMilestone(milestoneID);
+                var viewModel = _milestoneService.getSingleMilestone(milestoneID);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Mooshak___H37.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _milestoneService.EditMilestone(model, milestoneID);
+                    _milestoneService.editMilestone(model, milestoneID);
                     var assignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
                     return RedirectToAction("Milestones", new { id = assignmentID });
                 }
@@ -283,7 +283,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                var viewModel = _milestoneService.GetSingleMilestone(id);
+                var viewModel = _milestoneService.getSingleMilestone(id);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -296,7 +296,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                _milestoneService.RemoveMilestone(model);
+                _milestoneService.removeMilestone(model);
                 var assignmentID = _assignService.getAssignmentIDFromMilestoneID(model.ID);
                 return RedirectToAction("Milestones", new { id = assignmentID });
             }

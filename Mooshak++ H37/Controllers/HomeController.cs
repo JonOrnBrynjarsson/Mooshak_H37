@@ -31,7 +31,7 @@ namespace Mooshak___H37.Controllers
 
 			ViewBag.NumOfCourses = _courseService.NumberOfCourses();
 
-			ViewBag.NumOfMilestones = _milestoneService.NumberOfMilestones();
+			ViewBag.NumOfMilestones = _milestoneService.numberOfMilestones();
 
 			ViewBag.NumOfSubmissions = _submissionsService.NumberOfSubmissions();
 
