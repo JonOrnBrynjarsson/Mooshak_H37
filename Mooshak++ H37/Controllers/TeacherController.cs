@@ -423,8 +423,6 @@ namespace Mooshak___H37.Controllers
             {
 				TestCaseViewModel viewModel = _testcaseService.getSingleTestCase(id);
                 return View(viewModel);
-				//return RedirectToAction("TestCases", new { milID = milestoneID });
-
 			}
 			catch (Exception e)
             {
