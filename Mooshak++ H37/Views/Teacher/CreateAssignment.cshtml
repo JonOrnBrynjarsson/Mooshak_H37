@@ -1,7 +1,7 @@
 ﻿@model Mooshak___H37.Models.Viewmodels.AssignmentViewModel
 
 @{
-	ViewBag.Title = "CreateAssignment";
+	ViewBag.Title = "Create Assignment";
 }
 
 <h2>Create Assignment</h2>
@@ -26,16 +26,16 @@
 
 				<div class="form-group">
 					@Html.LabelFor(model => model.SetDate, htmlAttributes: new { @class = "control-label col-md-2" })
-					<div class="col-md-10">
-						@Html.EditorFor(model => model.SetDate, new { htmlAttributes = new { @class = "form-control" } })
+					<div class="col-md-10 form-inline">
+						@Html.EditorFor(model => model.SetDate, new { htmlAttributes = new { @class = "form-control" } })<p class="date_helper">DD/MM/YY 00:00:00</p>
 						@Html.ValidationMessageFor(model => model.SetDate, "", new { @class = "text-danger" })
 					</div>
 				</div>
 
 				<div class="form-group">
 					@Html.LabelFor(model => model.DueDate, htmlAttributes: new { @class = "control-label col-md-2" })
-					<div class="col-md-10">
-						@Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control" } })
+					<div class="col-md-10 form-inline">
+						@Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control" } })<p class="date_helper">DD/MM/YY 00:00:00</p>
 						@Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
 					</div>
 				</div>

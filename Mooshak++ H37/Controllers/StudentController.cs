@@ -15,7 +15,7 @@ using Project_4.Controllers;
 
 namespace Mooshak___H37.Controllers
 {
-	//[Authorize(Roles = "Student")]
+	[Authorize(Roles = "Student")]
 	public class StudentController : BasicController
 	{
 

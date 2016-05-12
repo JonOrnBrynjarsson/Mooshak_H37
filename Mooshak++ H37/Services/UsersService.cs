@@ -98,22 +98,6 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// This function takes in a userViewModel with the requerment that it has
-		/// a CourseID and ID wich is a userID, then it puts in the model, the correct role.
-		/// </summary>
-		private void getRolesByCourseID(UserViewModel model)
-		{
-			var role = (from x in _db.UserCourseRelations
-						where model.CourseID == x.CourseID &&
-						model.ID == x.UserID &&
-						x.IsRemoved == false
-						select x).FirstOrDefault();
-
-			model.RoleID = role.RoleID;
-
-		}
-
-		/// <summary>
 		/// Gets all the users in system and all users in the course and filters
 		/// the users that are not in the specific course so they wont be included in the complete list
 		/// </summary>
@@ -154,7 +138,6 @@ namespace Mooshak___H37.Services
                     flag = 0;
                 }
             }
-
 
             return viewModel;
         }
@@ -274,16 +257,6 @@ namespace Mooshak___H37.Services
 				throw new Exception("User Does Not Exists");
 			}
 
-        }
-
-        internal int getRoleNamebyId(int userId)
-        {
-            var roleID = (from x in _db.UserCourseRelations
-                        where x.UserID == userId
-						&& x.IsRemoved == false
-                        select x.RoleID).FirstOrDefault();
-
-            return roleID;
         }
 
 		public string getUserNameById(int userId)
