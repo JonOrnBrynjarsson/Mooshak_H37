@@ -1,63 +1,56 @@
 ﻿@model IEnumerable<Mooshak___H37.Services.Viewmodels.AdminErrorViewmModel>
 
 @{
-    ViewBag.Title = "Admin Homepage";
+	ViewBag.Title = "Admin Homepage";
 }
 
 <link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
 
+<div class="page-header">
+	<h1>Admin Home Page <small>Error Reports</small></h1>
+</div>
+
+
 <div class="clearfix">
+	<div id="due-assignments" class="large-left-portion">
+		<table id="assignments" class="table table-hover">
+			<thead>
+				<tr>
+					<th>Nr</th>
+					<th>Date</th>
+					<th>Error message</th>
+					<th>User</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{int rowNo = 0;}
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@(rowNo += 1)
+						</td>
+						<td>
+							@item.Date
+						</td>
+						<td>
+							@item.Message
+						</td>
+						<td>
+							@item.User
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 
-    <h2>AdminHomePage</h2>
-
-    @*<div class="admin-home-buttons">
-        <button type="button" class="btn btn-primary create-button">@Html.ActionLink("Create Course", "CreateCourse")</button>
-        <br/>
-        <button type="button" class="btn btn-primary create-button" id="createUser">@Html.ActionLink("Create Users", "CreateUser")</button>
-    </div>*@
-	<div>
+	</div>
+	<div class="small-right-portion btn-group-vertical">
 		@Html.ActionLink("Create Course", "CreateCourse", new { }, new { @class = "btn btn-primary button-right" })
-		
+
 		@Html.ActionLink("Create Users", "CreateUser", new { }, new { @class = "btn btn-primary button-right" })
 	</div>
 
 
 
-
-
-        <div id="due-assignments" class="right-portion">
-            <h3>Error Reports</h3>
-            <table id="assignments" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nr</th>
-                        <th>Date</th>
-                        <th>Error message</th>
-                        <th>User</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{int rowNo = 0;}
-					@foreach(var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @(rowNo += 1)
-                            </td>
-                            <td>
-                                @item.Date
-                            </td>
-                            <td>
-                                @item.Message
-                            </td>
-                            <td>
-								@item.User
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-        </div>
-    </div>
 </div>

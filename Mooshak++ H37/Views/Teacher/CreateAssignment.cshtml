@@ -34,11 +34,9 @@
 
 			<div class="form-group">
 				@Html.LabelFor(model => model.DueDate, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-                    @Html.TextBoxFor(model => model.DueDate , "{0:yyyy-MM-dd}", new { @class = "dateInput", @placeholder = "plz input date" })
-				@*	@Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control" } })*@
+				<div class="col-md-10">                
+					@Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control" } })
 					@Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
-                    <input type="date" id="@Model.DueDate" />
 				</div>
 			</div>
 
