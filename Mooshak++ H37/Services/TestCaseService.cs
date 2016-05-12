@@ -128,5 +128,25 @@ namespace Mooshak___H37.Services
 
             return testCases;
         }
-    }
+
+		/// <summary>
+		/// Returns the "ID" of the test cases related to the submission ID sent in.
+		/// </summary>
+		/// <param name="submissionId">The "ID" of the submission being tested.</param>
+		/// <returns>A list of testcase IDs</returns>
+		public List<int> getTestCases(int submissionId)
+		{
+			var testCases = (from t in _db.TestCases
+							 join m in _db.Milestones
+								 on t.MilestoneID equals m.ID
+							 join s in _db.Submissions
+								 on m.ID equals s.MilestoneID
+							 where s.ID == submissionId
+								   && t.IsRemoved == false
+							 select t.ID);
+
+			return testCases.ToList();
+		}
+
+	}
 }

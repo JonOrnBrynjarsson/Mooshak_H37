@@ -27,20 +27,6 @@ namespace Mooshak___H37.Services
 
 
 		/// <summary>
-		/// Finds the ID of logged in user
-		/// </summary>
-		/// <returns>User ID</returns>
-		public int getCurrentUser()
-		{
-			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
-			var currUserID = (from x in _db.Users
-							  where x.AspNetUserId == currentUser
-							  select x.ID).FirstOrDefault();
-
-			return currUserID;
-		}
-
-		/// <summary>
 		/// Gets a list of all Courses from the database that are not
 		/// marked as Removed.
 		/// </summary>
@@ -178,20 +164,20 @@ namespace Mooshak___H37.Services
 		public List<Course> getCurrentCourseList()
 		{
 			//Finds current User
-			var currUsId = getCurrentUser();
+			var currUsId = _userService.getUserIdForCurrentApplicationUser();
 
 			//Creates a List of Course IDs that User is associated with
 			var userCourses = (from uscr in _db.UserCourseRelations
-							   where currUsId == uscr.UserID
-							   && uscr.IsRemoved == false
-							   select uscr.CourseID).ToList();
+				where currUsId == uscr.UserID
+				      && uscr.IsRemoved == false
+				select uscr.CourseID).ToList();
 
 			//Selectes Courses that are in the previous userCourses List.
 			var courses = (from crs in _db.Courses
-						   where userCourses.Contains(crs.ID)
-						   && crs.IsRemoved == false
-						   orderby crs.ID descending
-						   select crs).ToList();
+				where userCourses.Contains(crs.ID)
+				      && crs.IsRemoved == false
+				orderby crs.ID descending
+				select crs).ToList();
 
 			return courses;
 		}
