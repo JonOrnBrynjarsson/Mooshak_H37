@@ -23,21 +23,7 @@ namespace Mooshak___H37.Services
 			_filesService = new FilesService(null);
 		}
 
-		/// <summary>
-		/// Finds LOGGED in user
-		/// </summary>
-		/// <returns>ID of Current User</returns>
-		public int getCurrentUser()
-		{
-			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
-			var currUserId = (from x in _db.Users
-							  where x.AspNetUserId == currentUser
-							  select x.ID).FirstOrDefault();
-
-			return currUserId;
-		}
-
-
+		
 		public List<User> getUsersInCourse(int courseId)
 		{
 			return (from u in _db.Users
@@ -202,7 +188,7 @@ namespace Mooshak___H37.Services
 		/// <returns>List of submissions</returns>
         public List<SubmissionsViewModel> getSubmissionsForMilestoneForStudent(int milestoneId)
         {
-            var currUser = getCurrentUser();
+            var currUser = _usersService.getUserIdForCurrentApplicationUser();
 
 			//Finds submissions for current user for given milestone
 			//That have not been marked as removed.

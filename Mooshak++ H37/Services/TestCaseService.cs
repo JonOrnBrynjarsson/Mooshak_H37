@@ -17,7 +17,7 @@ namespace Mooshak___H37.Services
 			_db = dbContext ?? new ApplicationDbContext();
 		}
 		//Creates a new Testcase with Given Model and Milestone ID
-		internal void createTestCase(TestCaseViewModel model, int milestoneId)
+		public void createTestCase(TestCaseViewModel model, int milestoneId)
 		{
 			_db.TestCases.Add(new TestCase
 			{
@@ -86,9 +86,7 @@ namespace Mooshak___H37.Services
 					&& test.IsRemoved != true
 					select test).ToList();
 		}
-
-
-
+		
 		/// <summary>
 		/// Finds Test Case associated with given Test Case ID
 		/// </summary>

@@ -4,9 +4,10 @@ using Mooshak___H37.Services;
 
 namespace Mooshak___H37.Tests.Services
 {
-	class SubmissionsServiceTest
+	[TestClass]
+	public class SubmissionsServiceTest
 	{
-		private SubmissionsService _submissionsService;
+		 private SubmissionsService _submissionsService;
 
 		[TestInitialize]
 		public void Initialize()

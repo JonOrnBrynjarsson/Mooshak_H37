@@ -4,7 +4,8 @@ using Mooshak___H37.Services;
 
 namespace Mooshak___H37.Tests.Services
 {
-	class FilesServiceTest
+	[TestClass]
+	public class FilesServiceTest
 	{
 		private FilesService _filesService;
 

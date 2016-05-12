@@ -300,7 +300,6 @@
     <Compile Include="Services\CoursesService.cs" />
     <Compile Include="Services\ErrorsService.cs" />
     <Compile Include="Services\FilesService.cs" />
-    <Compile Include="Services\MessagesService.cs" />
     <Compile Include="Services\MilestoneService.cs" />
     <Compile Include="Services\SubmissionsService.cs" />
     <Compile Include="Services\TestCaseService.cs" />

@@ -98,7 +98,6 @@
     <Compile Include="Services\CoursesServicesTest.cs" />
     <Compile Include="Services\ErrorsServiceTest.cs" />
     <Compile Include="Services\FilesServiceTest.cs" />
-    <Compile Include="Services\MessagesServiceTest.cs" />
     <Compile Include="Services\MilestoneServiceTest.cs" />
     <Compile Include="Services\SubmissionsServiceTest.cs" />
     <Compile Include="Services\TestCasesServiceTest.cs" />

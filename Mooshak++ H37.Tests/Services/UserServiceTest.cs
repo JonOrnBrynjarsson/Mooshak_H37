@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Services;
 
@@ -80,44 +77,8 @@ namespace Mooshak___H37.Tests.Services
 			// Assert:
 			Assert.AreEqual(numOfActiveUsers, result.Count);
 		}
-
-		[TestMethod]
-		public void GetAllUserName()
-		{
-			// Arrange:
-			List<string> comparisonList = new List<string>();
-			comparisonList.Add("Jón Gunnarsson");
-			comparisonList.Add("Gunna Jónsdóttir");
-			comparisonList.Add("Stafróf málsgrein");
 	
-			// Act:
-			var result = _usersService.getAllUsersName();
-			// Assert:
-			Assert.AreSame(result, comparisonList);
 
-		}
-
-		[TestMethod]
-		public void getSingleUser()
-		{
-			// Arrange:
-			string userName = "Gunna Jónsdóttir";
-			// Act:
-			var result = _usersService.getSingleUserInfo(3);
-			// Assert:
-			Assert.AreEqual(result.Name, userName);
-		}
-
-		[TestMethod]
-		public void testing()
-		{
-			// Arrange:
-
-			// Act:
-			var result = 0;
-			// Assert:
-			
-		}
 
 
 	}

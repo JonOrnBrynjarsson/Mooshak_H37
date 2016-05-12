@@ -169,7 +169,7 @@ namespace Mooshak___H37.Services
 			var userId = (from user in _db.Users
 							where user.AspNetUserId == aspUser &&
 							user.IsRemoved == false
-							select user.ID).FirstOrDefault();
+							select user.ID).SingleOrDefault();
 			return userId;
 		}
 
