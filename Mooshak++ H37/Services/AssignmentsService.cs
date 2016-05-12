@@ -419,7 +419,7 @@ namespace Mooshak___H37.Services
         }
 
         //Creates new assignment with given Assignment Model
-        internal void CreateAssignment(AssignmentViewModel model)
+        internal void createAssignment(AssignmentViewModel model)
         {
             _db.Assignments.Add(new Assignment
             {
@@ -436,7 +436,7 @@ namespace Mooshak___H37.Services
         }
 
         //Edits assignment with given Assignment Model
-        internal void EditAssignment(AssignmentViewModel model)
+        internal void editAssignment(AssignmentViewModel model)
         {
             var edit = (from assign in _db.Assignments
                         where assign.ID == model.ID
@@ -466,7 +466,7 @@ namespace Mooshak___H37.Services
         /// Finds all assignments in System
         /// </summary>
         /// <returns>Number of assignments</returns>
-        public int NumberOfAssignments()
+        public int numberOfAssignments()
         {
             var assignments = (from assi in _db.Assignments
                                where assi.IsRemoved != true
