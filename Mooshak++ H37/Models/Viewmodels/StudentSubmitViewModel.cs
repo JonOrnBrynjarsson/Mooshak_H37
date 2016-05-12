@@ -13,7 +13,7 @@ namespace Mooshak___H37.Models.Viewmodels
 		//[ConfigurationPropertyAttribute("maxRequestLength", DefaultValue = 50000)]
 		public int Milestone { get; set; }
 		public HttpPostedFileBase File { get; set; }
-		public DateTime Duedate { get; set; }
-		public DateTime DateSet { get; set; }
+        public DateTime Duedate { get; set; }
+        public DateTime DateSet { get; set; }
 	}
 }

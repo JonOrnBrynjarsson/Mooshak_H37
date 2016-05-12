@@ -21,8 +21,9 @@ namespace Mooshak___H37.Models.Viewmodels
 		[Required(ErrorMessage = "Percentage is required")]
 		public double Percentage { get; set; }
 		public int UserSubmissions { get; set; }
-		public DateTime DateSet { get; set; }
-		public DateTime DueDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
+        public DateTime DateSet { get; set; }
+        public DateTime DueDate { get; set; }
 		public int TotalSubmissions { get; set; }
 
 	}

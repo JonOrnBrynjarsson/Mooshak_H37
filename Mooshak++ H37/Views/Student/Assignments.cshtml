@@ -1,44 +1,55 @@
 ﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.CourseViewModel>
 
 @{
-	ViewBag.Title = "Assignments";
+    ViewBag.Title = "Assignments";
 }
 
+<div class="page-header">
+    <h1>Assignments <small>All Assignments</small></h1>
+</div>
+
 <div class="clearfix">
-	<div class="large-left-portion">
-		@foreach (var item in Model)
-		{
-			<h2>@item.Name</h2>
-			<table id="assignments-@item.Name" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nr</th>
-                        <th>Name</th>
-                        <th>Due Date</th>
-                        <th>Submitted</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{int rowNo = 0;}
+    <div class="large-left-portion">
+        @foreach (var item in Model)
+        {
+            <h2>@item.Name</h2>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table id="assignments-@item.Name" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nr</th>
+                                <th>Name</th>
+                                <th>Due Date</th>
+                                <th>Submitted</th>
+                                <th>Grade</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int rowNo = 0;}
 
-                    @foreach (var it in item.Assignments)
-                    {
-                        <tr style="@(ViewBag.Today > it.DueDate ? "color:grey; font-style:italic; Background-color:#f2f2f2; " : "")">
-                            <td>@(rowNo += 1)</td>
-                            <td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
-                            <td>@it.DueDate</td>
-                            <td>
-                                @Html.DisplayFor(modelItem => it.Submitted)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => it.TotalGrade)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-			</table>
+                            @foreach (var it in item.Assignments)
+                            {
+                                <tr style="@(ViewBag.Today > it.DueDate ? "color:grey; font-style:italic; Background-color:#f2f2f2; " : "")">
+                                    <td>@(rowNo += 1)</td>
+                                    <td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
+                                    <td>@it.DueDate</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => it.Submitted)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => it.TotalGrade)
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-		}
-	</div>
+         }
+    </div>
 </div>
 
