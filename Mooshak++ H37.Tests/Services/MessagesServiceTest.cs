@@ -22,7 +22,7 @@ namespace Mooshak___H37.Tests.Services
 			// need to provide the data for the methods you are
 			// actually testing here.
 
-			_messagesService = new MessagesService();
+			_messagesService = new MessagesService(mockDb);
 		}
 	}
 }

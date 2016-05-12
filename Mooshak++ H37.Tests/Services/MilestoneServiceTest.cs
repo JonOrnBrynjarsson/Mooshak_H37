@@ -22,7 +22,7 @@ namespace Mooshak___H37.Tests.Services
 			// need to provide the data for the methods you are
 			// actually testing here.
 
-			_milestoneService = new MilestoneService();
+			_milestoneService = new MilestoneService(mockDb);
 		}
 	}
 }
