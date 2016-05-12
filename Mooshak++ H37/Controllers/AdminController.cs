@@ -125,7 +125,7 @@ namespace Mooshak___H37.Controllers
 				// do something
 			}
 
-			_userService.removeUserByID(id);
+			_userService.removeUserById(id);
 
 			return RedirectToAction("ViewUsers");
 		}
@@ -144,7 +144,7 @@ namespace Mooshak___H37.Controllers
 			var viewModel = _userService.getAllUsersName();
 			foreach (var item in viewModel)
 			{
-				item.RoleID = _userService.getRoleNamebyID(item.ID);
+				item.RoleID = _userService.getRoleNamebyId(item.ID);
 			}
 			return View(viewModel);
 		}
@@ -152,7 +152,7 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult EditUser(int id)
 		{
-			var viewModel = _userService.GetSingleUser(id);
+			var viewModel = _userService.getSingleUser(id);
 			return View(viewModel);
 		}
 

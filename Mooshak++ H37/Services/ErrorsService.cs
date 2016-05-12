@@ -63,7 +63,7 @@ namespace Mooshak___H37.Services
 			foreach(var item in model)
 			{
 				suc = Int32.TryParse(item.User, out val);
-				item.User = _usersService.getUserNameByID(val);
+				item.User = _usersService.getUserNameById(val);
 			}
 		}
 

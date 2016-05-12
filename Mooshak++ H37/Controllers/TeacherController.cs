@@ -419,7 +419,7 @@ namespace Mooshak___H37.Controllers
         {
             try
             {
-                var viewModel = _testcaseService.getSingleTestCase(id);
+				TestCaseViewModel viewModel = _testcaseService.getSingleTestCase(id);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -428,11 +428,11 @@ namespace Mooshak___H37.Controllers
             }
         }
         [HttpPost]
-        public ActionResult RemoveTestCase(TestCaseViewModel model)
+        public ActionResult removeTestCase(int TestcaseId)
         {
             try
             {
-                _testcaseService.removeTestCase(model);
+                _testcaseService.removeTestCase(TestcaseId);
                 //LAGA::
                 return RedirectToAction("Index");
             }
