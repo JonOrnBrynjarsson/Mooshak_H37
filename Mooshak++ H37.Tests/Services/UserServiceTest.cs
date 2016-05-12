@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Services;
 
@@ -41,6 +43,22 @@ namespace Mooshak___H37.Tests.Services
 				IsRemoved = false
 			};
 			mockDb.Users.Add(f3);
+			var f4 = new User
+			{
+				ID = 4,
+				Name = "Niemand",
+				AspNetUserId = "a-sdfsi",
+				IsRemoved = true
+			};
+			mockDb.Users.Add(f4);
+			var f5 = new User
+			{
+				ID = 5,
+				Name = "Stafróf málsgrein",
+				AspNetUserId = "d3olrs-sdfsi",
+				IsRemoved = false
+			};
+			mockDb.Users.Add(f5);
 
 			// Note: you only have to add data necessary for this
 			// particular service (FriendService) to run properly.
@@ -52,35 +70,43 @@ namespace Mooshak___H37.Tests.Services
 		}
 
 		[TestMethod]
-		public void TestGetAllFriendsForDabs()
+		public void getAllActiveUsersInSystem()
 		{
 			// Arrange:
-			//const string userName = "dabs";
-
+			
 			// Act:
-			//var friends = _userService.GetFriendsFor(userName);
-
+			var result = _usersService.UsersInSystem();
 			// Assert:
-			//Assert.AreEqual(2, friends.Count);
-			//foreach (var item in friends)
-			{
-				//Assert.AreNotEqual(item, "dabs");
-			}
+			Assert.AreEqual(2, result);
 		}
 
 		[TestMethod]
-		public void TestGetForUserWithNoFriends()
+		public void GetAll()
 		{
 			// Arrange:
-			//const string userWithNoFriends = "loner";
-			// Note: no user with this username has an entry
-			// in our test data.
+			Array comparisonList  {"Jón Gunnarsson"};
+
+					"Gunna Jónsdóttir",
+					"Stafróf málsgrein";
 
 			// Act:
-			//var friends = _userService.GetFriendsFor(userWithNoFriends);
-
+			var result = _usersService.getAllUsersName();
 			// Assert:
-			//Assert.AreEqual(0, friends.Count);
+			Assert.AreSame();
+
 		}
+
+		[TestMethod]
+		public void testing()
+		{
+			// Arrange:
+
+			// Act:
+			var result = 0;
+			// Assert:
+			
+		}
+
+
 	}
 }
