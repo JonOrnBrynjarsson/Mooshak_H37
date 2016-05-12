@@ -295,7 +295,7 @@ namespace Mooshak___H37.Services
 			return name;
 		}
 
-		internal void EditUser(UserViewModel model)
+		internal void editUser(UserViewModel model)
 		{
 			var edit = (from user in _db.Users
 						where model.ID == user.ID
@@ -305,47 +305,34 @@ namespace Mooshak___H37.Services
 			if (edit != null)
 			{
 				edit.Name = model.Name;
-			}
-
-			_db.SaveChanges();
-
-			//var usr = (from us in _db.Users
-			//			 where edit.AspNetUserId == us.AspNetUser.Id
-			//			 select us.AspNetUser).SingleOrDefault();
-
-			//if (usr == null)
-			//{
-			//	//TODO
-			//	//throw error
-			//	return;
-			//}
-
-
-
-			//var store = new UserStore<ApplicationUser>(new IdentityDbContext());
-			//var manager = new UserManager<ApplicationUser>(store);
-
-			//ApplicationUser a = new ApplicationUser
-			//{
-			//	AccessFailedCount = usr.AccessFailedCount,
-			//	Email = usr.Email,
-			//	EmailConfirmed = usr.EmailConfirmed,
-			//	Id = usr.Id,
-			//	LockoutEnabled = usr.LockoutEnabled,
-			//	LockoutEndDateUtc = usr.LockoutEndDateUtc,
-			//	PasswordHash = usr.PasswordHash,
-			//	PhoneNumber = usr.PhoneNumber,
-			//	PhoneNumberConfirmed = usr.PhoneNumberConfirmed,
-			//	SecurityStamp = usr.SecurityStamp,
-			//	TwoFactorEnabled = usr.TwoFactorEnabled,
-			//	UserName = usr.UserName
-			//};
-
-
-			//manager.UpdateAsync(usr);
-
-			//store.Context.SaveChanges();
 			
+				_db.SaveChanges();
+			
+				editUserEmail(edit.AspNetUserId, model.Email);
+				editUserPassword(edit.AspNetUserId, model.Password);
+				string oldRole = getAspUserRole(edit.ID);
+				editUserRole(edit.AspNetUserId, oldRole, model.RoleName);
+			}
+		}
+
+		private void editUserEmail(string aspNetId, string email)
+		{
+			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+			um.SetEmail(aspNetId, email);
+		}
+
+		private void editUserPassword(string aspNetId, string password)
+		{
+			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+			um.RemovePassword(aspNetId);
+			um.AddPassword(aspNetId, password);
+		}
+
+		private void editUserRole(string aspNetId,string oldRole, string role)
+		{
+			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+			um.RemoveFromRole(aspNetId, oldRole);
+			um.AddToRole(aspNetId, role);
 		}
 
 		/// <summary>
