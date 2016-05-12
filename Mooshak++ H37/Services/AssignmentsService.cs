@@ -278,9 +278,9 @@ namespace Mooshak___H37.Services
 
             assignment.IsRemoved = true;
             _db.SaveChanges();
-			//TODO
-			//REMOVE ALL MILESTONES THAT WERE CONNECTED TO THAT ASSIGNMENT HERE
-			//MAKE NEW FUNCTION IN COURSESERVICE AND CALL IT ;D
+
+			_milestoneService.removeMilestoneByAssignmentId(model.ID);
+
         }
 
         /// <summary>
