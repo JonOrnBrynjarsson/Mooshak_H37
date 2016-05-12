@@ -131,7 +131,7 @@ namespace Mooshak___H37.Controllers
 			var viewModel = _userService.getAllUsersName();
 			foreach (var item in viewModel)
 			{
-				item.RoleID = _userService.getRoleNamebyId(item.ID);
+				item.RoleName = _userService.getAspUserRole(item.ID);
 			}
 			return View(viewModel);
 		}

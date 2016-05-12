@@ -27,20 +27,7 @@
                     <tr>
                         <td>@(rowNo += 1)</td>
                         <td>@item.Name</td>
-                        <td>                                        
-                        @if (item.RoleID == 1)                       
-                        {
-                            @Html.Raw("Student")
-                        }
-                        else if (item.RoleID == 2)
-                        {
-                            @Html.Raw("Teacher")
-                        }
-                        else if (item.RoleID == 3)
-                        {
-                            @Html.Raw("Admin")
-                        }                         
-                        </td>
+                        <td>@item.RoleName</td>
                         <td>@item.Email</td>                                                                    
                         <td>@Html.ActionLink("Edit", "EditUser", new { item.ID })</td>                        
                         <td>@Html.ActionLink("Delete", "RemoveUser", new { item.ID })</td>
