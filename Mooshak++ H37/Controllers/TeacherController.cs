@@ -51,7 +51,7 @@ namespace Mooshak___H37.Controllers
         {
             //Creates a list of Courses that teacher is associated with.
             List<SelectListItem> result = new List<SelectListItem>();
-            var allCourses = _courseService.GetCoursesForUser();
+            var allCourses = _courseService.getCoursesForUser();
 
             result.Add(new SelectListItem() { Value = "", Text = " - Choose a course - " });
 
@@ -245,7 +245,7 @@ namespace Mooshak___H37.Controllers
         public ActionResult Assignments()
         {
 
-            var viewModel = _courseService.GetCoursesForUser();
+            var viewModel = _courseService.getCoursesForUser();
             ViewBag.Today = _assignService.Today();
 
             return View(viewModel);

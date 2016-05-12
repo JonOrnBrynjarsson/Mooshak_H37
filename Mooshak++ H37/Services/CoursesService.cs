@@ -28,7 +28,7 @@ namespace Mooshak___H37.Services
 		/// Finds the ID of logged in user
 		/// </summary>
 		/// <returns>User ID</returns>
-		public int GetCurrentUser()
+		public int getCurrentUser()
 		{
 			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
 			var currUserID = (from x in _db.Users
@@ -45,14 +45,14 @@ namespace Mooshak___H37.Services
 		/// <returns>list of all Courses</returns>
 		public List<CourseViewModel> getAllCourses()
         {
-            var Courses = (from x in _db.Courses
+            var courses = (from x in _db.Courses
 						   where x.IsRemoved != true
 						   orderby x.Name ascending
                            select x).ToList();
 
             var viewModel = new List<CourseViewModel>();
 
-            foreach (var course in Courses)
+            foreach (var course in courses)
             {
                 CourseViewModel model = new CourseViewModel
                 {
@@ -72,11 +72,10 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds all Courses Associated with given User
 		/// </summary>
-		/// <param name="UserID"></param>
 		/// <returns>List of Courses</returns>
         public List<CourseViewModel> getAllCoursesByUserID(int UserID)
         {
-            List<Course> Courses = null;
+            List<Course> courses = null;
 
             var coursesID = (from x in _db.UserCourseRelations
                              where x.UserID == UserID &&
@@ -85,13 +84,13 @@ namespace Mooshak___H37.Services
 
             foreach (var id in coursesID)
             {
-                Courses.Add(getCourseByID(id));
+                courses.Add(getCourseByID(id));
             }
 
             var viewModel = new List<CourseViewModel>();
 
-	        if (Courses != null)
-		        foreach (var course in Courses)
+	        if (courses != null)
+		        foreach (var course in courses)
 		        {
 			        CourseViewModel model = new CourseViewModel
 			        {
@@ -111,10 +110,10 @@ namespace Mooshak___H37.Services
 		/// Finds all Courses that LOGGED IN User is Associated with.
 		/// </summary>
 		/// <returns>List of Courses</returns>
-		public List<CourseViewModel> GetCoursesForUser()
+		public List<CourseViewModel> getCoursesForUser()
 		{
 			//Finds current User
-			var currUsId = GetCurrentUser();
+			var currUsId = getCurrentUser();
 
 			//Creates a List of Course IDs that User is associated with
 			var userCourses = (from uscr in _db.UserCourseRelations
@@ -123,14 +122,14 @@ namespace Mooshak___H37.Services
 							   select uscr.CourseID).ToList();
 
 			//Selectes Courses that are in the previous userCourses List.
-			var Courses = (from courses in _db.Courses
-							   where userCourses.Contains(courses.ID) && courses.IsRemoved != true
-							   orderby courses.ID descending
-							   select courses).ToList();
+			var courses = (from crs in _db.Courses
+							   where userCourses.Contains(crs.ID) && crs.IsRemoved != true
+							   orderby crs.ID descending
+							   select crs).ToList();
 			var viewModel = new List<CourseViewModel>();
 
 			//Creates a View Model for Given Courses.
-			foreach (var course in Courses)
+			foreach (var course in courses)
 			{
                 if (_assignmentsService.getAssignmentsInCourse(course.ID).Count != 0)
                 {
@@ -151,7 +150,10 @@ namespace Mooshak___H37.Services
 			return viewModel;
 		}
 
-		//Adds User To Course
+		/// <summary>
+		/// TODO
+		/// </summary>
+		/// <param name="model"></param>
         internal void addUserToCourse(AddUserToCourseViewModel model)
         {
             int roleID = 1;
@@ -188,6 +190,10 @@ namespace Mooshak___H37.Services
 			return course;
 		}
 
+		/// <summary>
+		/// Adds a course into the database table Courses.
+		/// </summary>
+		/// <param name="model">this is the course that will be added.</param>
 		internal void setCourse(CourseViewModel model)
         {
             _db.Courses.Add(new Course
@@ -200,6 +206,10 @@ namespace Mooshak___H37.Services
             _db.SaveChanges();
         }
 
+		/// <summary>
+		/// Searches the database for a course with matching id as the parameter given
+		/// and returns an entity model Course if it is found
+		/// </summary>
         public Course getCourseByID(int courseID)
         {
 
@@ -215,6 +225,7 @@ namespace Mooshak___H37.Services
 
 			return course;
         }
+
 		//in progress
 		public CourseViewModel getCourseViewModelByID(int courseID)
 		{

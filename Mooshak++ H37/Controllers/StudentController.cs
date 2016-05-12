@@ -52,7 +52,7 @@ namespace Mooshak___H37.Controllers
 		public ActionResult Assignments()
 		{
 			//Returns all assignments in all Courses that user is in.
-			var viewModel = _courseService.GetCoursesForUser();
+			var viewModel = _courseService.getCoursesForUser();
             ViewBag.Today = _assignService.Today();
 			return View(viewModel);
 		}
