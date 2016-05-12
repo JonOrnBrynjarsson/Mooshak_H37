@@ -328,7 +328,7 @@ namespace Mooshak___H37.Services
 				FinalSolution = submission.FinalSolution,
 			};
 			//Finds Username associated with Submission
-			model.UserName = _usersService.getSingleUser(model.UserID).Name;
+			model.UserName = _usersService.getSingleUserInfo(model.UserID).Name;
 			//Finds Code associated with Submission
 			model.code = _filesService.getSubmissionFile(submissionId);
 			//Finds Testrun associated with Submission

@@ -152,7 +152,7 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult EditUser(int id)
 		{
-			var viewModel = _userService.getSingleUser(id);
+			var viewModel = _userService.getSingleUserInfo(id);
 			return View(viewModel);
 		}
 

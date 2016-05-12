@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Services;
@@ -73,11 +74,11 @@ namespace Mooshak___H37.Tests.Services
 		public void getAllActiveUsersInSystem()
 		{
 			// Arrange:
-			int numOfActiveUsers = 2;
+			int numOfActiveUsers = 3;
 			// Act:
 			var result = _usersService.UsersInSystem();
 			// Assert:
-			Assert.AreEqual(numOfActiveUsers, result);
+			Assert.AreEqual(numOfActiveUsers, result.Count);
 		}
 
 		[TestMethod]
@@ -88,7 +89,7 @@ namespace Mooshak___H37.Tests.Services
 			comparisonList.Add("Jón Gunnarsson");
 			comparisonList.Add("Gunna Jónsdóttir");
 			comparisonList.Add("Stafróf málsgrein");
-
+	
 			// Act:
 			var result = _usersService.getAllUsersName();
 			// Assert:
@@ -102,7 +103,7 @@ namespace Mooshak___H37.Tests.Services
 			// Arrange:
 			string userName = "Gunna Jónsdóttir";
 			// Act:
-			var result = _usersService.getSingleUser(3);
+			var result = _usersService.getSingleUserInfo(3);
 			// Assert:
 			Assert.AreEqual(result.Name, userName);
 		}
