@@ -138,8 +138,8 @@ namespace Mooshak___H37.Services
 
             //Users associated with Course
             var userid = (from usr in _db.UserCourseRelations
-                          where
-                          assignment.CourseID == usr.CourseID
+                          where assignment.CourseID == usr.CourseID
+						  && usr.RoleID == 1 //1 is Student
                           select usr.UserID).ToList();
 
 

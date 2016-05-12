@@ -29,13 +29,13 @@ namespace Mooshak___H37.Services
 		}
 
 		//Removes Testcase with associated with given model
-		internal void removeTestCase(TestCaseViewModel model)
+		internal void removeTestCase(int testcaseId)
 		{
 			//Finds test Case Associated with Given model
 			var testcase = (from test in _db.TestCases
-							 where test.ID == model.ID
+							 where test.ID == testcaseId
 							 && test.IsRemoved == false
-							 select test).FirstOrDefault();
+							 select test).SingleOrDefault();
 
 			if (testcase == null)
 			{
