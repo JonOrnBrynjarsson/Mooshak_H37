@@ -23,7 +23,8 @@
                                 <th>Due Date</th>
                                 <th>Submitted</th>
                                 <th>Grade</th>
-                                <th></th>
+                                <th>Details</th>
+								<th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,7 +34,7 @@
                             {
                                 <tr style="@(ViewBag.Today > it.DueDate ? "color:grey; font-style:italic; Background-color:#f2f2f2; " : "")">
                                     <td>@(rowNo += 1)</td>
-                                    <td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
+                                    <td>@it.Name</td>
                                     <td>@it.DueDate</td>
                                     <td>
                                         @Html.DisplayFor(modelItem => it.Submitted)
@@ -41,7 +42,8 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => it.TotalGrade)
                                     </td>
-                                    <td></td>
+									<td>@Html.ActionLink("Details", "ViewAssignment", new { id = it.ID })</td>
+									<td></td>
                                 </tr>
                             }
                         </tbody>

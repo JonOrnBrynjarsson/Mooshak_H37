@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace Mooshak___H37.Controllers
 {
-	//[Authorize(Roles = "Teacher")]
+	[Authorize(Roles = "Teacher")]
 	public class TeacherController : BasicController
 	{
 		readonly AssigmentsService _assignService = new AssigmentsService(null);
@@ -52,7 +52,7 @@ namespace Mooshak___H37.Controllers
         {
             //Creates a list of Courses that teacher is associated with.
             List<SelectListItem> result = new List<SelectListItem>();
-            var allCourses = _courseService.getCoursesForUser();
+            var allCourses = _courseService.getCoursesForUserWithEmptyCourses();
 
             result.Add(new SelectListItem() { Value = "", Text = " - Choose a course - " });
 
@@ -91,7 +91,7 @@ namespace Mooshak___H37.Controllers
             if (ModelState.IsValid)
             {
                 _assignService.createAssignment(model);
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewAssignments");
             }
             else
             {
@@ -152,25 +152,6 @@ namespace Mooshak___H37.Controllers
                 return View(model);
             }
 
-            //if (_milestoneService.TeacherCanCreateMilestone(model, assigID))
-            //{
-            //	if (ModelState.IsValid)
-            //	{
-            //		_milestoneService.CreateMilestone(model, assigID);
-            //		return RedirectToAction("Milestones", new { id = assigID });
-            //	}
-            //	else
-            //	{
-            //		ViewBag.CourseList = GetCourses();
-            //		return View(model);
-            //	}
-            //}
-            //else
-            //{
-            //	return View("Error");
-            //}
-
-
         }
 
         [HttpGet]
@@ -226,7 +207,6 @@ namespace Mooshak___H37.Controllers
                 try
                 {
                     _submissionsService.gradeAssignment(model);
-                    //return RedirectToAction("ViewSubmissions", new { id = model.ID });
                     return RedirectToAction("ViewSubmissions", new
                     {
                         milestoneID =
@@ -436,7 +416,6 @@ namespace Mooshak___H37.Controllers
             try
             {
                 _testcaseService.removeTestCase(testcaseId);
-                //LAGA::
 	            return RedirectToAction("TestCases", new {milID = milestoneID});
 
             }
