@@ -73,27 +73,38 @@ namespace Mooshak___H37.Tests.Services
 		public void getAllActiveUsersInSystem()
 		{
 			// Arrange:
-			
+			int numOfActiveUsers = 2;
 			// Act:
 			var result = _usersService.UsersInSystem();
 			// Assert:
-			Assert.AreEqual(2, result);
+			Assert.AreEqual(numOfActiveUsers, result);
 		}
 
 		[TestMethod]
-		public void GetAll()
+		public void GetAllUserName()
 		{
 			// Arrange:
-			Array comparisonList  {"Jón Gunnarsson"};
-
-					"Gunna Jónsdóttir",
-					"Stafróf málsgrein";
+			List<string> comparisonList = new List<string>();
+			comparisonList.Add("Jón Gunnarsson");
+			comparisonList.Add("Gunna Jónsdóttir");
+			comparisonList.Add("Stafróf málsgrein");
 
 			// Act:
 			var result = _usersService.getAllUsersName();
 			// Assert:
-			Assert.AreSame();
+			Assert.AreSame(result, comparisonList);
 
+		}
+
+		[TestMethod]
+		public void getSingleUser()
+		{
+			// Arrange:
+			string userName = "Gunna Jónsdóttir";
+			// Act:
+			var result = _usersService.getSingleUser(3);
+			// Assert:
+			Assert.AreEqual(result.Name, userName);
 		}
 
 		[TestMethod]
