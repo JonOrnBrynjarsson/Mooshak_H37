@@ -11,7 +11,7 @@ namespace Mooshak___H37.Controllers
 	public class HomeController : BasicController
 	{
 		readonly UsersService _userService = new UsersService();
-		readonly AssigmentsService _assignService = new AssigmentsService();
+		readonly AssignmentsService _assignService = new AssignmentsService();
 		readonly CoursesService _courseService = new CoursesService();
 		readonly MilestoneService _milestoneService = new MilestoneService();
 		readonly TestCaseService _testcaseService = new TestCaseService();

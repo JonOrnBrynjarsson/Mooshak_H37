@@ -296,7 +296,7 @@
     <Compile Include="Models\Viewmodels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Viewmodels\AdminErrorViewmModel.cs" />
-    <Compile Include="Services\AssigmentsService.cs" />
+    <Compile Include="Services\AssignmentsService.cs" />
     <Compile Include="Services\CoursesService.cs" />
     <Compile Include="Services\ErrorsService.cs" />
     <Compile Include="Services\FilesService.cs" />

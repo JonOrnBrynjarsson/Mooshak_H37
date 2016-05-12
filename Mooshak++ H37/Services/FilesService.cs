@@ -62,7 +62,7 @@ namespace Mooshak___H37.Services
 					{
 						//ID = 1,
 						MilestoneID = milestonedId,
-						UserID = _usersService.getUserIdForCurrentyApplicationUser(),
+						UserID = _usersService.getUserIdForCurrentApplicationUser(),
 						ProgramFileLocation = "a",
 						//Grade = 0,
 						IsGraded = false,
