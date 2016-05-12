@@ -47,8 +47,8 @@ namespace Project_4.Utilities
 			}
 			catch (Exception e)
 			{
-				System.Console.WriteLine(e);
-				throw;
+				//System.Console.WriteLine(e);
+				//throw;
 			}
 			
 		}
