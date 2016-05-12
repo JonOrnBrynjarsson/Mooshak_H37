@@ -90,7 +90,7 @@ namespace Mooshak___H37.Controllers
         {
             if (ModelState.IsValid)
             {
-                _assignService.CreateAssignment(model);
+                _assignService.createAssignment(model);
                 return RedirectToAction("Index");
             }
             else
@@ -328,7 +328,7 @@ namespace Mooshak___H37.Controllers
             {
                 try
                 {
-                    _assignService.EditAssignment(model);
+                    _assignService.editAssignment(model);
                     return RedirectToAction("ViewAssignment", new { id = model.ID });
                 }
                 catch (Exception e)
