@@ -60,11 +60,9 @@ namespace Mooshak___H37.Services
 				{
 					Submission submission = new Submission
 					{
-						//ID = 1,
 						MilestoneID = milestonedId,
 						UserID = _usersService.getUserIdForCurrentApplicationUser(),
-						ProgramFileLocation = "a",
-						//Grade = 0,
+						ProgramFileLocation = "a", //Required parameter -> set when db is updated.
 						IsGraded = false,
 						FinalSolution = false,
 						DateSubmitted = DateTime.Now
@@ -127,9 +125,8 @@ namespace Mooshak___H37.Services
 		public string getStudentRunFolder(int submissionId)
 		{
 			string userName = getUserNameBySubmissionId(submissionId);
-
-			string runfolder = @ConfigurationManager.AppSettings["RunLocation"].ToString() +
-			                   userName;// + @"\";
+			string runfolder = @ConfigurationManager.AppSettings["RunLocation"] +
+			                   userName;
 
 			if (!Directory.Exists(runfolder))
 			{

@@ -6,25 +6,24 @@
 
 
 <h3>Are you sure you want to delete this?</h3>
-<div>
-	<hr />
-	<div class="clearfix">
-		<div class="large-left-portion">
+<hr />
+<div class="clearfix">
+	<div class="large-left-portion">
 
-			<div class="form-group">
-				<pre class="prettyprint">@Html.DisplayFor(model => model.Inputstring)</pre>
-			</div>
+		<div class="form-group">
+			<pre class="prettyprint">@Html.DisplayFor(model => model.Inputstring)</pre>
 		</div>
-
-		@using (Html.BeginForm())
-		{
-			@Html.AntiForgeryToken()
-
-			<div class="small-right-portion btn-group-vertical">
-				<input type="hidden" name="TestcaseId" value="@Model.ID" />
-				<input type="submit" value="Delete" class="btn btn-primary create-button" />
-				@Html.ActionLink("Go Back", "TestCases", new { milID = Model.MilestoneID }, new { @class = "btn btn-primary create-button" })
-			</div>
-		}
 	</div>
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+
+		<div class="form-actions no-color">
+			<input type="hidden" name="testcaseId" value="@Model.ID"/>
+			<input type="hidden" name="milestoneId" value="@Model.MilestoneID"/>
+			<input type="submit" value="Delete" class="btn btn-default"/> |
+			@Html.ActionLink("Back to List", "Index")
+		</div>
+	}
 </div>
+

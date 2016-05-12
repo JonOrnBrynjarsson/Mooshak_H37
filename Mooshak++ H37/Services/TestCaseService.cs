@@ -50,27 +50,20 @@ namespace Mooshak___H37.Services
 		/// Finds Testcases associated with given Milestone
 		/// </summary>
 		/// <param name="milestoneId"></param>
-		/// <returns>List of Test cases</returns>
-		public List<TestCaseViewModel> getTestCasesForMilestone(int milestoneId)
+		/// <returns>List of Testcasesviewmodel</returns>
+		public List<TestCaseViewModel> getTestCasesVMForMilestone(int milestoneId)
 		{
-			//Finds test cases for given Milestone, that have not been removed
-			var testcases = (from test in _db.TestCases
-							 orderby test.ID
-							 where test.MilestoneID == milestoneId
-							 && test.IsRemoved != true
-							 select test).ToList();
-
+			List < TestCase >  testcases = GetTestCasesForMilstone(milestoneId);
 			var viewModel = new List<TestCaseViewModel>();
-			//Milestone has Test Cases
 			if (testcases != null)
 			{
-				//Creates List of Test Case Models for Given Milestone
 				foreach (var test in testcases)
 				{
 					TestCaseViewModel model = new TestCaseViewModel
 					{
 						ID = test.ID,
 						Inputstring = test.Inputstring,
+						Outputstring = test.Outputstring,
 						MilestoneID = test.MilestoneID,
 					};
 					viewModel.Add(model);
@@ -79,6 +72,22 @@ namespace Mooshak___H37.Services
 
 			return viewModel;
 		}
+
+		/// <summary>
+		/// Get a list of testcases for a particular milestone
+		/// </summary>
+		/// <param name="milestoneId">The ID of the milestone</param>
+		/// <returns>A list of testcases</returns>
+		public List<TestCase> GetTestCasesForMilstone(int milestoneId)
+		{
+			return (from test in _db.TestCases
+					orderby test.ID
+					where test.MilestoneID == milestoneId
+					&& test.IsRemoved != true
+					select test).ToList();
+		}
+
+
 
 		/// <summary>
 		/// Finds Test Case associated with given Test Case ID

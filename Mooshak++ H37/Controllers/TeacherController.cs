@@ -400,7 +400,7 @@ namespace Mooshak___H37.Controllers
         [HttpGet]
         public ActionResult TestCases(int milID)
         {
-            var viewModel = _testcaseService.getTestCasesForMilestone(milID);
+            var viewModel = _testcaseService.getTestCasesVMForMilestone(milID);
 
             ViewBag.MilestID = milID;
 
@@ -430,13 +430,14 @@ namespace Mooshak___H37.Controllers
             }
         }
         [HttpPost]
-        public ActionResult removeTestCase(int TestcaseId)
+        public ActionResult removeTestCase(int testcaseId, int milestoneID)
         {
             try
             {
-                _testcaseService.removeTestCase(TestcaseId);
+                _testcaseService.removeTestCase(testcaseId);
                 //LAGA::
-                return RedirectToAction("Index");
+	            return RedirectToAction("TestCases", new {milID = milestoneID});
+
             }
             catch (Exception e)
             {
