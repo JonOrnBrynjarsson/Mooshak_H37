@@ -350,23 +350,22 @@ namespace Mooshak___H37.Services
         }
 
         /// <summary>
-        /// Takes in Assignment Entity Model and UserID, and finds if Given User Has a Submission Associated with Assignment.
+        /// Takes in Assignment Entity Model and UserId, and finds if Given User Has a Submission Associated with Assignment.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="userID"></param>
         /// <returns>True or False</returns>
-        public bool userHasSubmissionForAssignment(Assignment entity, int userID)
+        public bool userHasSubmissionForAssignment(Assignment entity, int userId)
         {
             //Gets list of milestones for associated Assignment
             var milestones = (from mil in _db.Milestones
-                              where mil.AssignmentID ==
-                              entity.ID
+                              where mil.AssignmentID == entity.ID
+							  && mil.IsRemoved == false
                               select mil.ID);
 
             //Gets List of Submissions
             var submissions = (from submit in _db.Submissions
                                where milestones.Contains(submit.MilestoneID) &&
-                               submit.UserID == userID
+                               submit.UserID == userId &&
+							   submit.IsRemoved == false
                                select submit).Count();
 
             return (submissions >= 1);
@@ -374,20 +373,18 @@ namespace Mooshak___H37.Services
 
         /// <summary>
         /// First finds Milestones associate with assignment. Then It goes through the milestones and Finds...
-        /// Newst associated Submissions for each milestone. It then goes through the information and 
+        /// Newest associated Submissions for each milestone. It then goes through the information and 
         /// Calculates Total Grade for Given Assignment.
         /// </summary>
-        /// <param name="AssignmentID"></param>
-        /// <param name="userID"></param>
         /// <returns>Total Grade for Assignment</returns>
-        private double getGradeFromSubmissions(int AssignmentID, int userID)
+        private double getGradeFromSubmissions(int AssignmentId, int userId)
         {
             var milestones = (from mil in _db.Milestones
-                              where mil.AssignmentID == AssignmentID &&
+                              where mil.AssignmentID == AssignmentId &&
                               mil.IsRemoved != true
                               select mil).ToList();
 
-            List<GradeViewModel> NewestSubmissions = new List<GradeViewModel>();
+            List<GradeViewModel> newestSubmissions = new List<GradeViewModel>();
 
 
             foreach (var item in milestones)
@@ -396,18 +393,18 @@ namespace Mooshak___H37.Services
                 {
                     SubmissionData = (from newsub in _db.Submissions
                                       where item.ID == newsub.MilestoneID &&
-                                      newsub.UserID == userID &&
-                                      newsub.IsRemoved != true
+                                      newsub.UserID == userId &&
+                                      newsub.IsRemoved == false
                                       orderby newsub.DateSubmitted descending
                                       select newsub).FirstOrDefault(),
                     MilestoneData = item,
                 };
-                NewestSubmissions.Add(model);
+                newestSubmissions.Add(model);
             }
 
             double totalGrade = 0;
 
-            foreach (var it in NewestSubmissions)
+            foreach (var it in newestSubmissions)
             {
                 if (it.SubmissionData != null)
                 {
@@ -420,7 +417,10 @@ namespace Mooshak___H37.Services
             return totalGrade;
         }
 
-        //Creates new assignment with given Assignment Model
+        /// <summary>
+		/// Create a new assignment in the Assignment table from the database
+		/// with the information of the model param sent in.
+		/// </summary>
         internal void createAssignment(AssignmentViewModel model)
         {
             _db.Assignments.Add(new Assignment
@@ -471,7 +471,7 @@ namespace Mooshak___H37.Services
         public int numberOfAssignments()
         {
             var assignments = (from assi in _db.Assignments
-                               where assi.IsRemoved != true
+                               where assi.IsRemoved == false
                                select assi).Count();
 
             return assignments;
