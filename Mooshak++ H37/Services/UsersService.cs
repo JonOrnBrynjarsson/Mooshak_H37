@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Models.Viewmodels;
+using System;
 using SecurityWebAppTest.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,6 +121,7 @@ namespace Mooshak___H37.Services
 		/// <param name="courseId">the course id that we use to filter students out of the whole list</param>
         internal dynamic getAllUsersNameNotInCourse(int courseId)
         {
+
             //gets all the users in the system
             var usersInCourse = getUsersInCourse(courseId);
 
@@ -268,7 +270,10 @@ namespace Mooshak___H37.Services
 				};
 				return model;
 			}
-	        return null;
+			else
+			{
+				throw new Exception("User Does Not Exists");
+			}
 
         }
 
@@ -397,6 +402,10 @@ namespace Mooshak___H37.Services
 					_db.SaveChanges();
 
 					removeUserConnections(userId.Value);
+
+					//	var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+					//	ApplicationUser u = um.FindById(aspUser);
+					//	Membership.DeleteUser(u.UserName, true);
 				}
 			}
 		}
