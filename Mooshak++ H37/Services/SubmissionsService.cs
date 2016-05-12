@@ -95,6 +95,7 @@ namespace Mooshak___H37.Services
             var subs = (from subm in _db.Submissions
                         where subm.ID == submissionId
                         && subm.IsRemoved == false
+						orderby subm.DateSubmitted descending
                         select subm).FirstOrDefault();
 
 			if (subs == null)

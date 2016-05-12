@@ -74,6 +74,8 @@ namespace Mooshak___H37.Controllers
 				return View("~/Views/Shared/Cerror.cshtml", e);
 			}
 
+			ViewBag.AssignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneId);
+
 			MilestoneViewmodel m = new MilestoneViewmodel();
 
 			m = _milestoneService.getSingleMilestone(milestoneId);
