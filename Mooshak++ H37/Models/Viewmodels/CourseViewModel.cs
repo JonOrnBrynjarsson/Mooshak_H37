@@ -10,8 +10,10 @@ namespace Mooshak___H37.Models.Viewmodels
     public class CourseViewModel
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yy 00:00:00}",
+		[Required]
+		public string Name { get; set; }
+		[Required]
+		[DisplayFormat(DataFormatString = "{0:dd.MM.yy 00:00:00}",
                ApplyFormatInEditMode = true)]
 
 		[Display(Name = "Start Date")]
