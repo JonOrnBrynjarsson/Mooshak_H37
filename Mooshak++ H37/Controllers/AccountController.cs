@@ -177,8 +177,8 @@ namespace Mooshak___H37.Controllers
 
             // If we got this far, something failed, redisplay form
             //return RedirectToAction("CreateUser", "Admin", model);
-            return View(model);
-        }
+            return RedirectToAction("ViewUsers", "Admin");
+		}
 
         //
         // GET: /Account/ConfirmEmail
@@ -225,13 +225,13 @@ namespace Mooshak___H37.Controllers
                 // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
+			// If we got this far, something failed, redisplay form
+			return RedirectToAction("Index");
+		}
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
+		//
+		// GET: /Account/ForgotPasswordConfirmation
+		[AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();

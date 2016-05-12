@@ -1,10 +1,10 @@
 ﻿@model Mooshak___H37.Models.Viewmodels.UserViewModel
 
 @{
-	ViewBag.Title = "EditUser";
+	ViewBag.Title = "Edit User";
 }
 
-<h2>Edit Milestone</h2>
+<h2>Edit User</h2>
 <hr />
 
 
@@ -30,6 +30,29 @@
 						@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 					</div>
 				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+					<div class="col-md-10">
+						@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+					</div>
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.RoleName, new { @class = "col-md-2 control-label" })
+					<div class="col-md-10">
+						@Html.DropDownListFor(m => m.RoleName, new SelectList(
+											new List<Object> {
+												new { value = "Student", text = "Student"},
+												new { value = "Teacher", text = "Teacher" },
+												new { value = "Admin", text = "Admin" }
+												},
+											"value",
+											"text",
+											2), new { @class = "form-control" })
+					</div>
+				</div>
+
 
 
 			</div>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.UserViewModel>
 
 @{
-    ViewBag.Title = "ViewUsers";
+    ViewBag.Title = "View Users";
 }
 
 <div class="page-header">
@@ -50,6 +50,7 @@
 
     </div>
 	<div class="small-right-portion btn-group-vertical">
+		@Html.ActionLink("Create New User", "Register", "Account", null, new { @class = "btn btn-primary create-button" })
 		@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
 	</div>
 

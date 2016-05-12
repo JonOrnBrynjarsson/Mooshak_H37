@@ -155,7 +155,7 @@ namespace Mooshak___H37.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_userService.EditUser(model);
+				_userService.editUser(model);
 			}
 			else
 			{
