@@ -101,3 +101,16 @@ h1
 	min-width: 150px;
 	display:block;
 }
+
+.btn-group-vertical input.btn {
+	border-top-right-radius: 4px !important;
+	border-bottom-left-radius: 4px !important;
+	border-top-left-radius: 4px !important;
+	border-bottom-right-radius: 4px !important;
+	padding: 10px;
+	margin: 0px 0px 5px 0px;
+	border: 20px;
+
+	min-width: 150px;
+	display:block;
+}

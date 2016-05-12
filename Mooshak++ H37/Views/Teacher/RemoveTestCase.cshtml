@@ -7,34 +7,24 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <hr />
-    @*<dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Inputstring)
-        </dt>
+	<hr />
+	<div class="clearfix">
+		<div class="large-left-portion">
 
-        <dd>
-            
-        </dd>
+			<div class="form-group">
+				<pre class="prettyprint">@Html.DisplayFor(model => model.Inputstring)</pre>
+			</div>
+		</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MilestoneID)
-        </dt>
+		@using (Html.BeginForm())
+		{
+			@Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.MilestoneID)
-        </dd>
-
-    </dl>*@
-    <h4>@Html.DisplayFor(model => model.Inputstring)</h4>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-	    <div class="form-actions no-color">
-		    <input type="hidden" name="TestcaseId" value="@Model.ID"/>
-		    <input type="submit" value="Delete" class="btn btn-default"/> |
-		    @Html.ActionLink("Back to List", "Index")
-	    </div>
-    }
+			<div class="small-right-portion btn-group-vertical">
+				<input type="hidden" name="TestcaseId" value="@Model.ID" />
+				<input type="submit" value="Delete" class="btn btn-primary create-button" />
+				@Html.ActionLink("Go Back", "TestCases", new { milID = Model.MilestoneID }, new { @class = "btn btn-primary create-button" })
+			</div>
+		}
+	</div>
 </div>

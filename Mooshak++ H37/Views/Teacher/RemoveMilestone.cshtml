@@ -1,7 +1,7 @@
 ﻿@model Mooshak___H37.Models.Viewmodels.MilestoneViewmodel
 
 @{
-    ViewBag.Title = "RemoveMilestone";
+    ViewBag.Title = "Remove Milestone";
 }
 
 <h2>Remove Milestone</h2>
@@ -32,17 +32,18 @@
 				</tbody>
 			</table>
 		</div>
-	</div>
+
+
+
+			@using (Html.BeginForm())
+			{
+				@Html.AntiForgeryToken()
+
+				<div class="small-right-portion btn-group-vertical">
+					<input type="submit" value="Delete" class="btn btn-primary create-button" />
+					@Html.ActionLink("Go Back", "Milestones", new { id = Model.AssignmentID }, new { @class = "btn btn-primary create-button" })
+				</div>
+			}
+
+		</div>
 </div>
-
-@using (Html.BeginForm())
-{
-	@Html.AntiForgeryToken()
-
-	<div class="form-actions no-color">
-		<input type="submit" value="Delete" class="btn btn-default" /> |
-		@Html.ActionLink("Back to List", "Index")
-	</div>
-}
-
-

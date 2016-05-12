@@ -13,7 +13,9 @@ namespace Mooshak___H37.Models.Viewmodels
 		public string Name { get; set; }
 		[Required(ErrorMessage = "Description is required")]
 		public string Description { get; set; }
+
 		[Required(ErrorMessage = "Submissions are required")]
+		[Display(Name = "Allowed Submissions")]
 		public int AllowedSubmissions { get; set; }
 		//public double? Grade { get; set; }
 		public int AssignmentID { get; set; }
