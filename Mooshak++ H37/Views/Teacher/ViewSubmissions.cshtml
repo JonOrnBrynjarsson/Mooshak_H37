@@ -11,9 +11,6 @@
 </p>
 <table class="table table-hover">
     <tr>
-        @*<th>
-            @Html.DisplayNameFor(model => model.MilestoneID)
-        </th>*@
         <th>
             Username
         </th>
@@ -56,14 +53,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.code)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Testruns)
-        </td>
+        </td>*@
         <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
 			@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })
-            @*@Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
         </td>
     </tr>
 }

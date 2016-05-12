@@ -19,19 +19,18 @@ namespace Mooshak___H37.Services
 		{
 			_db = dbContext ?? new ApplicationDbContext();
 		}
-/*
-		public UsersService()
-		{
-			_db = new ApplicationDbContext();
-		}*/
 
+		/// <summary>
+		/// Get a list of all users currenty in the system
+		/// </summary>
+		/// <returns>UserViewModel with name, id, and mail of all users</returns>
         public List<UserViewModel> getAllUsersName()
         {
 			//gets all the users in the system
             var Users = (from x in _db.Users
 						 where x.IsRemoved == false
 						 orderby x.Name ascending
-                           select x).ToList();
+                         select x).ToList();
 
 			//retrevies the mail of all Users found above and
 			//inserts it into the list of strings
@@ -39,8 +38,9 @@ namespace Mooshak___H37.Services
 			foreach (var item in Users)
 			{
 				var mailinfo = (from y in _db.Users
-							 where item.AspNetUserId == y.AspNetUser.Id
-							 select y.AspNetUser.Email).SingleOrDefault();
+								where item.AspNetUserId == y.AspNetUser.Id
+								&& y.IsRemoved == false
+								select y.AspNetUser.Email).SingleOrDefault();
 
 				mail.Add(mailinfo);
 			}
@@ -73,7 +73,8 @@ namespace Mooshak___H37.Services
 			var usersInfo = (from ucr in _db.UserCourseRelations
 				join u in _db.Users on ucr.UserID equals u.ID
 				join c in _db.Courses on ucr.CourseID equals c.ID
-				where c.ID == courseId
+				where  u.IsRemoved == false && c.IsRemoved == false &&
+					   c.ID == courseId
 					   select  new {
 							ID = u.ID,
 							CourseID = courseId,
@@ -103,17 +104,23 @@ namespace Mooshak___H37.Services
 		{
 			var role = (from x in _db.UserCourseRelations
 						where model.CourseID == x.CourseID &&
-						model.ID == x.UserID
+						model.ID == x.UserID &&
+						x.IsRemoved == false
 						select x).FirstOrDefault();
 
 			model.RoleID = role.RoleID;
 
 		}
 
-        internal dynamic getAllUsersNameNotInCourse(int courseID)
+		/// <summary>
+		/// Gets all the users in system and all users in the course and filters
+		/// the users that are not in the specific course so they wont be included in the complete list
+		/// </summary>
+		/// <param name="courseId">the course id that we use to filter students out of the whole list</param>
+        internal dynamic getAllUsersNameNotInCourse(int courseId)
         {
             //gets all the users in the system
-            var usersInCourse = getUsersInCourse(courseID);
+            var usersInCourse = getUsersInCourse(courseId);
 
             var allUsers = getAllUsersName();
 
@@ -158,7 +165,8 @@ namespace Mooshak___H37.Services
 		{
 			var aspUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
 			var userId = (from user in _db.Users
-							where user.AspNetUserId == aspUser
+							where user.AspNetUserId == aspUser &&
+							user.IsRemoved == false
 							select user.ID).FirstOrDefault();
 			return userId;
 		}
@@ -167,6 +175,7 @@ namespace Mooshak___H37.Services
 		{
 			var aspUser = (from user in _db.Users
 				where user.ID == userId
+				&& user.IsRemoved == false
 				select user.AspNetUserId).SingleOrDefault();
 
 			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
@@ -194,15 +203,11 @@ namespace Mooshak___H37.Services
 
         }
 
-		//public string GetNameFromUserID(int userID)
-		//{
-		//	var username = (from name in _db.Users
-		//					where name.ID == userID
-		//					select name.Name).FirstOrDefault();
-		//	return username;
-		//}
-
-        internal int getUserIDbyEmail(LoginViewModel model)
+		/// <summary>
+		/// Here we send in a LoginViewModel with the email attribute filled and we find the id of the current user
+		/// </summary>
+		/// <returns>the Int id of a user</returns>
+		internal int getUserIdByEmail(LoginViewModel model)
         {
 
             var User = (from x in _db.Users
@@ -218,10 +223,11 @@ namespace Mooshak___H37.Services
             um.AddToRole(model.Id, role);
         }
 
-        public UserViewModel GetSingleUser(int userID)
+        public UserViewModel getSingleUser(int userId)
 		{
 			var user = (from us in _db.Users
-						where us.ID == userID
+						where us.ID == userId
+						&& us.IsRemoved == false
 						select us).FirstOrDefault();
 
 			var email = (from us in _db.Users
@@ -230,6 +236,7 @@ namespace Mooshak___H37.Services
 
 			if (user == null)
 			{
+				//TODO
 				//do something
 			}
 
@@ -243,19 +250,21 @@ namespace Mooshak___H37.Services
 			return model;
 		}
 
-        internal int getRoleNamebyID(int userID)
+        internal int getRoleNamebyId(int userId)
         {
             var roleID = (from x in _db.UserCourseRelations
-                        where x.UserID == userID
+                        where x.UserID == userId
+						&& x.IsRemoved == false
                         select x.RoleID).FirstOrDefault();
 
             return roleID;
         }
 
-		public string getUserNameByID(int userId)
+		public string getUserNameById(int userId)
 		{
 			var name = (from n in _db.Users
 						where n.ID == userId
+						&& n.IsRemoved == false
 						select n.Name).SingleOrDefault();
 			return name;
 		}
@@ -264,8 +273,9 @@ namespace Mooshak___H37.Services
 		{
 			var edit = (from user in _db.Users
 						where model.ID == user.ID
+						&& user.IsRemoved == false
 						select user).FirstOrDefault();
-
+			
 			if (edit != null)
 			{
 				edit.Name = model.Name;
@@ -317,19 +327,21 @@ namespace Mooshak___H37.Services
             List<int> UserList = new List<int>();
 
             var users = (from user in _db.Users
-                         where user.IsRemoved != true
+                         where user.IsRemoved == false
                          select user).Count();
 
             UserList.Add(users);
 
             var students = (from user in _db.UserCourseRelations
                          where user.RoleID == 1
+						 && user.IsRemoved == false
                          select user).Count();
 
             UserList.Add(students);
 
             var teachers = (from user in _db.UserCourseRelations
                             where user.RoleID == 2
+							&& user.IsRemoved == false
                             select user).Count();
 
             UserList.Add(teachers);
@@ -343,13 +355,18 @@ namespace Mooshak___H37.Services
             return UserList;
         }
 
-		public void removeUserByID(int? id)
+		/// <summary>
+		/// Sets isRemoved on a user to true so it counts as removed and finds the connections
+		/// and does the same thing to them from the userId
+		/// </summary>
+		/// <param name="userId"></param>
+		public void removeUserById(int? userId)
 		{
-			if(id != null)
+			if(userId != null)
 			{
 				//finds the user in the Users table from the id param.
 				var usr = (from user in _db.Users
-						   where user.ID == id.Value
+						   where user.ID == userId.Value
 						   select user).SingleOrDefault();
 
 				if (usr != null)

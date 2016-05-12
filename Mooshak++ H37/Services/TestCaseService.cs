@@ -17,23 +17,24 @@ namespace Mooshak___H37.Services
 			_db = dbContext ?? new ApplicationDbContext();
 		}
 		//Creates a new Testcase with Given Model and Milestone ID
-		internal void CreateTestCase(TestCaseViewModel model, int milestoneID)
+		internal void createTestCase(TestCaseViewModel model, int milestoneId)
 		{
 			_db.TestCases.Add(new TestCase
 			{
 				ID = model.ID,
 				Inputstring = model.Inputstring,
-				MilestoneID = milestoneID,
+				MilestoneID = milestoneId,
 			});
 			_db.SaveChanges();
 		}
 
 		//Removes Testcase with associated with given model
-		internal void RemoveTestCase(TestCaseViewModel model)
+		internal void removeTestCase(TestCaseViewModel model)
 		{
 			//Finds test Case Associated with Given model
 			var testcase = (from test in _db.TestCases
 							 where test.ID == model.ID
+							 && test.IsRemoved == false
 							 select test).FirstOrDefault();
 
 			if (testcase == null)
@@ -48,14 +49,14 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds Testcases associated with given Milestone
 		/// </summary>
-		/// <param name="milID"></param>
+		/// <param name="milestoneId"></param>
 		/// <returns>List of Test cases</returns>
-		public List<TestCaseViewModel> GetTestCasesForMilestone(int milID)
+		public List<TestCaseViewModel> getTestCasesForMilestone(int milestoneId)
 		{
 			//Finds test cases for given Milestone, that have not been removed
 			var testcases = (from test in _db.TestCases
 							 orderby test.ID
-							 where test.MilestoneID == milID
+							 where test.MilestoneID == milestoneId
 							 && test.IsRemoved != true
 							 select test).ToList();
 
@@ -82,14 +83,14 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds Test Case associated with given Test Case ID
 		/// </summary>
-		/// <param name="testCaseID"></param>
+		/// <param name="testCaseId"></param>
 		/// <returns>Test Case for given ID</returns>
-		public TestCaseViewModel GetSingleTestCase(int testCaseID)
+		public TestCaseViewModel getSingleTestCase(int testCaseId)
 		{
 			//Finds Test Case for given Test Case ID
 			var testcase = (from test in _db.TestCases
-							  where test.ID == testCaseID &&
-							  test.IsRemoved != true
+							where test.ID == testCaseId &&
+							test.IsRemoved != true
 							select test).FirstOrDefault();
 
 			if (testcase == null)
@@ -112,10 +113,11 @@ namespace Mooshak___H37.Services
 		/// Finds All Test cases in system
 		/// </summary>
 		/// <returns>Number of Test Cases</returns>
-        public int NumberOfTestCases()
+        public int numberOfTestCases()
         {
             var testCases = (from tc in _db.TestCases
-                              select tc).Count();
+							 where tc.IsRemoved == false
+							 select tc).Count();
 
             return testCases;
         }

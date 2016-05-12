@@ -27,28 +27,28 @@ namespace Mooshak___H37.Services
 		/// Finds LOGGED in user
 		/// </summary>
 		/// <returns>ID of Current User</returns>
-		public int GetCurrentUser()
+		public int getCurrentUser()
 		{
 			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
-			var currUserID = (from x in _db.Users
+			var currUserId = (from x in _db.Users
 							  where x.AspNetUserId == currentUser
 							  select x.ID).FirstOrDefault();
 
-			return currUserID;
+			return currUserId;
 		}
 		/// <summary>
 		/// Finds All submissions for Given Milestone ID
 		/// </summary>
-		/// <param name="milestoneID"></param>
+		/// <param name="milestoneId"></param>
 		/// <returns>List of Submissions</returns>
-        public List<SubmissionsViewModel> GetSubmissionsForMilestone(int milestoneID)
+        public List<SubmissionsViewModel> getSubmissionsForMilestone(int milestoneId)
         {
-            var currUsId = GetCurrentUser();
+            var currUsId = getCurrentUser();
 
 			//Finds alls submissions for given Milestone that have not been
 			//Marked as removed.
             var submissions = (from subs in _db.Submissions
-                               where subs.MilestoneID == milestoneID
+                               where subs.MilestoneID == milestoneId
                                && subs.IsRemoved != true
                                select subs).ToList();
 
@@ -75,6 +75,7 @@ namespace Mooshak___H37.Services
                     DateSubmitted = subs.DateSubmitted,
                     UserName = (from name in _db.Users
                                 where name.ID == subs.UserID
+								&& name.IsRemoved == false
                                 select name.Name).FirstOrDefault(),
 					FinalSolution = subs.FinalSolution,
                 };
@@ -87,14 +88,14 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds Submission for Given Submissions ID
 		/// </summary>
-		/// <param name="submissionID"></param>
+		/// <param name="submissionId"></param>
 		/// <returns>Submission for Given ID</returns>
-        public SubmissionsViewModel GetSubmission(int submissionID)
+        public SubmissionsViewModel getSubmission(int submissionId)
         {
 			//Finds submission that has not been marked as removed
             var subs = (from subm in _db.Submissions
-                        where subm.ID == submissionID
-                        && subm.IsRemoved != true
+                        where subm.ID == submissionId
+                        && subm.IsRemoved == false
                         select subm).FirstOrDefault();
 
 			if (subs == null)
@@ -116,6 +117,7 @@ namespace Mooshak___H37.Services
                 UserID = subs.UserID,
                 UserName = (from name in _db.Users
                             where name.ID == subs.UserID
+							&& name.IsRemoved == false
                             select name.Name).FirstOrDefault(),
 				FinalSolution = subs.FinalSolution,
             };
@@ -124,11 +126,12 @@ namespace Mooshak___H37.Services
         }
 
 		//Grades Assignment with given model.
-        internal void GradeAssignment(SubmissionsViewModel model)
+        internal void gradeAssignment(SubmissionsViewModel model)
         {
 			//Finds submission that from given Model
             var currSubmission = (from subs in _db.Submissions
                                   where subs.ID == model.ID
+								  && subs.IsRemoved == false
                                   select subs).FirstOrDefault();
 
 			//Submission Exists.
@@ -149,18 +152,18 @@ namespace Mooshak___H37.Services
 		/// Finds Submissions for given Milestone Associated
 		/// With Current Logged in User.
 		/// </summary>
-		/// <param name="milestoneID"></param>
+		/// <param name="milestoneId"></param>
 		/// <returns>List of submissions</returns>
-        public List<SubmissionsViewModel> GetSubmissionsForMilestoneForStudent(int milestoneID)
+        public List<SubmissionsViewModel> getSubmissionsForMilestoneForStudent(int milestoneId)
         {
-            var currUser = GetCurrentUser();
+            var currUser = getCurrentUser();
 
 			//Finds submissions for current user for given milestone
 			//That have not been marked as removed.
 			var submissions = (from subs in _db.Submissions
-				where subs.MilestoneID == milestoneID &&
+				where subs.MilestoneID == milestoneId &&
 				      subs.UserID == currUser &&
-				      subs.IsRemoved != true
+				      subs.IsRemoved == false
 				select subs).OrderByDescending(x => x.ID).ToList();
 
 			if (submissions == null)
@@ -187,6 +190,7 @@ namespace Mooshak___H37.Services
                     UserID = subs.UserID,
                     UserName = (from name in _db.Users
                                 where name.ID == subs.UserID
+								&& name.IsRemoved == false
                                 select name.Name).FirstOrDefault(),
 					FinalSolution = subs.FinalSolution,
 					NumOfTestruns = getNumOfTestruns(subs.ID),
@@ -207,8 +211,9 @@ namespace Mooshak___H37.Services
 		public int getNumOfTestruns(int submissionId)
 		{
 			return (from t in _db.Testruns
-				where t.SubmissionID == submissionId
-				select t.ID).Count();
+					where t.SubmissionID == submissionId
+					&& t.IsRemoved == false
+					select t.ID).Count();
 		}
 
 		/// <summary>
@@ -219,8 +224,9 @@ namespace Mooshak___H37.Services
 		public int getNumOfSuccessfulTestruns(int submissionId)
 		{
 			return (from t in _db.Testruns
-				where t.SubmissionID == submissionId
-				      && t.IsSuccess == true 
+					where t.SubmissionID == submissionId
+				    && t.IsSuccess == true 
+					&& t.IsRemoved == false
 					select t.ID).Count();
 		}
 
@@ -232,7 +238,8 @@ namespace Mooshak___H37.Services
 		public List<Testrun> getListofTestruns(int submissionId)
 		{
 			return (from t in _db.Testruns
-				where t.SubmissionID == submissionId
+					where t.SubmissionID == submissionId
+					&& t.IsRemoved == false
 					select t).ToList();
 		}
 
@@ -285,9 +292,10 @@ namespace Mooshak___H37.Services
 		/// Finds All submissions in system
 		/// </summary>
 		/// <returns>Number of all submissions</returns>
-		public int NumberOfSubmissions()
+		public int numberOfSubmissions()
         {
             var submissions = (from subs in _db.Submissions
+							   where subs.IsRemoved == false
                               select subs).Count();
 
             return submissions;
@@ -320,7 +328,7 @@ namespace Mooshak___H37.Services
 				FinalSolution = submission.FinalSolution,
 			};
 			//Finds Username associated with Submission
-			model.UserName = _usersService.GetSingleUser(model.UserID).Name;
+			model.UserName = _usersService.getSingleUser(model.UserID).Name;
 			//Finds Code associated with Submission
 			model.code = _filesService.getSubmissionFile(submissionId);
 			//Finds Testrun associated with Submission
@@ -333,12 +341,13 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds ID of milestone associated with Submission
 		/// </summary>
-		/// <param name="submissionID"></param>
+		/// <param name="submissionId"></param>
 		/// <returns>ID of Milestone</returns>
-		public int GetMilestoneIDFromSubmissionID(int submissionID)
+		public int getMilestoneIDFromSubmissionID(int submissionId)
 		{
 			var milestone = (from mil in _db.Submissions
-							 where mil.ID == submissionID
+							 where mil.ID == submissionId
+							 && mil.IsRemoved == false
 							 select mil.MilestoneID).FirstOrDefault();
 
 			return milestone;
