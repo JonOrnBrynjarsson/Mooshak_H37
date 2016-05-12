@@ -53,13 +53,16 @@ namespace Mooshak___H37.Controllers
 		[HttpPost]
 		public ActionResult CreateCourse(CourseViewModel model)
 		{
-			//Save the new course that was just created to the DB
-			_courseService.setCourse(model);
+			if (ModelState.IsValid)
+			{
+				//Save the new course that was just created to the DB
+				_courseService.setCourse(model);
 
-			//find the id number of the course just created from the DB
-			int Courseid = _courseService.getCourseIdByName(model.Name);
-
-			return RedirectToAction("EditCourse", new { id = Courseid });
+				//find the id number of the course just created from the DB
+				int Courseid = _courseService.getCourseIdByName(model.Name);
+				return RedirectToAction("EditCourse", new { id = Courseid });
+			}
+			return View(model);
 		}
 
 		public ActionResult EditCourse(int? id)
