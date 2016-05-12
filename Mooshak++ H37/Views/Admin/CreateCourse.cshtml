@@ -1,121 +1,49 @@
 ﻿@model Mooshak___H37.Models.Viewmodels.CourseViewModel
 @{
-    ViewBag.Title = "CreateCourse";
+	ViewBag.Title = "CreateCourse";
 }
 
-<h2>Create Course</h2>
 
 <link type="text/css" rel="stylesheet" href="~/Content/Admin.css">
-
+<div class="page-header">
+	<h1>Create Course <small>Admin</small></h1>
+</div>
 <div class="clearfix">
 
 
 
-    @*<div class="admin-createCourse-buttons">
-        <button class="btn btn-primary upload-csv-button" id="createUser">Upload CSV (todo)</button>
-    </div>*@
+	@using (Html.BeginForm("CreateCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+	{
+		@Html.AntiForgeryToken()
 
+		<div class="large-left-portion">
 
-    <div class="large-left-portion">
+			@Html.ValidationSummary("", new { @class = "text-danger" })
+			<div class="form-group">
+				@Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+				</div>
+			</div>
+			@Html.ValidationSummary("", new { @class = "text-danger" })
+			<div class="form-group">
+				@Html.LabelFor(m => m.StartDate, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10 form-inline">
+					@Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })@Html.Raw("DD/MM/YY 00:00:00")
+				</div>
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Isactive, new { @class = "col-md-2 control-label" })
+				<div class="col-md-10">
+					@Html.CheckBoxFor(m => m.Isactive, new { @class = "checkbox-inline" })
+				</div>
+			</div>
 
-        @using (Html.BeginForm("CreateCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        { 
-        @Html.AntiForgeryToken()
-
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(m => m.Name , new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Name , new { @class = "form-control" })
-                </div>
-            </div>
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(m => m.StartDate, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10 form-inline">
-                    @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })@Html.Raw("DD/MM/YY 00:00:00")
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Isactive, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.CheckBoxFor(m => m.Isactive, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Create" />
-                </div>
-            </div>
-        }
-
-            <br />
-            <br />
-    </div>
-    @*<div class="userTable">
-        <div class="form-inline" id="addUser">  
-            <select name="addUser" class="form-control" id="addUser">
-				@if (@ViewBag.userList != null)
-				{
-					foreach (var user in @ViewBag.userList)
-					{
-						<option>@user.Name</option>
-					}
-				}
-            </select>
-            <button class="btn btn-primary">Add user</button> 
-        </div>
-        <br/>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Nr</th>
-					<th>Name</th>
-					<th>Email</th>
-					<th>User Type</th>
-					<th>Date Added</th>
-				</tr>
-			</thead>
-			<tbody>
-
-				@{int rowNo = 0;}
-				@if (Model.User != null)
-				{
-					foreach (var item in Model.User)
-					{
-						<tr>
-							<td>@(rowNo += 1)</td>
-							<td>
-								@Html.DisplayFor(modelItem => item.Name)
-							</td>
-							<td>
-								@Html.DisplayFor(modelItem => item.Email)
-							</td>
-							<td>
-								@if (item.RoleID == 1)
-								{
-									@Html.Raw("Student")
-								}
-								else if (item.RoleID == 2)
-								{
-									@Html.Raw("Teach")
-								}
-								else if (item.RoleID == 2)
-								{
-									@Html.Raw("Admin")
-								}
-							</td>
-							<td>05-May-16 13:37:00</td>
-						</tr>
-					}
-				}
-			<tbody>
-		</table>
-    </div>*@
-
-
-
-
-
+		</div>
+		<div class="small-right-portion btn-group-vertical">
+			<input type="submit" value="Create" class="btn btn-primary create-button" />
+			@Html.ActionLink("Go Back", "ViewCourses", null, new { @class = "btn btn-primary create-button" })
+		</div>
+	}
 </div>
 
