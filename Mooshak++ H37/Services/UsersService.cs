@@ -147,7 +147,7 @@ namespace Mooshak___H37.Services
         /// In order to 
         /// </summary>
         /// <returns>Returns the User.ID for the current ApplicationUser</returns>
-        public int getUserIdForCurrentyApplicationUser()
+        public int getUserIdForCurrentApplicationUser()
 		{
 			var aspUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
 			var userId = (from user in _db.Users

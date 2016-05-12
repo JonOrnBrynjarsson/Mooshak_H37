@@ -16,41 +16,42 @@ using System.Web;
 
 namespace Mooshak___H37.Services
 {
-    class AssigmentsService
+    class AssignmentsService
     {
         private readonly ApplicationDbContext _db;
         private readonly UsersService _usersService;
         private readonly MilestoneService _milestoneService = new MilestoneService();
 
-        public AssigmentsService()
+        public AssignmentsService()
         {
             _db = new ApplicationDbContext();
             _usersService = new UsersService();
         }
 
-        public DateTime Today()
+        public DateTime today()
         {
             DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
             return endDateTime;
         }
 
-        private int GetCurrentUser()
+        private int getCurrentUser()
         {
-            return _usersService.getUserIdForCurrentyApplicationUser();
+            return _usersService.getUserIdForCurrentApplicationUser();
         }
 
         /// <summary>
         /// Gets list of Assignments associated with Current user
         /// </summary>
         /// <returns>List of assignments</returns>
-        public List<AssignmentViewModel> getAllAssignments()
+        public List<AssignmentViewModel> getAllAssignmentsForCurrUser()
         {
-            var todayDate = Today();
+            var todayDate = today();
 
-            var currUsId = _usersService.getUserIdForCurrentyApplicationUser();
+            var currUsId = _usersService.getUserIdForCurrentApplicationUser();
 
             var userCourses = (from uscr in _db.UserCourseRelations
                                where currUsId == uscr.UserID
+							   && uscr.IsRemoved == false
                                select uscr.CourseID).ToList();
 
 
@@ -84,14 +85,14 @@ namespace Mooshak___H37.Services
         }
 
         /// <summary>
-        /// Gets an assignment with given ID.
+        /// Gets an assignment with given assignment ID. and finds all milestones, users
+		/// and current users submissions to that assignment
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Returns assignment</returns>
-        public AssignmentViewModel Assignment(int id)
+        /// <returns>Returns assignmentViewModel with all the information needed</returns>
+        public AssignmentViewModel getAssignmentById(int assignmId)
         {
             var assignment = (from asi in _db.Assignments
-                              where asi.ID == id &&
+                              where asi.ID == assignmId &&
                               asi.IsRemoved != true
                               select asi).FirstOrDefault();
 
@@ -101,10 +102,10 @@ namespace Mooshak___H37.Services
             }
 
             //Current user ID
-            var userID = GetCurrentUser();
+            var userId = getCurrentUser();
 
             //List of Milestones with given assignment ID
-            var milestones = _db.Milestones.Where(x => x.AssignmentID == id &&
+            var milestones = _db.Milestones.Where(x => x.AssignmentID == assignmId &&
                                                   x.IsRemoved != true)
                 .Select(x => new MilestoneViewmodel
                 {
@@ -116,7 +117,7 @@ namespace Mooshak___H37.Services
                     IsRemoved = x.IsRemoved,
                     Percentage = x.Percentage,
                     UserSubmissions = (from s in _db.Submissions
-                                       where s.UserID == userID && s.MilestoneID == x.ID
+                                       where s.UserID == userId && s.MilestoneID == x.ID
                                        select s.ID).Count(),
                     TotalSubmissions = (from s in _db.Submissions
                                         where s.MilestoneID == x.ID
@@ -171,97 +172,101 @@ namespace Mooshak___H37.Services
         /// <summary>
         /// Gets Courses and populates them with Assignments.
         /// </summary>
-        /// <returns>list of Courses</returns>
-        public List<CourseViewModel> GetCourseAssignments()
-        {
-            var currUsId = _usersService.getUserIdForCurrentyApplicationUser();
+        /// <returns>list of Courses</returns>					HAS 0 REFERENCES (ENGINN AÐ NÝTA ÞETTA FALL?)
+        //public List<CourseViewModel> GetCourseAssignments()
+        //{
+        //    var currUsId = _usersService.getUserIdForCurrentApplicationUser();
 
-            //Gets List of Course IDs associated with Current User
-            var userCourses = (from uscr in _db.UserCourseRelations
-                               where currUsId == uscr.UserID &&
-                               uscr.IsRemoved != true
-                               select uscr.CourseID).ToList();
-
-
-            //var assignments = (from assi in _db.Assignments
-            //				   where userCourses.Contains(assi.CourseID)
-            //				   && assi.IsRemoved != true
-            //				   orderby assi.DueDate descending
-            //				   select assi).ToList();
+        //    //Gets List of Course IDs associated with Current User
+        //    var userCourses = (from uscr in _db.UserCourseRelations
+        //                       where currUsId == uscr.UserID &&
+        //                       uscr.IsRemoved != true
+        //                       select uscr.CourseID).ToList();
 
 
-            //Gets List of Courses associated with Current User
-            var courses = (from crse in _db.Courses
-                           where userCourses.Contains(crse.ID) &&
-                           crse.IsRemoved != true
-                           select crse)
+        //    //var assignments = (from assi in _db.Assignments
+        //    //				   where userCourses.Contains(assi.CourseID)
+        //    //				   && assi.IsRemoved != true
+        //    //				   orderby assi.DueDate descending
+        //    //				   select assi).ToList();
 
-            .Select(x => new CourseViewModel
-            {
-                ID = x.ID,
-                Name = x.Name,
-                Isactive = x.Isactive,
-                IsRemoved = x.IsRemoved,
-                StartDate = x.Startdate,
-                Assignments = getAssignmentsInCourse(x.ID),
-            }).ToList();
 
-            var viewModel = new List<CourseViewModel>();
+        //    //Gets List of Courses associated with Current User
+        //    var courses = (from crse in _db.Courses
+        //                   where userCourses.Contains(crse.ID) &&
+        //                   crse.IsRemoved != true
+        //                   select crse)
 
-            //Creates list of View Models for Course
-            foreach (var course in courses)
-            {
-                CourseViewModel model = new CourseViewModel
-                {
-                    Assignments = course.Assignments,
-                    ID = course.ID,
-                    Isactive = course.Isactive,
-                    IsRemoved = course.IsRemoved,
-                    Name = course.Name,
-                    StartDate = course.StartDate,
-                };
-                viewModel.Add(model);
-            }
+        //    .Select(x => new CourseViewModel
+        //    {
+        //        ID = x.ID,
+        //        Name = x.Name,
+        //        Isactive = x.Isactive,
+        //        IsRemoved = x.IsRemoved,
+        //        StartDate = x.Startdate,
+        //        Assignments = getAssignmentsInCourse(x.ID),
+        //    }).ToList();
 
-            return viewModel;
+        //    var viewModel = new List<CourseViewModel>();
 
-        }
+        //    //Creates list of View Models for Course
+        //    foreach (var course in courses)
+        //    {
+        //        CourseViewModel model = new CourseViewModel
+        //        {
+        //            Assignments = course.Assignments,
+        //            ID = course.ID,
+        //            Isactive = course.Isactive,
+        //            IsRemoved = course.IsRemoved,
+        //            Name = course.Name,
+        //            StartDate = course.StartDate,
+        //        };
+        //        viewModel.Add(model);
+        //    }
+
+        //    return viewModel;
+
+        //}
 
         /// <summary>
         /// Finds ID of Assignment that milestone is associated with
         /// </summary>
-        /// <param name="milestoneID"></param>
+        /// <param name="milestoneId"></param>
         /// <returns>Assignment ID</returns>
-        public int GetAssignmentIDFromMilestoneID(int milestoneID)
+        public int getAssignmentIDFromMilestoneID(int milestoneId)
         {
 
-            var assignmentID = (from mil in _db.Milestones
-                                where mil.ID == milestoneID
+            var assignmentId = (from mil in _db.Milestones
+                                where mil.ID == milestoneId
                                 select mil.AssignmentID).FirstOrDefault();
 
-            return assignmentID;
+            return assignmentId;
         }
 
-        /// <summary>
-        /// Gets the number of submissions from a user to a specific milestone.
-        /// </summary>
-        /// <param name="milestoneId">The milestone "ID"</param>
-        /// <param name="userId">The user "ID"</param>
-        /// <returns>Number of submissions</returns>
-        //public int getNumOfSubmissions(int milestoneId, int userId)
-        //{
-        //	return (from s in _db.Submissions
-        //		where s.ID == userId && s.MilestoneID == milestoneId
-        //		select s.ID).Count();
-        //}
+		/// <summary>
+		/// Gets the number of submissions from a user to a specific milestone.
+		/// </summary>
+		/// <param name="milestoneId">The milestone "ID"</param>
+		/// <param name="userId">The user "ID"</param>
+		/// <returns>Number of submissions</returns>
+		//public int getNumOfSubmissions(int milestoneId, int userId)
+		//{
+		//	return (from s in _db.Submissions
+		//			where s.ID == userId && s.MilestoneID == milestoneId
+		//			select s.ID).Count();
+		//}
 
 
-        //Marks assignment as Removed.
-        internal void RemoveAssignment(AssignmentViewModel model)
+		/// <summary>
+		/// Sets the assignment isRemoved to true in the database
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns>Assignment ID</returns>
+		internal void removeAssignment(AssignmentViewModel model)
         {
             var assignment = (from assign in _db.Assignments
                               where assign.ID == model.ID
-                              && assign.IsRemoved != true
+                              && assign.IsRemoved == false
                               select assign).FirstOrDefault();
 
             if (assignment == null)
@@ -271,6 +276,9 @@ namespace Mooshak___H37.Services
 
             assignment.IsRemoved = true;
             _db.SaveChanges();
+			//TODO
+			//REMOVE ALL MILESTONES THAT WERE CONNECTED TO THAT ASSIGNMENT HERE
+			//MAKE NEW FUNCTION IN COURSESERVICE AND CALL IT ;D
         }
 
         /// <summary>
@@ -300,7 +308,7 @@ namespace Mooshak___H37.Services
             //Creates list of view models for assignments
             foreach (var assignm in assignments)
             {
-                var test = GetGradeFromSubmissions(assignm.ID, GetCurrentUser());
+                var test = getGradeFromSubmissions(assignm.ID, getCurrentUser());
 
                 ////Gets list of milestones for associated Assignment
                 //var milestones = (from mil in _db.Milestones
@@ -316,9 +324,9 @@ namespace Mooshak___H37.Services
 
                 //bool submitted = (submissions >= 1);
 
-                bool submitted = UserHasSubmissionForAssignment(assignm, GetCurrentUser());
+                bool submitted = userHasSubmissionForAssignment(assignm, getCurrentUser());
 
-                double finalGrade = GetGradeFromSubmissions(assignm.ID, GetCurrentUser());
+                double finalGrade = getGradeFromSubmissions(assignm.ID, getCurrentUser());
 
                 AssignmentViewModel model = new AssignmentViewModel
                 {
@@ -345,7 +353,7 @@ namespace Mooshak___H37.Services
         /// <param name="entity"></param>
         /// <param name="userID"></param>
         /// <returns>True or False</returns>
-        public bool UserHasSubmissionForAssignment(Assignment entity, int userID)
+        public bool userHasSubmissionForAssignment(Assignment entity, int userID)
         {
             //Gets list of milestones for associated Assignment
             var milestones = (from mil in _db.Milestones
@@ -370,7 +378,7 @@ namespace Mooshak___H37.Services
         /// <param name="AssignmentID"></param>
         /// <param name="userID"></param>
         /// <returns>Total Grade for Assignment</returns>
-        private double GetGradeFromSubmissions(int AssignmentID, int userID)
+        private double getGradeFromSubmissions(int AssignmentID, int userID)
         {
             var milestones = (from mil in _db.Milestones
                               where mil.AssignmentID == AssignmentID &&
