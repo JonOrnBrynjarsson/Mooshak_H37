@@ -89,8 +89,8 @@ namespace Mooshak___H37.Services
 		{
 			//Finds Test Case for given Test Case ID
 			var testcase = (from test in _db.TestCases
-							  where test.ID == testCaseId &&
-							  test.IsRemoved != true
+							where test.ID == testCaseId &&
+							test.IsRemoved != true
 							select test).FirstOrDefault();
 
 			if (testcase == null)
@@ -116,7 +116,8 @@ namespace Mooshak___H37.Services
         public int numberOfTestCases()
         {
             var testCases = (from tc in _db.TestCases
-                              select tc).Count();
+							 where tc.IsRemoved == false
+							 select tc).Count();
 
             return testCases;
         }
