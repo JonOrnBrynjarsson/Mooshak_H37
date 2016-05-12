@@ -389,9 +389,8 @@ namespace Mooshak___H37.Services
 
 					removeUserConnections(userId.Value);
 
-					//	var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-					//	ApplicationUser u = um.FindById(aspUser);
-					//	Membership.DeleteUser(u.UserName, true);
+					var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+					um.RemovePassword(usr.AspNetUserId);
 				}
 			}
 		}
