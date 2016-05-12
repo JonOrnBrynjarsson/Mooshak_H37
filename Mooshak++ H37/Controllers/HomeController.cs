@@ -22,20 +22,6 @@ namespace Mooshak___H37.Controllers
 
 		public ActionResult Index()
 		{
-			ViewBag.NumOfUsers = _userService.UsersInSystem().ElementAt(0);
-			ViewBag.NumOfStudents = _userService.UsersInSystem().ElementAt(1);
-			ViewBag.NumOfTeachers = _userService.UsersInSystem().ElementAt(2);
-			//ViewBag.NumOfAdmins = _userService.UsersInSystem().ElementAt(4);
-
-			ViewBag.NumOfAssignments = _assignService.numberOfAssignments();
-
-			ViewBag.NumOfCourses = _courseService.NumberOfCourses();
-
-			ViewBag.NumOfMilestones = _milestoneService.NumberOfMilestones();
-
-			ViewBag.NumOfSubmissions = _submissionsService.NumberOfSubmissions();
-
-			ViewBag.NumOfTestCases = _testcaseService.NumberOfTestCases();
 
             if (Request.IsAuthenticated)
             {
@@ -45,5 +31,25 @@ namespace Mooshak___H37.Controllers
 
 			return RedirectToAction("Login", "Account");
 		}
+
+        public ActionResult About()
+        {
+            ViewBag.NumOfUsers = _userService.UsersInSystem().ElementAt(0);
+            ViewBag.NumOfStudents = _userService.UsersInSystem().ElementAt(1);
+            ViewBag.NumOfTeachers = _userService.UsersInSystem().ElementAt(2);
+            //ViewBag.NumOfAdmins = _userService.UsersInSystem().ElementAt(4);
+
+            ViewBag.NumOfAssignments = _assignService.numberOfAssignments();
+
+            ViewBag.NumOfCourses = _courseService.NumberOfCourses();
+
+            ViewBag.NumOfMilestones = _milestoneService.NumberOfMilestones();
+
+            ViewBag.NumOfSubmissions = _submissionsService.NumberOfSubmissions();
+
+            ViewBag.NumOfTestCases = _testcaseService.NumberOfTestCases();
+
+            return View();
+        }
 	}
 }
