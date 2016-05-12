@@ -4,62 +4,65 @@
     ViewBag.Title = "View Submissions";
 }
 
-<h2>Student Submissions: </h2>
+<div class="page-header">
+	<h1>View Submissions<small>All Submissions</small></h1>
+</div>
+<div class="clearfix">
+	<div class="large-left-portion">
+		<table class="table table-hover">
+			<tr>
+				<th>
+					Username
+				</th>
+				<th>
+					Graded:
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Grade)
+				</th>
+				<th>
+					File Location
+				</th>
+				<th>
+					Date Submitted
+				</th>
+				<th></th>
+				<th></th>
+			</tr>
 
-<p>
-    @*@Html.ActionLink("Create New", "Create")*@
-</p>
-<table class="table table-hover">
-    <tr>
-        <th>
-            Username
-        </th>
-        <th>
-            Graded:
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Grade)
-        </th>
-        <th>
-            File Location
-        </th>
-        <th>
-            Date Submitted
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
+			@foreach (var item in Model)
+			{
+				<tr>
+					@*<td>
+							@Html.DisplayFor(modelItem => item.MilestoneID)
+						</td>*@
+					<td>
+						@Html.DisplayFor(modelItem => item.UserName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.IsGraded)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Grade)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.ProgramFileLocation)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.DateSubmitted)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.code)
+					</td>
+					@*<td>
+							@Html.DisplayFor(modelItem => item.Testruns)
+						</td>*@
+					<td>
+						@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })
+					</td>
+				</tr>
+			}
 
-@foreach (var item in Model) {
-    <tr>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.MilestoneID)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsGraded)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Grade)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProgramFileLocation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateSubmitted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.code)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Testruns)
-        </td>*@
-        <td>
-			@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })
-        </td>
-    </tr>
-}
-
-</table>
+		</table>
+	</div>
+</div>

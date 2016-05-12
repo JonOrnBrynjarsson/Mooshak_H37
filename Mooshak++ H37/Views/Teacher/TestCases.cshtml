@@ -4,7 +4,9 @@
     ViewBag.Title = "Test Cases";
 }
 
-<h2>TestCases</h2>
+<div class="page-header">
+	<h1>Test Cases <small>List</small></h1>
+</div>
 
 <div class="clearfix">
 	<div class="large-left-portion">
@@ -33,10 +35,10 @@
 		</table>
 	</div>
 
-	<div class="small-right-portion">
+	<div class="small-right-portion btn-group-vertical">
 		<p>
 			@Html.ActionLink("Create New", "CreateTestCase", new { milestoneID = ViewBag.MilestID }, new { @class = "btn btn-primary create-button" })
-			@*@Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })*@
+			@Html.ActionLink("Go Back", "Milestones", new { id = ViewBag.AssignID }, new { @class = "btn btn-primary create-button" })
 		</p>
 	</div>
 
@@ -44,7 +46,6 @@
 
 </div>
 
-@Html.ActionLink("Go Back", "Milestones", new { id = ViewBag.AssignID }, new { @class = "btn btn-primary create-button" })
 
 
 
