@@ -25,40 +25,49 @@ namespace Mooshak___H37.Services
 		/// Finds ID of Current User
 		/// </summary>
 		/// <returns>ID of LOGGED IN User</returns>
-		public int GetCurrentUser()
+		public int getCurrentUser()
 		{
 			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
-			var currUserID = (from x in _db.Users
+			var currUserId = (from x in _db.Users
 							  where x.AspNetUserId == currentUser &&
 							  x.IsRemoved != true
 							  select x.ID).FirstOrDefault();
 
-			if (currUserID == 0)
+			if (currUserId == 0)
 			{
 				throw new Exception("User does not exist or has been removed.");
 			}
 
-			return currUserID;
+			return currUserId;
 		}
 
-        private List<Milestone> GetMilestones (int assigID)
+		/// <summary>
+		/// Gets all milestones associated to a specific assignment
+		/// </summary>
+		/// <param name="assigId">the id of the assignment for finding the milestones</param>
+		/// <returns>List of a Milestone entity class</returns>
+        private List<Milestone> getMilestones (int assigId)
         {
             var milestones = (from miles in _db.Milestones
                               orderby miles.ID
-                              where miles.AssignmentID == assigID &&
+                              where miles.AssignmentID == assigId &&
                               miles.IsRemoved != true
                               select miles).ToList();
 
             return milestones;
         }
 
-		//Creates Milestone with Given Milestone Model
-		internal void CreateMilestone(MilestoneViewmodel model, int assigID)
+		/// <summary>
+		/// Creates a milestone in the Database (Milestones table)
+		/// </summary>
+		/// <param name="model">Holds all the info of the new milestone</param>
+		/// <param name="assigId">id of assignment the milestone belongs to</param>
+		internal void createMilestone(MilestoneViewmodel model, int assigId)
 		{
 			_db.Milestones.Add(new Milestone
 			{
 				AllowedSubmissions = model.AllowedSubmissions,
-				AssignmentID = assigID,
+				AssignmentID = assigId,
 				Description = model.Description,
 				ID = model.ID,
 				IsRemoved = model.IsRemoved,
@@ -71,11 +80,11 @@ namespace Mooshak___H37.Services
 		/// Finds Milestones for given Assignment ID, that are not
 		/// Marked as removed. 
 		/// </summary>
-		/// <param name="assigID"></param>
+		/// <param name="assigId"></param>
 		/// <returns>List Of Milestones</returns>
-		public List<MilestoneViewmodel> GetMilestonesForAssignment(int assigID)
+		public List<MilestoneViewmodel> getMilestonesForAssignment(int assigId)
 		{
-            var milestones = GetMilestones(assigID);
+            var milestones = getMilestones(assigId);
 
 
             var viewModel = new List<MilestoneViewmodel>();
@@ -102,11 +111,10 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds Sum of all Milestone Percentages in Given Assignment.
 		/// </summary>
-		/// <param name="assigID"></param>
 		/// <returns>Percentage of All Milestones in Given Assignment</returns>
-		public double GetTotalMilestonePercentageForAssignment(int assigID)
+		public double getTotalMilestonePercentageForAssignment(int assigId)
 		{
-            var milestones = GetMilestones(assigID);
+            var milestones = getMilestones(assigId);
 
             if (milestones == null)
 			{
@@ -130,22 +138,20 @@ namespace Mooshak___H37.Services
 		/// Checks if User Can Still submit a Milestone, Depending on
 		/// How many times he has already submitted
 		/// </summary>
-		/// <param name="milestoneID"></param>
-		/// <returns>True or False</returns>
-		public bool UserCanSubmitMilestone(int milestoneID)
+		public bool userCanSubmitMilestone(int milestoneId)
 		{
 			//Returns ID of current User
-			var currUser = GetCurrentUser();
+			var currUser = getCurrentUser();
 
 			//Finds all submissions from Current User
 			var submissions = (from s in _db.Submissions
-							   where s.UserID == currUser && s.MilestoneID == milestoneID
+							   where s.UserID == currUser && s.MilestoneID == milestoneId
 							   && s.IsRemoved != true
 							   select s.ID).Count();
 
 			//Finds how often a User Can submit
 			var allowedSubmissions = (from x in _db.Milestones
-									  where x.ID == milestoneID
+									  where x.ID == milestoneId
 									  && x.IsRemoved != true
 									  select x.AllowedSubmissions).SingleOrDefault();
 
@@ -164,12 +170,12 @@ namespace Mooshak___H37.Services
 		/// Being created Exceed 100%
 		/// </summary>
 		/// <param name="model"></param>
-		/// <param name="assignmentID"></param>
+		/// <param name="assignmentId"></param>
 		/// <returns>True or False</returns>
-		public bool TeacherCanCreateMilestone(MilestoneViewmodel model, int assignmentID)
+		public bool teacherCanCreateMilestone(MilestoneViewmodel model, int assignmentId)
 		{
 			//Current Percentage of Milestones in Assignment
-			var totalPercentage = GetTotalMilestonePercentageForAssignment(assignmentID);
+			var totalPercentage = getTotalMilestonePercentageForAssignment(assignmentId);
 
 			//Percentage of Milestone that is being created
 			var milestonePercentage = model.Percentage;
@@ -188,14 +194,14 @@ namespace Mooshak___H37.Services
 		/// <summary>
 		/// Finds Milestone with Given Milestone ID
 		/// </summary>
-		/// <param name="milID"></param>
+		/// <param name="milestoneId"></param>
 		/// <returns>Milestone</returns>
-		public MilestoneViewmodel GetSingleMilestone(int milID)
+		public MilestoneViewmodel getSingleMilestone(int milestoneId)
 		{
 			//Finds Milestone that is associated with given Milestone ID
 			var milestones = (from miles in _db.Milestones
 							  orderby miles.ID 
-							  where miles.ID == milID &&
+							  where miles.ID == milestoneId &&
 							  miles.IsRemoved != true
 							  select miles).FirstOrDefault();
 
@@ -219,10 +225,10 @@ namespace Mooshak___H37.Services
 		}
 
 		//Edits Milestone with given Model and Id.
-		internal void EditMilestone(MilestoneViewmodel model, int milestoneID)
+		internal void editMilestone(MilestoneViewmodel model, int milestoneId)
 		{
 			var edit = (from mil in _db.Milestones where mil.ID == 
-						milestoneID
+						milestoneId
 						&& mil.IsRemoved != true
 						select mil).FirstOrDefault();
 
@@ -245,11 +251,22 @@ namespace Mooshak___H37.Services
 			}
 		}
 
+
+		public int allowedSubmissionsForMilestone(int milestoneId)
+		{
+			var submissions = (from allowedSubs in _db.Milestones
+							   where allowedSubs.ID == milestoneId &&
+							   allowedSubs.IsRemoved != true
+							   select allowedSubs.AllowedSubmissions).FirstOrDefault();
+			return submissions;
+		}
+
 		//Removes Milestone with Associated Model
-		internal void RemoveMilestone(MilestoneViewmodel model)
+		internal void removeMilestone(MilestoneViewmodel model)
 		{
 			var milestone = (from mile in _db.Milestones
 							where mile.ID == model.ID
+							&& mile.IsRemoved == false
 							select mile).FirstOrDefault();
 
 			if (milestone == null)
@@ -274,7 +291,7 @@ namespace Mooshak___H37.Services
 		/// Finds all Milestones in system
 		/// </summary>
 		/// <returns>Number of milestones</returns>
-        public int NumberOfMilestones()
+        public int numberOfMilestones()
         {
             var milestones = (from mil in _db.Milestones
                            select mil).Count();

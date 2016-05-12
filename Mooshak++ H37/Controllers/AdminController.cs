@@ -71,7 +71,7 @@ namespace Mooshak___H37.Controllers
 				id = 1;
 			}
 
-			CourseViewModel model = _courseService.getCourseViewModelByID(id.Value);
+			CourseViewModel model = _courseService.getCourseViewModelById(id.Value);
 
 			if (model == null)
 			{
@@ -110,7 +110,7 @@ namespace Mooshak___H37.Controllers
 				return null;//dont return null here
 			}
 
-			_courseService.removeCourseByID(id.Value);
+			_courseService.removeCourseById(id.Value);
 
 			return RedirectToAction("ViewCourses");
 		}
@@ -122,7 +122,7 @@ namespace Mooshak___H37.Controllers
 				// do something
 			}
 
-			_userService.removeUserByID(id);
+			_userService.removeUserById(id);
 
 			return RedirectToAction("ViewUsers");
 		}
@@ -141,7 +141,7 @@ namespace Mooshak___H37.Controllers
 			var viewModel = _userService.getAllUsersName();
 			foreach (var item in viewModel)
 			{
-				item.RoleID = _userService.getRoleNamebyID(item.ID);
+				item.RoleID = _userService.getRoleNamebyId(item.ID);
 			}
 			return View(viewModel);
 		}
@@ -149,7 +149,7 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult EditUser(int id)
 		{
-			var viewModel = _userService.GetSingleUser(id);
+			var viewModel = _userService.getSingleUserInfo(id);
 			return View(viewModel);
 		}
 

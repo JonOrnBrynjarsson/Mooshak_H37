@@ -79,7 +79,7 @@ namespace Mooshak___H37.Controllers
 
             UsersService _usersService = new UsersService(null);
 
-            int userID = _usersService.getUserIDbyEmail(model);
+            int userID = _usersService.getUserIdByEmail(model);
             string role = _usersService.getAspUserRole(userID);
 
             // This doesn't count login failures towards account lockout

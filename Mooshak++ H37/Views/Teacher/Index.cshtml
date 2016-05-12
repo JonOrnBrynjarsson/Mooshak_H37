@@ -1,52 +1,54 @@
 @model IEnumerable<Mooshak___H37.Models.Viewmodels.AssignmentViewModel>
 
 @{
-    ViewBag.Title = "Teacher Homepage";
+	ViewBag.Title = "Teacher Homepage";
 }
 
 <div class="page-header">
-    <h1>Welcome to Mooshak++ <small>Due Assignments</small></h1>
+	<h1>Welcome to Mooshak++ <small>Due Assignments</small></h1>
 </div>
 <div class="clearfix">
-    <div class="large-left-portion">
-        <div id="due-assignments">
-            <h3>
-                Assignments
-				@Html.ActionLink("Create Assignment", "CreateAssignment", new { }, new { @class = "btn btn-primary button-right" })
-            </h3>
-            <table id="assignments" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nr</th>
-                        <th>Name</th>
-                        <th>Due Date</th>
-                        <th>Details</th>
+	<div class="large-left-portion">
+		<div id="due-assignments">
+			<h3>
+				Assignments
+			</h3>
+			<table id="assignments" class="table table-hover">
+				<thead>
+					<tr>
+						<th>Nr</th>
+						<th>Name</th>
+						<th>Due Date</th>
+						<th>Details</th>
 						<th>Milestones</th>
 						<th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{int rowNo = 0;}
-                    @foreach (var item in Model)
-                    {
-                        <tr>          
-                            <td>
-                                @(rowNo += 1)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DueDate)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
-                            </td>
+					</tr>
+				</thead>
+				<tbody>
+					@{int rowNo = 0;}
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>
+								@(rowNo += 1)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Name)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.DueDate)
+							</td>
+							<td>
+								@Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
+							</td>
 							<td>@Html.ActionLink("Milestones", "Milestones", new { id = item.ID })</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="small-right-portion btn-group-vertical">
+		@Html.ActionLink("Create Assignment", "CreateAssignment", new { }, new { @class = "btn btn-primary button-right" })
+	</div>
 </div>

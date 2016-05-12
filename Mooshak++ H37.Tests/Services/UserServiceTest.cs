@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mooshak___H37.Models.Entities;
 using Mooshak___H37.Services;
 
@@ -23,7 +26,7 @@ namespace Mooshak___H37.Tests.Services
 				AspNetUserId = "23olrkj9-sdfsi",
 				IsRemoved = true
 			};
-			mockDb.User.Add(f1);
+			mockDb.Users.Add(f1);
 
 			var f2 = new User
 			{
@@ -32,7 +35,7 @@ namespace Mooshak___H37.Tests.Services
 				AspNetUserId = "23odsdflrkj9-sdfsi",
 				IsRemoved = false
 			};
-			mockDb.User.Add(f2);
+			mockDb.Users.Add(f2);
 			var f3 = new User
 			{
 				ID = 3,
@@ -40,7 +43,23 @@ namespace Mooshak___H37.Tests.Services
 				AspNetUserId = "d3olrkj9-sdfsi",
 				IsRemoved = false
 			};
-			mockDb.User.Add(f3);
+			mockDb.Users.Add(f3);
+			var f4 = new User
+			{
+				ID = 4,
+				Name = "Niemand",
+				AspNetUserId = "a-sdfsi",
+				IsRemoved = true
+			};
+			mockDb.Users.Add(f4);
+			var f5 = new User
+			{
+				ID = 5,
+				Name = "Stafróf málsgrein",
+				AspNetUserId = "d3olrs-sdfsi",
+				IsRemoved = false
+			};
+			mockDb.Users.Add(f5);
 
 			// Note: you only have to add data necessary for this
 			// particular service (FriendService) to run properly.
@@ -52,35 +71,54 @@ namespace Mooshak___H37.Tests.Services
 		}
 
 		[TestMethod]
-		public void TestGetAllFriendsForDabs()
+		public void getAllActiveUsersInSystem()
 		{
 			// Arrange:
-			const string userName = "dabs";
-
+			int numOfActiveUsers = 3;
 			// Act:
-			var friends = _userService.GetFriendsFor(userName);
-
+			var result = _usersService.UsersInSystem();
 			// Assert:
-			Assert.AreEqual(2, friends.Count);
-			foreach (var item in friends)
-			{
-				Assert.AreNotEqual(item, "dabs");
-			}
+			Assert.AreEqual(numOfActiveUsers, result.Count);
 		}
 
 		[TestMethod]
-		public void TestGetForUserWithNoFriends()
+		public void GetAllUserName()
 		{
 			// Arrange:
-			const string userWithNoFriends = "loner";
-			// Note: no user with this username has an entry
-			// in our test data.
+			List<string> comparisonList = new List<string>();
+			comparisonList.Add("Jón Gunnarsson");
+			comparisonList.Add("Gunna Jónsdóttir");
+			comparisonList.Add("Stafróf málsgrein");
+	
+			// Act:
+			var result = _usersService.getAllUsersName();
+			// Assert:
+			Assert.AreSame(result, comparisonList);
+
+		}
+
+		[TestMethod]
+		public void getSingleUser()
+		{
+			// Arrange:
+			string userName = "Gunna Jónsdóttir";
+			// Act:
+			var result = _usersService.getSingleUserInfo(3);
+			// Assert:
+			Assert.AreEqual(result.Name, userName);
+		}
+
+		[TestMethod]
+		public void testing()
+		{
+			// Arrange:
 
 			// Act:
-			var friends = _userService.GetFriendsFor(userWithNoFriends);
-
+			var result = 0;
 			// Assert:
-			Assert.AreEqual(0, friends.Count);
+			
 		}
+
+
 	}
 }

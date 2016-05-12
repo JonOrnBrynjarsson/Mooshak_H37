@@ -12,32 +12,32 @@ namespace Mooshak___H37.Tests
 		public MockDataContext()
 		{
 			// We're setting our DbSets to be InMemoryDbSets rather than using SQL Server.
-			Assignment = new InMemoryDbSet<Assignment>();
-			Course = new InMemoryDbSet<Course>();
-			ErrorReport = new InMemoryDbSet<ErrorReport>();
-			GroupMember = new InMemoryDbSet<GroupMember>();
-			Message = new InMemoryDbSet<Message>();
-			Milestone = new InMemoryDbSet<Milestone>();
-			Role = new InMemoryDbSet<Role>();
-			Submission = new InMemoryDbSet<Submission>();
-			TestCase = new InMemoryDbSet<TestCase>();
-			Testrun = new InMemoryDbSet<Testrun>();
-			User = new InMemoryDbSet<User>();
-			UserCourseRelation = new InMemoryDbSet<UserCourseRelation>();
+			Assignments = new InMemoryDbSet<Assignment>();
+			Courses = new InMemoryDbSet<Course>();
+			ErrorReports = new InMemoryDbSet<ErrorReport>();
+			GroupMembers = new InMemoryDbSet<GroupMember>();
+			Messages = new InMemoryDbSet<Message>();
+			Milestones = new InMemoryDbSet<Milestone>();
+			Roles = new InMemoryDbSet<Role>();
+			Submissions = new InMemoryDbSet<Submission>();
+			TestCases = new InMemoryDbSet<TestCase>();
+			Testruns = new InMemoryDbSet<Testrun>();
+			Users = new InMemoryDbSet<User>();
+			UserCourseRelations = new InMemoryDbSet<UserCourseRelation>();
 		}
 
-		public IDbSet<Assignment> Assignment { get; set; }
-		public IDbSet<Course> Course { get; set; }
-		public IDbSet<ErrorReport> ErrorReport { get; set; }
-		public IDbSet<GroupMember> GroupMember { get; set; }
-		public IDbSet<Message> Message { get; set; }
-		public IDbSet<Milestone> Milestone { get; set; }
-		public IDbSet<Role> Role { get; set; }
-		public IDbSet<Submission> Submission { get; set; }
-		public IDbSet<TestCase> TestCase { get; set; }
-		public IDbSet<Testrun> Testrun { get; set; }
-		public IDbSet<User> User { get; set; }
-		public IDbSet<UserCourseRelation> UserCourseRelation { get; set; }
+		public IDbSet<Assignment> Assignments { get; set; }
+		public IDbSet<Course> Courses { get; set; }
+		public IDbSet<ErrorReport> ErrorReports { get; set; }
+		public IDbSet<GroupMember> GroupMembers { get; set; }
+		public IDbSet<Message> Messages { get; set; }
+		public IDbSet<Milestone> Milestones { get; set; }
+		public IDbSet<Role> Roles { get; set; }
+		public IDbSet<Submission> Submissions { get; set; }
+		public IDbSet<TestCase> TestCases { get; set; }
+		public IDbSet<Testrun> Testruns { get; set; }
+		public IDbSet<User> Users { get; set; }
+		public IDbSet<UserCourseRelation> UserCourseRelations { get; set; }
 		
 		// TODO: bætið við fleiri færslum hér
 		// eftir því sem þeim fjölgar í AppDataContext klasanum ykkar!

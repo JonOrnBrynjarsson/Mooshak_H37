@@ -16,7 +16,6 @@ namespace Mooshak___H37.Tests.Services
 			// with 3 records:
 			var mockDb = new MockDataContext();
 
-			mockDb.User.Add(f3);
 
 			// Note: you only have to add data necessary for this
 			// particular service (FriendService) to run properly.

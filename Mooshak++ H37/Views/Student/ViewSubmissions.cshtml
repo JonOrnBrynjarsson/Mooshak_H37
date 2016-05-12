@@ -1,21 +1,17 @@
 ﻿@model IEnumerable<Mooshak___H37.Models.Viewmodels.SubmissionsViewModel>
 
 @{
-    ViewBag.Title = "View Submissions";
+	ViewBag.Title = "View Submissions";
 }
 
-<h2>My Submissions: </h2>
-
+<div class="page-header">
+	<h1>View Submissions <small>My Submissions</small></h1>
+</div>
 <div class="clearfix">
 	<div class="large-left-portion">
+
 		<table class="table table-hover">
 			<tr>
-				<th>
-					Milestone
-				</th>
-				<th>
-					Allowed Submissions
-				</th>
 				<th>
 					Testruns/<br />Success
 				</th>
@@ -29,18 +25,12 @@
 					Date Submitted
 				</th>
 				<th></th>
-                <th></th>
+				<th></th>
 			</tr>
 
 			@foreach (var item in Model)
 			{
 				<tr style="@(item.FinalSolution == true ? "Background-color:rgb(81, 142, 255);" : "")">
-					<td>
-						@Html.DisplayFor(modelItem => item.Milestone.Name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Milestone.AllowedSubmissions)
-					</td>
 					<td>
 						@{
 							if (item.NumOfTestruns > 0)
@@ -76,68 +66,19 @@
 
 		</table>
 
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				Allowed Submissions: @ViewBag.AllowedSubmissions
+			</div>
+		</div>
+	</div>
+	<div class="small-right-portion btn-group-vertical">
+		@Html.ActionLink("Submit", "Submit", new { milestoneId = ViewBag.MilestoneID }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Go Back", "ViewAssignment", new { id = @ViewBag.AssignmentID }, new { @class = "btn btn-primary create-button" })
+
+
+
+
 	</div>
 </div>
-<p>
-    @Html.ActionLink("Go Back", "ViewAssignment", new { id = @ViewBag.AssignmentID })
-</p>
-
-
-@*<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MilestoneID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsGraded)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Grade)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProgramFileLocation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsRemoved)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MilestoneID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsGraded)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Grade)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProgramFileLocation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsRemoved)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
-</table>*@
