@@ -4,9 +4,12 @@
     ViewBag.Title = "View Assignment";
 }
 
+<div class="page-header">
+	<h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
+</div>
+
 <div class="clearfix">
     <div class="large-left-portion">
-		<h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
         <div class="panel panel-default">
             <div class="panel-heading">Description:</div>
             <div class="panel-body">
@@ -46,11 +49,9 @@
         </table>
     </div>
     <div class="small-right-portion btn-group-vertical">
-        <p>
-            @Html.ActionLink("Edit Assignment", "EditAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
-			@Html.ActionLink("Remove Assignment", "RemoveAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
-			@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
-		</p>
+        @Html.ActionLink("Edit Assignment", "EditAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Remove Assignment", "RemoveAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
     </div>
 </div>
 

@@ -179,6 +179,7 @@ namespace Mooshak___H37.Controllers
             try
             {
                 var viewModel = _milestoneService.getSingleMilestone(milestoneID);
+				ViewBag.AssignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -376,6 +377,7 @@ namespace Mooshak___H37.Controllers
         public ActionResult CreateTestCase(TestCaseViewModel model)
         {
             TestCaseViewModel viewModel = new TestCaseViewModel();
+			ViewBag.MilestoneID = model.MilestoneID;
             return View(viewModel);
         }
 
@@ -421,8 +423,10 @@ namespace Mooshak___H37.Controllers
             {
 				TestCaseViewModel viewModel = _testcaseService.getSingleTestCase(id);
                 return View(viewModel);
-            }
-            catch (Exception e)
+				//return RedirectToAction("TestCases", new { milID = milestoneID });
+
+			}
+			catch (Exception e)
             {
                 return View("~/Views/Shared/Cerror.cshtml", e);
             }
@@ -442,6 +446,11 @@ namespace Mooshak___H37.Controllers
                 return View("~/Views/Shared/Cerror.cshtml", e);
             }
 
+        }
+
+        public ActionResult About()
+        {
+            return RedirectToAction("About", "Home");
         }
     }
 }
