@@ -12,7 +12,6 @@ namespace Mooshak___H37.Models.Entities
 
 		public DateTime DateOccurred { get; set; }
 
-		[Required]
 		public int UserID { get; set; }
 
 		public int? CourseID { get; set; }

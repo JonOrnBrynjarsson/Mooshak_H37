@@ -35,14 +35,22 @@ namespace Project_4.Utilities
 
 		public void LogException(Exception ex, string controller, string action )
 		{
-			string comment = string.Format("The action {0} in {1}Controller, threw an error \" {2}", action, controller,  ex.Message);
-			ErrorReport report = new ErrorReport();
-			report.UserID = _usersService.getUserIdForCurrentApplicationUser();
-			report._message = comment;
-			report.DateOccurred = DateTime.Now;
-
-			_db.ErrorReports.Add(report);
-			_db.SaveChanges();
+			try
+			{
+				string comment = string.Format("The action {0} in {1}Controller, threw an error \" {2}", action, controller, ex.Message);
+				ErrorReport report = new ErrorReport();
+				report.UserID = _usersService.getUserIdForCurrentApplicationUser();
+				report._message = comment;
+				report.DateOccurred = DateTime.Now;
+				_db.ErrorReports.Add(report);
+				_db.SaveChanges();
+			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				throw;
+			}
+			
 		}
 	}
 }
