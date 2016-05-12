@@ -52,7 +52,7 @@ namespace Mooshak___H37.Controllers
         {
             //Creates a list of Courses that teacher is associated with.
             List<SelectListItem> result = new List<SelectListItem>();
-            var allCourses = _courseService.getCoursesForUser();
+            var allCourses = _courseService.getCoursesForUserWithEmptyCourses();
 
             result.Add(new SelectListItem() { Value = "", Text = " - Choose a course - " });
 

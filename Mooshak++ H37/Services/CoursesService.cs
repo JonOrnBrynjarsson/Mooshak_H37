@@ -114,21 +114,8 @@ namespace Mooshak___H37.Services
 		/// <returns>List of Courses</returns>
 		public List<CourseViewModel> getCoursesForUser()
 		{
-			//Finds current User
-			var currUsId = getCurrentUser();
+			var courses = getCurrentCourseList();
 
-			//Creates a List of Course IDs that User is associated with
-			var userCourses = (from uscr in _db.UserCourseRelations
-							   where currUsId == uscr.UserID
-							   && uscr.IsRemoved == false
-							   select uscr.CourseID).ToList();
-
-			//Selectes Courses that are in the previous userCourses List.
-			var courses = (from crs in _db.Courses
-							   where userCourses.Contains(crs.ID) 
-							   && crs.IsRemoved == false
-							   orderby crs.ID descending
-							   select crs).ToList();
 			var viewModel = new List<CourseViewModel>();
 
 			//Creates a View Model for Given Courses.
@@ -154,10 +141,66 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
+		/// Finds all Courses that LOGGED IN User is Associated with.
+		/// </summary>
+		/// <returns>List of Courses</returns>
+		public List<CourseViewModel> getCoursesForUserWithEmptyCourses()
+		{
+			var courses = getCurrentCourseList();
+
+			var viewModel = new List<CourseViewModel>();
+
+			//Creates a View Model for Given Courses.
+			foreach (var course in courses)
+			{
+				{
+					CourseViewModel model = new CourseViewModel
+					{
+
+						ID = course.ID,
+						Assignments = _assignmentsService.getAssignmentsInCourse(course.ID),
+						Isactive = course.Isactive,
+						IsRemoved = course.IsRemoved,
+						Name = course.Name,
+						StartDate = course.Startdate,
+					};
+					viewModel.Add(model);
+				}
+			}
+
+			return viewModel;
+		}
+
+		/// <summary>
+		/// Finds list of Courses associated with logged in User
+		/// </summary>
+		/// <returns>List of Courses</returns>
+		public List<Course> getCurrentCourseList()
+		{
+			//Finds current User
+			var currUsId = getCurrentUser();
+
+			//Creates a List of Course IDs that User is associated with
+			var userCourses = (from uscr in _db.UserCourseRelations
+							   where currUsId == uscr.UserID
+							   && uscr.IsRemoved == false
+							   select uscr.CourseID).ToList();
+
+			//Selectes Courses that are in the previous userCourses List.
+			var courses = (from crs in _db.Courses
+						   where userCourses.Contains(crs.ID)
+						   && crs.IsRemoved == false
+						   orderby crs.ID descending
+						   select crs).ToList();
+
+			return courses;
+		}
+
+		/// <summary>
 		/// TODO
 		/// </summary>
 		/// <param name="model"></param>
-        internal void addUserToCourse(AddUserToCourseViewModel model)
+		internal void addUserToCourse(AddUserToCourseViewModel model)
         {
             int roleId = 1;
             if(model.Teacher == true)
