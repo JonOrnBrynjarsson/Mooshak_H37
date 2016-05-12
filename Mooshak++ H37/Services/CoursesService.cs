@@ -342,7 +342,7 @@ namespace Mooshak___H37.Services
 		/// Finds the count all Courses in the system
 		/// </summary>
 		/// <returns>Total Number Of Courses</returns>
-        public int NumberOfCourses()
+        public int numberOfCourses()
         {
             var courses = (from course in _db.Courses
 						   where course.IsRemoved == false

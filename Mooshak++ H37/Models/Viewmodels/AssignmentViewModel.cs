@@ -11,12 +11,18 @@ namespace Mooshak___H37.Models.Viewmodels
         public int ID { get; set; }
 		[Required(ErrorMessage  = "Name is required")]
         public string Name { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
-        public DateTime? SetDate { get; set; }
+		[Display(Name = "Set Date")]
+		public DateTime? SetDate { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
-        public DateTime? DueDate { get; set; }
+		[Display(Name = "Due Date")]
+		public DateTime? DueDate { get; set; }
 		public int CourseID { get; set; }
-        public bool IsActive { get; set; }
+
+		[Display(Name = "Active Assignment")]
+		public bool IsActive { get; set; }
         public bool IsRemoved { get; set; }
 		public string Description { get; set; }
 		public List<MilestoneViewmodel> Milestones { get; set; }

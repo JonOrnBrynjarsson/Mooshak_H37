@@ -4,12 +4,14 @@
     ViewBag.Title = "View Assignment";
 }
 
+<div class="page-header">
+	<h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
+</div>
+
 <div class="clearfix">
 	<div class="large-left-portion">
 
-		<div class="page-header">
-			<h1>@Html.DisplayFor(model => model.CourseName) <small>@Html.DisplayFor(model => model.Name)</small></h1>
-		</div>
+
 
 		<div class="panel panel-default">
 			<div class="panel-heading">Description:</div>
@@ -71,8 +73,7 @@
 	</div>
 
 	<div class="small-right-portion btn-group-vertical">
-		<button class="btn btn-primary create-button">Editor</button>
-		<br />
+		@Html.ActionLink("Editor", "Editor", null, new { @class = "btn btn-primary create-button" })
 		@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
 	</div>
 </div>

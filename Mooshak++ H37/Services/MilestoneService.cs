@@ -251,6 +251,16 @@ namespace Mooshak___H37.Services
 			}
 		}
 
+
+		public int allowedSubmissionsForMilestone(int milestoneId)
+		{
+			var submissions = (from allowedSubs in _db.Milestones
+							   where allowedSubs.ID == milestoneId &&
+							   allowedSubs.IsRemoved != true
+							   select allowedSubs.AllowedSubmissions).FirstOrDefault();
+			return submissions;
+		}
+
 		//Removes Milestone with Associated Model
 		internal void removeMilestone(MilestoneViewmodel model)
 		{

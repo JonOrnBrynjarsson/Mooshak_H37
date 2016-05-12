@@ -1,0 +1,50 @@
+﻿body 
+{
+       margin: 5%;
+}
+
+.my_icon
+{
+    padding-left: 15% !important;
+    margin-right: 10px !important;
+    font-size: xx-large !important;
+    color: white;
+}
+
+.Blue_button 
+{
+  color: #ffffff !important;
+  background-color: #000000;
+  border-color: #000000;
+  margin-top: 10px !important;
+  margin-right: 10px !important;
+  font-size: large !important;
+  margin-top: -1% !important;
+}
+
+.my_navbar
+{
+  position: absolute;
+  background-color: #000000;
+  margin: 7%;
+  padding-top: 1%;
+  margin-top: 4%;
+  padding-bottom: 1%;
+  border-radius: 30px;
+}
+
+.Blue_button:hover,
+.Blue_button:focus,
+.Blue_button:active,
+.Blue_button.active,
+.open .dropdown-toggle.Blue_button 
+{
+  color: #ffffff;
+  background-color: #0026ff !important;
+  border-color: #0026ff;
+}
+
+.Settnings
+{
+    padding: 11.5%;
+}

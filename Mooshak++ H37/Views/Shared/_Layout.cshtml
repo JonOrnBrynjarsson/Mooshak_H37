@@ -9,102 +9,9 @@
     <link href="~/Content/Layout.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="my_navbar navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <div class="my_icon">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Mooshak++", "Index", "Home", new { area = "" }, new { @class = "my_icon navbar-brand" })
-                </div>
-            </div>
 
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+    <img src="~/Images/Logo.png" alt="Logo" class="Logo" />
 
-                    @*<li>
-                        <div class="dropdown">
-                            <button class="Blue_button btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                Student
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><p>@Html.ActionLink("Index", "Index", "Student", new { area = "" }, new { @class = "my_icon navbar-brand" })</p></li>
-                            </ul>
-                        </div>
-                    </li>*@
-
-                    <li>
-                        <div class="dropdown">
-                            <button class="Blue_button btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Student
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li>@Html.ActionLink("Student Index", "Index", "Student")</li>
-								<li>@Html.ActionLink("Assignments", "Assignments", "Student")</li>
-                                <li role="separator" class="divider"></li>
-								<li>@Html.ActionLink("Courses-todo-dropdwn", "#", "#")</li>
-	                            <li>@Html.ActionLink("Assignments", "Assignments", "Student")</li>
-	                            <li>@Html.ActionLink("Submit", "Submit", "Student")</li>
-	                            <li>@Html.ActionLink("EditCode","EditCode","Student")</li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="dropdown">
-                            <button class="Blue_button btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Teacher
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li>@Html.ActionLink("Teacher Index", "Index", "Teacher")</li>
-								<li>@Html.ActionLink("Assignments", "Assignments", "Teacher")</li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Information</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="dropdown">
-                            <button class="Blue_button btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Admin
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li>@Html.ActionLink("Admin Index", "Index", "Admin")</li>
-	                            <li role="separator" class="divider"></li>
-								<li>@Html.ActionLink("Admin ErrorIndex", "IndexErrors", "Admin")</li>
-                                <li role="separator" class="divider"></li>
-                                <li>@Html.ActionLink("Admin View Course", "ViewCourses", "Admin")</li>
-                                <li role="separator" class="divider"></li>
-                                <li>@Html.ActionLink("Admin View Users", "ViewUsers", "Admin")</li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="dropdown">
-                            <button class="Blue_button btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                Settings
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -117,7 +24,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-    @*<script src="~/Scripts/Admin.js"></script>*@
+
 
 
 </body>

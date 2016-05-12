@@ -31,10 +31,7 @@ namespace Mooshak___H37.Controllers
 		}
 		public ActionResult CreateUser()
 		{
-			RegisterViewModel viewModel = new RegisterViewModel();
-			viewModel.Course = _courseService.getAllCourses();
-
-			return View(viewModel);
+            return RedirectToAction("Register", "Account");
 		}
 
 
@@ -152,7 +149,7 @@ namespace Mooshak___H37.Controllers
 		[HttpGet]
 		public ActionResult EditUser(int id)
 		{
-			var viewModel = _userService.getSingleUser(id);
+			var viewModel = _userService.getSingleUserInfo(id);
 			return View(viewModel);
 		}
 
@@ -170,5 +167,10 @@ namespace Mooshak___H37.Controllers
 
 			return RedirectToAction("ViewUsers");
 		}
-	}
+
+        public ActionResult About()
+        {
+            return RedirectToAction("About", "Home");
+        }
+    }
 }

@@ -223,32 +223,53 @@ namespace Mooshak___H37.Services
             um.AddToRole(model.Id, role);
         }
 
-        public UserViewModel getSingleUser(int userId)
+		/// <summary>
+		/// Gets the user info for a particular user based on his ID.
+		/// </summary>
+		/// <param name="userId">The ID of the user</param>
+		/// <returns>A User object with the user info</returns>
+		public User getUserById(int userId)
 		{
-			var user = (from us in _db.Users
-						where us.ID == userId
-						&& us.IsRemoved == false
-						select us).FirstOrDefault();
-
-			var email = (from us in _db.Users
-						 where user.AspNetUserId == us.AspNetUser.Id
-						 select us.AspNetUser.Email).SingleOrDefault();
-
-			if (user == null)
-			{
-				//TODO
-				//do something
-			}
-
-			UserViewModel model = new UserViewModel
-			{
-				ID = user.ID,
-				Name = user.Name,
-				Email = email,
-			};
-
-			return model;
+			return (from us in _db.Users
+						 where us.ID == userId
+						 && us.IsRemoved == false
+						 select us).FirstOrDefault();
 		}
+
+		/// <summary>
+		/// Gets the user email from AspNetUser.
+		/// </summary>
+		/// <param name="aspNetUserId">The AspNetUserId</param>
+		/// <returns>The email as string</returns>
+		public string getUserEmailByAspNetUserId(string aspNetUserId)
+		{
+			return (from us in _db.Users
+						 where  us.AspNetUser.Id == aspNetUserId
+						 select us.AspNetUser.Email).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Gets user info and email.
+		/// </summary>
+		/// <param name="userId">The ID of the user</param>
+		/// <returns>UserViewModel object with the info</returns>
+        public UserViewModel getSingleUserInfo(int userId)
+        {
+	        User user = getUserById(userId);
+			if (user != null)
+			{
+				string email = getUserEmailByAspNetUserId(user.AspNetUserId);
+				UserViewModel model = new UserViewModel
+				{
+					ID = user.ID,
+					Name = user.Name,
+					Email = email,
+				};
+				return model;
+			}
+	        return null;
+
+        }
 
         internal int getRoleNamebyId(int userId)
         {
@@ -322,36 +343,37 @@ namespace Mooshak___H37.Services
 			
 		}
 
+		/// <summary>
+		/// Gets the number of users with a particular role in the system
+		/// </summary>
+		/// <param name="roleId">The ID of the role</param>
+		/// <returns>The number of users with this roleId</returns>
+		public int usersInSystemByRole(int roleId)
+		{
+			return (from user in _db.UserCourseRelations
+							where user.RoleID == roleId
+							&& user.IsRemoved == false
+							select user).Count();
+		}
+
+		/// <summary>
+		/// Gets a list of the number of users in the system, 
+		/// as well as the number of students and teachers
+		/// </summary>
+		/// <returns>A list of integers for users, students and teachers</returns>
         public List<int> UsersInSystem()
         {
             List<int> UserList = new List<int>();
+			
+	        int students = usersInSystemByRole(1);
+			int teachers = usersInSystemByRole(2);
+			int admins = usersInSystemByRole(3);
+	        int users = students + teachers + admins;
 
-            var users = (from user in _db.Users
-                         where user.IsRemoved == false
-                         select user).Count();
-
-            UserList.Add(users);
-
-            var students = (from user in _db.UserCourseRelations
-                         where user.RoleID == 1
-						 && user.IsRemoved == false
-                         select user).Count();
-
-            UserList.Add(students);
-
-            var teachers = (from user in _db.UserCourseRelations
-                            where user.RoleID == 2
-							&& user.IsRemoved == false
-                            select user).Count();
-
-            UserList.Add(teachers);
-
-            //var admins = (from user in _db.UserCourseRelations
-            //                where user.RoleID == 3
-            //                select user).Count();
-
-            //UserList.Add(admins);
-
+			UserList.Add(users);
+			UserList.Add(students);
+			UserList.Add(teachers);
+			
             return UserList;
         }
 
@@ -365,10 +387,8 @@ namespace Mooshak___H37.Services
 			if(userId != null)
 			{
 				//finds the user in the Users table from the id param.
-				var usr = (from user in _db.Users
-						   where user.ID == userId.Value
-						   select user).SingleOrDefault();
-
+				var usr = getUserById(userId.Value);
+				
 				if (usr != null)
 				{
 					string aspUser = usr.AspNetUserId;
