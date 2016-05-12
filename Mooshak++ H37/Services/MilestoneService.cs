@@ -278,6 +278,24 @@ namespace Mooshak___H37.Services
 			_db.SaveChanges();
 		}
 
+		/// <summary>
+		/// Sets all milestones isRemoved to true for the matching assignment id we get as param.
+		/// </summary>
+		public void removeMilestoneByAssignmentId(int assignmentId)
+		{
+			var crs = (from item in _db.Milestones
+					   where item.AssignmentID == assignmentId
+					   && item.IsRemoved == false
+					   select item).ToList();
+			if(crs != null)
+			{
+				foreach (var c in crs)
+				{
+					c.IsRemoved = true;
+				}
+			}
+		}
+
 		public List<Testrun> getTestrunsOutcomeForSubmission(int submissionId)
 		{
 			List<Testrun> tRuns = (from t in _db.Testruns
