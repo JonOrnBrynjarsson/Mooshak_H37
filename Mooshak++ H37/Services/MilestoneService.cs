@@ -15,30 +15,12 @@ namespace Mooshak___H37.Services
 	public class MilestoneService
 	{
 		private readonly IAppDataContext _db;
+		private readonly UsersService _usersService;
 
 		public MilestoneService(IAppDataContext dbContext)
 		{
 			_db = dbContext ?? new ApplicationDbContext();
-		}
-
-		/// <summary>
-		/// Finds ID of Current User
-		/// </summary>
-		/// <returns>ID of LOGGED IN User</returns>
-		public int getCurrentUser()
-		{
-			var currentUser = System.Web.HttpContext.Current.User.Identity.GetUserId();
-			var currUserId = (from x in _db.Users
-							  where x.AspNetUserId == currentUser &&
-							  x.IsRemoved != true
-							  select x.ID).FirstOrDefault();
-
-			if (currUserId == 0)
-			{
-				throw new Exception("User does not exist or has been removed.");
-			}
-
-			return currUserId;
+			_usersService = new UsersService(null);
 		}
 
 		/// <summary>
@@ -141,7 +123,7 @@ namespace Mooshak___H37.Services
 		public bool userCanSubmitMilestone(int milestoneId)
 		{
 			//Returns ID of current User
-			var currUser = getCurrentUser();
+			var currUser = _usersService.getUserIdForCurrentApplicationUser();
 
 			//Finds all submissions from Current User
 			var submissions = (from s in _db.Submissions
@@ -296,14 +278,7 @@ namespace Mooshak___H37.Services
 			}
 		}
 
-		public List<Testrun> getTestrunsOutcomeForSubmission(int submissionId)
-		{
-			List<Testrun> tRuns = (from t in _db.Testruns
-								   where t.SubmissionID == submissionId
-								   select t).ToList();
-			return tRuns;
 
-		}
 
 		/// <summary>
 		/// Finds all Milestones in system
@@ -316,5 +291,17 @@ namespace Mooshak___H37.Services
 
             return milestones;
         }
-    }
+		/// <summary>
+		/// Gets the Milestone ID from the database based on a specific submission ID.
+		/// </summary>
+		/// <param name="submissionId">The "ID" of the submission for the milestone</param>
+		/// <returns>The "ID" of the milestone for the submission sent in</returns>
+		public int getMilestoneIdBySubmitId(int submissionId)
+		{
+			int milestoneId = (from s in _db.Submissions
+							   where s.ID == submissionId
+							   select s.MilestoneID).SingleOrDefault();
+			return milestoneId;
+		}
+	}
 }

@@ -47,41 +47,7 @@ namespace Mooshak___H37.Services
 			File.Create(filePath);
 		}
 
-		/// <summary>
-		/// Saves a submission to the database.
-		/// </summary>
-		/// <param name="milestonedId">The "ID" of the milestone that is being worked on</param>
-		/// <returns>The "ID" of the submission</returns>
-		public int createSubmission(int milestonedId)
-		{
-			if (milestonedId > 0)
-			{
-				try
-				{
-					Submission submission = new Submission
-					{
-						MilestoneID = milestonedId,
-						UserID = _usersService.getUserIdForCurrentApplicationUser(),
-						ProgramFileLocation = "a", //Required parameter -> set when db is updated.
-						IsGraded = false,
-						FinalSolution = false,
-						DateSubmitted = DateTime.Now
 
-					};
-					_db.Submissions.Add(submission);
-					_db.SaveChanges();
-
-					submission.ProgramFileLocation = getStudentSubmissionFolder(submission.ID);
-					_db.SaveChanges();
-					return submission.ID;
-				}
-				catch (Exception ex)
-				{
-					System.Console.WriteLine(ex);
-				}
-			}
-			return 0;
-		}
 
 		/// <summary>
 		/// Gets the userName responsible for a submission.
@@ -314,18 +280,7 @@ namespace Mooshak___H37.Services
 			return false;
 		}
 
-		/// <summary>
-		/// Gets the Milestone ID from the database based on a specific submission ID.
-		/// </summary>
-		/// <param name="submissionId">The "ID" of the submission for the milestone</param>
-		/// <returns>The "ID" of the milestone for the submission sent in</returns>
-		public int getMilestoneIdBySubmitId(int submissionId)
-		{
-			int milestoneId = (from s in _db.Submissions
-							   where s.ID == submissionId
-							   select s.MilestoneID).SingleOrDefault();
-			return milestoneId;
-		}
+	
 
 		/// <summary>
 		/// The main functions in testing a submission.  This one calles different functions

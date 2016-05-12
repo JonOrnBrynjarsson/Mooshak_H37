@@ -103,7 +103,7 @@ namespace Mooshak___H37.Controllers
 			{
 				try
 				{
-					int submissionId = _filesService.createSubmission(submit.Milestone);
+					int submissionId = _submissionService.createSubmission(submit.Milestone);
 					if (submissionId == 0)
 					{
 						throw new Exception();
@@ -164,7 +164,7 @@ namespace Mooshak___H37.Controllers
 			{
 				var viewModel = _submissionService.getSubmission(submissionID);
 				viewModel.code = _filesService.getSubmissionFile(submissionID);
-				viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionID);
+				viewModel.Testruns = _submissionService.getTestrunsOutcomeForSubmission(submissionID);
 				return View(viewModel);
 			}
 			catch (Exception e)
@@ -178,7 +178,7 @@ namespace Mooshak___H37.Controllers
 		{
 			int submissionId = 68;
 			EditCodeViewModel editCode = new EditCodeViewModel();
-			editCode.Milestone = _filesService.getMilestoneIdBySubmitId(submissionId);
+			editCode.Milestone = _milestoneService.getMilestoneIdBySubmitId(submissionId);
 			editCode.codefile = _filesService.getSubmissionFile(submissionId);
 
 			return View(editCode);
@@ -199,7 +199,7 @@ namespace Mooshak___H37.Controllers
 			{
 				try
 				{
-					int submissionId = _filesService.createSubmission(milestoneId);
+					int submissionId = _submissionService.createSubmission(milestoneId);
 					if (submissionId == 0)
 					{
 						throw new Exception();

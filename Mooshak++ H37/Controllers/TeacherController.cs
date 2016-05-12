@@ -190,7 +190,7 @@ namespace Mooshak___H37.Controllers
             {
                 var viewModel = _submissionsService.getSubmission(submissionId);
                 viewModel.code = _filesService.getSubmissionFile(submissionId);
-                viewModel.Testruns = _milestoneService.getTestrunsOutcomeForSubmission(submissionId);
+                viewModel.Testruns = _submissionsService.getTestrunsOutcomeForSubmission(submissionId);
                 return View(viewModel);
             }
             catch (Exception e)

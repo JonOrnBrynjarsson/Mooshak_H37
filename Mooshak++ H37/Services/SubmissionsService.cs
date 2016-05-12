@@ -23,7 +23,7 @@ namespace Mooshak___H37.Services
 			_filesService = new FilesService(null);
 		}
 
-		
+// Þetta fall á að vera í coursesService - Jón Örn
 		public List<User> getUsersInCourse(int courseId)
 		{
 			return (from u in _db.Users
@@ -32,6 +32,7 @@ namespace Mooshak___H37.Services
 				select u).ToList();
 		}
 
+// Þetta fall á að vera í coursesService - Jón Örn
 		public int getCourseIdFromMilestoneId(int milestoneId)
 		{
 			return (from c in _db.Courses
@@ -40,6 +41,7 @@ namespace Mooshak___H37.Services
 				where m.ID == milestoneId
 				select c.ID).SingleOrDefault();
 		}
+
 
 		/// <summary>
 		/// Finds All submissions for Given Milestone ID that have not been marke as
@@ -157,8 +159,9 @@ namespace Mooshak___H37.Services
             return model;
         }
 
+		
 		//Grades Assignment with given model.
-        internal void gradeAssignment(SubmissionsViewModel model)
+		internal void gradeAssignment(SubmissionsViewModel model)//Á þetta ekki að vera gradeSubmission
         {
 			//Finds submission that from given Model
             var currSubmission = (from subs in _db.Submissions
@@ -235,6 +238,7 @@ namespace Mooshak___H37.Services
 
             return viewModel;
         }
+
 		/// <summary>
 		/// Gets the number of testruns done on a particular submission.
 		/// </summary>
@@ -325,6 +329,8 @@ namespace Mooshak___H37.Services
 
 		}
 
+
+// Þetta fall á að vera í MilestonesService - Jón Örn
 		/// <summary>
 		/// Finds ID of milestone associated with Submission
 		/// </summary>
@@ -338,6 +344,52 @@ namespace Mooshak___H37.Services
 							 select mil.MilestoneID).FirstOrDefault();
 
 			return milestone;
+		}
+
+
+		public List<Testrun> getTestrunsOutcomeForSubmission(int submissionId)
+		{
+			List<Testrun> tRuns = (from t in _db.Testruns
+								   where t.SubmissionID == submissionId
+								   select t).ToList();
+			return tRuns;
+
+		}
+
+		/// <summary>
+		/// Saves a submission to the database.
+		/// </summary>
+		/// <param name="milestonedId">The "ID" of the milestone that is being worked on</param>
+		/// <returns>The "ID" of the submission</returns>
+		public int createSubmission(int milestonedId)
+		{
+			if (milestonedId > 0)
+			{
+				try
+				{
+					Submission submission = new Submission
+					{
+						MilestoneID = milestonedId,
+						UserID = _usersService.getUserIdForCurrentApplicationUser(),
+						ProgramFileLocation = "a", //Required parameter -> set when db is updated.
+						IsGraded = false,
+						FinalSolution = false,
+						DateSubmitted = DateTime.Now
+
+					};
+					_db.Submissions.Add(submission);
+					_db.SaveChanges();
+
+					submission.ProgramFileLocation = _filesService.getStudentSubmissionFolder(submission.ID);
+					_db.SaveChanges();
+					return submission.ID;
+				}
+				catch (Exception ex)
+				{
+					System.Console.WriteLine(ex);
+				}
+			}
+			return 0;
 		}
 	}
 }

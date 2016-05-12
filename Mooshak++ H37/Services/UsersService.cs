@@ -153,6 +153,10 @@ namespace Mooshak___H37.Services
 							where user.AspNetUserId == aspUser &&
 							user.IsRemoved == false
 							select user.ID).SingleOrDefault();
+			if (userId == 0)
+			{
+				throw new Exception("User does not exist or has been removed.");
+			}
 			return userId;
 		}
 
