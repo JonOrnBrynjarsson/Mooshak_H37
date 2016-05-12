@@ -21,8 +21,10 @@
                                 <th>Nr</th>
                                 <th>Name</th>
                                 <th>Due Date</th>
+								<th>Details</th>
                                 <th>Milestones</th>
-                                <th></th>
+                                <th>Remove</th>
+								<th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,9 +34,11 @@
                             {
                                 <tr style="@(ViewBag.Today > it.DueDate ? "color:grey; font-style:italic; Background-color:#f2f2f2; " : "")">
                                     <td>@(rowNo += 1)</td>
-                                    <td>@Html.ActionLink(it.Name, "ViewAssignment", new { id = it.ID })</td>
+                                    <td>@it.Name</td>
                                     <td>@it.DueDate</td>
+									<td>@Html.ActionLink("Details", "ViewAssignment", new { id = it.ID })</td>
                                     <td>@Html.ActionLink("Milestones", "Milestones", new { id = it.ID })</td>
+									<td>@Html.ActionLink("Remove", "RemoveAssignment", new { id = it.ID })</td>
                                 </tr>
                             }
                         </tbody>
