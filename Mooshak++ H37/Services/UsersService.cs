@@ -397,15 +397,16 @@ namespace Mooshak___H37.Services
 					_db.SaveChanges();
 
 					//deletes the account created in AspNetUsers Table	============	\\
-					//var usrName = (from user in _db.Users                               //
-					//			   where usr.AspNetUserId == user.AspNetUser.Id         //
-					//			   select user.AspNetUser.UserName).FirstOrDefault();   //
-					//if (usrName != null)                                                //
-					//{                                                                   //
-					//	Membership.DeleteUser(usrName);                                 //
-					//}//         ========================================				//
+					var usrName = (from user in _db.Users                               //
+								   where usr.AspNetUserId == user.AspNetUser.Id         //
+								   select user.AspNetUser.UserName).FirstOrDefault();   //
+					if (usrName != null)                                                //
+					{                                                                   //
+						Membership.DeleteUser(usrName);                                 //
+						_db.SaveChanges();
+					}//         ========================================				//
 
-					//retrieves all the connections to courses the user to be deleted has and removes them all
+						//retrieves all the connections to courses the user to be deleted has and removes them all
 					var connections = (from x in _db.UserCourseRelations									//
 									   where x.UserID == usr.ID												//
 									   select x).ToList();													//
@@ -416,9 +417,9 @@ namespace Mooshak___H37.Services
 					}//			=========================================									//
 					_db.SaveChanges();
 
-					var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-					ApplicationUser u = um.FindById(aspUser);	
-					Membership.DeleteUser(u.UserName, true);				
+					//var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+					//ApplicationUser u = um.FindById(aspUser);	
+					//Membership.DeleteUser(u.UserName, true);				
 				}
 			}
 		}

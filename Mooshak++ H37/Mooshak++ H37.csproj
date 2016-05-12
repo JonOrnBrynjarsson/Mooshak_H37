@@ -281,6 +281,7 @@
     <Compile Include="Models\Entities\Testrun.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\UserCourseRelation.cs" />
+    <Compile Include="Models\IdentityManager.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Viewmodels\AddUserToCourseViewModel.cs" />
