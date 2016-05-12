@@ -13,9 +13,9 @@ namespace Mooshak___H37.Controllers
 	[Authorize(Roles = "Admin")]
 	public class AdminController : BasicController
 	{
-		private ErrorsService _errorsService = new ErrorsService();
-		private CoursesService _courseService = new CoursesService();
-		private UsersService _userService = new UsersService();
+		private ErrorsService _errorsService = new ErrorsService(null);
+		private CoursesService _courseService = new CoursesService(null);
+		private UsersService _userService = new UsersService(null);
 
 		// GET: Admin
 		public ActionResult Index()

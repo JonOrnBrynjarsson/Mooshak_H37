@@ -16,16 +16,16 @@ using System.Web;
 
 namespace Mooshak___H37.Services
 {
-    class AssigmentsService
+    public class AssigmentsService
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
         private readonly UsersService _usersService;
-        private readonly MilestoneService _milestoneService = new MilestoneService();
+        private readonly MilestoneService _milestoneService = new MilestoneService(null);
 
-        public AssigmentsService()
-        {
-            _db = new ApplicationDbContext();
-            _usersService = new UsersService();
+        public AssigmentsService(IAppDataContext dbContext)
+		{
+			_db = dbContext ?? new ApplicationDbContext();
+			_usersService = new UsersService(null);
         }
 
         public DateTime Today()

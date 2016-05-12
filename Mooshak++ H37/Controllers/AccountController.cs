@@ -77,7 +77,7 @@ namespace Mooshak___H37.Controllers
                 return View(model);
             }
 
-            UsersService _usersService = new UsersService();
+            UsersService _usersService = new UsersService(null);
 
             int userID = _usersService.getUserIDbyEmail(model);
             string role = _usersService.getAspUserRole(userID);
@@ -163,7 +163,7 @@ namespace Mooshak___H37.Controllers
         {
             if (ModelState.IsValid)
             {
-                UsersService _userService = new UsersService();
+                UsersService _userService = new UsersService(null);
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

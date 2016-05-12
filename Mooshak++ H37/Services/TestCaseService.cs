@@ -10,11 +10,11 @@ namespace Mooshak___H37.Services
 {
 	public class TestCaseService
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly IAppDataContext _db;
 
-		public TestCaseService()
+		public TestCaseService(IAppDataContext dbContext)
 		{
-			_db = new ApplicationDbContext();
+			_db = dbContext ?? new ApplicationDbContext();
 		}
 		//Creates a new Testcase with Given Model and Milestone ID
 		internal void CreateTestCase(TestCaseViewModel model, int milestoneID)

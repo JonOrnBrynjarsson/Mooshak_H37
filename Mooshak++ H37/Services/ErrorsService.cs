@@ -13,13 +13,13 @@ namespace Mooshak___H37.Services
 {
 	public class ErrorsService
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly IAppDataContext _db;
 		private readonly UsersService _usersService;
 
-		public ErrorsService()
+		public ErrorsService(IAppDataContext dbContext)
 		{
-			_db = new ApplicationDbContext();
-			_usersService = new UsersService();
+			_db = dbContext ?? new ApplicationDbContext();
+			_usersService = new UsersService(null);
 		}
 
 		public List<AdminErrorViewmModel> getTopErrormessages()

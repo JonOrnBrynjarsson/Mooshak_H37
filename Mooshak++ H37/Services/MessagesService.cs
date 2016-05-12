@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Mooshak___H37.Services
 {
-	class MessagesService
+	public class MessagesService
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly IAppDataContext _db;
 
-		public MessagesService()
+		public MessagesService(IAppDataContext dbContext)
 		{
-			_db = new ApplicationDbContext();
+			_db = dbContext ?? new ApplicationDbContext();
 		}
 
 

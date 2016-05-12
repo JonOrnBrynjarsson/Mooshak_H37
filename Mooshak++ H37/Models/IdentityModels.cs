@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -20,22 +21,40 @@ namespace Mooshak___H37.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+	public interface IAppDataContext
+	{
+		IDbSet<Assignment> Assignments { get; set; }
+		IDbSet<Course> Courses { get; set; }
+		IDbSet<ErrorReport> ErrorReports { get; set; }
+		IDbSet<GroupMember> GroupMembers { get; set; }
+		IDbSet<Message> Messages { get; set; }
+		IDbSet<Milestone> Milestones { get; set; }
+		IDbSet<Submission> Submissions { get; set; }
+		IDbSet<TestCase> TestCases { get; set; }
+		IDbSet<Testrun> Testruns { get; set; }
+		IDbSet<UserCourseRelation> UserCourseRelations { get; set; }
+		IDbSet<User> Users { get; set; }
+		IDbSet<Role> Roles { get; set; }
+
+		int SaveChanges();
+	}
+
+	public class ApplicationDbContext : IdentityDbContext<ApplicationUser> , IAppDataContext
     {
 
-		public DbSet<Assignment> Assignments { get; set; }
-		public DbSet<Course> Courses { get; set; }
-		public virtual DbSet<ErrorReport> ErrorReports { get; set; }
-		public DbSet<GroupMember> GroupMembers { get; set; }
-		public DbSet<Message> Messages { get; set; }
-		public DbSet<Milestone> Milestones { get; set; }
-		public DbSet<Submission> Submissions { get; set; }
-		public DbSet<TestCase> TestCases { get; set; }
-		public DbSet<Testrun> Testruns { get; set; }
-		public DbSet<UserCourseRelation> UserCourseRelations { get; set; }
-		public  DbSet<User> Users { get; set; }
-        public  DbSet<Role> Roles { get; set; }
-
+		public IDbSet<Assignment> Assignments { get; set; }
+		public IDbSet<Course> Courses { get; set; }
+		public IDbSet<ErrorReport> ErrorReports { get; set; }
+		public IDbSet<GroupMember> GroupMembers { get; set; }
+		public IDbSet<Message> Messages { get; set; }
+		public IDbSet<Milestone> Milestones { get; set; }
+		public IDbSet<Submission> Submissions { get; set; }
+		public IDbSet<TestCase> TestCases { get; set; }
+		public IDbSet<Testrun> Testruns { get; set; }
+		public IDbSet<UserCourseRelation> UserCourseRelations { get; set; }
+		public  IDbSet<User> Users { get; set; }
+        public  IDbSet<Role> Roles { get; set; }
+		
 
 		public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
