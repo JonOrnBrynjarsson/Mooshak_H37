@@ -37,7 +37,16 @@
 								@Html.Raw(item.User.Count);
 							}
 						</td>
-						<td>@item.Isactive</td>
+						<td>
+							@if (item.Isactive == true)
+							{
+								@Html.Raw("Yes");
+							}
+							else
+							{
+								@Html.Raw("No");
+							}
+						</td>
 						<td>@Html.ActionLink("Delete", "RemoveCourse", new { id = item.ID })</td>
 						<td>@Html.ActionLink("Edit", "EditCourse", new { id = item.ID })</td>
 					</tr>
@@ -46,7 +55,7 @@
 		</table>
 	</div>
 	<div class="small-right-portion btn-group-vertical">
-		<button class="btn btn-primary create-button" onclick="location.href='@Url.Action("CreateCourse", "Admin")'">Create New Course</button>
+		<button class="btn btn-primary create-button" onclick="location.href='@Url.Action("CreateCourse", "Admin")'">Create Course</button>
 		@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
 	</div>
 </div>
