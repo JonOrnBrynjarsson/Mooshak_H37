@@ -104,13 +104,13 @@ namespace Mooshak___H37.Services
 			//Creates a View Model for Given Courses.
 			foreach (var course in courses)
 			{
-                if (_assignmentsService.getAssignmentsInCourse(course.ID).Count != 0)
+                if (getAssignmentsInCourse(course.ID).Count != 0)
                 {
                     CourseViewModel model = new CourseViewModel
                     {
 
                         ID = course.ID,
-                        Assignments = _assignmentsService.getAssignmentsInCourse(course.ID),
+                        Assignments = getAssignmentsInCourse(course.ID),
                         Isactive = course.Isactive,
                         IsRemoved = course.IsRemoved,
                         Name = course.Name,
@@ -141,7 +141,7 @@ namespace Mooshak___H37.Services
 					{
 
 						ID = course.ID,
-						Assignments = _assignmentsService.getAssignmentsInCourse(course.ID),
+						Assignments = getAssignmentsInCourse(course.ID),
 						Isactive = course.Isactive,
 						IsRemoved = course.IsRemoved,
 						Name = course.Name,
@@ -254,7 +254,7 @@ namespace Mooshak___H37.Services
 				throw new Exception("Course does not exist");
 			}
 
-			var ass = _assignmentsService.getAssignmentsInCourse(courseId);
+			var ass = getAssignmentsInCourse(courseId);
 			var users = _userService.getUsersInCourse(courseId);
 
 			CourseViewModel model = new CourseViewModel
@@ -383,5 +383,58 @@ namespace Mooshak___H37.Services
 					where m.ID == milestoneId
 					select c.ID).SingleOrDefault();
 		}
+
+
+		/// <summary>
+		/// Finds assignments in a Given Course, given they have not been marked Removed.
+		/// </summary>
+		/// <param name="assignmId"></param>
+		/// <returns>List of Assignments</returns>
+		public List<AssignmentViewModel> getAssignmentsInCourse(int assignmId)
+		{
+
+			//var todayDate = Today();
+
+			//List of assignments with given Course ID.
+			var assignments = (from asi in _db.Assignments
+							   where asi.CourseID == assignmId &&
+							   asi.IsRemoved != true
+							   orderby asi.DueDate descending
+							   select asi).ToList();
+
+			if (assignments == null)
+			{
+				throw new Exception("No Assignments for given context");
+			}
+
+			List<AssignmentViewModel> viewModel = new List<AssignmentViewModel>();
+			int curruser = _userService.getUserIdForCurrentApplicationUser();
+			//Creates list of view models for assignments
+			foreach (var assignm in assignments)
+			{
+
+				var test = _assignmentsService.getGradeFromSubmissions(assignm.ID, curruser);
+				bool submitted = _assignmentsService.hasSubmittedAssignment(assignm.ID);
+				double finalGrade = _assignmentsService.getGradeFromSubmissions(assignm.ID, curruser);
+
+				AssignmentViewModel model = new AssignmentViewModel
+				{
+					ID = assignm.ID,
+					Name = assignm.Name,
+					SetDate = assignm.SetDate,
+					DueDate = assignm.DueDate,
+					CourseID = assignm.CourseID,
+					IsActive = assignm.IsActive,
+					IsRemoved = assignm.IsRemoved,
+					Description = assignm.Description,
+					Submitted = submitted,
+					TotalGrade = finalGrade,
+				};
+				viewModel.Add(model);
+			}
+
+			return viewModel;
+		}
+
 	}
 }

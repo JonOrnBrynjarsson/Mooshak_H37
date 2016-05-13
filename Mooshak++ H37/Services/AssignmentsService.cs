@@ -14,14 +14,12 @@ namespace Mooshak___H37.Services
 		private readonly IAppDataContext _db;
 		private readonly MilestoneService _milestoneService;
 		private readonly UsersService _usersService;
-		private readonly CoursesService _coursesService;
-
+		
 		public AssigmentsService(IAppDataContext dbContext)
 		{
 			_db = dbContext ?? new ApplicationDbContext();
 			_usersService = new UsersService(null);
 			_milestoneService = new MilestoneService(null);
-			_coursesService = new CoursesService(null);
 		}
 		
 		/// <summary>
@@ -253,63 +251,12 @@ namespace Mooshak___H37.Services
         }
 
         /// <summary>
-        /// Finds assignments in a Given Course, given they have not been marked Removed.
-        /// </summary>
-        /// <param name="assignmId"></param>
-        /// <returns>List of Assignments</returns>
-        public List<AssignmentViewModel> getAssignmentsInCourse(int assignmId)
-        {
-
-            //var todayDate = Today();
-
-            //List of assignments with given Course ID.
-            var assignments = (from asi in _db.Assignments
-                               where asi.CourseID == assignmId &&
-                               asi.IsRemoved != true
-                               orderby asi.DueDate descending
-                               select asi).ToList();
-
-            if (assignments == null)
-            {
-                throw new Exception("No Assignments for given context");
-            }
-
-            List<AssignmentViewModel> viewModel = new List<AssignmentViewModel>();
-	        int curruser = _usersService.getUserIdForCurrentApplicationUser();
-            //Creates list of view models for assignments
-            foreach (var assignm in assignments)
-            {
-				
-                var test = getGradeFromSubmissions(assignm.ID, curruser);
-				bool submitted = hasSubmittedAssignment(assignm.ID);
-                double finalGrade = getGradeFromSubmissions(assignm.ID, curruser);
-
-                AssignmentViewModel model = new AssignmentViewModel
-                {
-                    ID = assignm.ID,
-                    Name = assignm.Name,
-                    SetDate = assignm.SetDate,
-                    DueDate = assignm.DueDate,
-                    CourseID = assignm.CourseID,
-                    IsActive = assignm.IsActive,
-                    IsRemoved = assignm.IsRemoved,
-                    Description = assignm.Description,
-                    Submitted = submitted,
-                    TotalGrade = finalGrade,
-                };
-                viewModel.Add(model);
-            }
-
-            return viewModel;
-        }
-
-        /// <summary>
         /// First finds Milestones associate with assignment. Then It goes through the milestones and Finds...
         /// Newest associated Submissions for each milestone. It then goes through the information and 
         /// Calculates Total Grade for Given Assignment.
         /// </summary>
         /// <returns>Total Grade for Assignment</returns>
-        private double getGradeFromSubmissions(int AssignmentId, int userId)
+        public double getGradeFromSubmissions(int AssignmentId, int userId)
         {
             var milestones = (from mil in _db.Milestones
                               where mil.AssignmentID == AssignmentId &&
