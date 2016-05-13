@@ -28,7 +28,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Saves the file submitted to a submission folder for that submission.
+		///	Saves the file submitted to a submission folder for that submission.
 		/// </summary>
 		/// <param name="file">The code submitted</param>
 		/// <param name="submissionId">The "ID" of the submission.</param>
@@ -45,7 +45,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Saves the string codefile to a submission folder
+		///	Saves the string codefile to a submission folder
 		/// </summary>
 		/// <param name="codefile">The string to be saved</param>
 		/// <param name="submissionId">The "ID" of the submission</param>
@@ -58,7 +58,7 @@ namespace Mooshak___H37.Services
 
 
 		/// <summary>
-		///     Gets the userName responsible for a submission.
+		///	Gets the userName responsible for a submission.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of  submission being tested</param>
 		/// <returns>The username for a specific submission</returns>
@@ -75,7 +75,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Gets the folder that holds the code for a submission.
+		///	Gets the folder that holds the code for a submission.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <returns>A string reprsenting the folder for the student submission</returns>
@@ -92,7 +92,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Returns the folder where the submission will be tested.
+		///	Returns the folder where the submission will be tested.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <returns></returns>
@@ -110,7 +110,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Compiles a submission from student to a running folder.
+		///	Compiles a submission from student to a running folder.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission to be compiled</param>
 		public void compileStudentProgram(int submissionId)
@@ -133,9 +133,9 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Compiles the code to an executable file.  If the file is to be in a different directory
-		///     from the one that holds the code, that directory has to be included in the name
-		///     sent into the function.
+		/// Compiles the code to an executable file.  If the file is to be in a different directory
+		/// from the one that holds the code, that directory has to be included in the name
+		/// sent into the function.
 		/// </summary>
 		/// <param name="folderWithCodeFile">The folder of the file to be compiled</param>
 		/// <param name="fullFileNameforCompiledFile">The filename of the compiled file with directory</param>
@@ -164,7 +164,7 @@ namespace Mooshak___H37.Services
 
 
 		/// <summary>
-		///     Saves the result from the current testrun to the database
+		/// Saves the result from the current testrun to the database
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <param name="testCase">The "ID" of the testcase used in this testrun</param>
@@ -183,7 +183,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Deletes all files from the test directory.
+		/// Deletes all files from the test directory.
 		/// </summary>
 		/// <param name="submissionId">The submission being tested</param>
 		public void clearRunfolder(int submissionId)
@@ -207,8 +207,8 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Runs the students submission against a testCase.  Compares the result
-		///     against expected output.
+		/// Runs the students submission against a testCase.  Compares the result
+		/// against expected output.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <param name="testCase">The input for the test run</param>
@@ -245,8 +245,8 @@ namespace Mooshak___H37.Services
 
 
 		/// <summary>
-		///     The main functions in testing a submission.  This one calles different functions
-		///     as needed.
+		/// The main functions in testing a submission.  This one calles different functions
+		/// as needed.
 		/// </summary>
 		/// <param name="submissionId">The "Id" of the submission being tested</param>
 		public void testingSubmission(int submissionId)
@@ -295,7 +295,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		///     Gets the program code for a submission
+		/// Gets the program code for a submission
 		/// </summary>
 		/// <param name="submissionId">The submission ID for the submission</param>
 		/// <returns>The program code as a string</returns>

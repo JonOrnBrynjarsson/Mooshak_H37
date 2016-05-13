@@ -15,7 +15,12 @@ namespace Mooshak___H37.Services
 		{
 			_db = dbContext ?? new ApplicationDbContext();
 		}
-		//Creates a new Testcase with Given Model and Milestone ID
+
+		/// <summary>
+		/// Creates a new Testcase with Given Model and Milestone ID
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="milestoneId"></param>
 		public void createTestCase(TestCaseViewModel model, int milestoneId)
 		{
 			_db.TestCases.Add(new TestCase
@@ -28,7 +33,10 @@ namespace Mooshak___H37.Services
 			_db.SaveChanges();
 		}
 
-		//Removes Testcase with associated with given model
+		/// <summary>
+		/// Removes Testcase with associated with given model
+		/// </summary>
+		/// <param name="testcaseId"></param>
 		internal void removeTestCase(int testcaseId)
 		{
 			//Finds test Case Associated with Given model

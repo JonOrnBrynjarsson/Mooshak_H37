@@ -180,7 +180,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// TODO
+		/// Adds the model in to the database
 		/// </summary>
 		/// <param name="model"></param>
 		internal void addUserToCourse(AddUserToCourseViewModel model)
@@ -355,6 +355,12 @@ namespace Mooshak___H37.Services
             return courses;
         }
 
+		/// <summary>
+		/// Gets all the users in the course with 
+		/// spesific ID
+		/// </summary>
+		/// <param name="courseId"></param>
+		/// <returns></returns>
 		public List<User> getUsersInCourse(int courseId)
 		{
 			return (from u in _db.Users
@@ -363,6 +369,12 @@ namespace Mooshak___H37.Services
 					select u).ToList();
 		}
 
+		/// <summary>
+		/// Get the id of the course connected to a milestone 
+		/// with the specific ID
+		/// </summary>
+		/// <param name="milestoneId"></param>
+		/// <returns></returns>
 		public int getCourseIdFromMilestoneId(int milestoneId)
 		{
 			return (from c in _db.Courses

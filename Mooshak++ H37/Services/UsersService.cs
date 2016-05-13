@@ -158,6 +158,12 @@ namespace Mooshak___H37.Services
 			return userId;
 		}
 
+		/// <summary>
+		/// Get the role of a user with the specific
+		/// ID from the asp table
+		/// </summary>
+		/// <param name="userId"></param>
+		/// <returns></returns>
 		public string getAspUserRole(int userId)
 		{
 			var aspUser = (from user in _db.Users
@@ -171,6 +177,12 @@ namespace Mooshak___H37.Services
 			
 		}
 
+		/// <summary>
+		/// Adds the specific user to the database
+		/// and connects him the asp user
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="user"></param>
 		internal void setUser(string name, ApplicationUser user)
         {
 
@@ -204,6 +216,11 @@ namespace Mooshak___H37.Services
             return User;
         }
 
+		/// <summary>
+		/// Adds the specifc user to the selected role
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="role"></param>
         internal void setRole(ApplicationUser model, string role)
         {
             var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
@@ -261,6 +278,11 @@ namespace Mooshak___H37.Services
 
         }
 
+		/// <summary>
+		/// Gets the username of the user with the specific ID
+		/// </summary>
+		/// <param name="userId"></param>
+		/// <returns></returns>
 		public string getUserNameById(int userId)
 		{
 			var name = (from n in _db.Users
@@ -270,6 +292,11 @@ namespace Mooshak___H37.Services
 			return name;
 		}
 
+		/// <summary>
+		/// Gets the user with the specific ID and updates
+		/// him with new informations
+		/// </summary>
+		/// <param name="model"></param>
 		internal void editUser(UserViewModel model)
 		{
 			var edit = (from user in _db.Users
@@ -290,12 +317,22 @@ namespace Mooshak___H37.Services
 			}
 		}
 
+		/// <summary>
+		/// Updates the email on a user with a specific ID
+		/// </summary>
+		/// <param name="aspNetId"></param>
+		/// <param name="email"></param>
 		private void editUserEmail(string aspNetId, string email)
 		{
 			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 			um.SetEmail(aspNetId, email);
 		}
 
+		/// <summary>
+		/// Updates the password on a user with a specific ID
+		/// </summary>
+		/// <param name="aspNetId"></param>
+		/// <param name="email"></param>
 		private void editUserPassword(string aspNetId, string password)
 		{
 			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
@@ -303,6 +340,11 @@ namespace Mooshak___H37.Services
 			um.AddPassword(aspNetId, password);
 		}
 
+		/// <summary>
+		/// Updates the role on a user with a specific ID
+		/// </summary>
+		/// <param name="aspNetId"></param>
+		/// <param name="email"></param>
 		private void editUserRole(string aspNetId,string oldRole, string role)
 		{
 			var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
@@ -370,6 +412,10 @@ namespace Mooshak___H37.Services
 			}
 		}
 
+		/// <summary>
+		/// Removes the connection of a user and courses
+		/// </summary>
+		/// <param name="userId"></param>
 		private void removeUserConnections(int userId)
 		{
 
