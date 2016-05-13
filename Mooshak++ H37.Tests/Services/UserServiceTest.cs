@@ -67,7 +67,7 @@ namespace Mooshak___H37.Tests.Services
 		}
 
 		[TestMethod]
-		public void getAllActiveUsersInSystem()
+		public void UsersInSystem()
 		{
 			// Arrange:
 			int numOfActiveUsers = 3;
