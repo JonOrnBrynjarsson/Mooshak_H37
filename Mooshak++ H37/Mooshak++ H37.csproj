@@ -205,67 +205,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605061351300_InitialCreate.cs" />
-    <Compile Include="Migrations\201605061351300_InitialCreate.Designer.cs">
-      <DependentUpon>201605061351300_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605061505030_submission.cs" />
-    <Compile Include="Migrations\201605061505030_submission.Designer.cs">
-      <DependentUpon>201605061505030_submission.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605081226445_jon.cs" />
-    <Compile Include="Migrations\201605081226445_jon.Designer.cs">
-      <DependentUpon>201605081226445_jon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605081535549_bardi.cs" />
-    <Compile Include="Migrations\201605081535549_bardi.Designer.cs">
-      <DependentUpon>201605081535549_bardi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091114495_isgraded.cs" />
-    <Compile Include="Migrations\201605091114495_isgraded.Designer.cs">
-      <DependentUpon>201605091114495_isgraded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091204568_testcasechange.cs" />
-    <Compile Include="Migrations\201605091204568_testcasechange.Designer.cs">
-      <DependentUpon>201605091204568_testcasechange.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091208138_tc.cs" />
-    <Compile Include="Migrations\201605091208138_tc.Designer.cs">
-      <DependentUpon>201605091208138_tc.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091306316_jont1.cs" />
-    <Compile Include="Migrations\201605091306316_jont1.Designer.cs">
-      <DependentUpon>201605091306316_jont1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091316385_jon1.cs" />
-    <Compile Include="Migrations\201605091316385_jon1.Designer.cs">
-      <DependentUpon>201605091316385_jon1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091617318_users.cs" />
-    <Compile Include="Migrations\201605091617318_users.Designer.cs">
-      <DependentUpon>201605091617318_users.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091651213_test.cs" />
-    <Compile Include="Migrations\201605091651213_test.Designer.cs">
-      <DependentUpon>201605091651213_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605092151031_testcase.cs" />
-    <Compile Include="Migrations\201605092151031_testcase.Designer.cs">
-      <DependentUpon>201605092151031_testcase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605101802112_datesubmitted.cs" />
-    <Compile Include="Migrations\201605101802112_datesubmitted.Designer.cs">
-      <DependentUpon>201605101802112_datesubmitted.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605102230333_finalsolution.cs" />
-    <Compile Include="Migrations\201605102230333_finalsolution.Designer.cs">
-      <DependentUpon>201605102230333_finalsolution.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605111612390_jondbtest.cs" />
-    <Compile Include="Migrations\201605111612390_jondbtest.Designer.cs">
-      <DependentUpon>201605111612390_jondbtest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Assignment.cs" />
     <Compile Include="Models\Entities\Course.cs" />
@@ -424,53 +363,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605061351300_InitialCreate.resx">
-      <DependentUpon>201605061351300_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605061505030_submission.resx">
-      <DependentUpon>201605061505030_submission.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605081226445_jon.resx">
-      <DependentUpon>201605081226445_jon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605081535549_bardi.resx">
-      <DependentUpon>201605081535549_bardi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091114495_isgraded.resx">
-      <DependentUpon>201605091114495_isgraded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091204568_testcasechange.resx">
-      <DependentUpon>201605091204568_testcasechange.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091208138_tc.resx">
-      <DependentUpon>201605091208138_tc.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091306316_jont1.resx">
-      <DependentUpon>201605091306316_jont1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091316385_jon1.resx">
-      <DependentUpon>201605091316385_jon1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091617318_users.resx">
-      <DependentUpon>201605091617318_users.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091651213_test.resx">
-      <DependentUpon>201605091651213_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605092151031_testcase.resx">
-      <DependentUpon>201605092151031_testcase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605101802112_datesubmitted.resx">
-      <DependentUpon>201605101802112_datesubmitted.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605102230333_finalsolution.resx">
-      <DependentUpon>201605102230333_finalsolution.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605111612390_jondbtest.resx">
-      <DependentUpon>201605111612390_jondbtest.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
