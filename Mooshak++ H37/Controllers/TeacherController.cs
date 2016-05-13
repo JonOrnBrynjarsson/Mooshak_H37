@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models.Viewmodels;
-using Microsoft.AspNet.Identity;
 using Project_4.Controllers;
-using System.Diagnostics;
 
 namespace Mooshak___H37.Controllers
 {

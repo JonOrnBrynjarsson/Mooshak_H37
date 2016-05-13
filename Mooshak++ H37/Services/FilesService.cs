@@ -31,6 +31,10 @@ namespace Mooshak___H37.Services
 		/// <param name="submissionId">The "ID" of the submission.</param>
 		public void saveSubmissionfile(HttpPostedFileBase file, int submissionId)
 		{
+			if (file == null)
+			{
+				throw new Exception("You did not select a file");
+			}
 			string filePath = getStudentSubmissionFolder(submissionId);
 
 			filePath += file.FileName;
