@@ -57,26 +57,30 @@ namespace Mooshak___H37.Controllers
 
 			try
 			{
-				var canSubmit = _milestoneService.userCanSubmitMilestone(milestoneId);
+				var assignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneId);
+				_milestoneService.userCanSubmitMilestone(milestoneId);
+				_assignService.assignmentIsStillActive(assignmentId);
+
+				ViewBag.assignmentId = assignmentId;
+
+				MilestoneViewmodel m = new MilestoneViewmodel();
+
+				m = _milestoneService.getSingleMilestone(milestoneId);
+
+				StudentSubmitViewModel submission = new StudentSubmitViewModel();
+
+				submission.Milestone = milestoneId;
+				submission.DateSet = m.DateSet;
+				submission.Duedate = m.DueDate;
+
+				return View(submission);
 			}
 			catch (Exception e)
 			{
 				return View("~/Views/Shared/Cerror.cshtml", e);
 			}
 
-			ViewBag.AssignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneId);
-
-			MilestoneViewmodel m = new MilestoneViewmodel();
-
-			m = _milestoneService.getSingleMilestone(milestoneId);
-
-			StudentSubmitViewModel submission = new StudentSubmitViewModel();
-
-			submission.Milestone = milestoneId;
-			submission.DateSet = m.DateSet;
-			submission.Duedate = m.DueDate;
-
-			return View(submission);
+			
 		}
 
 		[HttpPost]

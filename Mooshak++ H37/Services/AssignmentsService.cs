@@ -226,6 +226,18 @@ namespace Mooshak___H37.Services
             return assignmentId;
         }
 
+		public void assignmentIsStillActive(int assignmentId)
+		{
+			var tody = today();
+			var assignment = (from assi in _db.Assignments
+							  where assi.ID == assignmentId && assi.DueDate > tody
+							  select assi).FirstOrDefault();
+			if (assignment == null)
+			{
+				throw new Exception("You cannot submit because the this assignment has exceeded the deadline");
+			}
+		}
+
 		/// <summary>
 		/// Sets the assignment isRemoved to true in the database
 		/// </summary>

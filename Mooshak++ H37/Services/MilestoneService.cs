@@ -114,7 +114,7 @@ namespace Mooshak___H37.Services
 		/// Checks if User Can Still submit a Milestone, Depending on
 		/// How many times he has already submitted
 		/// </summary>
-		public bool userCanSubmitMilestone(int milestoneId)
+		public void userCanSubmitMilestone(int milestoneId)
 		{
 			//Returns ID of current User
 			var currUser = _usersService.getUserIdForCurrentApplicationUser();
@@ -134,11 +134,8 @@ namespace Mooshak___H37.Services
 			//Returns true if User has not submitted to many times
 			if (submissions >= allowedSubmissions)
 			{
-				//return true;
 				throw new Exception("You have already submitted the maximum number of times");
 			}
-
-			return true;
 		}
 
 		/// <summary>
