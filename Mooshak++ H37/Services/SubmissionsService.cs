@@ -133,9 +133,12 @@ namespace Mooshak___H37.Services
             return model;
         }
 
-		
-		//Grades Assignment with given model.
-		internal void gradeAssignment(SubmissionsViewModel model)//Á þetta ekki að vera gradeSubmission
+
+		/// <summary>
+		/// Grades Assignment with given model.
+		/// </summary>
+		/// <param name="model"></param>
+		internal void gradeAssignment(SubmissionsViewModel model)
         {
 			//Finds submission that from given Model
             var currSubmission = (from subs in _db.Submissions
@@ -304,7 +307,12 @@ namespace Mooshak___H37.Services
 		}
 
 
-
+		/// <summary>
+		/// Gets the test run outcome for a submission
+		/// with the specific ID
+		/// </summary>
+		/// <param name="submissionId"></param>
+		/// <returns></returns>
 		public List<Testrun> getTestrunsOutcomeForSubmission(int submissionId)
 		{
 			List<Testrun> tRuns = (from t in _db.Testruns
@@ -345,7 +353,6 @@ namespace Mooshak___H37.Services
 					throw new Exception("The Milestone you are trying to submit to does not exist or has been removed.");
 				}
 
-			return 0;
 		}
 			
 	}

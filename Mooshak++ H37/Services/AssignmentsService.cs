@@ -22,6 +22,10 @@ namespace Mooshak___H37.Services
 			_milestoneService = new MilestoneService(null);
 		}
 		
+		/// <summary>
+		/// Returns the date to day
+		/// </summary>
+		/// <returns></returns>
 		public DateTime today()
         {
             DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
