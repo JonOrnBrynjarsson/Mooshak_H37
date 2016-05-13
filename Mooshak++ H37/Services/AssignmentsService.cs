@@ -14,12 +14,14 @@ namespace Mooshak___H37.Services
 		private readonly IAppDataContext _db;
 		private readonly MilestoneService _milestoneService;
 		private readonly UsersService _usersService;
+		private readonly CoursesService _coursesService;
 
 		public AssigmentsService(IAppDataContext dbContext)
 		{
 			_db = dbContext ?? new ApplicationDbContext();
 			_usersService = new UsersService(null);
 			_milestoneService = new MilestoneService(null);
+			_coursesService = new CoursesService(null);
 		}
 		
 		/// <summary>
@@ -158,6 +160,7 @@ namespace Mooshak___H37.Services
                     AssignmentID = x.AssignmentID,
                     IsRemoved = x.IsRemoved,
                     Percentage = x.Percentage,
+					
                     UserSubmissions = (from s in _db.Submissions
                                        where s.UserID == userId && s.MilestoneID == x.ID
 									   select s.UserID).Count(),
