@@ -21,7 +21,7 @@
 		<div class="small-right-portion btn-group-vertical">
 			<input type="hidden" name="testcaseId" value="@Model.ID" />
 			<input type="hidden" name="milestoneId" value="@Model.MilestoneID" />
-			<input type="submit" value="Delete" class="btn btn-primary create-button" /> |
+			<input type="submit" value="Delete" class="btn btn-primary create-button" />
 			@Html.ActionLink("Go Back", "TestCases", new { milestoneId = Model.MilestoneID }, new { @class = "btn btn-primary create-button" })
 		</div>
 	}

@@ -144,7 +144,7 @@ namespace Mooshak___H37.Controllers
             if (ModelState.IsValid)
             {
                 _milestoneService.createMilestone(model, assignmentId);
-                return RedirectToAction("Milestones", new { id = assignmentId });
+                return RedirectToAction("Milestones", new { assignmentId = assignmentId });
             }
             else
             {
@@ -196,7 +196,7 @@ namespace Mooshak___H37.Controllers
                     _submissionsService.gradeAssignment(model);
                     return RedirectToAction("ViewSubmissions", new
                     {
-                        milestoneID =
+                        milestoneId =
                         _milestoneService.getMilestoneIdBySubmitId(model.ID)
                     });
                 }
@@ -282,7 +282,7 @@ namespace Mooshak___H37.Controllers
             {
                 _milestoneService.removeMilestone(model);
                 var assignmentId = _assignService.getAssignmentIDFromMilestoneID(model.ID);
-                return RedirectToAction("Milestones", new { id = assignmentId });
+                return RedirectToAction("Milestones", new { assignmentId = assignmentId });
             }
             catch (Exception e)
             {

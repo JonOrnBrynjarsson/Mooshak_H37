@@ -38,6 +38,7 @@
 			@using (Html.BeginForm())
 			{
 				@Html.AntiForgeryToken()
+				@Html.HiddenFor(model => model.ID)
 
 				<div class="small-right-portion btn-group-vertical">
 					<input type="submit" value="Delete" class="btn btn-primary create-button" />

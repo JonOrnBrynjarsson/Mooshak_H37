@@ -125,10 +125,8 @@ namespace Mooshak___H37.Controllers
 			}
             //return RedirectToAction("Index");
 
-            //var assignmentID = _assignService.getAssignmentIDFromMilestoneID(submit.Milestone);
 			int milestoneId = _milestoneService.getMilestoneIdBySubmitId(submissionId);
-            return RedirectToAction("ViewSubmissions", new { milestoneID = milestoneId });
-			//return RedirectToAction("ViewAssignment", new { id = assignmentID });
+            return RedirectToAction("ViewSubmissions", new { milestoneId = milestoneId });
 
 		}
 
