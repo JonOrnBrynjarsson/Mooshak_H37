@@ -18,6 +18,8 @@ namespace Mooshak___H37.Tests.Services
 			// with 3 records:
 			var mockDb = new MockDataContext();
 
+			#region Mock Assignment
+
 			var a1 = new Assignment()
 			{
 				ID = 1,
@@ -148,29 +150,9 @@ namespace Mooshak___H37.Tests.Services
 			};
 			mockDb.Assignments.Add(a10);
 
-			// Note: you only have to add data necessary for this
-			// particular service (FriendService) to run properly.
-			// There will be more tables in your DB, but you only
-			// need to provide the data for the methods you are
-			// actually testing here.
+			#endregion
 
 			_assigmentsService = new AssigmentsService(mockDb);
-		}
-
-		[TestMethod]
-		public void removeCourseById()
-		{
-			// Arrange:
-			//const int a1 = 6;
-			const int a2 = 10;
-
-			// Act:
-			//var result1 = _assigmentsService.getAssignmentById(6);
-			var result2 = _assigmentsService.getAssignmentById(10);
-			
-			// Assert: 
-			//Assert.AreEqual(a1, result1);
-			Assert.AreEqual(a2, result2);
 		}
 
 		[TestMethod]
