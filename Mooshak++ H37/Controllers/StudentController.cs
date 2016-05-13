@@ -99,11 +99,12 @@ namespace Mooshak___H37.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult Submit(StudentSubmitViewModel submit)
 		{
+			int submissionId;
 		if (submit.File != null && submit.File.ContentLength > 0)
 			{
 				try
 				{
-					int submissionId = _submissionService.createSubmission(submit.Milestone);
+					submissionId = _submissionService.createSubmission(submit.Milestone);
 					if (submissionId == 0)
 					{
 						throw new Exception();
@@ -124,11 +125,12 @@ namespace Mooshak___H37.Controllers
 			}
             //return RedirectToAction("Index");
 
-            var assignmentID = _assignService.getAssignmentIDFromMilestoneID(submit.Milestone);
+            //var assignmentID = _assignService.getAssignmentIDFromMilestoneID(submit.Milestone);
+			int milestoneId = _milestoneService.getMilestoneIdBySubmitId(submissionId);
+            return RedirectToAction("ViewSubmissions", new { milestoneID = milestoneId });
+			//return RedirectToAction("ViewAssignment", new { id = assignmentID });
 
-            return RedirectToAction("ViewAssignment", new {id = assignmentID });
-
-        }
+		}
 
         public ActionResult ViewSubmissions (int milestoneID)
 		{

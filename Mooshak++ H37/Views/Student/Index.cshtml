@@ -16,7 +16,7 @@
                     <th>Nr</th>
                     <th>Name</th>
                     <th>Due Date</th>
-                    <th></th>
+                    <th>Submitted</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,15 +30,16 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DueDate)
-                        </td>
+	                    <td>
+		                    @Html.DisplayFor(modelItem => item.DueDate)
+	                    </td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Submitted)
+						</td>   
                         <td>
                             @Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
                         </td>
-                        <td>
-                          
-                        </td>   
+
                     </tr>
                 }
             </tbody>

@@ -198,14 +198,13 @@ namespace Mooshak___H37.Services
 
 		/// <summary>
 		/// Runs the students submission against a testCase.  Compares the result
-		/// against expected output.  Returns true if the results
-		/// are the same. Otherwise returns false.
+		/// against expected output.  
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <param name="testCase">The input for the test run</param>
 		/// <param name="compareTo">The expected output from the test run </param>
-		/// <returns>bool = true if testrun is successful</returns>
-		public bool runTest(int submissionId, string testCase, string compareTo)
+		/// <returns>The result from the testrun</returns>
+		public string runTest(int submissionId, string testCase, string compareTo)
 		{
 			Process process = new Process();
 			string runfolder = getStudentRunFolder(submissionId);
@@ -231,11 +230,7 @@ namespace Mooshak___H37.Services
 			string error = errorReader.ReadToEnd();
 			process.Close();
 
-			if (output == compareTo)
-			{
-				return true;
-			}
-			return false;
+			return output;
 		}
 
 	
@@ -254,14 +249,16 @@ namespace Mooshak___H37.Services
 			{
 				string input = _testCaseService.getATestCaseInput(test);
 				string output = _testCaseService.getATestCaseOutput(test);
-		
-				if (runTest(submissionId, input, output))
+				string result = runTest(submissionId, input, output);
+
+
+				if (result == output)
 				{
-					updateTestrun(submissionId, test, true, "LATER");
+					updateTestrun(submissionId, test, true, "Success!");
 				}
 				else
 				{
-					updateTestrun(submissionId, test, false, "Villa");
+					updateTestrun(submissionId, test, false, "Error! Input: " + input + ", Expected: " + output + ", Received: " + result);
 				}
 			}
 			clearRunfolder(submissionId);

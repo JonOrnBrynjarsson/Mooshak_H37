@@ -50,7 +50,7 @@ namespace Mooshak___H37.Services
                                 assi.IsRemoved != true &&
                                 assi.DueDate > todayDate
                                orderby assi.DueDate descending
-                               select assi).ToList();
+                               select assi).OrderBy(x => x.DueDate).ToList();
 
             var viewModel = new List<AssignmentViewModel>();
 
@@ -67,12 +67,61 @@ namespace Mooshak___H37.Services
                     IsActive = assignm.IsActive,
                     IsRemoved = assignm.IsRemoved,
                     Description = assignm.Description,
+					Submitted = hasSubmittedAssignment(assignm.ID)
                 };
                 viewModel.Add(model);
             }
 
             return viewModel;
         }
+
+		/// <summary>
+		/// Checks is all milestones in an assignment have submissions to them
+		/// </summary>
+		/// <param name="assignmentId">The assignment being checked</param>
+		/// <returns>True if all milestones have submissions</returns>
+		public bool hasSubmittedAssignment(int assignmentId)
+		{
+			var milestones = (from m in _db.Milestones
+				where m.AssignmentID == assignmentId
+				      && m.IsRemoved == false
+				select m.ID).ToList();
+			if (milestones.Count > 0)
+			{
+
+				foreach (int milestone in milestones)
+				{
+					if (!hasSubmittedMilestone(milestone))
+					{
+						return false;
+					}
+				}
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Checks if the current user has submitted a solution to a particular milestone
+		/// </summary>
+		/// <param name="milestoneId">The milestone being checked</param>
+		/// <returns>True if mileste has submissions</returns>
+		public bool hasSubmittedMilestone(int milestoneId)
+		{
+			int user = _usersService.getUserIdForCurrentApplicationUser();
+			var ret = (from s in _db.Submissions
+				where s.MilestoneID == milestoneId
+				      && s.UserID == user
+					  && s.IsRemoved == false
+				select s).FirstOrDefault();
+			if (ret != null)
+			{
+				return true;
+			}
+			return false;
+		}
 
         /// <summary>
         /// Gets an assignment with given assignment ID. and finds all milestones, users
