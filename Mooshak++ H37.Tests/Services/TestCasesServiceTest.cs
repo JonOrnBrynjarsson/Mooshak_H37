@@ -13,9 +13,7 @@ namespace Mooshak___H37.Tests.Services
 		[TestInitialize]
 		public void Initialize()
 		{
-			// Set up our mock database. In this case,
-			// we only have to worry about one table
-			// with 3 records:
+
 			var mockDb = new MockDataContext();
 
 			#region Mock Testcases
@@ -74,17 +72,11 @@ namespace Mooshak___H37.Tests.Services
 
 			#endregion
 
-			// Note: you only have to add data necessary for this
-			// particular service (FriendService) to run properly.
-			// There will be more tables in your DB, but you only
-			// need to provide the data for the methods you are
-			// actually testing here.
-
 			_testCaseService = new TestCaseService(mockDb);
 		}
 
 		[TestMethod]
-		public void getASingleTestCase()
+		public void getSingleTestCase()
 		{
 			// Arrange:
 			const int testcaseId = 1;
@@ -96,7 +88,7 @@ namespace Mooshak___H37.Tests.Services
 		}
 	
 		[TestMethod]
-		public void getNumberOfTestCases()
+		public void numberOfTestCases()
 		{
 			// Arrange:
 			const int num = 4;
@@ -104,26 +96,6 @@ namespace Mooshak___H37.Tests.Services
 			int result = _testCaseService.numberOfTestCases();
 			// Assert: 
 			Assert.AreEqual(result, num);
-		}
-
-
-
-		[TestMethod]
-		public void insertAIlllegalTestCase()
-		{
-			// Arrange:
-			const int num = 4;
-			TestCaseViewModel tcVm = new TestCaseViewModel()
-			{
-				ID = 0 ,
-				Inputstring = "hey",
-				Outputstring = "Jú"
-			};
-			// Act:
-			_testCaseService.createTestCase(tcVm, 13);
-			var tc = _testCaseService.numberOfTestCases();
-			// Assert: 
-			Assert.AreEqual(tc, num);
 		}
 
 		[TestMethod]
@@ -142,13 +114,13 @@ namespace Mooshak___H37.Tests.Services
 			_testCaseService.createTestCase(tcVm, 13);
 			var tc = _testCaseService.numberOfTestCases();
 			// Assert: 
-			Assert.AreEqual(tc, num);
+			Assert.AreEqual(num, tc);
 
 		}
 
 
 		[TestMethod]
-		public void getTestCaseForMilestone()
+		public void getTestCasesVMForMilestone()
 		{
 			// Arrange:
 			const int milestone1 = 10;
@@ -161,8 +133,8 @@ namespace Mooshak___H37.Tests.Services
 			var list2 = _testCaseService.getTestCasesVMForMilestone(milestone2);
 			
 			// Assert: 
-			Assert.AreEqual(list1.Count, num1);
-			Assert.AreEqual(list2.Count, num2);
+			Assert.AreEqual(num1, list1.Count);
+			Assert.AreEqual(num2, list2.Count);
 		}
 
 
@@ -183,8 +155,8 @@ namespace Mooshak___H37.Tests.Services
 			string result3 = _testCaseService.getATestCaseOutput(testcase3);
 
 			// Assert: 
-			Assert.AreEqual(result1, i1);
-			Assert.AreEqual(result2, i2);
+			Assert.AreEqual(i1, result1);
+			Assert.AreEqual(i2, result2);
 			Assert.IsNull(result3);
 		}
 
@@ -206,8 +178,8 @@ namespace Mooshak___H37.Tests.Services
 			string result3 = _testCaseService.getATestCaseInput(testcase3);
 
 			// Assert: 
-			Assert.AreEqual(result1, i1);
-			Assert.AreEqual(result2, i2);
+			Assert.AreEqual(i1, result1);
+			Assert.AreEqual(i2, result2);
 			Assert.IsNull(result3);
 		}
 	}

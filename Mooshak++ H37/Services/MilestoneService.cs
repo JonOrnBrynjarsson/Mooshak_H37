@@ -211,9 +211,7 @@ namespace Mooshak___H37.Services
 			if (edit != null)
 			{
 				edit.AllowedSubmissions = model.AllowedSubmissions;
-				//model.AssignmentID;
 				edit.Description = model.Description;
-				//model.ID;
 				edit.IsRemoved = model.IsRemoved;
 				edit.Name = model.Name;
 				edit.Percentage = model.Percentage;
@@ -281,6 +279,7 @@ namespace Mooshak___H37.Services
         public int numberOfMilestones()
         {
             var milestones = (from mil in _db.Milestones
+							  where mil.IsRemoved == false
                            select mil).Count();
 
             return milestones;

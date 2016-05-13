@@ -22,7 +22,6 @@ namespace Mooshak___H37.Services
 			_milestoneService = new MilestoneService(null);
 		}
 
-// Hverju á þetta fall að skila? DateTime.Now()?  - Jón Örn
 		public DateTime today()
         {
             DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
@@ -157,11 +156,10 @@ namespace Mooshak___H37.Services
                     Percentage = x.Percentage,
                     UserSubmissions = (from s in _db.Submissions
                                        where s.UserID == userId && s.MilestoneID == x.ID
-                                       select s.ID).Count(),
+									   select s.UserID).Count(),
                     TotalSubmissions = (from s in _db.Submissions
                                         where s.MilestoneID == x.ID
                                         select s.ID).Count()
-
                 }).ToList();
 
             var coursename = (from asi in _db.Courses
@@ -276,7 +274,7 @@ namespace Mooshak___H37.Services
             {
 				
                 var test = getGradeFromSubmissions(assignm.ID, curruser);
-				bool submitted = userHasSubmissionForAssignment(assignm, curruser);
+				bool submitted = hasSubmittedAssignment(assignm.ID);
                 double finalGrade = getGradeFromSubmissions(assignm.ID, curruser);
 
                 AssignmentViewModel model = new AssignmentViewModel
@@ -296,28 +294,6 @@ namespace Mooshak___H37.Services
             }
 
             return viewModel;
-        }
-
-        /// <summary>
-        /// Takes in Assignment Entity Model and UserId, and finds if Given User Has a Submission Associated with Assignment.
-        /// </summary>
-        /// <returns>True or False</returns>
-        public bool userHasSubmissionForAssignment(Assignment entity, int userId)
-        {
-            //Gets list of milestones for associated Assignment
-            var milestones = (from mil in _db.Milestones
-                              where mil.AssignmentID == entity.ID
-							  && mil.IsRemoved == false
-                              select mil.ID);
-
-            //Gets List of Submissions
-            var submissions = (from submit in _db.Submissions
-                               where milestones.Contains(submit.MilestoneID) &&
-                               submit.UserID == userId &&
-							   submit.IsRemoved == false
-                               select submit).Count();
-
-            return (submissions >= 1);
         }
 
         /// <summary>

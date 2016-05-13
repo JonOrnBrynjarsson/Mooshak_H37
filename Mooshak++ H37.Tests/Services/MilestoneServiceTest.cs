@@ -110,20 +110,22 @@ namespace Mooshak___H37.Tests.Services
 		}
 
 		[TestMethod]
-		public void getMilestoneForAssingment()
+		public void getMilestonesForAssignment()
 		{
 			// Arrange:
 			const int num1 = 2;
 			const int num2 = 2;
 			const int num3 = 1;
+
 			// Act:
 			var result1 = _milestoneService.getMilestonesForAssignment(1);
 			var result2 = _milestoneService.getMilestonesForAssignment(2);
 			var result3 = _milestoneService.getMilestonesForAssignment(3);
+
 			// Assert: 
-			Assert.AreEqual(result1.Count, num1);
-			Assert.AreEqual(result2.Count, num2);
-			Assert.AreEqual(result3.Count, num3);
+			Assert.AreEqual(num1, result1.Count);
+			Assert.AreEqual(num2, result2.Count);
+			Assert.AreEqual(num3, result3.Count);
 		}
 
 		[TestMethod]
@@ -131,28 +133,25 @@ namespace Mooshak___H37.Tests.Services
 		{
 			// Arrange:
 			const int num1 = 2;
-			const int num2 = 5;
-			const int num3 = 8;
+			
 			// Act:
 			var result1 = _milestoneService.getSingleMilestone(num1);
-			var result2 = _milestoneService.getSingleMilestone(num2);
-			var result3 = _milestoneService.getSingleMilestone(num3);
+			
 			// Assert: 
 			Assert.AreEqual(result1.ID, num1);
-			Assert.IsNull(result2);
-			Assert.IsNull(result3);
+	
 		}
 
 		[TestMethod]
-		public void getNumberOfMilestones()
+		public void numberOfMilestones()
 		{
 			// Arrange:
-			const int num = 6;
+			const int num = 5;
 			// Act:
 			var result = _milestoneService.numberOfMilestones();
 			
 			// Assert: 
-			Assert.AreEqual(result, num);
+			Assert.AreEqual(num, result);
 		}
 
 
