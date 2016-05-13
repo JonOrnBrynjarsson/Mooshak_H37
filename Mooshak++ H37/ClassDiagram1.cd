@@ -27,8 +27,6 @@
   <Class Name="Mooshak___H37.Controllers.AccountController">
     <Position X="0.75" Y="21.75" Width="1.5" />
     <Compartments>
-      <Compartment Name="Properties" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <NestedTypes>
@@ -45,6 +43,9 @@
   </Class>
   <Class Name="Mooshak___H37.Controllers.AdminController">
     <Position X="2.75" Y="21.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAEAAAIAAQAAACGIAAAAAACAACBAARAAAAEEAAAAAgA=</HashCode>
       <FileName>Controllers\AdminController.cs</FileName>
@@ -52,6 +53,9 @@
   </Class>
   <Class Name="Mooshak___H37.Controllers.HomeController">
     <Position X="5" Y="21.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAABAAEAAAAAAAAAQAAAAIAAAAEEAAAAQAA=</HashCode>
       <FileName>Controllers\HomeController.cs</FileName>
@@ -59,6 +63,9 @@
   </Class>
   <Class Name="Mooshak___H37.Controllers.ManageController">
     <Position X="7.25" Y="21.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <NestedTypes>
       <Enum Name="Mooshak___H37.Controllers.ManageController.ManageMessageId" Collapsed="true">
         <TypeIdentifier>
@@ -73,6 +80,9 @@
   </Class>
   <Class Name="Mooshak___H37.Controllers.StudentController">
     <Position X="9.5" Y="21.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAIAACIAAAAhIAEBAAAAAAAAAAAAAYAAAAEACQAAAAo=</HashCode>
       <FileName>Controllers\StudentController.cs</FileName>
@@ -80,6 +90,9 @@
   </Class>
   <Class Name="Mooshak___H37.Controllers.TeacherController">
     <Position X="11.75" Y="21.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>ABIAAAIAAAQBgoEBAAABBAAQUAAAEYACACEAAAAAQAg=</HashCode>
       <FileName>Controllers\TeacherController.cs</FileName>
@@ -100,20 +113,20 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Models.RegisterViewModel">
-    <Position X="2.5" Y="9.5" Width="1.5" />
+    <Position X="2.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAEIAAAAQAAAAAAAACAAAAAAAAIAA=</HashCode>
       <FileName>Models\AccountViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Models.ResetPasswordViewModel">
-    <Position X="2.5" Y="7.5" Width="1.5" />
+    <Position X="2.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAgAAAAAAAAAAACAAAAAAAAIAA=</HashCode>
       <FileName>Models\AccountViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Mooshak___H37.Models.ForgotPasswordViewModel" Collapsed="true">
+  <Class Name="Mooshak___H37.Models.ForgotPasswordViewModel">
     <Position X="7.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -185,14 +198,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Models.Entities.Message">
-    <Position X="7.75" Y="7.75" Width="1.5" />
+    <Position X="7.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAIAgAAAAAAAAAAAAAAIAAAAEAAgAAAAAAA=</HashCode>
       <FileName>Models\Entities\Message.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Models.Entities.Milestone">
-    <Position X="6" Y="14.25" Width="1.5" />
+    <Position X="6" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgEAAAAAAggAAAAAAAAQQAAAgAEAAABAAgAAAAAAA=</HashCode>
       <FileName>Models\Entities\Milestone.cs</FileName>
@@ -227,7 +240,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Models.Entities.User">
-    <Position X="2.5" Y="11.75" Width="1.5" />
+    <Position X="2.5" Y="12" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAgBAAAAAA=</HashCode>
       <FileName>Models\Entities\User.cs</FileName>
@@ -276,7 +289,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Models.Viewmodels.MilestoneViewmodel">
-    <Position X="7.75" Y="14.25" Width="1.5" />
+    <Position X="7.75" Y="14.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAggCAgAAAAAARAAAgAAAAAJAAgAAAAAAA=</HashCode>
       <FileName>Models\Viewmodels\MilestoneViewmodel.cs</FileName>
@@ -290,7 +303,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Models.Viewmodels.SubmissionsViewModel">
-    <Position X="7.75" Y="10" Width="1.5" />
+    <Position X="7.75" Y="10.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAQhAEAAAAAAAgAIABAAAEAAQCwAAEAAEA=</HashCode>
       <FileName>Models\Viewmodels\SubmissionsViewModel.cs</FileName>
@@ -319,20 +332,26 @@
   </Class>
   <Class Name="Mooshak___H37.Services.AssigmentsService">
     <Position X="4.25" Y="15.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>gBACgAAAkAAhAAAAAEAIAAAAEAAAIAAQAAABAAAAAAQ=</HashCode>
+      <HashCode>gAACgAAAkAAhAAAAAEAIAAAAAAAAIAAQAAABAAAAAAQ=</HashCode>
       <FileName>Services\AssignmentsService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Services.CoursesService">
     <Position X="13" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AkIAgAFBABAAAAAAAAAAAAAwAAAAAAMAAgIUAAAAAAA=</HashCode>
+      <HashCode>AlIAgAFBABAAAAAAAAAAAAAwAAAAAAMAAgIUAAAAAAA=</HashCode>
       <FileName>Services\CoursesService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Services.ErrorsService">
-    <Position X="13" Y="9.25" Width="1.5" />
+    <Position X="13" Y="9.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAgAAAAAAAAAAAAAAAAAAAACEAAAAAAAAA=</HashCode>
       <FileName>Services\ErrorsService.cs</FileName>
@@ -340,6 +359,9 @@
   </Class>
   <Class Name="Mooshak___H37.Services.FilesService">
     <Position X="9.5" Y="14.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AIAIgAAAAAAgAAIAAQAEDAAEQAAAQAQAAAAAAAAAAAA=</HashCode>
       <FileName>Services\FilesService.cs</FileName>
@@ -347,6 +369,9 @@
   </Class>
   <Class Name="Mooshak___H37.Services.MilestoneService">
     <Position X="0.75" Y="16.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>UgAEgAggAAIgAAAEAAAAAAAAAAAAAQAEAAAAAgACAAA=</HashCode>
       <FileName>Services\MilestoneService.cs</FileName>
@@ -354,13 +379,19 @@
   </Class>
   <Class Name="Mooshak___H37.Services.SubmissionsService">
     <Position X="11.25" Y="14.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAQAgAAAABIiACABAEABQAAAEAAABAAAAACAABAAAAA=</HashCode>
       <FileName>Services\SubmissionsService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Mooshak___H37.Services.TestCaseService">
-    <Position X="2.5" Y="13.75" Width="1.5" />
+    <Position X="2.5" Y="14" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAgAEAAAQAAAAAAhgAAAgAAAAAAAAAACAAAAIAAAA=</HashCode>
       <FileName>Services\TestCaseService.cs</FileName>
@@ -368,6 +399,9 @@
   </Class>
   <Class Name="Mooshak___H37.Services.UsersService">
     <Position X="13" Y="11.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAgCgAAQAQgAAAAAQCAAEIBAgAAABAEIIAAAAhAAAQA=</HashCode>
       <FileName>Services\UsersService.cs</FileName>
