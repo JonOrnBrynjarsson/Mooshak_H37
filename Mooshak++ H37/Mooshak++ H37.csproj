@@ -266,7 +266,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ClassDiagram1.cd" />
-    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -331,6 +330,8 @@
     <Content Include="Views\Student\Submit.cshtml" />
     <Content Include="Views\Teacher\Milestones.cshtml" />
     <Content Include="Views\Teacher\CreateMilestone.cshtml" />
+    <Content Include="Views\Teacher\EditMilestone.cshtml" />
+    <Content Include="Views\Teacher\EditAssignment.cshtml" />
     <Content Include="Views\Teacher\ViewAssignment.cshtml" />
     <Content Include="Views\Teacher\CreateTestCase.cshtml" />
     <Content Include="Views\Teacher\TestCases.cshtml" />
@@ -348,8 +349,6 @@
     <Content Include="Views\Student\_ViewStart.cshtml" />
     <Content Include="Views\Teacher\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_UserLayout.cshtml" />
-    <Content Include="Views\Teacher\EditAssignment.cshtml" />
-    <Content Include="Views\Teacher\EditMilestone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
