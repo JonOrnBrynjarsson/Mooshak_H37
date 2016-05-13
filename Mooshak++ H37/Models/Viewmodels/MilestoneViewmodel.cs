@@ -24,8 +24,10 @@ namespace Mooshak___H37.Models.Viewmodels
 		public double Percentage { get; set; }
 		public int UserSubmissions { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
-        public DateTime DateSet { get; set; }
-        public DateTime DueDate { get; set; }
+		[Display(Name = "Date Set")]
+		public DateTime DateSet { get; set; }
+		[Display(Name = "Due Date")]
+		public DateTime DueDate { get; set; }
 		public int TotalSubmissions { get; set; }
 
 	}

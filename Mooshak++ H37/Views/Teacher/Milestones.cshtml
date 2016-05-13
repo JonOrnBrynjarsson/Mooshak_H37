@@ -34,10 +34,10 @@
                         <td>@item.Name</td>
                         <td>@item.Percentage %</td>
                         <td>@item.TotalSubmissions</td>
-						<td>@Html.ActionLink("Remove", "RemoveMilestone", new { id = item.ID })</td>
-                        <td>@Html.ActionLink("Edit", "EditMilestone", new { milestoneID = item.ID })</td>
-						<td>@Html.ActionLink("Test Cases", "TestCases", new { milID = item.ID })</td>
-						<td>@Html.ActionLink("View", "ViewSubmissions", new { milestoneID = item.ID })</td>
+						<td>@Html.ActionLink("Remove", "RemoveMilestone", new { milestoneId = item.ID })</td>
+                        <td>@Html.ActionLink("Edit", "EditMilestone", new { milestoneId = item.ID })</td>
+						<td>@Html.ActionLink("Test Cases", "TestCases", new { milestoneId = item.ID })</td>
+						<td>@Html.ActionLink("View", "ViewSubmissions", new { milestoneId = item.ID })</td>
 						<td></td>
 					</tr>
 				}
@@ -66,7 +66,7 @@
     </div>
 	<div class="small-right-portion btn-group-vertical">
 		@*<button class="btn btn-primary create-button">Editor</button>*@
-		@Html.ActionLink("Create Milestone", "CreateMilestone", new { assigID = Model.ID }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Create Milestone", "CreateMilestone", new { assignmentId = Model.ID }, new { @class = "btn btn-primary create-button" })
 		@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
 	</div>
 </div>

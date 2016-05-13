@@ -128,10 +128,10 @@ namespace Mooshak___H37.Services
 		/// and current users submissions to that assignment
         /// </summary>
         /// <returns>Returns assignmentViewModel with all the information needed</returns>
-        public AssignmentViewModel getAssignmentById(int assignmId)
+        public AssignmentViewModel getAssignmentById(int assignmentId)
         {
             var assignment = (from asi in _db.Assignments
-                              where asi.ID == assignmId &&
+                              where asi.ID == assignmentId &&
                               asi.IsRemoved != true
                               select asi).FirstOrDefault();
 
@@ -144,7 +144,7 @@ namespace Mooshak___H37.Services
 	        var userId = _usersService.getUserIdForCurrentApplicationUser();
 
             //List of Milestones with given assignment ID
-            var milestones = _db.Milestones.Where(x => x.AssignmentID == assignmId &&
+            var milestones = _db.Milestones.Where(x => x.AssignmentID == assignmentId &&
                                                   x.IsRemoved != true)
                 .Select(x => new MilestoneViewmodel
                 {

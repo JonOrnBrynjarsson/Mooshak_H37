@@ -22,32 +22,11 @@
             </div>
          </div>
     
-        @*<table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Nr</th>
-                    <th>Name</th>
-					<th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ int rowNo = 0;}
-                @foreach (var item in Model.Users)
-                {
-                    <tr>
-                        <th>@(rowNo += 1)</th>
-                        <th>@item.Name</th>
-                        <th></th>
-                    </tr>
-				}
-            </tbody>
-        </table>*@
-
     </div>
     <div class="small-right-portion btn-group-vertical">
-		@Html.ActionLink("Milestones", "Milestones", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
-        @Html.ActionLink("Edit Assignment", "EditAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
-		@Html.ActionLink("Remove Assignment", "RemoveAssignment", new { id = Model.ID }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Milestones", "Milestones", new { assignmentId = Model.ID }, new { @class = "btn btn-primary create-button" })
+        @Html.ActionLink("Edit Assignment", "EditAssignment", new { assignmentId = Model.ID }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Remove Assignment", "RemoveAssignment", new { assignmentId = Model.ID }, new { @class = "btn btn-primary create-button" })
 		@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
     </div>
 </div>

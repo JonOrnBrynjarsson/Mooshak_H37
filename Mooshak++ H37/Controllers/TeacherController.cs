@@ -32,12 +32,12 @@ namespace Mooshak___H37.Controllers
             return View(viewModel);
         }
 
-        public ActionResult ViewAssignment(int id)
+        public ActionResult ViewAssignment(int assignmentId)
         {
             //Returns selected assignment
             try
             {
-                var viewModel = _assignService.getAssignmentById(id);
+                var viewModel = _assignService.getAssignmentById(assignmentId);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -91,7 +91,7 @@ namespace Mooshak___H37.Controllers
             if (ModelState.IsValid)
             {
                 _assignService.createAssignment(model);
-                return RedirectToAction("ViewAssignments");
+                return RedirectToAction("Assignments");
             }
             else
             {
@@ -103,13 +103,13 @@ namespace Mooshak___H37.Controllers
 
 
         [HttpGet]
-        public ActionResult Milestones(int id)
+        public ActionResult Milestones(int assignmentId)
         {
             try
             {
-                AssignmentViewModel model = _assignService.getAssignmentById(id);
-                ViewBag.MilestoneList = GetMilestones(id);
-                ViewBag.TotalPercentage = _milestoneService.getTotalMilestonePercentageForAssignment(id);
+                AssignmentViewModel model = _assignService.getAssignmentById(assignmentId);
+                ViewBag.MilestoneList = GetMilestones(assignmentId);
+                ViewBag.TotalPercentage = _milestoneService.getTotalMilestonePercentageForAssignment(assignmentId);
                 return View(model);
             }
             catch (Exception e)
@@ -129,11 +129,11 @@ namespace Mooshak___H37.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateMilestone(MilestoneViewmodel model, int assigID)
+        public ActionResult CreateMilestone(MilestoneViewmodel model, int assignmentId)
         {
             try
             {
-                _milestoneService.teacherCanCreateMilestone(model, assigID);
+                _milestoneService.teacherCanCreateMilestone(model, assignmentId);
 
 			}
 			catch (Exception e)
@@ -143,8 +143,8 @@ namespace Mooshak___H37.Controllers
 
             if (ModelState.IsValid)
             {
-                _milestoneService.createMilestone(model, assigID);
-                return RedirectToAction("Milestones", new { id = assigID });
+                _milestoneService.createMilestone(model, assignmentId);
+                return RedirectToAction("Milestones", new { id = assignmentId });
             }
             else
             {
@@ -154,27 +154,14 @@ namespace Mooshak___H37.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult EditMilestone(int milestoneID)
-        {
-            try
-            {
-                var viewModel = _milestoneService.getSingleMilestone(milestoneID);
-				ViewBag.AssignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
-                return View(viewModel);
-            }
-            catch (Exception e)
-            {
-                return View("~/Views/Shared/Cerror.cshtml", e);
-            }
-        }
+        
 
-        public ActionResult ViewSubmissions(int milestoneID)
+        public ActionResult ViewSubmissions(int milestoneId)
         {
             try
             {
-                var viewmodel = _submissionsService.getSubmissionsForMilestone(milestoneID);
-				ViewBag.AssignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
+                var viewmodel = _submissionsService.getSubmissionsForMilestone(milestoneId);
+				ViewBag.assignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneId);
                 return View(viewmodel);
             }
             catch (Exception e)
@@ -229,23 +216,38 @@ namespace Mooshak___H37.Controllers
         {
 
             var viewModel = _courseService.getCoursesForUser();
-            ViewBag.Today = _assignService.today();
+            ViewBag.today = _assignService.today();
 
             return View(viewModel);
 
         }
 
-        [HttpPost]
-        public ActionResult EditMilestone(MilestoneViewmodel model, int milestoneID)
+		[HttpGet]
+		public ActionResult EditMilestone(int milestoneId)
+		{
+			try
+			{
+				var viewModel = _milestoneService.getSingleMilestone(milestoneId);
+				ViewBag.assignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneId);
+				return View(viewModel);
+			}
+			catch (Exception e)
+			{
+				return View("~/Views/Shared/Cerror.cshtml", e);
+			}
+		}
+
+		[HttpPost]
+        public ActionResult EditMilestone(MilestoneViewmodel model, int milestoneId)
         {
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _milestoneService.editMilestone(model, milestoneID);
-                    var assignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
-                    return RedirectToAction("Milestones", new { id = assignmentID });
+                    _milestoneService.editMilestone(model, milestoneId);
+                    var assignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneId);
+                    return RedirectToAction("Milestones", new { assignmentId = assignmentId });
                 }
                 else
                 {
@@ -261,11 +263,11 @@ namespace Mooshak___H37.Controllers
         }
 
         [HttpGet]
-        public ActionResult RemoveMilestone(int id)
+        public ActionResult RemoveMilestone(int milestoneId)
         {
             try
             {
-                var viewModel = _milestoneService.getSingleMilestone(id);
+                var viewModel = _milestoneService.getSingleMilestone(milestoneId);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -279,8 +281,8 @@ namespace Mooshak___H37.Controllers
             try
             {
                 _milestoneService.removeMilestone(model);
-                var assignmentID = _assignService.getAssignmentIDFromMilestoneID(model.ID);
-                return RedirectToAction("Milestones", new { id = assignmentID });
+                var assignmentId = _assignService.getAssignmentIDFromMilestoneID(model.ID);
+                return RedirectToAction("Milestones", new { id = assignmentId });
             }
             catch (Exception e)
             {
@@ -290,11 +292,11 @@ namespace Mooshak___H37.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditAssignment(int id)
+        public ActionResult EditAssignment(int assignmentId)
         {
             try
             {
-                var viewModel = _assignService.getAssignmentById(id);
+                var viewModel = _assignService.getAssignmentById(assignmentId);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -311,7 +313,7 @@ namespace Mooshak___H37.Controllers
                 try
                 {
                     _assignService.editAssignment(model);
-                    return RedirectToAction("ViewAssignment", new { id = model.ID });
+                    return RedirectToAction("ViewAssignment", new { assignmentId = model.ID });
                 }
                 catch (Exception e)
                 {
@@ -326,11 +328,11 @@ namespace Mooshak___H37.Controllers
         }
 
         [HttpGet]
-        public ActionResult RemoveAssignment(int id)
+        public ActionResult RemoveAssignment(int assignmentId)
         {
             try
             {
-                var viewModel = _assignService.getAssignmentById(id);
+                var viewModel = _assignService.getAssignmentById(assignmentId);
                 return View(viewModel);
             }
             catch (Exception e)
@@ -358,18 +360,18 @@ namespace Mooshak___H37.Controllers
         public ActionResult CreateTestCase(TestCaseViewModel model)
         {
             TestCaseViewModel viewModel = new TestCaseViewModel();
-			ViewBag.MilestoneID = model.MilestoneID;
+			ViewBag.MilestoneId = model.MilestoneID;
             return View(viewModel);
         }
 
 
         [HttpPost]
-        public ActionResult CreateTestCase(TestCaseViewModel model, int milestoneID)
+        public ActionResult CreateTestCase(TestCaseViewModel model, int milestoneId)
         {
             if (ModelState.IsValid)
             {
-                _testcaseService.createTestCase(model, milestoneID);
-                return RedirectToAction("TestCases", new { milID = milestoneID });
+                _testcaseService.createTestCase(model, milestoneId);
+                return RedirectToAction("TestCases", new { milestoneId = milestoneId });
 
             }
             else
@@ -379,13 +381,13 @@ namespace Mooshak___H37.Controllers
         }
 
         [HttpGet]
-        public ActionResult TestCases(int milID)
+        public ActionResult TestCases(int milestoneId)
         {
-            var viewModel = _testcaseService.getTestCasesVMForMilestone(milID);
+            var viewModel = _testcaseService.getTestCasesVMForMilestone(milestoneId);
 
-            ViewBag.MilestID = milID;
+            ViewBag.milestoneId = milestoneId;
 
-            ViewBag.AssignID = _assignService.getAssignmentIDFromMilestoneID(milID);
+            ViewBag.assignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneId);
 
             if (viewModel.Count == 0)
             {
@@ -398,11 +400,11 @@ namespace Mooshak___H37.Controllers
 
 
         [HttpGet]
-        public ActionResult RemoveTestCase(int id)
+        public ActionResult RemoveTestCase(int testCaseId)
         {
             try
             {
-				TestCaseViewModel viewModel = _testcaseService.getSingleTestCase(id);
+				TestCaseViewModel viewModel = _testcaseService.getSingleTestCase(testCaseId);
                 return View(viewModel);
 			}
 			catch (Exception e)
@@ -411,12 +413,12 @@ namespace Mooshak___H37.Controllers
             }
         }
         [HttpPost]
-        public ActionResult removeTestCase(int testcaseId, int milestoneID)
+        public ActionResult removeTestCase(int testcaseId, int milestoneId)
         {
             try
             {
                 _testcaseService.removeTestCase(testcaseId);
-	            return RedirectToAction("TestCases", new {milID = milestoneID});
+	            return RedirectToAction("TestCases", new { milestoneId = milestoneId });
 
             }
             catch (Exception e)

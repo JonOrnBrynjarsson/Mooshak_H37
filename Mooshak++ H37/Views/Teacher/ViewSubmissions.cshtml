@@ -33,9 +33,7 @@
 			@foreach (var item in Model)
 			{
 				<tr>
-					@*<td>
-							@Html.DisplayFor(modelItem => item.MilestoneID)
-						</td>*@
+
 					<td>
 						@Html.DisplayFor(modelItem => item.UserName)
 					</td>
@@ -58,7 +56,7 @@
 							@Html.DisplayFor(modelItem => item.Testruns)
 						</td>*@
 					<td>
-						@Html.ActionLink("Grade", "GradeSubmission", new { submissionID = item.ID })
+						@Html.ActionLink("Grade", "GradeSubmission", new { submissionId = item.ID })
 					</td>
 				</tr>
 			}
@@ -66,6 +64,6 @@
 		</table>
 	</div>
 	<div class="small-right-portion btn-group-vertical">
-		@Html.ActionLink("Go Back", "Milestones", new { id = ViewBag.AssignmentId }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Go Back", "Milestones", new { id = ViewBag.assignmentId }, new { @class = "btn btn-primary create-button" })
 	</div>
 	</div>

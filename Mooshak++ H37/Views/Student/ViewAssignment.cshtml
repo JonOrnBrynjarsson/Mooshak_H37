@@ -50,7 +50,7 @@
 						<th>
 							@Html.ActionLink("Submit", "Submit", new { milestoneId = item.ID })
 						</th>
-						<th>@Html.ActionLink("View", "ViewSubmissions", new { milestoneID = item.ID })</th>
+						<th>@Html.ActionLink("View", "ViewSubmissions", new { milestoneId = item.ID })</th>
 						<th></th>
 				</tr>
 			}
@@ -70,8 +70,7 @@
 	</div>
 
 	<div class="small-right-portion btn-group-vertical">
-		@*@Html.ActionLink("Editor", "Editor", null, new { @class = "btn btn-primary create-button" })*@
-		@Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Go Back", "Assignments", null, new { @class = "btn btn-primary create-button" })
 	</div>
 </div>
 
