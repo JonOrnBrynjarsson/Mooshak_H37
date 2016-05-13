@@ -163,7 +163,52 @@ namespace Mooshak___H37.Tests.Services
 			// Assert: 
 			Assert.AreEqual(list1.Count, num1);
 			Assert.AreEqual(list2.Count, num2);
+		}
 
+
+		[TestMethod]
+		public void getATestCaseOutput()
+		{
+			// Arrange:
+			const int testcase1 = 1;
+			const int testcase2 = 2;
+			const int testcase3 = 3;
+			const string i1 = "4";
+			const string i2 = "27";
+			const string i3 = "7";
+
+			// Act:
+			string result1 = _testCaseService.getATestCaseOutput(testcase1);
+			string result2 = _testCaseService.getATestCaseOutput(testcase2);
+			string result3 = _testCaseService.getATestCaseOutput(testcase3);
+
+			// Assert: 
+			Assert.AreEqual(result1, i1);
+			Assert.AreEqual(result2, i2);
+			Assert.IsNull(result3);
+		}
+
+
+		[TestMethod]
+		public void getATestCaseInput()
+		{
+			// Arrange:
+			const int testcase1 = 1;
+			const int testcase2 = 2;
+			const int testcase3 = 3;
+			const string i1 = "1 3";
+			const string i2 = "7 9";
+			const string i3 = "0 0 0";
+
+			// Act:
+			string result1 = _testCaseService.getATestCaseInput(testcase1);
+			string result2 = _testCaseService.getATestCaseInput(testcase2);
+			string result3 = _testCaseService.getATestCaseInput(testcase3);
+
+			// Assert: 
+			Assert.AreEqual(result1, i1);
+			Assert.AreEqual(result2, i2);
+			Assert.IsNull(result3);
 		}
 	}
 }

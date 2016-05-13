@@ -28,7 +28,7 @@ namespace Mooshak___H37.Services
             var milestones = (from miles in _db.Milestones
                               orderby miles.ID
                               where miles.AssignmentID == assignmentId &&
-                              miles.IsRemoved != true
+                              miles.IsRemoved == false
                               select miles).ToList();
             return milestones;
         }

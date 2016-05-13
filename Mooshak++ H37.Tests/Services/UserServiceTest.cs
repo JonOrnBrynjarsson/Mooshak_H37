@@ -16,6 +16,9 @@ namespace Mooshak___H37.Tests.Services
 			// we only have to worry about one table
 			// with 3 records:
 			var mockDb = new MockDataContext();
+			
+			#region Mock Users
+
 			var f1 = new User()
 			{
 				ID = 1,
@@ -58,12 +61,8 @@ namespace Mooshak___H37.Tests.Services
 			};
 			mockDb.Users.Add(f5);
 
-			// Note: you only have to add data necessary for this
-			// particular service (FriendService) to run properly.
-			// There will be more tables in your DB, but you only
-			// need to provide the data for the methods you are
-			// actually testing here.
-
+			#endregion
+			
 			_usersService = new UsersService(mockDb);
 		}
 

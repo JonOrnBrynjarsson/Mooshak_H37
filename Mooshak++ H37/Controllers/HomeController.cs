@@ -37,8 +37,7 @@ namespace Mooshak___H37.Controllers
             ViewBag.NumOfUsers = _userService.UsersInSystem().ElementAt(0);
             ViewBag.NumOfStudents = _userService.UsersInSystem().ElementAt(1);
             ViewBag.NumOfTeachers = _userService.UsersInSystem().ElementAt(2);
-            //ViewBag.NumOfAdmins = _userService.UsersInSystem().ElementAt(4);
-
+          
             ViewBag.NumOfAssignments = _assignService.numberOfAssignments();
 
             ViewBag.NumOfCourses = _courseService.numberOfCourses();
