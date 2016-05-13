@@ -87,12 +87,6 @@ namespace Mooshak___H37.Controllers
 			submission.Duedate = m.DueDate;
 
 			return View(submission);
-
-			//if (!_milestoneService.UserCanSubmitMilestone(milestoneId))
-			//{
-			//	//You have already submitted the maximum number of times.
-			//	return View("Error");
-			//}
 		}
 
 		[HttpPost]
