@@ -4,7 +4,10 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.WebPages;
 using Microsoft.Ajax.Utilities;
 using Mooshak___H37.Models;
 using Mooshak___H37.Models.Entities;
@@ -143,6 +146,10 @@ namespace Mooshak___H37.Services
 			process.StartInfo.Arguments = all;
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.RedirectStandardError = true;
+
+			
+
+
 			process.Start();
 			StreamReader errorReader = process.StandardError;
 			string output = errorReader.ReadToEnd();
@@ -247,7 +254,27 @@ namespace Mooshak___H37.Services
 			{
 				string input = _testCaseService.getATestCaseInput(test);
 				string output = _testCaseService.getATestCaseOutput(test);
-				string result = runTest(submissionId, input, output);
+				string result = String.Empty;
+
+				// code from : https://blogs.msdn.microsoft.com/nikhil_agarwal/2014/03/28/timeout-a-function-call-in-c/
+				int maxRuntime = int.Parse(ConfigurationManager.AppSettings["RunTimeOut"]);
+				var tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				var task = Task.Factory.StartNew(() => runTest(submissionId, input, output));
+				bool timedOut = false;
+
+				if (!task.Wait(maxRuntime, token))
+				{
+					timedOut = true;
+					result = String.Format("Program took to long to run");
+					tokenSource.Cancel();
+				}
+				if (result.IsEmpty())
+				{
+					result = (task.Result);
+					
+				}
+				task.Dispose();
 
 
 				if (result == output)
