@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/UserLayout.css" rel="stylesheet" type="text/css">
+	<link rel="shortcut icon" href="~/Images/Icon.png"/>
 </head>
 <body>
     <div class="my_navbar navbar navbar-inverse navbar-fixed-top">
@@ -36,7 +37,7 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Account Settnings", "Index", "Manage")</li>
+                                <li>@Html.ActionLink("Account Settnings", "ChangePassword", "Manage")</li>
                                 <li>@Html.ActionLink("About", "About")</li>
                                 <li><hr/></li>
                                 <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>

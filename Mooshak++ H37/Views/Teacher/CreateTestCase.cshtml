@@ -15,14 +15,19 @@
 
 				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 				<div class="form-group">
-					@*@Html.LabelFor(model => model.Inputstring, htmlAttributes: new { @class = "control-label col-md-2" })*@
-					<label class="control-label col-md-2" for="Inputstring">Input: </label>
+					<label class="control-label col-md-2" for="Inputstring">Input </label>
 					<div class="col-md-10">
 						@Html.TextAreaFor(model => model.Inputstring, new { @class = "form-control" })
 						@Html.ValidationMessageFor(model => model.Inputstring, "", new { @class = "text-danger" })
 					</div>
 				</div>
-
+				<div class="form-group">
+					<label class="control-label col-md-2" for="Outputstring">Output </label>
+					<div class="col-md-10">
+						@Html.TextAreaFor(model => model.Outputstring, new { @class = "form-control" })
+						@Html.ValidationMessageFor(model => model.Outputstring, "", new { @class = "text-danger" })
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="small-right-portion btn-group-vertical">

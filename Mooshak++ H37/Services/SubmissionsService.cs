@@ -323,8 +323,6 @@ namespace Mooshak___H37.Services
 		{
 			if (milestonedId > 0)
 			{
-				try
-				{
 					Submission submission = new Submission
 					{
 						MilestoneID = milestonedId,
@@ -342,12 +340,13 @@ namespace Mooshak___H37.Services
 					_db.SaveChanges();
 					return submission.ID;
 				}
-				catch (Exception ex)
+				else
 				{
-					System.Console.WriteLine(ex);
+					throw new Exception("The Milestone you are trying to submit to does not exist or has been removed.");
 				}
-			}
+
 			return 0;
 		}
+			
 	}
 }

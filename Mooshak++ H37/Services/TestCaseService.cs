@@ -22,6 +22,7 @@ namespace Mooshak___H37.Services
 			{
 				ID = model.ID,
 				Inputstring = model.Inputstring,
+				Outputstring = model.Outputstring,
 				MilestoneID = milestoneId,
 			});
 			_db.SaveChanges();

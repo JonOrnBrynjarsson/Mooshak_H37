@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using Mooshak___H37.Services;
-using Mooshak___H37.Models;
 using Mooshak___H37.Models.Viewmodels;
-using System.Web.UI.HtmlControls;
-using Mooshak___H37.Models.Entities;
-using System.IO;
 using Project_4.Controllers;
 
 namespace Mooshak___H37.Controllers
@@ -26,7 +17,6 @@ namespace Mooshak___H37.Controllers
 		readonly MilestoneService _milestoneService = new MilestoneService(null);
 		readonly SubmissionsService _submissionService = new SubmissionsService(null);
 
-		// GET: Assignment
 		[HttpGet]
 		public ActionResult Index()
 		{
@@ -54,7 +44,7 @@ namespace Mooshak___H37.Controllers
 		{
 			//Returns all assignments in all Courses that user is in.
 			var viewModel = _courseService.getCoursesForUser();
-            ViewBag.Today = _assignService.today();
+			ViewBag.Today = _assignService.today();
 			return View(viewModel);
 		}
 
@@ -87,52 +77,27 @@ namespace Mooshak___H37.Controllers
 			submission.Duedate = m.DueDate;
 
 			return View(submission);
-
-			//if (!_milestoneService.UserCanSubmitMilestone(milestoneId))
-			//{
-			//	//You have already submitted the maximum number of times.
-			//	return View("Error");
-			//}
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Submit(StudentSubmitViewModel submit)
 		{
-			int submissionId;
-		if (submit.File != null && submit.File.ContentLength > 0)
+			try
 			{
-				try
-				{
-					submissionId = _submissionService.createSubmission(submit.Milestone);
-					if (submissionId == 0)
-					{
-						throw new Exception();
-					}
-					_filesService.saveSubmissionfile(submit.File, submissionId);
-					_filesService.testingSubmission(submissionId);
-				}
-				catch (Exception)
-				{
-					return View("Error");
-				}
-			
+				var submissionId = _submissionService.createSubmission(submit.Milestone);
+				_filesService.saveSubmissionfile(submit.File, submissionId);
+				_filesService.testingSubmission(submissionId);
+				int milestoneId = _milestoneService.getMilestoneIdBySubmitId(submissionId);
+				return RedirectToAction("ViewSubmissions", new { milestoneId = milestoneId });
 			}
-			else
+			catch (Exception e)
 			{
-				ViewBag.ErrorMessage = "No file submitted, please try again";
-				return View(submit);
+				return View("~/Views/Shared/Cerror.cshtml", e);
 			}
-            //return RedirectToAction("Index");
-
-            //var assignmentID = _assignService.getAssignmentIDFromMilestoneID(submit.Milestone);
-			int milestoneId = _milestoneService.getMilestoneIdBySubmitId(submissionId);
-            return RedirectToAction("ViewSubmissions", new { milestoneID = milestoneId });
-			//return RedirectToAction("ViewAssignment", new { id = assignmentID });
-
 		}
 
-        public ActionResult ViewSubmissions (int milestoneId)
+		public ActionResult ViewSubmissions(int milestoneId)
 		{
 			try
 			{
@@ -160,8 +125,8 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpGet]
-        public ActionResult ViewSubmission (int submissionId)
-        {
+		public ActionResult ViewSubmission(int submissionId)
+		{
 			try
 			{
 				var viewModel = _submissionService.getSubmission(submissionId);
@@ -173,10 +138,10 @@ namespace Mooshak___H37.Controllers
 			{
 				return View("~/Views/Shared/Cerror.cshtml", e);
 			}
-        }
+		}
 
-        [HttpGet]
-		public ActionResult EditCode( )
+		[HttpGet]
+		public ActionResult EditCode()
 		{
 			int submissionId = 68;
 			EditCodeViewModel editCode = new EditCodeViewModel();
@@ -218,9 +183,9 @@ namespace Mooshak___H37.Controllers
 			return RedirectToAction("Index");
 		}
 
-        public ActionResult About()
-        {
-            return RedirectToAction("About", "Home");
-        }
-    }
+		public ActionResult About()
+		{
+			return RedirectToAction("About", "Home");
+		}
+	}
 }

@@ -11,7 +11,6 @@ namespace Mooshak___H37.Services
 {
 	public class UsersService
 	{
-		//private readonly ApplicationDbContext _db;
 
 		private readonly IAppDataContext _db;
 

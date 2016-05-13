@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Mooshak___H37.Services;
 using Mooshak___H37.Models.Viewmodels;
-using Microsoft.AspNet.Identity;
 using Project_4.Controllers;
-using System.Diagnostics;
 
 namespace Mooshak___H37.Controllers
 {
@@ -144,7 +141,7 @@ namespace Mooshak___H37.Controllers
             if (ModelState.IsValid)
             {
                 _milestoneService.createMilestone(model, assignmentId);
-                return RedirectToAction("Milestones", new { id = assignmentId });
+                return RedirectToAction("Milestones", new { assignmentId = assignmentId });
             }
             else
             {
@@ -196,7 +193,7 @@ namespace Mooshak___H37.Controllers
                     _submissionsService.gradeAssignment(model);
                     return RedirectToAction("ViewSubmissions", new
                     {
-                        milestoneID =
+                        milestoneId =
                         _milestoneService.getMilestoneIdBySubmitId(model.ID)
                     });
                 }
@@ -282,7 +279,7 @@ namespace Mooshak___H37.Controllers
             {
                 _milestoneService.removeMilestone(model);
                 var assignmentId = _assignService.getAssignmentIDFromMilestoneID(model.ID);
-                return RedirectToAction("Milestones", new { id = assignmentId });
+                return RedirectToAction("Milestones", new { assignmentId = assignmentId });
             }
             catch (Exception e)
             {
@@ -413,7 +410,7 @@ namespace Mooshak___H37.Controllers
             }
         }
         [HttpPost]
-        public ActionResult removeTestCase(int testcaseId, int milestoneId)
+        public ActionResult RemoveTestCase(int testcaseId, int milestoneId)
         {
             try
             {
