@@ -58,7 +58,7 @@
 						
 					</td>
 					<td>
-						@Html.ActionLink("Details", "ViewSubmission", new { submissionID = item.ID })
+						@Html.ActionLink("Details", "ViewSubmission", new { submissionId = item.ID })
 					</td>
 					<td></td>
 				</tr>
@@ -69,13 +69,13 @@
 
 		<div class="panel panel-default">
 			<div class="panel-body">
-				Allowed Submissions: @ViewBag.AllowedSubmissions
+				Allowed Submissions: @ViewBag.allowedSubmissions
 			</div>
 		</div>
 	</div>
 	<div class="small-right-portion btn-group-vertical">
-		@Html.ActionLink("Submit", "Submit", new { milestoneId = ViewBag.MilestoneID }, new { @class = "btn btn-primary create-button" })
-		@Html.ActionLink("Go Back", "ViewAssignment", new { id = @ViewBag.AssignmentID }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Submit", "Submit", new { milestoneId = ViewBag.milestoneId }, new { @class = "btn btn-primary create-button" })
+		@Html.ActionLink("Go Back", "ViewAssignment", new { assignmentId = @ViewBag.assignmentId }, new { @class = "btn btn-primary create-button" })
 
 
 

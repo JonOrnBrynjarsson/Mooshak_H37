@@ -331,8 +331,6 @@
     <Content Include="Views\Student\Submit.cshtml" />
     <Content Include="Views\Teacher\Milestones.cshtml" />
     <Content Include="Views\Teacher\CreateMilestone.cshtml" />
-    <Content Include="Views\Teacher\EditMilestone.cshtml" />
-    <Content Include="Views\Teacher\EditAssignment.cshtml" />
     <Content Include="Views\Teacher\ViewAssignment.cshtml" />
     <Content Include="Views\Teacher\CreateTestCase.cshtml" />
     <Content Include="Views\Teacher\TestCases.cshtml" />
@@ -350,6 +348,8 @@
     <Content Include="Views\Student\_ViewStart.cshtml" />
     <Content Include="Views\Teacher\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\Teacher\EditAssignment.cshtml" />
+    <Content Include="Views\Teacher\EditMilestone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

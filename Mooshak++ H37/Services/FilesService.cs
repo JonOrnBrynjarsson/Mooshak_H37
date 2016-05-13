@@ -1,21 +1,21 @@
-﻿using Mooshak___H37.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Microsoft.Ajax.Utilities;
-using Mooshak___H37.Models.Entities;
 using System.Web;
+using Microsoft.Ajax.Utilities;
+using Mooshak___H37.Models;
+using Mooshak___H37.Models.Entities;
 
 namespace Mooshak___H37.Services
 {
 	public class FilesService
 	{
 		private readonly IAppDataContext _db;
-		private readonly UsersService _usersService;
 		private readonly TestCaseService _testCaseService;
+		private readonly UsersService _usersService;
 
 		public FilesService(IAppDataContext dbContext)
 		{
@@ -25,34 +25,33 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Saves the file submitted to a submission folder for that submission.
+		///     Saves the file submitted to a submission folder for that submission.
 		/// </summary>
 		/// <param name="file">The code submitted</param>
 		/// <param name="submissionId">The "ID" of the submission.</param>
 		public void saveSubmissionfile(HttpPostedFileBase file, int submissionId)
 		{
 			string filePath = getStudentSubmissionFolder(submissionId);
-			
+
 			filePath += file.FileName;
-			file.SaveAs(filePath);	
+			file.SaveAs(filePath);
 		}
 
 		/// <summary>
-		/// Saves the string codefile to a submission folder
+		///     Saves the string codefile to a submission folder
 		/// </summary>
 		/// <param name="codefile">The string to be saved</param>
 		/// <param name="submissionId">The "ID" of the submission</param>
 		public void saveSubmissionfile(string codefile, int submissionId)
 		{
 			string filePath = getStudentSubmissionFolder(submissionId) +
-			                  @"\main.cpp";				  
+			                  @"\main.cpp";
 			File.Create(filePath);
 		}
 
 
-
 		/// <summary>
-		/// Gets the userName responsible for a submission.
+		///     Gets the userName responsible for a submission.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of  submission being tested</param>
 		/// <returns>The username for a specific submission</returns>
@@ -61,7 +60,7 @@ namespace Mooshak___H37.Services
 			string userName = (from x in _db.Submissions
 				where x.ID == submissionId
 				select x.User.AspNetUser.UserName).SingleOrDefault();
-			if (!String.IsNullOrEmpty(userName))
+			if (!string.IsNullOrEmpty(userName))
 			{
 				return userName.SubstringUpToFirst('@');
 			}
@@ -69,14 +68,14 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Gets the folder that holds the code for a submission.
+		///     Gets the folder that holds the code for a submission.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <returns>A string reprsenting the folder for the student submission</returns>
 		public string getStudentSubmissionFolder(int submissionId)
 		{
-			string folder = @ConfigurationManager.AppSettings["StudentFileLocation"] + 
-				submissionId.ToString() + @"\";
+			string folder = ConfigurationManager.AppSettings["StudentFileLocation"] +
+			                submissionId + @"\";
 
 			if (!Directory.Exists(folder))
 			{
@@ -86,14 +85,14 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Returns the folder where the submission will be tested.
+		///     Returns the folder where the submission will be tested.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <returns></returns>
 		public string getStudentRunFolder(int submissionId)
 		{
 			string userName = getUserNameBySubmissionId(submissionId);
-			string runfolder = @ConfigurationManager.AppSettings["RunLocation"] +
+			string runfolder = ConfigurationManager.AppSettings["RunLocation"] +
 			                   userName;
 
 			if (!Directory.Exists(runfolder))
@@ -102,23 +101,23 @@ namespace Mooshak___H37.Services
 			}
 			return runfolder;
 		}
-		
+
 		/// <summary>
-		/// Compiles a submission from student to a running folder.
+		///     Compiles a submission from student to a running folder.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission to be compiled</param>
 		public void compileStudentProgram(int submissionId)
 		{
-			String runfolder = getStudentRunFolder(submissionId);
+			string runfolder = getStudentRunFolder(submissionId);
 			string fileName = runfolder + @"\" +
-				getUserNameBySubmissionId(submissionId) +
-				".exe";
+			                  getUserNameBySubmissionId(submissionId) +
+			                  ".exe";
 			string filefolder = getStudentSubmissionFolder(submissionId);
 			DirectoryInfo di = new DirectoryInfo(filefolder);
 			FileInfo fi = di.GetFiles("*.cpp").FirstOrDefault();
 			if (fi != null)
 			{
-				string errorMsg = compileProgram(filefolder +  fi, fileName);
+				string errorMsg = compileProgram(filefolder + fi, fileName);
 			}
 			else
 			{
@@ -127,18 +126,18 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Compiles the code to an executable file.  If the file is to be in a different directory
-		/// from the one that holds the code, that directory has to be included in the name
-		/// sent into the function.
+		///     Compiles the code to an executable file.  If the file is to be in a different directory
+		///     from the one that holds the code, that directory has to be included in the name
+		///     sent into the function.
 		/// </summary>
 		/// <param name="folderWithCodeFile">The folder of the file to be compiled</param>
 		/// <param name="fullFileNameforCompiledFile">The filename of the compiled file with directory</param>
 		public string compileProgram(string folderWithCodeFile, string fullFileNameforCompiledFile)
 		{
-			string fileToCompile = @folderWithCodeFile;
+			string fileToCompile = folderWithCodeFile;
 			string Compiler = "mingw32-g++.exe";
 			string all = fileToCompile + " -o " + fullFileNameforCompiledFile;
-			
+
 			Process process = new Process();
 			process.StartInfo.FileName = Compiler;
 			process.StartInfo.Arguments = all;
@@ -152,9 +151,9 @@ namespace Mooshak___H37.Services
 			return output;
 		}
 
-	
+
 		/// <summary>
-		/// Saves the result from the current testrun to the database
+		///     Saves the result from the current testrun to the database
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <param name="testCase">The "ID" of the testcase used in this testrun</param>
@@ -173,7 +172,7 @@ namespace Mooshak___H37.Services
 		}
 
 		/// <summary>
-		/// Deletes all files from the test directory.
+		///     Deletes all files from the test directory.
 		/// </summary>
 		/// <param name="submissionId">The submission being tested</param>
 		public void clearRunfolder(int submissionId)
@@ -186,19 +185,19 @@ namespace Mooshak___H37.Services
 			{
 				try
 				{
-					string deleteFile = runfolder + @"\" + file.ToString();
-					System.IO.File.Delete(deleteFile);
+					string deleteFile = runfolder + @"\" + file;
+					File.Delete(deleteFile);
 				}
 				catch (Exception ex)
 				{
-					System.Console.WriteLine(ex);
+					Console.WriteLine(ex);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Runs the students submission against a testCase.  Compares the result
-		/// against expected output.  
+		///     Runs the students submission against a testCase.  Compares the result
+		///     against expected output.
 		/// </summary>
 		/// <param name="submissionId">The "ID" of the submission being tested</param>
 		/// <param name="testCase">The input for the test run</param>
@@ -211,7 +210,7 @@ namespace Mooshak___H37.Services
 			string filename = runfolder + @"\" +
 			                  getUserNameBySubmissionId(submissionId) +
 			                  ".exe";
-			process.StartInfo.FileName = @filename;
+			process.StartInfo.FileName = filename;
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.RedirectStandardOutput = true;
 			process.StartInfo.RedirectStandardInput = true;
@@ -233,11 +232,10 @@ namespace Mooshak___H37.Services
 			return output;
 		}
 
-	
 
 		/// <summary>
-		/// The main functions in testing a submission.  This one calles different functions
-		/// as needed.  
+		///     The main functions in testing a submission.  This one calles different functions
+		///     as needed.
 		/// </summary>
 		/// <param name="submissionId">The "Id" of the submission being tested</param>
 		public void testingSubmission(int submissionId)
@@ -258,14 +256,15 @@ namespace Mooshak___H37.Services
 				}
 				else
 				{
-					updateTestrun(submissionId, test, false, "Error! Input: " + input + ", Expected: " + output + ", Received: " + result);
+					updateTestrun(submissionId, test, false,
+						"Error! Input: " + input + ", Expected: " + output + ", Received: " + result);
 				}
 			}
 			clearRunfolder(submissionId);
 		}
 
 		/// <summary>
-		/// Gets the program code for a submission
+		///     Gets the program code for a submission
 		/// </summary>
 		/// <param name="submissionId">The submission ID for the submission</param>
 		/// <returns>The program code as a string</returns>

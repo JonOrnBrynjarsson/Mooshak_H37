@@ -34,14 +34,14 @@ namespace Mooshak___H37.Controllers
 			return View(viewModel);
 		}
 
-		public ActionResult ViewAssignment(int id)
+		public ActionResult ViewAssignment(int assignmentId)
 		{
 			try
 			{
 				//returns selected assignment
-				var viewModel = _assignService.getAssignmentById(id);
+				var viewModel = _assignService.getAssignmentById(assignmentId);
 				//gives total percentage of all milestones in given assignment
-				ViewBag.TotalPercentage = _milestoneService.getTotalMilestonePercentageForAssignment(id);
+				ViewBag.TotalPercentage = _milestoneService.getTotalMilestonePercentageForAssignment(assignmentId);
 				return View(viewModel);
 			}
 			catch (Exception e)
@@ -126,17 +126,17 @@ namespace Mooshak___H37.Controllers
 
 		}
 
-        public ActionResult ViewSubmissions (int milestoneID)
+        public ActionResult ViewSubmissions (int milestoneId)
 		{
 			try
 			{
 				//Returns submissions that student has submitted in given milestone
-				var viewModel = _submissionService.getSubmissionsForMilestoneForStudent(milestoneID);
+				var viewModel = _submissionService.getSubmissionsForMilestoneForStudent(milestoneId);
 
 				//ID of assignment is added to Viewbag to be able to Go Back
-				ViewBag.AssignmentID = _assignService.getAssignmentIDFromMilestoneID(milestoneID);
-				ViewBag.MilestoneID = milestoneID;
-				ViewBag.AllowedSubmissions = _milestoneService.allowedSubmissionsForMilestone(milestoneID);
+				ViewBag.assignmentId = _assignService.getAssignmentIDFromMilestoneID(milestoneId);
+				ViewBag.milestoneId = milestoneId;
+				ViewBag.allowedSubmissions = _milestoneService.allowedSubmissionsForMilestone(milestoneId);
 				return View(viewModel);
 			}
 			catch (Exception e)
@@ -154,13 +154,13 @@ namespace Mooshak___H37.Controllers
 		}
 
 		[HttpGet]
-        public ActionResult ViewSubmission (int submissionID)
+        public ActionResult ViewSubmission (int submissionId)
         {
 			try
 			{
-				var viewModel = _submissionService.getSubmission(submissionID);
-				viewModel.code = _filesService.getSubmissionFile(submissionID);
-				viewModel.Testruns = _submissionService.getTestrunsOutcomeForSubmission(submissionID);
+				var viewModel = _submissionService.getSubmission(submissionId);
+				viewModel.code = _filesService.getSubmissionFile(submissionId);
+				viewModel.Testruns = _submissionService.getTestrunsOutcomeForSubmission(submissionId);
 				return View(viewModel);
 			}
 			catch (Exception e)

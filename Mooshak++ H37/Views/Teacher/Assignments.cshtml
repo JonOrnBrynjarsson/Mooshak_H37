@@ -32,13 +32,13 @@
 
                             @foreach (var it in item.Assignments)
                             {
-                                <tr style="@(ViewBag.Today > it.DueDate ? "color:grey; font-style:italic; Background-color:#f2f2f2; " : "")">
+                                <tr style="@(ViewBag.today > it.DueDate ? "color:grey; font-style:italic; Background-color:#f2f2f2; " : "")">
                                     <td>@(rowNo += 1)</td>
                                     <td>@it.Name</td>
                                     <td>@it.DueDate</td>
-									<td>@Html.ActionLink("Details", "ViewAssignment", new { id = it.ID })</td>
-                                    <td>@Html.ActionLink("Milestones", "Milestones", new { id = it.ID })</td>
-									<td>@Html.ActionLink("Remove", "RemoveAssignment", new { id = it.ID })</td>
+									<td>@Html.ActionLink("Details", "ViewAssignment", new { assignmentId = it.ID })</td>
+                                    <td>@Html.ActionLink("Milestones", "Milestones", new { assignmentId = it.ID })</td>
+									<td>@Html.ActionLink("Remove", "RemoveAssignment", new { assignmentId = it.ID })</td>
                                 </tr>
                             }
                         </tbody>

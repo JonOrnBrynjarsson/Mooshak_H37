@@ -39,9 +39,9 @@
 								@Html.DisplayFor(modelItem => item.DueDate)
 							</td>
 							<td>
-								@Html.ActionLink("Details", "ViewAssignment", new { id = item.ID })
+								@Html.ActionLink("Details", "ViewAssignment", new { assignmentId = item.ID })
 							</td>
-							<td>@Html.ActionLink("Milestones", "Milestones", new { id = item.ID })</td>
+							<td>@Html.ActionLink("Milestones", "Milestones", new { assignmentId = item.ID })</td>
 						</tr>
 					}
 				</tbody>

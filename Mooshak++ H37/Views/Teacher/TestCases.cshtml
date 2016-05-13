@@ -33,7 +33,7 @@
 					<td>
 						@*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
 						@*@Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
-						@Html.ActionLink("Delete", "RemoveTestCase", new { id = item.ID })
+						@Html.ActionLink("Delete", "RemoveTestCase", new { testCaseId = item.ID })
 					</td>
 				</tr>
 			}
@@ -43,8 +43,8 @@
 
 	<div class="small-right-portion btn-group-vertical">
 		<p>
-			@Html.ActionLink("Create New", "CreateTestCase", new { milestoneID = ViewBag.MilestID }, new { @class = "btn btn-primary create-button" })
-			@Html.ActionLink("Go Back", "Milestones", new { id = ViewBag.AssignID }, new { @class = "btn btn-primary create-button" })
+			@Html.ActionLink("Create New", "CreateTestCase", new { milestoneId = ViewBag.milestoneId }, new { @class = "btn btn-primary create-button" })
+			@Html.ActionLink("Go Back", "Milestones", new { assignmentId = ViewBag.assignmentId }, new { @class = "btn btn-primary create-button" })
 		</p>
 	</div>
 
