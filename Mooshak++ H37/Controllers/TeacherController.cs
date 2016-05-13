@@ -413,7 +413,7 @@ namespace Mooshak___H37.Controllers
             }
         }
         [HttpPost]
-        public ActionResult removeTestCase(int testcaseId, int milestoneId)
+        public ActionResult RemoveTestCase(int testcaseId, int milestoneId)
         {
             try
             {

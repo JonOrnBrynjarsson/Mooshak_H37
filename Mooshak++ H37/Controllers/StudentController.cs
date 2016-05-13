@@ -26,7 +26,6 @@ namespace Mooshak___H37.Controllers
 		readonly MilestoneService _milestoneService = new MilestoneService(null);
 		readonly SubmissionsService _submissionService = new SubmissionsService(null);
 
-		// GET: Assignment
 		[HttpGet]
 		public ActionResult Index()
 		{
