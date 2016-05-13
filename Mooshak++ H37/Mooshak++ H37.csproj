@@ -258,7 +258,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\data.jpg" />
     <Content Include="Images\Logo.png" />
-    <Content Include="Scripts\Admin.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -266,6 +265,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -313,9 +313,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
-    <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\Admin\CreateCourse.cshtml" />
-    <Content Include="Views\Admin\IndexErrors.cshtml" />
     <Content Include="Views\Admin\ViewCourses.cshtml" />
     <Content Include="Views\Admin\EditCourse.cshtml" />
     <Content Include="Views\Admin\ViewUsers.cshtml" />
@@ -332,6 +330,8 @@
     <Content Include="Views\Student\Submit.cshtml" />
     <Content Include="Views\Teacher\Milestones.cshtml" />
     <Content Include="Views\Teacher\CreateMilestone.cshtml" />
+    <Content Include="Views\Teacher\EditMilestone.cshtml" />
+    <Content Include="Views\Teacher\EditAssignment.cshtml" />
     <Content Include="Views\Teacher\ViewAssignment.cshtml" />
     <Content Include="Views\Teacher\CreateTestCase.cshtml" />
     <Content Include="Views\Teacher\TestCases.cshtml" />
@@ -349,12 +349,9 @@
     <Content Include="Views\Student\_ViewStart.cshtml" />
     <Content Include="Views\Teacher\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_UserLayout.cshtml" />
-    <Content Include="Views\Teacher\EditAssignment.cshtml" />
-    <Content Include="Views\Teacher\EditMilestone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\StudentHomeViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
