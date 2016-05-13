@@ -133,13 +133,16 @@ namespace Mooshak___H37.Tests.Services
 		{
 			// Arrange:
 			const int num1 = 2;
+			const int num2 = 3;
 			
 			// Act:
-			var result1 = _milestoneService.getSingleMilestone(num1);
-			
+			var result1 = _milestoneService.getSingleMilestone(2);
+			var result2 = _milestoneService.getSingleMilestone(3);
+
 			// Assert: 
-			Assert.AreEqual(result1.ID, num1);
-	
+			Assert.AreEqual(num1, result1.ID);
+			Assert.AreEqual(num2, result2.ID);
+
 		}
 
 		[TestMethod]
