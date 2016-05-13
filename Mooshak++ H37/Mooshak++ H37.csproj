@@ -339,13 +339,11 @@
     <Content Include="Views\Teacher\RemoveTestCase.cshtml" />
     <Content Include="Views\Teacher\RemoveMilestone.cshtml" />
     <Content Include="Views\Teacher\RemoveAssignment.cshtml" />
-    <Content Include="Views\Student\EditCode.cshtml" />
     <Content Include="Views\Student\Assignments.cshtml" />
     <Content Include="Views\Teacher\ViewSubmissions.cshtml" />
     <Content Include="Views\Teacher\GradeSubmission.cshtml" />
     <Content Include="Views\Student\ViewSubmissions.cshtml" />
     <Content Include="Views\Teacher\Assignments.cshtml" />
-    <Content Include="Views\Student\SubmissionDetail.cshtml" />
     <Content Include="Views\Student\ViewSubmission.cshtml" />
     <Content Include="Views\Student\_ViewStart.cshtml" />
     <Content Include="Views\Teacher\_ViewStart.cshtml" />
